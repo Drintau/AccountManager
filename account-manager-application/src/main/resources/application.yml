@@ -1,0 +1,14 @@
+debug: true
+server:
+  port: 12138
+  servlet:
+    context-path: /accountmanager
+spring:
+  application:
+    name: account-manager
+  jackson:
+    default-property-inclusion: non_null
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+logging:
+  level:
+    root: debug
