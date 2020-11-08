@@ -1,4 +1,4 @@
-debug: true
+debug: false
 server:
   port: 12138
   servlet:
@@ -9,6 +9,3 @@ spring:
   jackson:
     default-property-inclusion: non_null
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
-logging:
-  level:
-    root: debug
