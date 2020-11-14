@@ -20,10 +20,7 @@ public class AccountManagerController {
 
     @GetMapping("/test")
     public CommonResult<String> test() {
-        String miwen = aesService.encrypt("testets");
-        logger.info("密文:{}", miwen);
-        String mingwen = aesService.decrypt(miwen);
-        logger.info("明文:{}", mingwen);
+        logger.debug("测试成功");
         return new CommonResult<>(CommonCode.SUCCESS);
     }
 

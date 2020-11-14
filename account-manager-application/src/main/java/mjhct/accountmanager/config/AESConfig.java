@@ -3,6 +3,9 @@ package mjhct.accountmanager.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * AES加解密配置类
+ */
 @Component
 @ConfigurationProperties(prefix = "aes")
 public class AESConfig {
