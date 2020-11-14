@@ -9,3 +9,5 @@ spring:
   jackson:
     default-property-inclusion: non_null
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+aes:
+  key: FKVfce6Hjgti2Htu/Sa4iTatTHkHJQxh

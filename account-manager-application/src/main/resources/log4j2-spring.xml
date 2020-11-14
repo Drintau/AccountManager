@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration name="account-manager-application"
                xmlns="http://logging.apache.org/log4j/2.0/config">
+
+    <Properties>
+        <Property name="CONSOLE_PATTERN">%date{DEFAULT} [%-5level] %logger(%file:%line) - %msg%n</Property>
+    </Properties>
+
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%date{DEFAULT}] %-5level %logger(%file:%line) - %msg%n"/>
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
     </Appenders>
     <Loggers>
