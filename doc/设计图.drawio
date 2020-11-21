@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-11-21T11:53:24.950Z" agent="5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3823.400 QQBrowser/10.7.4307.400" etag="zGMZyqVgJFJZPuOTqj4p" version="13.10.0" type="github">
+<mxfile host="app.diagrams.net" modified="2020-11-21T15:08:08.817Z" agent="5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.25 Safari/537.36 Core/1.70.3823.400 QQBrowser/10.7.4307.400" etag="v0P3uTD5X9ncq2JUEEwc" version="13.10.0" type="github">
   <diagram id="TVX21sVX0WDwAyLNo6e5" name="设计">
     <mxGraphModel dx="1038" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -25,7 +25,7 @@
         <mxCell id="kQaS527iCov22ewZqlWK-27" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" parent="kQaS527iCov22ewZqlWK-26" vertex="1">
           <mxGeometry width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="kQaS527iCov22ewZqlWK-28" value="app_name VARCHAT(20) 应用名称" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="kQaS527iCov22ewZqlWK-26" vertex="1">
+        <mxCell id="kQaS527iCov22ewZqlWK-28" value="app_name VARCHAR(20) 应用名称" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" parent="kQaS527iCov22ewZqlWK-26" vertex="1">
           <mxGeometry x="30" width="340" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kQaS527iCov22ewZqlWK-5" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="kQaS527iCov22ewZqlWK-1" vertex="1">
