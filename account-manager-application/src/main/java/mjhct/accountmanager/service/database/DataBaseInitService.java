@@ -17,7 +17,7 @@ public class DataBaseInitService {
 
     private static final String TBL_MY_ACCOUNT =
             "CREATE TABLE IF NOT EXISTS my_account(\n" +
-                    "    id INT PRIMARY KEY COMMENT '逻辑主键',\n" +
+                    "    id INT IDENTITY COMMENT '逻辑主键',\n" +
                     "    app_name VARCHAR(20) COMMENT '应用名称',\n" +
                     "    url VARCHAR(100) COMMENT '网址',\n" +
                     "    my_username VARCHAR(200) COMMENT '加密用户名',\n" +
