@@ -1,11 +1,10 @@
-package mjhct.accountmanager.service.impl;
+package mjhct.accountmanager.service.crypto.impl;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
 import mjhct.accountmanager.config.AESConfig;
-import mjhct.accountmanager.service.DecryptionService;
-import mjhct.accountmanager.service.EncryptService;
+import mjhct.accountmanager.service.crypto.CryptoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,8 +12,8 @@ import javax.annotation.Resource;
 /**
  * AES对称加密服务
  */
-@Service
-public class AESServiceImpl implements EncryptService, DecryptionService {
+@Service("aesService")
+public class AESServiceImpl implements CryptoService {
 
     @Resource
     private AESConfig aesConfig;
