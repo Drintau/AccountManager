@@ -13,8 +13,8 @@ public class MyAccount {
     @Column(name = "app_name", length = 20, nullable = false)
     private String appName;
 
-    @Column(name = "url", length = 100)
-    private String url;
+    @Column(name = "app_url", length = 100)
+    private String appUrl;
 
     @Column(name = "my_username", length = 200, nullable = false)
     private String myUsername;
@@ -47,12 +47,12 @@ public class MyAccount {
         this.appName = appName;
     }
 
-    public String getUrl() {
-        return url;
+    public String getAppUrl() {
+        return appUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setAppUrl(String appUrl) {
+        this.appUrl = appUrl;
     }
 
     public String getMyUsername() {
@@ -100,7 +100,7 @@ public class MyAccount {
         return "MyAccount{" +
                 "id=" + id +
                 ", appName='" + appName + '\'' +
-                ", url='" + url + '\'' +
+                ", appUrl='" + appUrl + '\'' +
                 ", myUsername='" + myUsername + '\'' +
                 ", myPassword='" + myPassword + '\'' +
                 ", remark='" + remark + '\'' +

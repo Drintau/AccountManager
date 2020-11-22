@@ -1,20 +1,23 @@
 package mjhct.accountmanager.controller;
 
+import mjhct.accountmanager.bo.MyAccountAddBO;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
+import mjhct.accountmanager.dto.MyAccountAddReqDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.MyAccountService;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
-import java.util.Random;
-
 
 @RestController
+@RequestMapping("/account")
 public class AccountManagerController {
 
     public static final Logger logger = LoggerFactory.getLogger(AccountManagerController.class);
@@ -34,24 +37,13 @@ public class AccountManagerController {
         return new CommonResult<>(CommonCode.SUCCESS, myAccountById);
     }
 
-    @PostMapping("/testI")
-    public CommonResult<MyAccount> testI() {
-        logger.debug("测试成功");
-
-        MyAccount myAccount = new MyAccount();
-        myAccount.setAppName("测试" + new Random().nextInt(Integer.MAX_VALUE));
-        myAccount.setUrl("xxxx");
-        myAccount.setMyUsername("xxxx");
-        myAccount.setMyPassword("xxxxx");
-        myAccount.setRemark("xxxxx");
-
-        logger.debug("新增数据:{}", myAccount);
-
-        MyAccount myAccount1 = myAccountService.saveMyAccount(myAccount);
-
-        logger.debug("新增结果:{}", myAccount1);
-
-        return new CommonResult<>(CommonCode.SUCCESS, myAccount1);
+    @PostMapping("/add")
+    public CommonResult<MyAccount> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
+        MyAccountAddBO myAccountAddBO = new MyAccountAddBO();
+        BeanUtils.copyProperties(myAccountAddReqDTO, myAccountAddBO);
+        logger.info("要添加的账号是{}", myAccountAddBO);
+        MyAccount myAccount = myAccountService.addMyAccount(myAccountAddBO);
+        return new CommonResult<>(CommonCode.SUCCESS, myAccount);
     }
 
     @GetMapping("/testL")
