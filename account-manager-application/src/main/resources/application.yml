@@ -1,4 +1,4 @@
-debug: false
+debug: true
 server:
   port: 12138
   servlet:
@@ -11,14 +11,20 @@ spring:
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
   jpa:
     hibernate:
-      ddl-auto: create
-  h2:
-    console:
-      enabled: true
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:D:/h2db
-    username: root
-    password: h2database
+      ddl-auto: none
+#  h2:
+#    console:
+#      enabled: true
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:D:/h2db
+#    username: root
+#    password: h2database
+#  datasource:
+#    url: jdbc:hsqldb:D:/hsqldb
+#    username: root
+#    password: hsqldb
+#  datasource:
+#    url: jdbc:derby:D:/derbydb;create=true
 aes:
   key: FKVfce6Hjgti2Htu/Sa4iTatTHkHJQxh
