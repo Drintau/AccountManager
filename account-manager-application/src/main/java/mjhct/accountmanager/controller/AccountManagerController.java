@@ -5,6 +5,7 @@ import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.dto.MyAccountAddReqDTO;
 import mjhct.accountmanager.entity.MyAccount;
+import mjhct.accountmanager.service.DataBaseService;
 import mjhct.accountmanager.service.MyAccountService;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import org.slf4j.Logger;
@@ -28,8 +29,11 @@ public class AccountManagerController {
     @Resource
     private MyAccountService myAccountService;
 
+    @Resource
+    private DataBaseService dataBaseService;
+
     @GetMapping("/testQ")
-    public CommonResult<MyAccount> testQ(@RequestParam("id") Integer id) throws SQLException {
+    public CommonResult<MyAccount> testQ(@RequestParam("id") Integer id) {
         logger.debug("测试成功");
 
         MyAccount myAccountById = myAccountService.getMyAccountById(id);
@@ -53,6 +57,17 @@ public class AccountManagerController {
         Iterable<MyAccount> myAccounts = myAccountService.listMyAccount();
 
         return new CommonResult<>(CommonCode.SUCCESS, myAccounts);
+    }
+
+    @PostMapping("init")
+    public CommonResult<String> init(){
+        try {
+            dataBaseService.initTable();
+        } catch (SQLException e) {
+            logger.error("初始化数据库失败", e);
+            return new CommonResult<>(CommonCode.FAIL, "初始化数据库失败，请尝试删除数据库文件重试");
+        }
+        return new CommonResult<>(CommonCode.SUCCESS, "初始化数据库成功!");
     }
 
 }
