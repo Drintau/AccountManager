@@ -1,6 +1,5 @@
 package mjhct.accountmanager.service;
 
-import cn.hutool.core.util.RandomUtil;
 import mjhct.accountmanager.bo.MyAccountAddBO;
 import mjhct.accountmanager.dao.MyAccountRepository;
 import mjhct.accountmanager.entity.MyAccount;
@@ -13,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,13 +27,21 @@ public class MyAccountService {
     @Resource
     private MyAccountRepository myAccountRepository;
 
-    public MyAccount getMyAccountById(Integer id) {
-        Optional<MyAccount> byId = myAccountRepository.findById(id);
-        if (byId.isPresent()) {
-            return byId.get();
+    public List<MyAccount> getMyAccountByIdOrAppName(Integer id, String appName) {
+        // id优先
+        if (id != null) {
+
+            Optional<MyAccount> byId = myAccountRepository.findById(id);
+            if (byId.isPresent()) {
+                List<MyAccount> rst = new ArrayList<>(2);
+                rst.add(byId.get());
+                return rst;
+            }
+            return null;
         }
-        logger.warn("未找到id为{}的数据", id);
-        return null;
+
+        // 根据应用名称查
+        return myAccountRepository.findByAppName(appName);
     }
 
     public MyAccount addMyAccount(MyAccountAddBO myAccountAddBO) {

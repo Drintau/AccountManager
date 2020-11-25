@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
+@Table(name = "my_account")
 public class MyAccount {
 
     @Id

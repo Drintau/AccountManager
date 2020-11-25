@@ -11,11 +11,13 @@ import mjhct.accountmanager.service.crypto.CryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.sql.SQLException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/account")
@@ -32,13 +34,17 @@ public class AccountManagerController {
     @Resource
     private DataBaseService dataBaseService;
 
-    @GetMapping("/testQ")
-    public CommonResult<MyAccount> testQ(@RequestParam("id") Integer id) {
-        logger.debug("测试成功");
+    @GetMapping("/query")
+    public CommonResult<List<MyAccount>> query(@RequestParam(name = "id", required = false) Integer id,
+                                               @RequestParam(name = "app_name", required = false) String appName) {
 
-        MyAccount myAccountById = myAccountService.getMyAccountById(id);
+        if (id == null && StringUtils.isEmpty(appName)) {
+            return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR, "id和app_name不能同时为空");
+        }
 
-        return new CommonResult<>(CommonCode.SUCCESS, myAccountById);
+        List<MyAccount> myAccountByIdOrAppName = myAccountService.getMyAccountByIdOrAppName(id, appName);
+
+        return new CommonResult<>(CommonCode.SUCCESS, myAccountByIdOrAppName);
     }
 
     @PostMapping("/add")
