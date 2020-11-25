@@ -50,12 +50,9 @@ public class AccountManagerController {
         return new CommonResult<>(CommonCode.SUCCESS, myAccount);
     }
 
-    @GetMapping("/testL")
-    public CommonResult<Iterable<MyAccount>> testL() {
-        logger.debug("测试成功");
-
+    @GetMapping("/list")
+    public CommonResult<Iterable<MyAccount>> list() {
         Iterable<MyAccount> myAccounts = myAccountService.listMyAccount();
-
         return new CommonResult<>(CommonCode.SUCCESS, myAccounts);
     }
 

@@ -50,8 +50,7 @@ public class MyAccountService {
     }
 
     public Iterable<MyAccount> listMyAccount() {
-        Iterable<MyAccount> all = myAccountRepository.findAll();
-        return all;
+        return myAccountRepository.findAll();
     }
 
 }
