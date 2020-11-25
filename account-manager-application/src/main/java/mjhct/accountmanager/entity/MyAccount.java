@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 public class MyAccount {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "app_name", length = 20, nullable = false)

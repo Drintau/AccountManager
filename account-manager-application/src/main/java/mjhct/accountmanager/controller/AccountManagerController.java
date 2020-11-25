@@ -45,7 +45,7 @@ public class AccountManagerController {
     public CommonResult<MyAccount> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
         MyAccountAddBO myAccountAddBO = new MyAccountAddBO();
         BeanUtils.copyProperties(myAccountAddReqDTO, myAccountAddBO);
-        logger.info("要添加的账号是{}", myAccountAddBO);
+        logger.debug("要添加的账号是{}", myAccountAddBO);
         MyAccount myAccount = myAccountService.addMyAccount(myAccountAddBO);
         return new CommonResult<>(CommonCode.SUCCESS, myAccount);
     }

@@ -40,12 +40,12 @@ public class MyAccountService {
         BeanUtils.copyProperties(myAccountAddBO, addAccount);
         addAccount.setMyUsername(cryptoService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(cryptoService.encrypt(addAccount.getMyPassword()));
-        OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowOffsetDateTime();
+        OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
         addAccount.setCreateTime(nowOffsetDateTime);
         addAccount.setUpdateTime(nowOffsetDateTime);
-        logger.info("添加到数据库的数据是:{}", addAccount);
-        addAccount.setId(RandomUtil.randomInt());
-        logger.info("添加到数据库的结果是{}", addAccount);
+        logger.debug("添加到数据库的数据是:{}", addAccount);
+        myAccountRepository.save(addAccount);
+        logger.debug("添加到数据库的结果是{}", addAccount);
         return addAccount;
     }
 

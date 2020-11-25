@@ -11,7 +11,7 @@ public class DateTimeUtil {
      * 现在的北京时间
      * @return
      */
-    public static OffsetDateTime nowOffsetDateTime() {
+    public static OffsetDateTime nowChinaOffsetDateTime() {
         return OffsetDateTime.now(CHINA_ZONE_ID);
     }
 

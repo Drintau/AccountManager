@@ -19,7 +19,7 @@ public class DataBaseService {
             "CREATE TABLE IF NOT EXISTS my_account(\n" +
             "    id INT IDENTITY COMMENT '逻辑主键',\n" +
             "    app_name VARCHAR(20) NOT NULL COMMENT '应用名称',\n" +
-            "    url VARCHAR(100) COMMENT '网址',\n" +
+            "    app_url VARCHAR(100) COMMENT '网址',\n" +
             "    my_username VARCHAR(200) NOT NULL COMMENT '加密用户名',\n" +
             "    my_password VARCHAR(200) NOT NULL COMMENT '加密密码',\n" +
             "    remark VARCHAR(200) COMMENT '备注',\n" +
