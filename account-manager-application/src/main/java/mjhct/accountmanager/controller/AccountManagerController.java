@@ -1,9 +1,11 @@
 package mjhct.accountmanager.controller;
 
 import mjhct.accountmanager.bo.MyAccountAddBO;
+import mjhct.accountmanager.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.dto.MyAccountAddReqDTO;
+import mjhct.accountmanager.dto.MyAccountUpdateReqDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.DataBaseService;
 import mjhct.accountmanager.service.MyAccountService;
@@ -60,6 +62,15 @@ public class AccountManagerController {
     public CommonResult<Iterable<MyAccount>> list() {
         Iterable<MyAccount> myAccounts = myAccountService.listMyAccount();
         return new CommonResult<>(CommonCode.SUCCESS, myAccounts);
+    }
+
+    @PostMapping("/update")
+    public CommonResult<MyAccount> update(@RequestBody @Validated MyAccountUpdateReqDTO myAccountUpdateReqDTO) {
+        MyAccountUpdateBO myAccountUpdateBO = new MyAccountUpdateBO();
+        BeanUtils.copyProperties(myAccountUpdateReqDTO, myAccountUpdateBO);
+        logger.debug("要修改的账号是{}", myAccountUpdateBO);
+        MyAccount myAccount = myAccountService.updateMyAccount(myAccountUpdateBO);
+        return new CommonResult<>(CommonCode.SUCCESS, myAccount);
     }
 
     @PostMapping("init")
