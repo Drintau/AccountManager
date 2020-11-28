@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/accountmanager/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
+</head>
+<body>
+<table id="table" class="table">
+    <thead>
+    <tr>
+        <th scope="col">序号</th>
+        <th scope="col">应用名称</th>
+        <th scope="col">应用网址</th>
+        <th scope="col">账号</th>
+        <th scope="col">密码</th>
+        <th scope="col">备注</th>
+        <th scope="col">创建时间</th>
+        <th scope="col">更新时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</body>
+<script src="/accountmanager/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+      function createTr(i, jsonData) {
+        var tr="<tr>";
+        tr = tr + "<th scope='row'>" + i + "</th>";
+        tr = tr + "<td>" + jsonData.app_name + "</td>";
+        tr = tr + "<td>" + jsonData.app_url + "</td>";
+        tr = tr + "<td>" + jsonData.my_username + "</td>";
+        tr = tr + "<td>" + jsonData.my_password + "</td>";
+        tr = tr + "<td>" + jsonData.remark + "</td>";
+        tr = tr + "<td>" + jsonData.create_time + "</td>";
+        tr = tr + "<td>" + jsonData.update_time + "</td>";
+        tr = tr + "</tr>";
+        return tr;
+      }
+
+      $.getJSON("/accountmanager/account/list", function(data){
+        //console.log(data);
+        $.each(data.data, function(i, item){
+            //console.log(item);
+            $('#table').append(createTr(i, item));
+        })
+      });
+
+</script>
+</html>
