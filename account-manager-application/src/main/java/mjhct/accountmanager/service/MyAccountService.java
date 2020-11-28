@@ -54,6 +54,7 @@ public class MyAccountService {
         return byAppName;
     }
 
+    @Transactional
     public MyAccount addMyAccount(MyAccountAddBO myAccountAddBO) {
         MyAccount addAccount = new MyAccount();
         BeanUtils.copyProperties(myAccountAddBO, addAccount);
@@ -87,6 +88,11 @@ public class MyAccountService {
             return updateRst;
         }
         throw new RuntimeException("未找到旧的账号");
+    }
+
+    @Transactional
+    public void deleteMyAccount(Integer id) {
+        myAccountRepository.deleteById(id);
     }
 
 }

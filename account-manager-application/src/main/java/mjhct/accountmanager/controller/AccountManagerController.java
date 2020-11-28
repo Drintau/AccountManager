@@ -5,6 +5,7 @@ import mjhct.accountmanager.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.dto.MyAccountAddReqDTO;
+import mjhct.accountmanager.dto.MyAccountDeleteReqDTO;
 import mjhct.accountmanager.dto.MyAccountUpdateReqDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.DataBaseService;
@@ -71,6 +72,12 @@ public class AccountManagerController {
         logger.debug("要修改的账号是{}", myAccountUpdateBO);
         MyAccount myAccount = myAccountService.updateMyAccount(myAccountUpdateBO);
         return new CommonResult<>(CommonCode.SUCCESS, myAccount);
+    }
+
+    @PostMapping("/delete")
+    public CommonResult delete(@RequestBody @Validated MyAccountDeleteReqDTO myAccountDeleteReqDTO) {
+        myAccountService.deleteMyAccount(myAccountDeleteReqDTO.getId());
+        return new CommonResult(CommonCode.SUCCESS);
     }
 
     @PostMapping("init")
