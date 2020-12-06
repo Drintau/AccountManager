@@ -6,25 +6,54 @@
     <link rel="stylesheet" href="/accountmanager/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
 </head>
 <body>
-<table id="table" class="table">
-    <thead>
-    <tr>
-        <th scope="col">序号</th>
-        <th scope="col">应用名称</th>
-        <th scope="col">应用网址</th>
-        <th scope="col">账号</th>
-        <th scope="col">密码</th>
-        <th scope="col">备注</th>
-        <th scope="col">创建时间</th>
-        <th scope="col">更新时间</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="table" class="table table-bordered table-hover table-sm">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>应用名称</th>
+                    <th>应用网址</th>
+                    <th>账号</th>
+                    <th>密码</th>
+                    <th>备注</th>
+                    <th>创建时间</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 </body>
+
 <script src="/accountmanager/webjars/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+      function showOne(id) {
+        //console.log(id);
+        $.getJSON("/accountmanager/account/query?id=" + id, function(data){
+            //console.log(data);
+            $.each(data.data, function(i, item){
+              console.log(item);
+            });
+        });
+      }
+
+      function updateOne(id) {
+        console.log(id);
+      }
+
+      function deleteOne(id) {
+        console.log(id);
+      }
 
       function createTr(i, jsonData) {
         var tr="<tr>";
@@ -36,6 +65,11 @@
         tr = tr + "<td>" + jsonData.remark + "</td>";
         tr = tr + "<td>" + jsonData.create_time + "</td>";
         tr = tr + "<td>" + jsonData.update_time + "</td>";
+        tr = tr + "<td>"
+                         + "<button onclick='showOne(" + jsonData.id + ")' type='button' class='btn btn-success btn-sm col-md-4'>查看</button>"
+                         + "<button onclick='updateOne(" + jsonData.id + ")' type='button' class='btn btn-primary btn-sm col-md-4'>修改</button>"
+                         + "<button onclick='deleteOne(" + jsonData.id + ")' type='button' class='btn btn-danger btn-sm col-md-4'>删除</button>"
+                + "</td>";
         tr = tr + "</tr>";
         return tr;
       }
@@ -45,7 +79,7 @@
         $.each(data.data, function(i, item){
             //console.log(item);
             $('#table').append(createTr(i, item));
-        })
+        });
       });
 
 </script>
