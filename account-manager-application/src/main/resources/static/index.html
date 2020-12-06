@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/accountmanager/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
 </head>
 <body>
-
+<h1 id="h1">{{message}}</h1>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -25,7 +25,7 @@
                 </tr>
                 </thead>
                 <tbody>
-
+                
                 </tbody>
             </table>
         </div>
@@ -34,53 +34,14 @@
 
 </body>
 
-<script src="/accountmanager/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/accountmanager/webjars/vue/2.6.11/vue.min.js"></script>
 <script>
-
-      function showOne(id) {
-        //console.log(id);
-        $.getJSON("/accountmanager/account/query?id=" + id, function(data){
-            //console.log(data);
-            $.each(data.data, function(i, item){
-              console.log(item);
-            });
-        });
+    new Vue({
+      el: '#h1',
+      data: {
+        message: 'Hello Vue.js!'
       }
-
-      function updateOne(id) {
-        console.log(id);
-      }
-
-      function deleteOne(id) {
-        console.log(id);
-      }
-
-      function createTr(i, jsonData) {
-        var tr="<tr>";
-        tr = tr + "<th scope='row'>" + i + "</th>";
-        tr = tr + "<td>" + jsonData.app_name + "</td>";
-        tr = tr + "<td>" + jsonData.app_url + "</td>";
-        tr = tr + "<td>" + jsonData.my_username + "</td>";
-        tr = tr + "<td>" + jsonData.my_password + "</td>";
-        tr = tr + "<td>" + jsonData.remark + "</td>";
-        tr = tr + "<td>" + jsonData.create_time + "</td>";
-        tr = tr + "<td>" + jsonData.update_time + "</td>";
-        tr = tr + "<td>"
-                         + "<button onclick='showOne(" + jsonData.id + ")' type='button' class='btn btn-success btn-sm col-md-4'>查看</button>"
-                         + "<button onclick='updateOne(" + jsonData.id + ")' type='button' class='btn btn-primary btn-sm col-md-4'>修改</button>"
-                         + "<button onclick='deleteOne(" + jsonData.id + ")' type='button' class='btn btn-danger btn-sm col-md-4'>删除</button>"
-                + "</td>";
-        tr = tr + "</tr>";
-        return tr;
-      }
-
-      $.getJSON("/accountmanager/account/list", function(data){
-        //console.log(data);
-        $.each(data.data, function(i, item){
-            //console.log(item);
-            $('#table').append(createTr(i, item));
-        });
-      });
-
+    })
 </script>
+
 </html>
