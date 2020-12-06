@@ -3,45 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/accountmanager/webjars/bootstrap/4.5.3/css/bootstrap.min.css">
 </head>
 <body>
-<h1 id="h1">{{message}}</h1>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <table id="table" class="table table-bordered table-hover table-sm">
-                <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>应用名称</th>
-                    <th>应用网址</th>
-                    <th>账号</th>
-                    <th>密码</th>
-                    <th>备注</th>
-                    <th>创建时间</th>
-                    <th>更新时间</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>序号</th>
+        <th>应用名称</th>
+        <th>应用网址</th>
+        <th>账号</th>
+        <th>密码</th>
+        <th>备注</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{account.id}}</td>
+        <td>{{account.app_name}}</td>
+        <td>{{account.app_url}}</td>
+        <td>{{account.username}}</td>
+        <td>{{account.password}}</td>
+        <td>{{account.remark}}</td>
+        <td>{{account.create_time}}</td>
+        <td>{{account.update_time}}</td>
+        <td>查看</td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 
 <script src="/accountmanager/webjars/vue/2.6.11/vue.min.js"></script>
+<script src="/accountmanager/webjars/axios/0.21.0/dist/axios.min.js"></script>
+
 <script>
-    new Vue({
-      el: '#h1',
-      data: {
-        message: 'Hello Vue.js!'
-      }
-    })
+
 </script>
 
 </html>
