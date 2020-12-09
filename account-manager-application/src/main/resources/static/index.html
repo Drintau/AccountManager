@@ -3,45 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
 </head>
 <body>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>序号</th>
-        <th>应用名称</th>
-        <th>应用网址</th>
-        <th>账号</th>
-        <th>密码</th>
-        <th>备注</th>
-        <th>创建时间</th>
-        <th>更新时间</th>
-        <th>操作</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>{{account.id}}</td>
-        <td>{{account.app_name}}</td>
-        <td>{{account.app_url}}</td>
-        <td>{{account.username}}</td>
-        <td>{{account.password}}</td>
-        <td>{{account.remark}}</td>
-        <td>{{account.create_time}}</td>
-        <td>{{account.update_time}}</td>
-        <td>查看</td>
-    </tr>
-    </tbody>
-</table>
-
+<div id="app">
+    <template>
+        <el-table
+                :data="tableData"
+                style="width: 100%">
+            <el-table-column
+                    prop="date"
+                    label="日期"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="name"
+                    label="姓名"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="address"
+                    label="地址">
+            </el-table-column>
+        </el-table>
+    </template>
+</div>
 </body>
 
 <script src="/accountmanager/webjars/vue/2.6.11/vue.min.js"></script>
+<script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
 <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.min.js"></script>
 
 <script>
-
+  var Main = {
+      data() {
+        return {
+          tableData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+          }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
+          }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+          }]
+        }
+      }
+    }
+var Ctor = Vue.extend(Main)
+new Ctor().$mount('#app')
 </script>
 
 </html>
