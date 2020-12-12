@@ -3,6 +3,7 @@ package mjhct.accountmanager.service;
 import mjhct.accountmanager.bo.MyAccountAddBO;
 import mjhct.accountmanager.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.dao.MyAccountRepository;
+import mjhct.accountmanager.dto.MyAccountQueryResDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.util.DateTimeUtil;
@@ -29,17 +30,18 @@ public class MyAccountService {
     @Resource
     private MyAccountRepository myAccountRepository;
 
-    public List<MyAccount> getMyAccountByIdOrAppName(Integer id, String appName) {
+    public List<MyAccountQueryResDTO> getMyAccountByIdOrAppName(Integer id, String appName) {
         // id优先
         if (id != null) {
 
             Optional<MyAccount> byId = myAccountRepository.findById(id);
             if (byId.isPresent()) {
-                List<MyAccount> rst = new ArrayList<>(2);
+                List<MyAccountQueryResDTO> rst = new ArrayList<>(2);
                 MyAccount myAccount = byId.get();
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-                rst.add(myAccount);
+                MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
+                rst.add(resDTO);
                 return rst;
             }
             return null;
@@ -47,11 +49,14 @@ public class MyAccountService {
 
         // 根据应用名称查
         List<MyAccount> byAppName = myAccountRepository.findByAppName(appName);
+        List<MyAccountQueryResDTO> rst = new ArrayList<>(byAppName.size()*2);
         for (MyAccount myAccount : byAppName) {
             myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
             myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+            MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
+            rst.add(resDTO);
         }
-        return byAppName;
+        return rst;
     }
 
     @Transactional
@@ -69,8 +74,9 @@ public class MyAccountService {
         return addAccount;
     }
 
-    public Iterable<MyAccount> listMyAccount() {
-        return myAccountRepository.findAll();
+    public List<MyAccountQueryResDTO> listMyAccount() {
+        Iterable<MyAccount> all = myAccountRepository.findAll();
+        return myAccountEntityListToResDTOList(all);
     }
 
     @Transactional
@@ -93,6 +99,31 @@ public class MyAccountService {
     @Transactional
     public void deleteMyAccount(Integer id) {
         myAccountRepository.deleteById(id);
+    }
+
+    /**
+     * 实体集合转换成响应体集合
+     * @param myAccountList
+     * @return
+     */
+    private List<MyAccountQueryResDTO> myAccountEntityListToResDTOList(Iterable<MyAccount> myAccountList) {
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = new ArrayList<>(16);
+        for (MyAccount myAccount : myAccountList) {
+            MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
+            myAccountQueryResDTOList.add(resDTO);
+        }
+        return myAccountQueryResDTOList;
+    }
+
+    /**
+     * 实体对象转换成响应体对象
+     * @param myAccount
+     * @return
+     */
+    private MyAccountQueryResDTO myAccountEntityToResDTO(MyAccount myAccount) {
+        MyAccountQueryResDTO resDTO = new MyAccountQueryResDTO();
+        BeanUtils.copyProperties(myAccount, resDTO);
+        return resDTO;
     }
 
 }

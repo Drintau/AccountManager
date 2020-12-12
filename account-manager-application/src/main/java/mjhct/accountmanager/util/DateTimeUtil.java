@@ -7,6 +7,8 @@ public class DateTimeUtil {
 
     public static final ZoneId CHINA_ZONE_ID = ZoneId.of("Asia/Shanghai");
 
+    public static final String DATETIME_PATTERN_1 = "yyyy-MM-dd HH:mm:ss";
+
     /**
      * 现在的北京时间
      * @return

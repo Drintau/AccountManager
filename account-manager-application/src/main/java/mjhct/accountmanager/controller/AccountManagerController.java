@@ -6,6 +6,7 @@ import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.dto.MyAccountAddReqDTO;
 import mjhct.accountmanager.dto.MyAccountDeleteReqDTO;
+import mjhct.accountmanager.dto.MyAccountQueryResDTO;
 import mjhct.accountmanager.dto.MyAccountUpdateReqDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.DataBaseService;
@@ -39,14 +40,14 @@ public class AccountManagerController {
     private DataBaseService dataBaseService;
 
     @GetMapping("/query")
-    public CommonResult<List<MyAccount>> query(@RequestParam(name = "id", required = false) Integer id,
+    public CommonResult<List<MyAccountQueryResDTO>> query(@RequestParam(name = "id", required = false) Integer id,
                                                @RequestParam(name = "app_name", required = false) String appName) {
 
         if (id == null && StringUtils.isEmpty(appName)) {
             return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR, "id和app_name不能同时为空");
         }
 
-        List<MyAccount> myAccountByIdOrAppName = myAccountService.getMyAccountByIdOrAppName(id, appName);
+        List<MyAccountQueryResDTO> myAccountByIdOrAppName = myAccountService.getMyAccountByIdOrAppName(id, appName);
 
         return new CommonResult<>(CommonCode.SUCCESS, myAccountByIdOrAppName);
     }
@@ -61,8 +62,8 @@ public class AccountManagerController {
     }
 
     @GetMapping("/list")
-    public CommonResult<Iterable<MyAccount>> list() {
-        Iterable<MyAccount> myAccounts = myAccountService.listMyAccount();
+    public CommonResult<List<MyAccountQueryResDTO>> list() {
+        List<MyAccountQueryResDTO> myAccounts = myAccountService.listMyAccount();
         return new CommonResult<>(CommonCode.SUCCESS, myAccounts);
     }
 
