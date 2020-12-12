@@ -7,13 +7,24 @@
     </head>
     <body>
         <div id="app">
-            <button @click="test">改变</button>
-            <p v-text="message"></p>
-            <p v-text="accounts"></p>
-            <div v-for="(item, i) in accounts">
-                {{item.id}}
-            </div>
-            <p v-text="serverData"></p>
+            <el-table :data="accounts" border height="400" style="width: 100%">
+                <el-table-column prop="id" label="序号" width="50">
+                </el-table-column>
+                <el-table-column prop="app_name" label="应用名称" width="180">
+                </el-table-column>
+                <el-table-column prop="app_url" label="应用网址" width="180">
+                </el-table-column>
+                <el-table-column prop="my_username" label="账号" width="180">
+                </el-table-column>
+                <el-table-column prop="my_password" label="密码" width="180">
+                </el-table-column>
+                <el-table-column prop="remark" label="备注" width="180">
+                </el-table-column>
+                <el-table-column prop="create_time" label="创建时间" width="180">
+                </el-table-column>
+                <el-table-column prop="update_time" label="更新时间" width="180">
+                </el-table-column>
+            </el-table>
         </div>
     </body>
 
@@ -22,36 +33,22 @@
     <script src="http://localhost:12138/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
 
     <script>
-         var vm = new Vue({
+        var vm = new Vue({
             el: '#app',
             data() {
                 return {
-                    accounts: [{"id":1,"name":"haha"},{"id":2,"name":"xixi"}],
-                    accounts2: [{"id":3,"name":"haha"},{"id":4,"name":"xixi"}],
-                    message: 'haha',
-                    serverData: null
+                    accounts: null
                 }
             },
-            methods: {
-                test() {
-                    this.accounts=this.accounts2;
-                    message: 'sxxsxsxsxs';
-                },
-            },
             mounted() {
-                <!-- 参考：https://www.cnblogs.com/wuchenggong/p/9608384.html -->
                 axios.get('http://localhost:12138/accountmanager/account/list')
-                  .then((response) => {
-                      const result = response.data;
-                      console.log(result);
-                      const item1 = result.data[0];
-                      console.log(item1);
-                      console.log(item1.id);
-                      this.serverData = item1;
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                  });
+                    .then((response) => {
+                        const result = response.data.data;
+                        this.accounts = result;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
             }
         })
     </script>
