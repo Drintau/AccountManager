@@ -4,7 +4,7 @@
                status="error">
 
     <Properties>
-        <Property name="CONSOLE_PATTERN">%date{DEFAULT} [%-5level] %logger(%file:%line) - %msg%n</Property>
+        <Property name="CONSOLE_PATTERN">%X{TRACE_ID} %date{DEFAULT} [%-5level] %logger(%file:%line) - %msg%n</Property>
     </Properties>
 
     <Appenders>
