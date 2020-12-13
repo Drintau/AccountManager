@@ -1,10 +1,12 @@
 package mjhct.accountmanager.service;
 
+import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.entity.bo.MyAccountAddBO;
 import mjhct.accountmanager.entity.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.dao.MyAccountRepository;
 import mjhct.accountmanager.entity.dto.MyAccountQueryResDTO;
 import mjhct.accountmanager.entity.MyAccount;
+import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.util.DateTimeUtil;
 import org.slf4j.Logger;
@@ -99,12 +101,16 @@ public class MyAccountService {
             logger.debug("修改到数据库的结果是{}", updateRst);
             return updateRst;
         }
-        throw new RuntimeException("未找到旧的账号");
+        throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteMyAccount(Integer id) {
-        myAccountRepository.deleteById(id);
+        Optional<MyAccount> old = myAccountRepository.findById(id);
+        if (old.isPresent()) {
+            myAccountRepository.deleteById(id);
+        }
+        throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
 
     /**

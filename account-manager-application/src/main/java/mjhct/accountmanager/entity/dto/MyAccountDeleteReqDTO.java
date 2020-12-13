@@ -20,4 +20,10 @@ public class MyAccountDeleteReqDTO {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "MyAccountDeleteReqDTO{" +
+                "id=" + id +
+                '}';
+    }
 }
