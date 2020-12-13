@@ -1,9 +1,9 @@
 package mjhct.accountmanager.service;
 
-import mjhct.accountmanager.bo.MyAccountAddBO;
-import mjhct.accountmanager.bo.MyAccountUpdateBO;
+import mjhct.accountmanager.entity.bo.MyAccountAddBO;
+import mjhct.accountmanager.entity.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.dao.MyAccountRepository;
-import mjhct.accountmanager.dto.MyAccountQueryResDTO;
+import mjhct.accountmanager.entity.dto.MyAccountQueryResDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.util.DateTimeUtil;
@@ -74,12 +74,18 @@ public class MyAccountService {
         return addAccount;
     }
 
-    public List<MyAccountQueryResDTO> listMyAccount() {
-        Iterable<MyAccount> all = myAccountRepository.findAll();
+    public List<MyAccountQueryResDTO> listMyAccount(Boolean decrypt) {
+        List<MyAccount> all = myAccountRepository.findAll();
+        if (decrypt) {
+            for (MyAccount myAccount : all) {
+                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
+                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+            }
+        }
         return myAccountEntityListToResDTOList(all);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public MyAccount updateMyAccount(MyAccountUpdateBO myAccountUpdateBO) {
         Optional<MyAccount> old = myAccountRepository.findById(myAccountUpdateBO.getId());
         if (old.isPresent()) {
@@ -96,7 +102,7 @@ public class MyAccountService {
         throw new RuntimeException("未找到旧的账号");
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void deleteMyAccount(Integer id) {
         myAccountRepository.deleteById(id);
     }
@@ -106,10 +112,10 @@ public class MyAccountService {
      * @param myAccountList
      * @return
      */
-    private List<MyAccountQueryResDTO> myAccountEntityListToResDTOList(Iterable<MyAccount> myAccountList) {
+    private List<MyAccountQueryResDTO> myAccountEntityListToResDTOList(List<MyAccount> myAccountList) {
         List<MyAccountQueryResDTO> myAccountQueryResDTOList = new ArrayList<>(16);
         for (MyAccount myAccount : myAccountList) {
-            MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
+             MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
             myAccountQueryResDTOList.add(resDTO);
         }
         return myAccountQueryResDTOList;

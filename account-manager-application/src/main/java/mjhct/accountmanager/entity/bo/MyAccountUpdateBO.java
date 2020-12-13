@@ -1,37 +1,21 @@
-package mjhct.accountmanager.dto;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import mjhct.accountmanager.util.DateTimeUtil;
+package mjhct.accountmanager.entity.bo;
 
 import java.time.OffsetDateTime;
 
-public class MyAccountQueryResDTO {
+public class MyAccountUpdateBO {
 
-    @JsonProperty("id")
     private Integer id;
 
-    @JsonProperty("name")
     private String appName;
 
-    @JsonProperty("url")
     private String appUrl;
 
-    @JsonProperty("username")
     private String myUsername;
 
-    @JsonProperty("password")
     private String myPassword;
 
-    @JsonProperty("remark")
     private String remark;
 
-    @JsonProperty("create_time")
-    @JsonFormat(pattern = DateTimeUtil.DATETIME_PATTERN_1)
-    private OffsetDateTime createTime;
-
-    @JsonProperty("update_time")
-    @JsonFormat(pattern = DateTimeUtil.DATETIME_PATTERN_1)
     private OffsetDateTime updateTime;
 
     public Integer getId() {
@@ -82,19 +66,24 @@ public class MyAccountQueryResDTO {
         this.remark = remark;
     }
 
-    public OffsetDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(OffsetDateTime createTime) {
-        this.createTime = createTime;
-    }
-
     public OffsetDateTime getUpdateTime() {
         return updateTime;
     }
 
     public void setUpdateTime(OffsetDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MyAccountUpdateBO{" +
+                "id=" + id +
+                ", appName='" + appName + '\'' +
+                ", appUrl='" + appUrl + '\'' +
+                ", myUsername='" + myUsername + '\'' +
+                ", myPassword='" + myPassword + '\'' +
+                ", remark='" + remark + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

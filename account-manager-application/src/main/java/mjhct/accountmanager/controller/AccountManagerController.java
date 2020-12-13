@@ -1,13 +1,13 @@
 package mjhct.accountmanager.controller;
 
-import mjhct.accountmanager.bo.MyAccountAddBO;
-import mjhct.accountmanager.bo.MyAccountUpdateBO;
+import mjhct.accountmanager.entity.bo.MyAccountAddBO;
+import mjhct.accountmanager.entity.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
-import mjhct.accountmanager.dto.MyAccountAddReqDTO;
-import mjhct.accountmanager.dto.MyAccountDeleteReqDTO;
-import mjhct.accountmanager.dto.MyAccountQueryResDTO;
-import mjhct.accountmanager.dto.MyAccountUpdateReqDTO;
+import mjhct.accountmanager.entity.dto.MyAccountAddReqDTO;
+import mjhct.accountmanager.entity.dto.MyAccountDeleteReqDTO;
+import mjhct.accountmanager.entity.dto.MyAccountQueryResDTO;
+import mjhct.accountmanager.entity.dto.MyAccountUpdateReqDTO;
 import mjhct.accountmanager.entity.MyAccount;
 import mjhct.accountmanager.service.DataBaseService;
 import mjhct.accountmanager.service.MyAccountService;
@@ -62,8 +62,8 @@ public class AccountManagerController {
     }
 
     @GetMapping("/list")
-    public CommonResult<List<MyAccountQueryResDTO>> list() {
-        List<MyAccountQueryResDTO> myAccounts = myAccountService.listMyAccount();
+    public CommonResult<List<MyAccountQueryResDTO>> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt) {
+        List<MyAccountQueryResDTO> myAccounts = myAccountService.listMyAccount(decrypt);
         return new CommonResult<>(CommonCode.SUCCESS, myAccounts);
     }
 
