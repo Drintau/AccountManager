@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link rel="stylesheet" href="http://localhost:12138/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+        <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
     </head>
     <body>
         <div id="app">
@@ -35,9 +35,9 @@
         </div>
     </body>
 
-    <script src="http://localhost:12138/accountmanager/webjars/vue/2.6.11/vue.js"></script>
-    <script src="http://localhost:12138/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
-    <script src="http://localhost:12138/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
+    <script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
+    <script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
+    <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
 
     <script>
         var vm = new Vue({
@@ -48,7 +48,7 @@
                 }
             },
             mounted() {
-                axios.get('http://localhost:12138/accountmanager/account/list')
+                axios.get('/accountmanager/account/list')
                     .then((response) => {
                         const result = response.data.data;
                         this.accounts = result;
@@ -60,7 +60,7 @@
             methods: {
                 show(account) {
                     //console.log(account.id);
-                    axios.get('http://localhost:12138/accountmanager/account/query?id='+account.id)
+                    axios.get('/accountmanager/account/query?id='+account.id)
                         .then((response) => {
                             const result = response.data.data;
                             console.log(result);
@@ -70,7 +70,7 @@
                         });
                 },
                 edit(account) {
-                    axios.get('http://localhost:12138/accountmanager/account/query?id='+account.id)
+                    axios.get('/accountmanager/account/query?id='+account.id)
                         .then((response) => {
                             const result = response.data.data;
                             console.log(result);
@@ -85,7 +85,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() =>{
-                        axios.post('http://localhost:12138/accountmanager/account/delete', {id: account.id})
+                        axios.post('/accountmanager/account/delete', {id: account.id})
                             .then((response) => {
                                 const result = response.data;
                                 console.log(result);
