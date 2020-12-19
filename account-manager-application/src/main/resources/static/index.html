@@ -80,19 +80,33 @@
                         });
                 },
                 deleteOne(account) {
-                    axios.post('http://localhost:12138/accountmanager/account/delete', {id: account.id})
-                        .then((response) => {
-                            const result = response.data;
-                            console.log(result);
-                            if (result.code == '000000') {
-                                location.reload();
-                            } else {
-                                alert(result.message);
-                            }
+                    this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() =>{
+                        axios.post('http://localhost:12138/accountmanager/account/delete', {id: account.id})
+                            .then((response) => {
+                                const result = response.data;
+                                console.log(result);
+                                if (result.code == '000000') {
+                                    location.reload();
+                                } else {
+                                    this.$message({
+                                      type: 'error',
+                                      message: result.message
+                                    });
+                                }
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            })
+                    }).catch(() => {
+                        this.$message({
+                          type: 'info',
+                          message: '已取消删除'
                         })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
+                    });
                 }
             }
         })
