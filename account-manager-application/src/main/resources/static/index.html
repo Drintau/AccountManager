@@ -12,7 +12,7 @@
                 </el-table-column>
                 <el-table-column prop="name" label="应用名称" width="100">
                 </el-table-column>
-                <el-table-column prop="url" label="应用网址" width="200">
+                <el-table-column prop="url" label="应用网址" width="150">
                 </el-table-column>
                 <el-table-column prop="username" label="账号">
                 </el-table-column>
@@ -23,6 +23,13 @@
                 <el-table-column prop="create_time" label="创建时间" width="160">
                 </el-table-column>
                 <el-table-column prop="update_time" label="更新时间" width="160">
+                </el-table-column>
+                <el-table-column fixed="right" label="操作" width="150">
+                      <template slot-scope="scope">
+                        <el-button @click="show(scope.row)" type="text" size="mini">查看</el-button>
+                        <el-button @click="edit(scope.row)" type="text" size="mini">编辑</el-button>
+                        <el-button @click="deleteOne(scope.row)" type="text" size="mini"><span style="color: red;">删除</span></el-button>
+                      </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -49,6 +56,44 @@
                     .catch(function(error) {
                         console.log(error);
                     });
+            },
+            methods: {
+                show(account) {
+                    //console.log(account.id);
+                    axios.get('http://localhost:12138/accountmanager/account/query?id='+account.id)
+                        .then((response) => {
+                            const result = response.data.data;
+                            console.log(result);
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
+                edit(account) {
+                    axios.get('http://localhost:12138/accountmanager/account/query?id='+account.id)
+                        .then((response) => {
+                            const result = response.data.data;
+                            console.log(result);
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
+                deleteOne(account) {
+                    axios.post('http://localhost:12138/accountmanager/account/delete', {id: account.id})
+                        .then((response) => {
+                            const result = response.data;
+                            console.log(result);
+                            if (result.code == '000000') {
+                                location.reload();
+                            } else {
+                                alert(result.message);
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                }
             }
         })
     </script>

@@ -37,16 +37,15 @@ public class MyAccountService {
         if (id != null) {
 
             Optional<MyAccount> byId = myAccountRepository.findById(id);
+            List<MyAccountQueryResDTO> rst = new ArrayList<>(2);
             if (byId.isPresent()) {
-                List<MyAccountQueryResDTO> rst = new ArrayList<>(2);
                 MyAccount myAccount = byId.get();
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
                 MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
                 rst.add(resDTO);
-                return rst;
             }
-            return null;
+            return rst;
         }
 
         // 根据应用名称查
@@ -109,6 +108,7 @@ public class MyAccountService {
         Optional<MyAccount> old = myAccountRepository.findById(id);
         if (old.isPresent()) {
             myAccountRepository.deleteById(id);
+            return;
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
