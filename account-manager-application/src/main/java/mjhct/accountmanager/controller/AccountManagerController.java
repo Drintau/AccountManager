@@ -1,17 +1,15 @@
 package mjhct.accountmanager.controller;
 
-import mjhct.accountmanager.entity.bo.MyAccountAddBO;
-import mjhct.accountmanager.entity.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
+import mjhct.accountmanager.entity.MyAccount;
+import mjhct.accountmanager.entity.bo.MyAccountAddBO;
+import mjhct.accountmanager.entity.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.entity.dto.MyAccountAddReqDTO;
 import mjhct.accountmanager.entity.dto.MyAccountDeleteReqDTO;
 import mjhct.accountmanager.entity.dto.MyAccountQueryResDTO;
 import mjhct.accountmanager.entity.dto.MyAccountUpdateReqDTO;
-import mjhct.accountmanager.entity.MyAccount;
-import mjhct.accountmanager.service.DataBaseService;
 import mjhct.accountmanager.service.MyAccountService;
-import mjhct.accountmanager.service.crypto.CryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +18,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -30,14 +27,8 @@ public class AccountManagerController {
 
     public static final Logger logger = LoggerFactory.getLogger(AccountManagerController.class);
 
-    @Resource(name = "aesService")
-    private CryptoService cryptoService;
-
     @Resource
     private MyAccountService myAccountService;
-
-    @Resource
-    private DataBaseService dataBaseService;
 
     @GetMapping("/query")
     public CommonResult<List<MyAccountQueryResDTO>> query(@RequestParam(name = "id", required = false) Integer id,
@@ -80,17 +71,6 @@ public class AccountManagerController {
     public CommonResult delete(@RequestBody @Validated MyAccountDeleteReqDTO myAccountDeleteReqDTO) {
         myAccountService.deleteMyAccount(myAccountDeleteReqDTO.getId());
         return new CommonResult(CommonCode.SUCCESS);
-    }
-
-    @PostMapping("init")
-    public CommonResult<String> init(){
-        try {
-            dataBaseService.initTable();
-        } catch (SQLException e) {
-            logger.error("初始化数据库失败", e);
-            return new CommonResult<>(CommonCode.FAIL, "初始化数据库失败，请尝试删除数据库文件重试");
-        }
-        return new CommonResult<>(CommonCode.SUCCESS, "初始化数据库成功!");
     }
 
 }
