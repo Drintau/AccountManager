@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="app">
+    <el-table :data="accounts" border>
+        <el-table-column prop="id" label="序号" width="50">
+        </el-table-column>
+        <el-table-column prop="name" label="应用名称" width="100">
+        </el-table-column>
+        <el-table-column prop="url" label="应用网址" width="150">
+        </el-table-column>
+        <el-table-column prop="username" label="账号">
+        </el-table-column>
+        <el-table-column prop="password" label="密码">
+        </el-table-column>
+        <el-table-column prop="remark" label="备注" width="200">
+        </el-table-column>
+        <el-table-column prop="create_time" label="创建时间" width="160">
+        </el-table-column>
+        <el-table-column prop="update_time" label="更新时间" width="160">
+        </el-table-column>
+        <el-table-column fixed="right" label="操作" width="150">
+            <template slot-scope="scope">
+                <el-button @click="edit(scope.row)" type="text" size="mini">编辑</el-button>
+                <el-button @click="deleteOne(scope.row)" type="text" size="mini"><span style="color: red;">删除</span></el-button>
+            </template>
+        </el-table-column>
+    </el-table>
+</div>
+</body>
+
+<script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
+<script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
+<script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
+
+<script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    accounts: null
+                }
+            },
+            mounted() {
+                axios.get('/accountmanager/account/list?decrypt=true')
+                    .then((response) => {
+                        const result = response.data.data;
+                        this.accounts = result;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            },
+            methods: {
+                edit(account) {
+                    axios.get('/accountmanager/account/query?id='+account.id)
+                        .then((response) => {
+                            const result = response.data.data;
+                            console.log(result);
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
+                deleteOne(account) {
+                    this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() =>{
+                        axios.post('/accountmanager/account/delete', {id: account.id})
+                            .then((response) => {
+                                const result = response.data;
+                                console.log(result);
+                                if (result.code == '000000') {
+                                    location.reload();
+                                } else {
+                                    this.$message({
+                                      type: 'error',
+                                      message: result.message
+                                    });
+                                }
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            })
+                    }).catch(() => {
+                        this.$message({
+                          type: 'info',
+                          message: '已取消删除'
+                        })
+                    });
+                }
+            }
+        })
+    </script>
+
+</html>

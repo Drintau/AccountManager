@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+        <link rel="stylesheet" href="http://localhost:12138/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
     </head>
     <body>
         <div id="app">
@@ -25,30 +25,105 @@
                 <el-table-column prop="update_time" label="更新时间" width="160">
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" width="150">
-                      <template slot-scope="scope">
+                    <template slot-scope="scope">
                         <el-button @click="show(scope.row)" type="text" size="mini">查看</el-button>
                         <el-button @click="edit(scope.row)" type="text" size="mini">编辑</el-button>
                         <el-button @click="deleteOne(scope.row)" type="text" size="mini"><span style="color: red;">删除</span></el-button>
-                      </template>
+                    </template>
                 </el-table-column>
             </el-table>
+
+            <el-dialog title="账号信息" :visible.sync="showDialogFormVisible" :width="dialogWidth">
+                <el-form :model="showForm" disabled :label-width="formLabelWidth" size='small'>
+                    <el-form-item label="应用名称">
+                        <el-input v-model="showForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="应用网址">
+                        <el-input v-model="showForm.url" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="账号">
+                        <el-input v-model="showForm.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input v-model="showForm.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注">
+                        <el-input v-model="showForm.remark" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="创建时间">
+                        <el-input v-model="showForm.create_time" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="更新时间">
+                        <el-input v-model="showForm.update_time" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="showDialogFormVisible = false" size='mini'>关闭</el-button>
+                </div>
+            </el-dialog>
+            
+            <el-dialog title="修改账号" :visible.sync="editDialogFormVisible" :width="dialogWidth">
+                <el-form :model="editForm" :label-width="formLabelWidth" size='small'>
+                    <el-form-item label="应用名称">
+                        <el-input v-model="editForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="应用网址">
+                        <el-input v-model="editForm.url" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="账号">
+                        <el-input v-model="editForm.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input v-model="editForm.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注">
+                        <el-input v-model="editForm.remark" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="editDialogFormVisible = false" size='mini'>取 消</el-button>
+                    <el-button type="primary" @click="editOne(editForm)" size='mini'>确 定</el-button>
+                </div>
+            </el-dialog>
         </div>
     </body>
 
-    <script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
-    <script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
-    <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
+    <script src="http://localhost:12138/accountmanager/webjars/vue/2.6.11/vue.js"></script>
+    <script src="http://localhost:12138/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
+    <script src="http://localhost:12138/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
 
     <script>
         var vm = new Vue({
             el: '#app',
             data() {
                 return {
-                    accounts: null
+                    accounts: null,
+                    showDialogFormVisible: false,
+                    showForm: {
+                        id: '',
+                        name: '',
+                        url: '',
+                        username: '',
+                        password: '',
+                        remark: '',
+                        create_time: '',
+                        update_time: ''
+                    },
+                    editDialogFormVisible: false,
+                    editForm: {
+                        id: '',
+                        name: '',
+                        url: '',
+                        username: '',
+                        password: '',
+                        remark: ''
+                    },
+                    formLabelWidth: '100px',
+                    dialogWidth: '30%'
                 }
             },
             mounted() {
-                axios.get('/accountmanager/account/list')
+                axios.get('http://localhost:12138/accountmanager/account/list')
                     .then((response) => {
                         const result = response.data.data;
                         this.accounts = result;
@@ -59,21 +134,25 @@
             },
             methods: {
                 show(account) {
+                    this.showDialogFormVisible = true;
                     //console.log(account.id);
-                    axios.get('/accountmanager/account/query?id='+account.id)
+                    axios.get('http://localhost:12138/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
                             const result = response.data.data;
                             console.log(result);
+                            this.showForm = result[0]
                         })
                         .catch(function(error) {
                             console.log(error);
                         });
                 },
                 edit(account) {
-                    axios.get('/accountmanager/account/query?id='+account.id)
+                    this.editDialogFormVisible = true;
+                    axios.get('http://localhost:12138/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
                             const result = response.data.data;
                             console.log(result);
+                            this.editForm = result[0]
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -84,8 +163,10 @@
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
-                    }).then(() =>{
-                        axios.post('/accountmanager/account/delete', {id: account.id})
+                    }).then(() => {
+                        axios.post('http://localhost:12138/accountmanager/account/delete', {
+                                id: account.id
+                            })
                             .then((response) => {
                                 const result = response.data;
                                 console.log(result);
@@ -93,8 +174,8 @@
                                     location.reload();
                                 } else {
                                     this.$message({
-                                      type: 'error',
-                                      message: result.message
+                                        type: 'error',
+                                        message: result.message
                                     });
                                 }
                             })
@@ -103,10 +184,14 @@
                             })
                     }).catch(() => {
                         this.$message({
-                          type: 'info',
-                          message: '已取消删除'
+                            type: 'info',
+                            message: '已取消删除'
                         })
                     });
+                },
+                editOne(account) {
+                    console.log(account);
+                    console.log(account.password);
                 }
             }
         })
