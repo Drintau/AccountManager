@@ -19,21 +19,21 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public CommonResult handleBusinessException(BusinessException be) {
         return new CommonResult(be.getExceptionCode(), be.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     public CommonResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         List<ObjectError> allErrors = bindingResult.getAllErrors();
         StringBuilder errMsg = new StringBuilder();
         for (ObjectError allError : allErrors) {
             errMsg.append(allError.getDefaultMessage());
-            errMsg.append(";");
+            errMsg.append("；");
         }
         String errMsgStr = errMsg.substring(0, errMsg.length()-1) + "。";
         return new CommonResult(CommonCode.REQUEST_PARAMETER_ERROR, errMsgStr);

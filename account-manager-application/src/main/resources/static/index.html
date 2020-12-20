@@ -139,8 +139,8 @@
                     axios.get('http://localhost:12138/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
                             const result = response.data.data;
-                            console.log(result);
-                            this.showForm = result[0]
+                            //console.log(result);
+                            this.showForm = result[0];
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -151,8 +151,8 @@
                     axios.get('http://localhost:12138/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
                             const result = response.data.data;
-                            console.log(result);
-                            this.editForm = result[0]
+                            //console.log(result);
+                            this.editForm = result[0];
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -190,8 +190,31 @@
                     });
                 },
                 editOne(account) {
-                    console.log(account);
-                    console.log(account.password);
+                    //console.log(account);
+                    //console.log(account.password);
+                    axios.post('http://localhost:12138/accountmanager/account/update', {
+                            id: account.id,
+                            name: account.name,
+                            url: account.url,
+                            username: account.username,
+                            password: account.password,
+                            remark: account.remark
+                        })
+                        .then((response) => {
+                            const result = response.data;
+                            //console.log(result);
+                            if (result.code == '000000') {
+                                location.reload();
+                            } else {
+                                this.$message({
+                                    type: 'error',
+                                    message: result.message
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
                 }
             }
         })
