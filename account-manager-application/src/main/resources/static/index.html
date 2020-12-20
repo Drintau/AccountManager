@@ -3,10 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link rel="stylesheet" href="http://localhost:12138/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+        <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
     </head>
     <body>
         <div id="app">
+
+            <el-header height="30px" style="padding: 0;margin: 5px;">
+                <el-button type="primary" @click="add" size="mini">新增账号</el-button>
+                <el-link style="float: right;" type="primary" href="/accountmanager/advanced.html">高级页面</el-link>
+            </el-header>
+
             <el-table :data="accounts" border>
                 <el-table-column prop="id" label="序号" width="50">
                 </el-table-column>
@@ -61,7 +67,7 @@
                     <el-button @click="showDialogFormVisible = false" size='mini'>关闭</el-button>
                 </div>
             </el-dialog>
-            
+
             <el-dialog title="修改账号" :visible.sync="editDialogFormVisible" :width="dialogWidth">
                 <el-form :model="editForm" :label-width="formLabelWidth" size='small'>
                     <el-form-item label="应用名称">
@@ -85,12 +91,37 @@
                     <el-button type="primary" @click="editOne(editForm)" size='mini'>确 定</el-button>
                 </div>
             </el-dialog>
+
+            <el-dialog title="新增账号" :visible.sync="addDialogFormVisible" :width="dialogWidth">
+                <el-form :model="addForm" :label-width="formLabelWidth" size='small'>
+                    <el-form-item label="应用名称">
+                        <el-input v-model="addForm.name" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="应用网址">
+                        <el-input v-model="addForm.url" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="账号">
+                        <el-input v-model="addForm.username" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input v-model="addForm.password" autocomplete="off"></el-input>
+                    </el-form-item>
+                    <el-form-item label="备注">
+                        <el-input v-model="addForm.remark" autocomplete="off"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="addDialogFormVisible = false" size='mini'>取 消</el-button>
+                    <el-button type="primary" @click="addOne(addForm)" size='mini'>确 定</el-button>
+                </div>
+            </el-dialog>
+
         </div>
     </body>
 
-    <script src="http://localhost:12138/accountmanager/webjars/vue/2.6.11/vue.js"></script>
-    <script src="http://localhost:12138/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
-    <script src="http://localhost:12138/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
+    <script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
+    <script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
+    <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
 
     <script>
         var vm = new Vue({
@@ -98,6 +129,8 @@
             data() {
                 return {
                     accounts: null,
+                    dialogWidth: '30%',
+                    formLabelWidth: '100px',
                     showDialogFormVisible: false,
                     showForm: {
                         id: '',
@@ -118,12 +151,18 @@
                         password: '',
                         remark: ''
                     },
-                    formLabelWidth: '100px',
-                    dialogWidth: '30%'
+                    addDialogFormVisible: false,
+                    addForm: {
+                        name: '',
+                        url: '',
+                        username: '',
+                        password: '',
+                        remark: ''
+                    }
                 }
             },
             mounted() {
-                axios.get('http://localhost:12138/accountmanager/account/list')
+                axios.get('/accountmanager/account/list')
                     .then((response) => {
                         const result = response.data.data;
                         this.accounts = result;
@@ -133,10 +172,11 @@
                     });
             },
             methods: {
+                /* 查看 */
                 show(account) {
                     this.showDialogFormVisible = true;
                     //console.log(account.id);
-                    axios.get('http://localhost:12138/accountmanager/account/query?id=' + account.id)
+                    axios.get('/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
                             const result = response.data.data;
                             //console.log(result);
@@ -146,25 +186,15 @@
                             console.log(error);
                         });
                 },
-                edit(account) {
-                    this.editDialogFormVisible = true;
-                    axios.get('http://localhost:12138/accountmanager/account/query?id=' + account.id)
-                        .then((response) => {
-                            const result = response.data.data;
-                            //console.log(result);
-                            this.editForm = result[0];
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                        });
-                },
+
+                /* 删除 */
                 deleteOne(account) {
                     this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        axios.post('http://localhost:12138/accountmanager/account/delete', {
+                        axios.post('/accountmanager/account/delete', {
                                 id: account.id
                             })
                             .then((response) => {
@@ -189,11 +219,56 @@
                         })
                     });
                 },
+
+                /* 修改：先查再改 */
+                edit(account) {
+                    this.editDialogFormVisible = true;
+                    axios.get('/accountmanager/account/query?id=' + account.id)
+                        .then((response) => {
+                            const result = response.data.data;
+                            //console.log(result);
+                            this.editForm = result[0];
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                        });
+                },
                 editOne(account) {
                     //console.log(account);
                     //console.log(account.password);
-                    axios.post('http://localhost:12138/accountmanager/account/update', {
+                    axios.post('/accountmanager/account/update', {
                             id: account.id,
+                            name: account.name,
+                            url: account.url,
+                            username: account.username,
+                            password: account.password,
+                            remark: account.remark
+                        })
+                        .then((response) => {
+                            const result = response.data;
+                            //console.log(result);
+                            if (result.code == '000000') {
+                                location.reload();
+                            } else {
+                                this.$message({
+                                    type: 'error',
+                                    message: result.message
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        })
+                },
+
+                /* 添加 */
+                add() {
+                    this.addDialogFormVisible = true;
+                },
+                addOne(account) {
+                    //console.log(account);
+                    //console.log(account.password);
+                    axios.post('/accountmanager/account/add', {
                             name: account.name,
                             url: account.url,
                             username: account.username,
