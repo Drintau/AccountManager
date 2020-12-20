@@ -16,7 +16,7 @@ public class MyAccountAddReqDTO {
     private String appName;
 
     @JsonProperty("url")
-    @Length(min = 1, max = 100, message = "应用网址长度为1-100")
+    @Length(max = 100, message = "应用网址最大长度为100")
     private String appUrl;
 
     @JsonProperty("username")
@@ -31,7 +31,7 @@ public class MyAccountAddReqDTO {
     private String myPassword;
 
     @JsonProperty("remark")
-    @Length(min = 1, max = 200, message = "说明长度为1-200")
+    @Length(max = 200, message = "备注最大长度为200")
     private String remark;
 
     public String getAppName() {
