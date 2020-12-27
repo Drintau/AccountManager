@@ -26,7 +26,7 @@ public class RequestLogAspect {
         Object[] args = joinPoint.getArgs();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
-        logger.info("{}.{}:{}", method.getDeclaringClass().getName(), method.getName(), args);
+        logger.debug("{}.{}:{}", method.getDeclaringClass().getName(), method.getName(), args);
     }
 
 }
