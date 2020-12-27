@@ -4,15 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 @Component
 public class InitService implements ApplicationRunner {
@@ -34,28 +31,17 @@ public class InitService implements ApplicationRunner {
     @Resource
     private DataSource dataSource;
 
-    @Resource
-    private DataSourceProperties dataSourceProperties;
-
     @Override
     public void run(ApplicationArguments args){
-        logger.info("应用启动成功，即将执行初始化数据库操作。");
+        //logger.info("应用启动成功。");
+        System.out.println("应用启动成功。");
         try {
-            String[] split = dataSourceProperties.getUrl().split("/");
-            String dbName = split[1];
             Connection connection = dataSource.getConnection();
-            DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet tables = metaData.getTables(connection.getCatalog(), dbName, "my_account", new String[]{"TABLE"});
-            if (tables == null) {
-                logger.info("数据库没有必要数据，执行初始化。");
-                PreparedStatement preparedStatement = connection.prepareStatement(TBL_MY_ACCOUNT);
-                preparedStatement.execute();
-                connection.close();
-            } else {
-                logger.info("数据库已有必要数据，无需初始化。");
-            }
+            PreparedStatement preparedStatement = connection.prepareStatement(TBL_MY_ACCOUNT);
+            preparedStatement.execute();
+            connection.close();
         } catch (Exception e) {
-            logger.error("初始化数据库失败！", e);
+            logger.error("初始化数据失败！", e);
             // 退出程序？关闭程序？
         }
     }
