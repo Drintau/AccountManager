@@ -33,8 +33,7 @@ public class InitService implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args){
-        //logger.info("应用启动成功。");
-        System.out.println("应用启动成功。");
+        logger.info("应用启动成功。");
         try {
             Connection connection = dataSource.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(TBL_MY_ACCOUNT);
