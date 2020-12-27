@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -12,9 +13,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 @Component
-public class InitService implements ApplicationRunner {
+@Order(1)
+public class InitRunner implements ApplicationRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitService.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitRunner.class);
 
     private static final String TBL_MY_ACCOUNT =
             "CREATE TABLE IF NOT EXISTS my_account(\n" +
@@ -32,7 +34,7 @@ public class InitService implements ApplicationRunner {
     private DataSource dataSource;
 
     @Override
-    public void run(ApplicationArguments args){
+    public void run(ApplicationArguments args) throws Exception {
         logger.info("应用启动成功。");
         try {
             Connection connection = dataSource.getConnection();
@@ -41,7 +43,8 @@ public class InitService implements ApplicationRunner {
             connection.close();
         } catch (Exception e) {
             logger.error("初始化数据失败！", e);
-            // 退出程序？关闭程序？
+            // 抛出异常
+            throw e;
         }
     }
 }

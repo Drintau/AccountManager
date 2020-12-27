@@ -4,7 +4,6 @@ server:
   servlet:
     context-path: /accountmanager
 spring:
-  profiles: default
   application:
     name: account-manager
   jackson:
