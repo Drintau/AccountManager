@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration name="account-manager-application"
+<Configuration name="account-manager-application-dev"
                xmlns="http://logging.apache.org/log4j/2.0/config"
                status="error">
 
@@ -13,13 +13,13 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="org" level="warn" additivity="false">
+        <Logger name="org" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="com" level="warn" additivity="false">
+        <Logger name="com" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

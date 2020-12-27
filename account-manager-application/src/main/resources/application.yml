@@ -4,12 +4,14 @@ server:
   servlet:
     context-path: /accountmanager
 spring:
+  profiles: default
   application:
     name: account-manager
   jackson:
     default-property-inclusion: non_null
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: none
   h2:
@@ -28,3 +30,5 @@ spring:
     password: h2database
 aes:
   key: FKVfce6Hjgti2Htu/Sa4iTatTHkHJQxh
+logging:
+  config: classpath:log4j2-spring-dev.xml
