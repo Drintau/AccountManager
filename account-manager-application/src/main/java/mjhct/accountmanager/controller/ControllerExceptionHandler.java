@@ -47,4 +47,11 @@ public class ControllerExceptionHandler {
         return new CommonResult(CommonCode.REQUEST_PARAMETER_ERROR, errMsgStr);
     }
 
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public CommonResult handleOtherException(Exception e) {
+        return new CommonResult(CommonCode.FAIL, e.getMessage());
+    }
+
 }

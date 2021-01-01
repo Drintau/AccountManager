@@ -164,11 +164,23 @@
             mounted() {
                 axios.get('/accountmanager/account/list')
                     .then((response) => {
-                        const result = response.data.data;
-                        this.accounts = result;
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            const accountsData = result.data;
+                            this.accounts = accountsData;
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: result.message
+                            });
+                        }
                     })
                     .catch(function(error) {
                         console.log(error);
+                        this.$message({
+                            type: 'error',
+                            message: error.message
+                        });
                     });
             },
             methods: {
@@ -178,12 +190,23 @@
                     //console.log(account.id);
                     axios.get('/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
-                            const result = response.data.data;
-                            //console.log(result);
-                            this.showForm = result[0];
+                            const result = response.data;
+                            if (result.code == '000000') {
+                                const accountsData = result.data;
+                                this.showForm = accountsData[0];
+                            } else {
+                                this.$message({
+                                    type: 'error',
+                                    message: result.message
+                                });
+                            }
                         })
                         .catch(function(error) {
                             console.log(error);
+                            this.$message({
+                                type: 'error',
+                                message: error.message
+                            });
                         });
                 },
 
@@ -199,7 +222,7 @@
                             })
                             .then((response) => {
                                 const result = response.data;
-                                console.log(result);
+                                //console.log(result);
                                 if (result.code == '000000') {
                                     location.reload();
                                 } else {
@@ -211,6 +234,10 @@
                             })
                             .catch(function(error) {
                                 console.log(error);
+                                this.$message({
+                                    type: 'error',
+                                    message: error.message
+                                });
                             })
                     }).catch(() => {
                         this.$message({
@@ -225,12 +252,23 @@
                     this.editDialogFormVisible = true;
                     axios.get('/accountmanager/account/query?id=' + account.id)
                         .then((response) => {
-                            const result = response.data.data;
-                            //console.log(result);
-                            this.editForm = result[0];
+                            const result = response.data;
+                            if (result.code == '000000') {
+                                const accountsData = result.data;
+                                this.editForm = accountsData[0];
+                            } else {
+                                this.$message({
+                                    type: 'error',
+                                    message: result.message
+                                });
+                            }
                         })
                         .catch(function(error) {
                             console.log(error);
+                            this.$message({
+                                type: 'error',
+                                message: error.message
+                            });
                         });
                 },
                 editOne(account) {
@@ -258,6 +296,10 @@
                         })
                         .catch((error) => {
                             console.log(error);
+                            this.$message({
+                                type: 'error',
+                                message: error.message
+                            });
                         })
                 },
 
@@ -289,6 +331,10 @@
                         })
                         .catch((error) => {
                             console.log(error);
+                            this.$message({
+                                type: 'error',
+                                message: error.message
+                            });
                         })
                 }
             }
