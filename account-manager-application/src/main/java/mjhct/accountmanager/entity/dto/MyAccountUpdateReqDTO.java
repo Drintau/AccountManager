@@ -36,7 +36,7 @@ public class MyAccountUpdateReqDTO {
     private String myPassword;
 
     @JsonProperty("remark")
-    @Length(min = 1, max = 200, message = "说明长度为1-200")
+    @Length(max = 200, message = "备注最大长度为200")
     private String remark;
 
     public Integer getId() {
