@@ -8,6 +8,9 @@ public enum CommonCode {
     // 请求参数错误
     REQUEST_PARAMETER_ERROR("000100", "请求参数错误"),
 
+    // 加解密错误
+    CRYPTO_ERROR("000200", "加解密错误"),
+
     // 业务失败响应
     FAIL("111111", "业务失败");
 

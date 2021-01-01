@@ -3,8 +3,12 @@ package mjhct.accountmanager.service.crypto.impl;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
+import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.config.AESConfig;
+import mjhct.accountmanager.exception.CommonException;
 import mjhct.accountmanager.service.crypto.CryptoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,26 +19,38 @@ import javax.annotation.Resource;
 @Service("aesService")
 public class AESServiceImpl implements CryptoService {
 
+    private static final Logger logger = LoggerFactory.getLogger(AESServiceImpl.class);
+
     @Resource
     private AESConfig aesConfig;
 
     @Override
     public String decrypt(String ciphertext) {
-        // 使用配置的密钥
-        byte[] key = aesConfig.getKey().getBytes();
-        // 构建
-        AES aes = SecureUtil.aes(key);
-        // 解密为字符串
-        return aes.decryptStr(ciphertext, CharsetUtil.CHARSET_UTF_8);
+        try {
+            // 使用配置的密钥
+            byte[] key = aesConfig.getKey().getBytes();
+            // 构建
+            AES aes = SecureUtil.aes(key);
+            // 解密为字符串
+            return aes.decryptStr(ciphertext, CharsetUtil.CHARSET_UTF_8);
+        } catch (Exception e) {
+            logger.error("aes解密失败", e);
+            throw new CommonException(CommonCode.CRYPTO_ERROR, "aes解密失败，请检查秘钥");
+        }
     }
 
     @Override
     public String encrypt(String plaintext) {
-        // 使用配置的密钥
-        byte[] key = aesConfig.getKey().getBytes();
-        // 构建
-        AES aes = SecureUtil.aes(key);
-        // 加密为16进制表示
-        return aes.encryptHex(plaintext);
+        try {
+            // 使用配置的密钥
+            byte[] key = aesConfig.getKey().getBytes();
+            // 构建
+            AES aes = SecureUtil.aes(key);
+            // 加密为16进制表示
+            return aes.encryptHex(plaintext);
+        } catch (Exception e) {
+            logger.error("aes加密失败", e);
+            throw new CommonException(CommonCode.CRYPTO_ERROR, "aes加密失败，请检查秘钥");
+        }
     }
 }
