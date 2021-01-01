@@ -21,7 +21,7 @@ public class MyAccountUpdateReqDTO {
     private String appName;
 
     @JsonProperty("url")
-    @Length(min = 1, max = 100, message = "应用网址长度为1-100")
+    @Length(max = 100, message = "应用网址最大长度为100")
     private String appUrl;
 
     @JsonProperty("username")
