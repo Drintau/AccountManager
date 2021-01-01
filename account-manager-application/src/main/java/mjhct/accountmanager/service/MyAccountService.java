@@ -8,10 +8,10 @@ import mjhct.accountmanager.entity.bo.MyAccountInfoBO;
 import mjhct.accountmanager.entity.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.crypto.CryptoService;
+import mjhct.accountmanager.util.BeanUtil;
 import mjhct.accountmanager.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +41,7 @@ public class MyAccountService {
                 MyAccountPO myAccount = byId.get();
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-                rst.add(myAccountEntityToBO(myAccount));
+                rst.add(BeanUtil.copy(myAccount, MyAccountInfoBO.class));
             }
         } else {
             // 根据应用名称查
@@ -49,7 +49,7 @@ public class MyAccountService {
             for (MyAccountPO myAccount : byAppName) {
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-                rst.add(myAccountEntityToBO(myAccount));
+                rst.add(BeanUtil.copy(myAccount, MyAccountInfoBO.class));
             }
         }
         return rst;
@@ -57,15 +57,14 @@ public class MyAccountService {
 
     @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO) {
-        MyAccountPO addAccount = new MyAccountPO();
-        BeanUtils.copyProperties(myAccountAddBO, addAccount);
+        MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
         addAccount.setMyUsername(cryptoService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(cryptoService.encrypt(addAccount.getMyPassword()));
         OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
         addAccount.setCreateTime(nowOffsetDateTime);
         addAccount.setUpdateTime(nowOffsetDateTime);
         MyAccountPO save = myAccountRepository.save(addAccount);
-        return myAccountEntityToBO(save);
+        return BeanUtil.copy(save, MyAccountInfoBO.class);
     }
 
     public List<MyAccountInfoBO> listMyAccount(Boolean decrypt) {
@@ -76,7 +75,7 @@ public class MyAccountService {
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
             }
         }
-        return myAccountEntityListToBOList(all);
+        return BeanUtil.copyList(all, MyAccountInfoBO::new);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -84,12 +83,12 @@ public class MyAccountService {
         Optional<MyAccountPO> old = myAccountRepository.findById(myAccountUpdateBO.getId());
         if (old.isPresent()) {
             MyAccountPO updateAccount = old.get();
-            BeanUtils.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
+            BeanUtil.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
             updateAccount.setMyUsername(cryptoService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(cryptoService.encrypt(updateAccount.getMyPassword()));
             updateAccount.setUpdateTime(DateTimeUtil.nowChinaOffsetDateTime());
             MyAccountPO updateRst = myAccountRepository.save(updateAccount);
-            return myAccountEntityToBO(updateRst);
+            return BeanUtil.copy(updateRst, MyAccountInfoBO.class);
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
@@ -102,31 +101,6 @@ public class MyAccountService {
             return;
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
-    }
-
-    /**
-     * 实体对象集合转换成业务对象集合
-     * @param myAccountPOList
-     * @return
-     */
-    private List<MyAccountInfoBO> myAccountEntityListToBOList(List<MyAccountPO> myAccountPOList) {
-        List<MyAccountInfoBO> myAccountInfoBOList = new ArrayList<>(16);
-        for (MyAccountPO myAccount : myAccountPOList) {
-            MyAccountInfoBO resDTO = myAccountEntityToBO(myAccount);
-            myAccountInfoBOList.add(resDTO);
-        }
-        return myAccountInfoBOList;
-    }
-
-    /**
-     * 实体对象转换成业务对象
-     * @param myAccountPO
-     * @return
-     */
-    private MyAccountInfoBO myAccountEntityToBO(MyAccountPO myAccountPO) {
-        MyAccountInfoBO myAccountInfoBO = new MyAccountInfoBO();
-        BeanUtils.copyProperties(myAccountPO, myAccountInfoBO);
-        return myAccountInfoBO;
     }
 
 }

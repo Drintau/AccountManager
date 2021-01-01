@@ -2,18 +2,19 @@ package mjhct.accountmanager.controller;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
-import mjhct.accountmanager.entity.bo.*;
+import mjhct.accountmanager.entity.bo.MyAccountAddBeforeBO;
+import mjhct.accountmanager.entity.bo.MyAccountInfoBO;
+import mjhct.accountmanager.entity.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.entity.dto.*;
 import mjhct.accountmanager.service.MyAccountService;
+import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,44 +34,30 @@ public class AccountManagerController {
             return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR, "id和app_name不能同时为空");
         }
         List<MyAccountInfoBO> myAccountByIdOrAppName = myAccountService.getMyAccountByIdOrAppName(id, appName);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = new ArrayList<>(myAccountByIdOrAppName.size()*2);
-        for (MyAccountInfoBO myAccountInfoBO : myAccountByIdOrAppName) {
-            MyAccountQueryResDTO myAccountQueryResDTO = new MyAccountQueryResDTO();
-            BeanUtils.copyProperties(myAccountInfoBO, myAccountQueryResDTO);
-            myAccountQueryResDTOList.add(myAccountQueryResDTO);
-        }
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountByIdOrAppName, MyAccountQueryResDTO::new);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
     }
 
     @PostMapping("/add")
     public CommonResult<MyAccountAddResDTO> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
-        MyAccountAddBeforeBO myAccountAddBeforeBO = new MyAccountAddBeforeBO();
-        BeanUtils.copyProperties(myAccountAddReqDTO, myAccountAddBeforeBO);
+        MyAccountAddBeforeBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqDTO, MyAccountAddBeforeBO.class);
         MyAccountInfoBO myAccount = myAccountService.addMyAccount(myAccountAddBeforeBO);
-        MyAccountAddResDTO myAccountAddResDTO = new MyAccountAddResDTO();
-        BeanUtils.copyProperties(myAccount, myAccountAddResDTO);
+        MyAccountAddResDTO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountAddResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountAddResDTO);
     }
 
     @GetMapping("/list")
     public CommonResult<List<MyAccountQueryResDTO>> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt) {
         List<MyAccountInfoBO> myAccounts = myAccountService.listMyAccount(decrypt);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = new ArrayList<>(myAccounts.size()*2);
-        for (MyAccountInfoBO myAccountInfoBO : myAccounts) {
-            MyAccountQueryResDTO myAccountQueryResDTO = new MyAccountQueryResDTO();
-            BeanUtils.copyProperties(myAccountInfoBO, myAccountQueryResDTO);
-            myAccountQueryResDTOList.add(myAccountQueryResDTO);
-        }
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccounts, MyAccountQueryResDTO::new);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
     }
 
     @PostMapping("/update")
     public CommonResult<MyAccountUpdateResDTO> update(@RequestBody @Validated MyAccountUpdateReqDTO myAccountUpdateReqDTO) {
-        MyAccountUpdateBeforeBO myAccountUpdateBO = new MyAccountUpdateBeforeBO();
-        BeanUtils.copyProperties(myAccountUpdateReqDTO, myAccountUpdateBO);
+        MyAccountUpdateBeforeBO myAccountUpdateBO = BeanUtil.copy(myAccountUpdateReqDTO, MyAccountUpdateBeforeBO.class);
         MyAccountInfoBO myAccount = myAccountService.updateMyAccount(myAccountUpdateBO);
-        MyAccountUpdateResDTO myAccountUpdateResDTO = new MyAccountUpdateResDTO();
-        BeanUtils.copyProperties(myAccount, myAccountUpdateResDTO);
+        MyAccountUpdateResDTO myAccountUpdateResDTO = BeanUtil.copy(myAccount, MyAccountUpdateResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountUpdateResDTO);
     }
 
