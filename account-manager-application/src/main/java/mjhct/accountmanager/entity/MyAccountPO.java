@@ -5,7 +5,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "my_account")
-public class MyAccount {
+public class MyAccountPO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,7 +98,7 @@ public class MyAccount {
 
     @Override
     public String toString() {
-        return "MyAccount{" +
+        return "MyAccountPO{" +
                 "id=" + id +
                 ", appName='" + appName + '\'' +
                 ", appUrl='" + appUrl + '\'' +

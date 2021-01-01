@@ -1,8 +1,6 @@
 package mjhct.accountmanager.entity.bo;
 
-import java.time.OffsetDateTime;
-
-public class MyAccountUpdateBO {
+public class MyAccountUpdateBeforeBO {
 
     private Integer id;
 
@@ -15,8 +13,6 @@ public class MyAccountUpdateBO {
     private String myPassword;
 
     private String remark;
-
-    private OffsetDateTime updateTime;
 
     public Integer getId() {
         return id;
@@ -66,24 +62,15 @@ public class MyAccountUpdateBO {
         this.remark = remark;
     }
 
-    public OffsetDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(OffsetDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     @Override
     public String toString() {
-        return "MyAccountUpdateBO{" +
+        return "MyAccountUpdateBeforeBO{" +
                 "id=" + id +
                 ", appName='" + appName + '\'' +
                 ", appUrl='" + appUrl + '\'' +
                 ", myUsername='" + myUsername + '\'' +
                 ", myPassword='" + myPassword + '\'' +
                 ", remark='" + remark + '\'' +
-                ", updateTime=" + updateTime +
                 '}';
     }
 }

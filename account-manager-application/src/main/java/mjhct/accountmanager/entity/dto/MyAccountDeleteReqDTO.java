@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 public class MyAccountDeleteReqDTO {
 
     @JsonProperty("id")
-    @NotNull
+    @NotNull(message = "要删除的账号id不能为空")
     private Integer id;
 
     public Integer getId() {

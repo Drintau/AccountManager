@@ -6,7 +6,7 @@ import mjhct.accountmanager.util.DateTimeUtil;
 
 import java.time.OffsetDateTime;
 
-public class MyAccountQueryResDTO {
+public class MyAccountUpdateResDTO {
 
     @JsonProperty("id")
     private Integer id;
@@ -97,4 +97,5 @@ public class MyAccountQueryResDTO {
     public void setUpdateTime(OffsetDateTime updateTime) {
         this.updateTime = updateTime;
     }
+
 }

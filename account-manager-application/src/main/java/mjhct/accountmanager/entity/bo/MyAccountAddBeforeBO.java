@@ -1,6 +1,6 @@
 package mjhct.accountmanager.entity.bo;
 
-public class MyAccountAddBO {
+public class MyAccountAddBeforeBO {
 
     private String appName;
 
@@ -54,7 +54,7 @@ public class MyAccountAddBO {
 
     @Override
     public String toString() {
-        return "MyAccountAddReqDTO{" +
+        return "MyAccountAddBeforeBO{" +
                 "appName='" + appName + '\'' +
                 ", appUrl='" + appUrl + '\'' +
                 ", myUsername='" + myUsername + '\'' +
@@ -62,5 +62,4 @@ public class MyAccountAddBO {
                 ", remark='" + remark + '\'' +
                 '}';
     }
-
 }

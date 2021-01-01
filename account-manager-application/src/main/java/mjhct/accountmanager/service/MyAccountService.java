@@ -1,11 +1,11 @@
 package mjhct.accountmanager.service;
 
 import mjhct.accountmanager.commons.CommonCode;
-import mjhct.accountmanager.entity.bo.MyAccountAddBO;
-import mjhct.accountmanager.entity.bo.MyAccountUpdateBO;
 import mjhct.accountmanager.dao.MyAccountRepository;
-import mjhct.accountmanager.entity.dto.MyAccountQueryResDTO;
-import mjhct.accountmanager.entity.MyAccount;
+import mjhct.accountmanager.entity.MyAccountPO;
+import mjhct.accountmanager.entity.bo.MyAccountAddBeforeBO;
+import mjhct.accountmanager.entity.bo.MyAccountInfoBO;
+import mjhct.accountmanager.entity.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.util.DateTimeUtil;
@@ -32,80 +32,71 @@ public class MyAccountService {
     @Resource
     private MyAccountRepository myAccountRepository;
 
-    public List<MyAccountQueryResDTO> getMyAccountByIdOrAppName(Integer id, String appName) {
+    public List<MyAccountInfoBO> getMyAccountByIdOrAppName(Integer id, String appName) {
+        List<MyAccountInfoBO> rst = new ArrayList<>(16);
         // id优先
         if (id != null) {
-
-            Optional<MyAccount> byId = myAccountRepository.findById(id);
-            List<MyAccountQueryResDTO> rst = new ArrayList<>(2);
+            Optional<MyAccountPO> byId = myAccountRepository.findById(id);
             if (byId.isPresent()) {
-                MyAccount myAccount = byId.get();
+                MyAccountPO myAccount = byId.get();
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-                MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
-                rst.add(resDTO);
+                rst.add(myAccountEntityToBO(myAccount));
             }
-            return rst;
-        }
-
-        // 根据应用名称查
-        List<MyAccount> byAppName = myAccountRepository.findByAppName(appName);
-        List<MyAccountQueryResDTO> rst = new ArrayList<>(byAppName.size()*2);
-        for (MyAccount myAccount : byAppName) {
-            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-            MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
-            rst.add(resDTO);
+        } else {
+            // 根据应用名称查
+            List<MyAccountPO> byAppName = myAccountRepository.findByAppName(appName);
+            for (MyAccountPO myAccount : byAppName) {
+                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
+                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+                rst.add(myAccountEntityToBO(myAccount));
+            }
         }
         return rst;
     }
 
-    @Transactional
-    public MyAccount addMyAccount(MyAccountAddBO myAccountAddBO) {
-        MyAccount addAccount = new MyAccount();
+    @Transactional(rollbackFor = Exception.class)
+    public MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO) {
+        MyAccountPO addAccount = new MyAccountPO();
         BeanUtils.copyProperties(myAccountAddBO, addAccount);
         addAccount.setMyUsername(cryptoService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(cryptoService.encrypt(addAccount.getMyPassword()));
         OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
         addAccount.setCreateTime(nowOffsetDateTime);
         addAccount.setUpdateTime(nowOffsetDateTime);
-        logger.debug("添加到数据库的数据是:{}", addAccount);
-        myAccountRepository.save(addAccount);
-        logger.debug("添加到数据库的结果是{}", addAccount);
-        return addAccount;
+        MyAccountPO save = myAccountRepository.save(addAccount);
+        return myAccountEntityToBO(save);
     }
 
-    public List<MyAccountQueryResDTO> listMyAccount(Boolean decrypt) {
-        List<MyAccount> all = myAccountRepository.findAll();
+    public List<MyAccountInfoBO> listMyAccount(Boolean decrypt) {
+        List<MyAccountPO> all = myAccountRepository.findAll();
         if (decrypt) {
-            for (MyAccount myAccount : all) {
+            for (MyAccountPO myAccount : all) {
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
             }
         }
-        return myAccountEntityListToResDTOList(all);
+        return myAccountEntityListToBOList(all);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public MyAccount updateMyAccount(MyAccountUpdateBO myAccountUpdateBO) {
-        Optional<MyAccount> old = myAccountRepository.findById(myAccountUpdateBO.getId());
+    public MyAccountInfoBO updateMyAccount(MyAccountUpdateBeforeBO myAccountUpdateBO) {
+        Optional<MyAccountPO> old = myAccountRepository.findById(myAccountUpdateBO.getId());
         if (old.isPresent()) {
-            MyAccount updateAccount = old.get();
-            myAccountUpdateBO.setUpdateTime(DateTimeUtil.nowChinaOffsetDateTime());
-            BeanUtils.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime");
+            MyAccountPO updateAccount = old.get();
+            BeanUtils.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
             updateAccount.setMyUsername(cryptoService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(cryptoService.encrypt(updateAccount.getMyPassword()));
-            logger.debug("修改到数据库的数据是:{}", updateAccount);
-            MyAccount updateRst = myAccountRepository.save(updateAccount);
-            logger.debug("修改到数据库的结果是{}", updateRst);
-            return updateRst;
+            updateAccount.setUpdateTime(DateTimeUtil.nowChinaOffsetDateTime());
+            MyAccountPO updateRst = myAccountRepository.save(updateAccount);
+            return myAccountEntityToBO(updateRst);
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void deleteMyAccount(Integer id) {
-        Optional<MyAccount> old = myAccountRepository.findById(id);
+        Optional<MyAccountPO> old = myAccountRepository.findById(id);
         if (old.isPresent()) {
             myAccountRepository.deleteById(id);
             return;
@@ -114,28 +105,28 @@ public class MyAccountService {
     }
 
     /**
-     * 实体集合转换成响应体集合
-     * @param myAccountList
+     * 实体对象集合转换成业务对象集合
+     * @param myAccountPOList
      * @return
      */
-    private List<MyAccountQueryResDTO> myAccountEntityListToResDTOList(List<MyAccount> myAccountList) {
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = new ArrayList<>(16);
-        for (MyAccount myAccount : myAccountList) {
-             MyAccountQueryResDTO resDTO = myAccountEntityToResDTO(myAccount);
-            myAccountQueryResDTOList.add(resDTO);
+    private List<MyAccountInfoBO> myAccountEntityListToBOList(List<MyAccountPO> myAccountPOList) {
+        List<MyAccountInfoBO> myAccountInfoBOList = new ArrayList<>(16);
+        for (MyAccountPO myAccount : myAccountPOList) {
+            MyAccountInfoBO resDTO = myAccountEntityToBO(myAccount);
+            myAccountInfoBOList.add(resDTO);
         }
-        return myAccountQueryResDTOList;
+        return myAccountInfoBOList;
     }
 
     /**
-     * 实体对象转换成响应体对象
-     * @param myAccount
+     * 实体对象转换成业务对象
+     * @param myAccountPO
      * @return
      */
-    private MyAccountQueryResDTO myAccountEntityToResDTO(MyAccount myAccount) {
-        MyAccountQueryResDTO resDTO = new MyAccountQueryResDTO();
-        BeanUtils.copyProperties(myAccount, resDTO);
-        return resDTO;
+    private MyAccountInfoBO myAccountEntityToBO(MyAccountPO myAccountPO) {
+        MyAccountInfoBO myAccountInfoBO = new MyAccountInfoBO();
+        BeanUtils.copyProperties(myAccountPO, myAccountInfoBO);
+        return myAccountInfoBO;
     }
 
 }
