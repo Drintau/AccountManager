@@ -3,6 +3,7 @@ package mjhct.accountmanager.controller;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.exception.BusinessException;
+import mjhct.accountmanager.exception.CommonException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -16,6 +17,13 @@ import java.util.List;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
+    @ExceptionHandler(CommonException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public CommonResult handleCommonException(CommonException ce) {
+        return new CommonResult(ce.getExceptionCode(), ce.getMessage());
+    }
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody

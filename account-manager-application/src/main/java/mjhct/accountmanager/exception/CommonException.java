@@ -3,9 +3,9 @@ package mjhct.accountmanager.exception;
 import mjhct.accountmanager.commons.CommonCode;
 
 /**
- * 业务异常
+ * 公共异常
  */
-public class BusinessException extends CommonException{
+public class CommonException extends RuntimeException{
 
     /**
      * 异常码
@@ -17,18 +17,20 @@ public class BusinessException extends CommonException{
      */
     private String message;
 
-    public BusinessException(CommonCode commonCode, String message) {
+    public CommonException(String message) {
+        super(message);
+    }
+
+    public CommonException(CommonCode commonCode, String message) {
         super(message);
         this.exceptionCode = commonCode;
         this.message = message;
     }
 
-    @Override
     public CommonCode getExceptionCode() {
         return exceptionCode;
     }
 
-    @Override
     public void setExceptionCode(CommonCode exceptionCode) {
         this.exceptionCode = exceptionCode;
     }
@@ -38,14 +40,13 @@ public class BusinessException extends CommonException{
         return message;
     }
 
-    @Override
     public void setMessage(String message) {
         this.message = message;
     }
 
     @Override
     public String toString() {
-        return "BusinessException{" +
+        return "CommonException{" +
                 "exceptionCode=" + exceptionCode +
                 ", message='" + message + '\'' +
                 '}';
