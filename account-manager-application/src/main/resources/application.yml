@@ -31,6 +31,6 @@ spring:
     # 打印sql语句
     show-sql: true
 aes:
-  key: FKVfce6Hjgti2Htu/Sa4iTatTHkHJQxh
+  key: 43CF686405DC1ED8760D7DEBE1AD614A
 logging:
   config: classpath:log4j2-spring-dev.xml
