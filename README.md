@@ -13,7 +13,7 @@
 #### 软件使用方法
 1. 安装配置java环境；java8以上。
 2. 下载压缩包，解压到一个不带中文的目录。
-3. 找个aes秘钥，修改`application.properties`里面的配置。
+3. 找个AES秘钥，也可以执行`java -jar account-manager-1.0.0.jar --aesKey`获得一个随机秘钥；把秘钥填到`application.properties`里面的`aes.key=`后面。
 4. 命令行执行`java -jar account-manager-1.0.0.jar`启动程序；windows下可通过双击脚本`startam.bat`启动程序。
 
 #### 存储到云盘
