@@ -18,13 +18,14 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.h2.Driver
+    # url: jdbc:h2:file:D:/h2db 文件数据库
 ---
 #开发时使用命令行参数激活dev配置 --spring.profiles.active=dev
 debug: true
 spring:
   profiles: dev
   datasource:
-    url: jdbc:h2:file:D:/h2db
+    url: jdbc:h2:mem:h2db
     username: root
     password: h2database
   jpa:
