@@ -4,9 +4,10 @@ import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
 import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
+import mjhct.accountmanager.domain.bo.MyAccountQueryConditionBO;
 import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.domain.dto.*;
-import mjhct.accountmanager.service.MyAccountService;
+import mjhct.accountmanager.service.myaccount.impl.MyAccountServiceImpl;
 import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,17 +25,14 @@ public class AccountManagerController {
 
     public static final Logger logger = LoggerFactory.getLogger(AccountManagerController.class);
 
-    @Resource
-    private MyAccountService myAccountService;
+    @Resource(name = "myAccountService")
+    private MyAccountServiceImpl myAccountService;
 
     @GetMapping("/query")
-    public CommonResult<List<MyAccountQueryResDTO>> query(@RequestParam(name = "id", required = false) Integer id,
-                                                          @RequestParam(name = "app_name", required = false) String appName) {
-        if (id == null && StringUtils.isEmpty(appName)) {
-            return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR, "id和app_name不能同时为空");
-        }
-        List<MyAccountInfoBO> myAccountByIdOrAppName = myAccountService.getMyAccountByIdOrAppName(id, appName);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountByIdOrAppName, MyAccountQueryResDTO::new);
+    public CommonResult<List<MyAccountQueryResDTO>> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
+        MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
+        List<MyAccountInfoBO> myAccountByCondition = myAccountService.queryMyAccount(condition);
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountByCondition, MyAccountQueryResDTO::new);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
     }
 

@@ -1,13 +1,15 @@
-package mjhct.accountmanager.service;
+package mjhct.accountmanager.service.myaccount.impl;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.dao.MyAccountRepository;
+import mjhct.accountmanager.domain.bo.MyAccountQueryConditionBO;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
 import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
 import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
 import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.crypto.CryptoService;
+import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
 import mjhct.accountmanager.util.DateTimeUtil;
 import org.slf4j.Logger;
@@ -21,10 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class MyAccountService {
+@Service(value = "myAccountService")
+public class MyAccountServiceImpl implements MyAccountService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyAccountService.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyAccountServiceImpl.class);
 
     @Resource(name = "aesService")
     private CryptoService cryptoService;
@@ -32,29 +34,21 @@ public class MyAccountService {
     @Resource
     private MyAccountRepository myAccountRepository;
 
-    public List<MyAccountInfoBO> getMyAccountByIdOrAppName(Integer id, String appName) {
-        List<MyAccountInfoBO> rst = new ArrayList<>(16);
-        // id优先
-        if (id != null) {
-            Optional<MyAccountPO> byId = myAccountRepository.findById(id);
-            if (byId.isPresent()) {
-                MyAccountPO myAccount = byId.get();
-                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-                rst.add(BeanUtil.copy(myAccount, MyAccountInfoBO.class));
-            }
-        } else {
-            // 根据应用名称查
-            List<MyAccountPO> byAppName = myAccountRepository.findByAppName(appName);
-            for (MyAccountPO myAccount : byAppName) {
-                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-                rst.add(BeanUtil.copy(myAccount, MyAccountInfoBO.class));
-            }
+    @Override
+    public MyAccountInfoBO getMyAccountById(Integer id) {
+        Optional<MyAccountPO> byId = myAccountRepository.findById(id);
+        if (byId.isPresent()) {
+            MyAccountPO myAccountPO = byId.get();
+            MyAccountInfoBO myAccount = BeanUtil.copy(myAccountPO, MyAccountInfoBO.class);
+            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
+            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+            return myAccount;
         }
-        return rst;
+
+        return null;
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO) {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
@@ -67,6 +61,7 @@ public class MyAccountService {
         return BeanUtil.copy(save, MyAccountInfoBO.class);
     }
 
+    @Override
     public List<MyAccountInfoBO> listMyAccount(Boolean decrypt) {
         List<MyAccountPO> all = myAccountRepository.findAll();
         if (decrypt) {
@@ -78,6 +73,18 @@ public class MyAccountService {
         return BeanUtil.copyList(all, MyAccountInfoBO::new);
     }
 
+    @Override
+    public List<MyAccountInfoBO> queryMyAccount(MyAccountQueryConditionBO condition) {
+        List<MyAccountInfoBO> resultList = new ArrayList<>(16);
+        // id优先
+        if (condition.getId() != null && condition.getId() > 0) {
+            MyAccountInfoBO myAccountById = getMyAccountById(condition.getId());
+            resultList.add(myAccountById);
+        }
+        return resultList;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO updateMyAccount(MyAccountUpdateBeforeBO myAccountUpdateBO) {
         Optional<MyAccountPO> old = myAccountRepository.findById(myAccountUpdateBO.getId());
@@ -93,6 +100,7 @@ public class MyAccountService {
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
 
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteMyAccount(Integer id) {
         Optional<MyAccountPO> old = myAccountRepository.findById(id);

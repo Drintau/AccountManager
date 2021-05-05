@@ -7,6 +7,4 @@ import java.util.List;
 
 public interface MyAccountRepository extends JpaRepository<MyAccountPO, Integer> {
 
-    List<MyAccountPO> findByAppName(String appName);
-
 }
