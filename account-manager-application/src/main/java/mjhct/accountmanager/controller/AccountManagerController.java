@@ -28,7 +28,7 @@ public class AccountManagerController {
     @Resource(name = "myAccountService")
     private MyAccountServiceImpl myAccountService;
 
-    @GetMapping("/query")
+    @PostMapping("/query")
     public CommonResult<List<MyAccountQueryResDTO>> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
         MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
         List<MyAccountInfoBO> myAccountByCondition = myAccountService.queryMyAccount(condition);

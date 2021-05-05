@@ -182,7 +182,9 @@
                 /* 修改：先查再改 */
                 edit(account) {
                     this.editDialogFormVisible = true;
-                    axios.get('/accountmanager/account/query?id=' + account.id)
+                    axios.post('/accountmanager/account/query', {
+                            id: account.id
+                        })
                         .then((response) => {
                             const result = response.data;
                             if (result.code == '000000') {
