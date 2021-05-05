@@ -1,4 +1,4 @@
-package mjhct.accountmanager.entity.dto;
+package mjhct.accountmanager.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

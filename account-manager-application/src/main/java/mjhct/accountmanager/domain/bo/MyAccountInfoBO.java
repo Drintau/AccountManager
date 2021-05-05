@@ -1,6 +1,10 @@
-package mjhct.accountmanager.entity.bo;
+package mjhct.accountmanager.domain.bo;
 
-public class MyAccountAddBeforeBO {
+import java.time.OffsetDateTime;
+
+public class MyAccountInfoBO {
+
+    private Integer id;
 
     private String appName;
 
@@ -11,6 +15,18 @@ public class MyAccountAddBeforeBO {
     private String myPassword;
 
     private String remark;
+
+    private OffsetDateTime createTime;
+
+    private OffsetDateTime updateTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAppName() {
         return appName;
@@ -52,14 +68,33 @@ public class MyAccountAddBeforeBO {
         this.remark = remark;
     }
 
+    public OffsetDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(OffsetDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public OffsetDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(OffsetDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
-        return "MyAccountAddBeforeBO{" +
-                "appName='" + appName + '\'' +
+        return "MyAccountInfoBO{" +
+                "id=" + id +
+                ", appName='" + appName + '\'' +
                 ", appUrl='" + appUrl + '\'' +
                 ", myUsername='" + myUsername + '\'' +
                 ", myPassword='" + myPassword + '\'' +
                 ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

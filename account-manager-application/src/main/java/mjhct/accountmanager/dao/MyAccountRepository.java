@@ -1,6 +1,6 @@
 package mjhct.accountmanager.dao;
 
-import mjhct.accountmanager.entity.MyAccountPO;
+import mjhct.accountmanager.domain.entity.MyAccountPO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

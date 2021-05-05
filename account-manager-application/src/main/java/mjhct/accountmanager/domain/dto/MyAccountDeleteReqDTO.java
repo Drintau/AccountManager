@@ -1,4 +1,4 @@
-package mjhct.accountmanager.entity.dto;
+package mjhct.accountmanager.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

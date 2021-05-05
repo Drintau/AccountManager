@@ -2,10 +2,10 @@ package mjhct.accountmanager.service;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.dao.MyAccountRepository;
-import mjhct.accountmanager.entity.MyAccountPO;
-import mjhct.accountmanager.entity.bo.MyAccountAddBeforeBO;
-import mjhct.accountmanager.entity.bo.MyAccountInfoBO;
-import mjhct.accountmanager.entity.bo.MyAccountUpdateBeforeBO;
+import mjhct.accountmanager.domain.entity.MyAccountPO;
+import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
+import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
+import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.util.BeanUtil;

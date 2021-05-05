@@ -1,4 +1,4 @@
-package mjhct.accountmanager.entity.dto;
+package mjhct.accountmanager.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import mjhct.accountmanager.util.DateTimeUtil;
 
 import java.time.OffsetDateTime;
 
-public class MyAccountAddResDTO {
+public class MyAccountUpdateResDTO {
 
     @JsonProperty("id")
     private Integer id;

@@ -2,10 +2,10 @@ package mjhct.accountmanager.controller;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
-import mjhct.accountmanager.entity.bo.MyAccountAddBeforeBO;
-import mjhct.accountmanager.entity.bo.MyAccountInfoBO;
-import mjhct.accountmanager.entity.bo.MyAccountUpdateBeforeBO;
-import mjhct.accountmanager.entity.dto.*;
+import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
+import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
+import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
+import mjhct.accountmanager.domain.dto.*;
 import mjhct.accountmanager.service.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class AccountManagerController {
 
     @GetMapping("/query")
     public CommonResult<List<MyAccountQueryResDTO>> query(@RequestParam(name = "id", required = false) Integer id,
-                                               @RequestParam(name = "app_name", required = false) String appName) {
+                                                          @RequestParam(name = "app_name", required = false) String appName) {
         if (id == null && StringUtils.isEmpty(appName)) {
             return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR, "id和app_name不能同时为空");
         }

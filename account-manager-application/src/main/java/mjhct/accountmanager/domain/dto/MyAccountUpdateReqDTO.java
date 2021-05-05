@@ -1,36 +1,42 @@
-package mjhct.accountmanager.entity;
+package mjhct.accountmanager.domain.dto;
 
-import javax.persistence.*;
-import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.Length;
 
-@Entity
-@Table(name = "my_account")
-public class MyAccountPO {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class MyAccountUpdateReqDTO {
+
+    @JsonProperty("id")
+    @NotNull
     private Integer id;
 
-    @Column(name = "app_name", length = 20, nullable = false)
+    @JsonProperty("name")
+    @NotEmpty(message = "应用名称不能为空")
+    @Length(min = 1, max = 20, message = "应用名称长度为1-20")
     private String appName;
 
-    @Column(name = "app_url", length = 100)
+    @JsonProperty("url")
+    @Length(max = 100, message = "应用网址最大长度为100")
     private String appUrl;
 
-    @Column(name = "my_username", length = 200, nullable = false)
+    @JsonProperty("username")
+    @NotEmpty(message = "账号不能为空")
+    @Length(min = 1, max = 20, message = "账号长度为1-20")
     private String myUsername;
 
-    @Column(name = "my_password", length = 200, nullable = false)
+    @JsonProperty("password")
+    @NotEmpty(message = "密码不能为空")
+//    @Pattern(regexp = "^(?![a-z0-9]{6,12})(?![0-9A-Z]{6,12})(?![a-zA-Z]{6,12})[a-zA-Z0-9].{5,11}$",
+//            message = "密码长度6-12位，不能以特殊符号开头，且前6位不能仅有：小写字母+数字、大写字母+数字、大小写字母")
     private String myPassword;
 
-    @Column(name = "remark", length = 200)
+    @JsonProperty("remark")
+    @Length(max = 200, message = "备注最大长度为200")
     private String remark;
-
-    @Column(name = "create_time")
-    private OffsetDateTime createTime;
-
-    @Column(name = "update_time")
-    private OffsetDateTime updateTime;
 
     public Integer getId() {
         return id;
@@ -80,33 +86,15 @@ public class MyAccountPO {
         this.remark = remark;
     }
 
-    public OffsetDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(OffsetDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public OffsetDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(OffsetDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     @Override
     public String toString() {
-        return "MyAccountPO{" +
+        return "MyAccountUpdateReqDTO{" +
                 "id=" + id +
                 ", appName='" + appName + '\'' +
                 ", appUrl='" + appUrl + '\'' +
                 ", myUsername='" + myUsername + '\'' +
                 ", myPassword='" + myPassword + '\'' +
                 ", remark='" + remark + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
                 '}';
     }
 }

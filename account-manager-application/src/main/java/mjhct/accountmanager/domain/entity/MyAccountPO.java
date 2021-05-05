@@ -1,18 +1,36 @@
-package mjhct.accountmanager.entity.bo;
+package mjhct.accountmanager.domain.entity;
 
-public class MyAccountUpdateBeforeBO {
+import javax.persistence.*;
+import java.time.OffsetDateTime;
 
+@Entity
+@Table(name = "my_account")
+public class MyAccountPO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "app_name", length = 20, nullable = false)
     private String appName;
 
+    @Column(name = "app_url", length = 100)
     private String appUrl;
 
+    @Column(name = "my_username", length = 200, nullable = false)
     private String myUsername;
 
+    @Column(name = "my_password", length = 200, nullable = false)
     private String myPassword;
 
+    @Column(name = "remark", length = 200)
     private String remark;
+
+    @Column(name = "create_time")
+    private OffsetDateTime createTime;
+
+    @Column(name = "update_time")
+    private OffsetDateTime updateTime;
 
     public Integer getId() {
         return id;
@@ -62,15 +80,33 @@ public class MyAccountUpdateBeforeBO {
         this.remark = remark;
     }
 
+    public OffsetDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(OffsetDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public OffsetDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(OffsetDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
-        return "MyAccountUpdateBeforeBO{" +
+        return "MyAccountPO{" +
                 "id=" + id +
                 ", appName='" + appName + '\'' +
                 ", appUrl='" + appUrl + '\'' +
                 ", myUsername='" + myUsername + '\'' +
                 ", myPassword='" + myPassword + '\'' +
                 ", remark='" + remark + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }
