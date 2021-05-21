@@ -32,7 +32,7 @@ public class AccountManagerController {
     public CommonResult<List<MyAccountQueryResDTO>> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
         MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
         List<MyAccountInfoBO> myAccountByCondition = myAccountService.queryMyAccount(condition);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountByCondition, MyAccountQueryResDTO::new);
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountByCondition, MyAccountQueryResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
     }
 
@@ -47,7 +47,7 @@ public class AccountManagerController {
     @GetMapping("/list")
     public CommonResult<List<MyAccountQueryResDTO>> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt) {
         List<MyAccountInfoBO> myAccounts = myAccountService.listMyAccount(decrypt);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccounts, MyAccountQueryResDTO::new);
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccounts, MyAccountQueryResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
     }
 

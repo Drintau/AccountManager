@@ -70,7 +70,7 @@ public class MyAccountServiceImpl implements MyAccountService {
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
             }
         }
-        return BeanUtil.copyList(all, MyAccountInfoBO::new);
+        return BeanUtil.copyList(all, MyAccountInfoBO.class);
     }
 
     @Override

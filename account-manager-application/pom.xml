@@ -59,11 +59,6 @@
             <artifactId>hutool-crypto</artifactId>
             <version>${hutool.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>3.3.0</version>
-        </dependency>
         <!-- 数据库 -->
         <dependency>
             <groupId>com.h2database</groupId>
