@@ -22,14 +22,14 @@ public class BeanUtil {
      * @return 目标对象
      */
     public static <T> T copy(@NotNull Object source, Class<T> targetClass) {
-        T target;
+        T targetObject;
         try {
-            target = targetClass.getDeclaredConstructor().newInstance();
+            targetObject = targetClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException("未找到目标类!");
         }
-        copyProperties(source, targetClass);
-        return target;
+        copyProperties(source, targetObject);
+        return targetObject;
     }
 
     /**
@@ -38,7 +38,7 @@ public class BeanUtil {
      * @param target 目标对象
      * @param ignoreProperties 忽略的属性值
      */
-    public static void copyProperties(Object source, Object target, String... ignoreProperties) {
+    public static void copyProperties(@NotNull Object source, @NotNull Object target, String... ignoreProperties) {
         BeanUtils.copyProperties(source, target, ignoreProperties);
     }
 
