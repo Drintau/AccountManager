@@ -2,11 +2,8 @@ package mjhct.accountmanager.service.myaccount.impl;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.dao.MyAccountRepository;
-import mjhct.accountmanager.domain.bo.MyAccountQueryConditionBO;
+import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
-import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
-import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
-import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
 import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
@@ -14,6 +11,9 @@ import mjhct.accountmanager.util.BeanUtil;
 import mjhct.accountmanager.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,15 +62,18 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
-    public List<MyAccountInfoBO> listMyAccount(Boolean decrypt) {
-        List<MyAccountPO> all = myAccountRepository.findAll();
+    public MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<MyAccountPO> pageData = myAccountRepository.findAll(pageable);
+        List<MyAccountPO> dataList = pageData.getContent();
         if (decrypt) {
-            for (MyAccountPO myAccount : all) {
+            for (MyAccountPO myAccount : dataList) {
                 myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
                 myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
             }
         }
-        return BeanUtil.copyList(all, MyAccountInfoBO.class);
+        List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
+        return new MyAccountListBO(pageNumber, pageSize, pageData.getTotalPages(), myAccountInfoBOS);
     }
 
     @Override

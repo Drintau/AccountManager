@@ -2,11 +2,9 @@ package mjhct.accountmanager.controller;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
-import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
-import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
-import mjhct.accountmanager.domain.bo.MyAccountQueryConditionBO;
-import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
+import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.dto.*;
+import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.myaccount.impl.MyAccountServiceImpl;
 import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
@@ -45,10 +43,24 @@ public class AccountManagerController {
     }
 
     @GetMapping("/list")
-    public CommonResult<List<MyAccountQueryResDTO>> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt) {
-        List<MyAccountInfoBO> myAccounts = myAccountService.listMyAccount(decrypt);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccounts, MyAccountQueryResDTO.class);
-        return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
+    public CommonResult<MyAccountListResDTO> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt,
+                                                  @RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
+                                                  @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
+        // 前端页面看到的第1页，分页参数是第0页
+        if (pageNumber < 1) {
+            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "请求页数不能小于1");
+        }
+        if (pageSize < 1) {
+            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
+        }
+        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber - 1, pageSize);
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResDTO.class);
+        MyAccountListResDTO myAccountListResDTO = new MyAccountListResDTO();
+        myAccountListResDTO.setPageNumber(pageNumber);
+        myAccountListResDTO.setPageSize(pageSize);
+        myAccountListResDTO.setTotalPages(myAccountListBO.getTotalPages());
+        myAccountListResDTO.setList(myAccountQueryResDTOList);
+        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResDTO);
     }
 
     @PostMapping("/update")

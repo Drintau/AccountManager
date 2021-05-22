@@ -1,9 +1,6 @@
 package mjhct.accountmanager.service.myaccount;
 
-import mjhct.accountmanager.domain.bo.MyAccountAddBeforeBO;
-import mjhct.accountmanager.domain.bo.MyAccountInfoBO;
-import mjhct.accountmanager.domain.bo.MyAccountQueryConditionBO;
-import mjhct.accountmanager.domain.bo.MyAccountUpdateBeforeBO;
+import mjhct.accountmanager.domain.bo.*;
 
 import java.util.List;
 
@@ -12,11 +9,18 @@ public interface MyAccountService {
     MyAccountInfoBO getMyAccountById(Integer id);
 
     /**
-     * 查询所有账号信息
-     * @param decrypt 是否要解密
+     *
+     * @param decrypt
      * @return
      */
-    List<MyAccountInfoBO> listMyAccount(Boolean decrypt);
+    /**
+     * 查询所有账号信息
+     * @param decrypt 是否要解密
+     * @param pageNumber 起始页
+     * @param pageSize 每页记录数
+     * @return
+     */
+    MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
 
     /**
      * 根据条件查询账号集合
