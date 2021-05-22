@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotBlank;
 
 /**
  * AES对称加密服务
@@ -25,7 +26,7 @@ public class AESServiceImpl implements CryptoService {
     private AESConfig aesConfig;
 
     @Override
-    public String decrypt(String ciphertext) {
+    public String decrypt(@NotBlank String ciphertext) {
         try {
             // 使用配置的密钥
             byte[] key = aesConfig.getKey().getBytes();
@@ -40,7 +41,7 @@ public class AESServiceImpl implements CryptoService {
     }
 
     @Override
-    public String encrypt(String plaintext) {
+    public String encrypt(@NotBlank String plaintext) {
         try {
             // 使用配置的密钥
             byte[] key = aesConfig.getKey().getBytes();
