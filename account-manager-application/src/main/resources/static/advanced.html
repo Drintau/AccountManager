@@ -38,6 +38,8 @@
         </el-table-column>
     </el-table>
 
+    <el-pagination hide-on-single-page :page-count="totalPages" :page-size="10" @current-change="handleCurrentChange" layout="prev, pager, next"></el-pagination>
+
     <el-dialog title="修改账号" :visible.sync="editDialogFormVisible" :width="dialogWidth">
         <el-form :model="editForm" :label-width="formLabelWidth" size='small'>
             <el-form-item label="应用名称">
@@ -116,15 +118,17 @@
                         username: '',
                         password: '',
                         remark: ''
-                    }
+                    },
+                    totalPages: 1
                 }
             },
             mounted() {
-                axios.get('/accountmanager/account/list?decrypt=true')
+                axios.get('/accountmanager/account/list?decrypt=true&page_number=1&page_size=10')
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
-                            const accountsData = result.data;
+                            this.totalPages = result.data.total_pages;
+                            const accountsData = result.data.list;
                             this.accounts = accountsData;
                         } else {
                             this.$message({
@@ -142,6 +146,31 @@
                     });
             },
             methods: {
+                /* 查询列表 */
+                list(pageNumber, pageSize) {
+                    axios.get('/accountmanager/account/list?decrypt=true&page_number=' + pageNumber + "&page_size=" + pageSize)
+                    .then((response) => {
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            this.totalPages = result.data.total_pages;
+                            const accountsData = result.data.list;
+                            this.accounts = accountsData;
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: result.message
+                            });
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                        this.$message({
+                            type: 'error',
+                            message: error.message
+                        });
+                    });
+                },
+
                 /* 删除 */
                 deleteOne(account) {
                     this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
@@ -270,6 +299,12 @@
                                 message: error.message
                             });
                         })
+                },
+
+                // 页码变更
+                handleCurrentChange(pageNumber) {
+                    // console.log(pageNumber);
+                    this.list(pageNumber, 10);
                 }
             }
         })

@@ -40,7 +40,7 @@
                 </el-table-column>
             </el-table>
 
-            <el-pagination small :total="50" :page-size="10" @current-change="handleCurrentChange" layout="prev, pager, next"></el-pagination>
+            <el-pagination hide-on-single-page :page-count="totalPages" :page-size="10" @current-change="handleCurrentChange" layout="prev, pager, next"></el-pagination>
 
             <el-dialog title="账号信息" :visible.sync="showDialogFormVisible" :width="dialogWidth">
                 <el-form :model="showForm" disabled :label-width="formLabelWidth" size='small'>
@@ -164,7 +164,8 @@
                         username: '',
                         password: '',
                         remark: ''
-                    }
+                    },
+                    totalPages: 1
                 }
             },
             mounted() {
@@ -172,7 +173,8 @@
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
-                            const accountsData = result.data;
+                            this.totalPages = result.data.total_pages;
+                            const accountsData = result.data.list;
                             this.accounts = accountsData;
                         } else {
                             this.$message({
@@ -196,7 +198,8 @@
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
-                            const accountsData = result.data;
+                            this.totalPages = result.data.total_pages;
+                            const accountsData = result.data.list;
                             this.accounts = accountsData;
                         } else {
                             this.$message({
