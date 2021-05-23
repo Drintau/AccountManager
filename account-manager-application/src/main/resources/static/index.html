@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+         <link rel="stylesheet" href="/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">
+<!--        <link rel="stylesheet" href="http://127.0.0.1:12138/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">-->
     </head>
     <body>
         <div id="app">
@@ -38,6 +39,8 @@
                     </template>
                 </el-table-column>
             </el-table>
+
+            <el-pagination small :total="50" :page-size="10" @current-change="handleCurrentChange" layout="prev, pager, next"></el-pagination>
 
             <el-dialog title="账号信息" :visible.sync="showDialogFormVisible" :width="dialogWidth">
                 <el-form :model="showForm" disabled :label-width="formLabelWidth" size='small'>
@@ -122,6 +125,9 @@
     <script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
     <script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
     <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
+<!--    <script src="http://127.0.0.1:12138/accountmanager/webjars/vue/2.6.11/vue.js"></script>-->
+<!--    <script src="http://127.0.0.1:12138/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>-->
+<!--    <script src="http://127.0.0.1:12138/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>-->
 
     <script>
         var vm = new Vue({
@@ -162,7 +168,7 @@
                 }
             },
             mounted() {
-                axios.get('/accountmanager/account/list')
+                axios.get('/accountmanager/account/list?decrypt=false&page_number=1&page_size=10')
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
@@ -184,6 +190,30 @@
                     });
             },
             methods: {
+                /* 查询列表 */
+                list(pageNumber, pageSize) {
+                    axios.get('/accountmanager/account/list?decrypt=false&page_number=' + pageNumber + "&page_size=" + pageSize)
+                    .then((response) => {
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            const accountsData = result.data;
+                            this.accounts = accountsData;
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: result.message
+                            });
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                        this.$message({
+                            type: 'error',
+                            message: error.message
+                        });
+                    });
+                },
+
                 /* 查看 */
                 show(account) {
                     this.showDialogFormVisible = true;
@@ -340,6 +370,12 @@
                                 message: error.message
                             });
                         })
+                },
+
+                // 页码变更
+                handleCurrentChange(pageNumber) {
+                    // console.log(pageNumber);
+                    this.list(pageNumber, 10);
                 }
             }
         })
