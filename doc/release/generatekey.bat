@@ -3,7 +3,6 @@
 chcp 65001
 echo 正在生成秘钥...
 
-start java -jar account-manager-1.0.2.jar --aesKey
+start java -jar account-manager-1.0.3.jar --aesKey
 
-echo 暂时用不了...
-pause
+rem pause
