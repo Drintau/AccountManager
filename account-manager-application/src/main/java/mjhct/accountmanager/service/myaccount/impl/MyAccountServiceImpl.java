@@ -1,5 +1,7 @@
 package mjhct.accountmanager.service.myaccount.impl;
 
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.dao.MyAccountRepository;
 import mjhct.accountmanager.domain.bo.*;
@@ -112,6 +114,33 @@ public class MyAccountServiceImpl implements MyAccountService {
             return;
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
+    }
+
+    @Override
+    public void export() {
+        // 查询所有数据
+        List<MyAccountPO> dataList = myAccountRepository.findAll();
+        // List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
+        // 解密
+        for (MyAccountPO myAccount : dataList) {
+            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
+            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+        }
+
+        // 写到xlsx
+        ExcelWriter writer = ExcelUtil.getWriter("E:/账号数据.xlsx");
+
+        writer.addHeaderAlias("id", "序号");
+        writer.addHeaderAlias("appName", "应用名称");
+        writer.addHeaderAlias("appUrl", "应用网址");
+        writer.addHeaderAlias("myUsername", "登录名");
+        writer.addHeaderAlias("myPassword", "密码");
+        writer.addHeaderAlias("remark", "说明");
+        writer.addHeaderAlias("createTime", "创建时间");
+        writer.addHeaderAlias("updateTime", "更新时间");
+
+        writer.write(dataList);
+        writer.close();
     }
 
 }

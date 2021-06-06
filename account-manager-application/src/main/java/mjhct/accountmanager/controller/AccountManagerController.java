@@ -5,11 +5,10 @@ import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.dto.*;
 import mjhct.accountmanager.exception.BusinessException;
-import mjhct.accountmanager.service.myaccount.impl.MyAccountServiceImpl;
+import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class AccountManagerController {
     public static final Logger logger = LoggerFactory.getLogger(AccountManagerController.class);
 
     @Resource(name = "myAccountService")
-    private MyAccountServiceImpl myAccountService;
+    private MyAccountService myAccountService;
 
     @PostMapping("/query")
     public CommonResult<List<MyAccountQueryResDTO>> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
@@ -75,6 +74,11 @@ public class AccountManagerController {
     public CommonResult delete(@RequestBody @Validated MyAccountDeleteReqDTO myAccountDeleteReqDTO) {
         myAccountService.deleteMyAccount(myAccountDeleteReqDTO.getId());
         return new CommonResult(CommonCode.SUCCESS);
+    }
+
+    @PostMapping("/export")
+    public void export() {
+        myAccountService.export();
     }
 
 }

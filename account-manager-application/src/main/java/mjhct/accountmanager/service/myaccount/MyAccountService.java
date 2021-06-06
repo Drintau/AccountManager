@@ -35,4 +35,6 @@ public interface MyAccountService {
 
     void deleteMyAccount(Integer id);
 
+    void export();
+
 }
