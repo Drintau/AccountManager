@@ -117,30 +117,28 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
-    public void export() {
+    public ExcelWriter export() {
         // 查询所有数据
-        List<MyAccountPO> dataList = myAccountRepository.findAll();
-        // List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
+        List<MyAccountPO> rawDataList = myAccountRepository.findAll();
+        List<MyAccountImportAndExportInfoBO> importAndExportDataList = BeanUtil.copyList(rawDataList, MyAccountImportAndExportInfoBO.class);
         // 解密
-        for (MyAccountPO myAccount : dataList) {
+        for (MyAccountImportAndExportInfoBO myAccount : importAndExportDataList) {
             myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
             myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
         }
 
         // 写到xlsx
-        ExcelWriter writer = ExcelUtil.getWriter("E:/账号数据.xlsx");
+        ExcelWriter writer = ExcelUtil.getWriter(true);
 
-        writer.addHeaderAlias("id", "序号");
         writer.addHeaderAlias("appName", "应用名称");
         writer.addHeaderAlias("appUrl", "应用网址");
         writer.addHeaderAlias("myUsername", "登录名");
         writer.addHeaderAlias("myPassword", "密码");
         writer.addHeaderAlias("remark", "说明");
-        writer.addHeaderAlias("createTime", "创建时间");
-        writer.addHeaderAlias("updateTime", "更新时间");
 
-        writer.write(dataList);
-        writer.close();
+        writer.write(importAndExportDataList);
+
+        return writer;
     }
 
 }

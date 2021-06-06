@@ -1,10 +1,12 @@
 package mjhct.accountmanager.controller;
 
+import cn.hutool.poi.excel.ExcelWriter;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.dto.*;
 import mjhct.accountmanager.exception.BusinessException;
+import mjhct.accountmanager.exception.CommonException;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
@@ -13,6 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -76,9 +81,17 @@ public class AccountManagerController {
         return new CommonResult(CommonCode.SUCCESS);
     }
 
-    @PostMapping("/export")
-    public void export() {
-        myAccountService.export();
+    @GetMapping("/export")
+    public void export(HttpServletResponse response) {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+        response.setHeader("Content-Disposition","attachment;filename=account_data.xlsx");
+
+        try (ExcelWriter export = myAccountService.export();
+             ServletOutputStream outputStream = response.getOutputStream()) {
+            export.flush(outputStream, true);
+        } catch (IOException e) {
+            throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
+        }
     }
 
 }
