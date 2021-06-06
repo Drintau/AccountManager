@@ -17,7 +17,8 @@
     <el-container>
 
     <el-header height="30px" style="padding: 0;margin: 5px;">
-        <el-button type="primary" @click="add" size="mini">新增账号</el-button>
+        <el-button type="primary" size="mini" @click="add">新增账号</el-button>
+        <el-button type="primary" size="mini" onclick="window.location.href='/accountmanager/account/export'">导出数据</el-button>
         <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/index.html'">普通页面</el-button>
     </el-header>
 
