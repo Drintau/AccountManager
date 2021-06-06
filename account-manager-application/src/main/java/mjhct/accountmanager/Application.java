@@ -8,6 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 @SpringBootApplication
 @ServletComponentScan
 public class Application {
@@ -23,6 +26,21 @@ public class Application {
                     byte[] key = SecureUtil.generateKey(SymmetricAlgorithm.AES.getValue()).getEncoded();
                     String aesKey = HexUtil.encodeHexStr(key, false);
                     System.out.println(aesKey);
+                    // 一分钟倒计时给用户保存秘钥
+                    Instant oneMinute = Instant.now().plusSeconds(60);
+                    long diffAsMinutes = 60L;
+                    do {
+                        System.out.println("请保存秘钥，程序将在" + diffAsMinutes + "秒后退出！");
+                        try {
+                            // 睡眠30秒
+                            Thread.sleep(30000);
+                        } catch (InterruptedException e) {
+                            System.out.println("程序异常退出！");
+                            return;
+                        }
+                        diffAsMinutes = ChronoUnit.SECONDS.between(Instant.now(), oneMinute);
+                    } while (diffAsMinutes > 0L);
+                    System.out.println("程序退出！");
                     return;
                 }
             }
