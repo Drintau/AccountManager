@@ -24,7 +24,7 @@ public class InitRunner implements ApplicationRunner {
     private static final Logger logger = LoggerFactory.getLogger(InitRunner.class);
 
     @Autowired
-    ResourceLoader resourceLoader;
+    private ResourceLoader resourceLoader;
 
     @Autowired
     private DataSource dataSource;

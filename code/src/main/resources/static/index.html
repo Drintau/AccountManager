@@ -52,52 +52,53 @@
             <el-dialog title="账号信息" :visible.sync="showDialogFormVisible" :width="dialogWidth">
                 <el-form :model="showForm" disabled :label-width="formLabelWidth" size='small'>
                     <el-form-item label="应用名称">
-                        <el-input v-model="showForm.name" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.name" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="应用网址">
-                        <el-input v-model="showForm.url" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.url" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="账号">
-                        <el-input v-model="showForm.username" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.username" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-input v-model="showForm.password" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.password" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="备注">
-                        <el-input v-model="showForm.remark" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.remark" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="创建时间">
-                        <el-input v-model="showForm.create_time" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.create_time" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="更新时间">
-                        <el-input v-model="showForm.update_time" autocomplete="off"></el-input>
+                        <el-input v-model="showForm.update_time" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="showDialogFormVisible = false" size='mini'>关闭</el-button>
+                    <el-button @click="cancelDialog" size='mini'>关闭</el-button>
                 </div>
             </el-dialog>
 
             <el-dialog title="修改账号" :visible.sync="editDialogFormVisible" :width="dialogWidth">
                 <el-form :model="editForm" :label-width="formLabelWidth" size='small'>
                     <el-form-item label="应用名称">
-                        <el-input v-model="editForm.name" autocomplete="off"></el-input>
+                        <el-input v-model="editForm.name" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="应用网址">
-                        <el-input v-model="editForm.url" autocomplete="off"></el-input>
+                        <el-input v-model="editForm.url" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="账号">
-                        <el-input v-model="editForm.username" autocomplete="off"></el-input>
+                        <el-input v-model="editForm.username" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-input v-model="editForm.password" autocomplete="off"></el-input>
+                        <el-input v-model="editForm.password" autocomplete="off" style="width: 265px;"></el-input>
+                        <el-button type="primary" @click="getRandomPassword">随机密码</el-button>
                     </el-form-item>
                     <el-form-item label="备注">
-                        <el-input v-model="editForm.remark" autocomplete="off"></el-input>
+                        <el-input v-model="editForm.remark" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="editDialogFormVisible = false" size='mini'>取 消</el-button>
+                    <el-button @click="cancelDialog" size='mini'>取 消</el-button>
                     <el-button type="primary" @click="editOne(editForm)" size='mini'>确 定</el-button>
                 </div>
             </el-dialog>
@@ -105,23 +106,24 @@
             <el-dialog title="新增账号" :visible.sync="addDialogFormVisible" :width="dialogWidth">
                 <el-form :model="addForm" :label-width="formLabelWidth" size='small'>
                     <el-form-item label="应用名称">
-                        <el-input v-model="addForm.name" autocomplete="off"></el-input>
+                        <el-input v-model="addForm.name" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="应用网址">
-                        <el-input v-model="addForm.url" autocomplete="off"></el-input>
+                        <el-input v-model="addForm.url" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="账号">
-                        <el-input v-model="addForm.username" autocomplete="off"></el-input>
+                        <el-input v-model="addForm.username" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                     <el-form-item label="密码">
-                        <el-input v-model="addForm.password" autocomplete="off"></el-input>
+                        <el-input v-model="addForm.password" autocomplete="off" style="width: 265px;"></el-input>
+                        <el-button type="primary" @click="getRandomPassword">随机密码</el-button>
                     </el-form-item>
                     <el-form-item label="备注">
-                        <el-input v-model="addForm.remark" autocomplete="off"></el-input>
+                        <el-input v-model="addForm.remark" autocomplete="off" style="width: 350px;"></el-input>
                     </el-form-item>
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button @click="addDialogFormVisible = false" size='mini'>取 消</el-button>
+                    <el-button @click="cancelDialog" size='mini'>取 消</el-button>
                     <el-button type="primary" @click="addOne(addForm)" size='mini'>确 定</el-button>
                 </div>
             </el-dialog>
@@ -149,7 +151,7 @@
             data() {
                 return {
                     accounts: null,
-                    dialogWidth: '30%',
+                    dialogWidth: '500px',
                     formLabelWidth: '100px',
                     showDialogFormVisible: false,
                     showForm: {
@@ -296,6 +298,31 @@
                     });
                 },
 
+                // 获取随机密码
+                getRandomPassword() {
+                    axios.get('/accountmanager/password/get')
+                    .then((response) => {
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            // 两个一起赋值，省去判断属于哪个对话框
+                            this.addForm.password = result.data;
+                            this.editForm.password = result.data;
+                        } else {
+                            this.$message({
+                                type: 'error',
+                                message: result.message
+                            });
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                        this.$message({
+                            type: 'error',
+                            message: error.message
+                        });
+                    });
+                },
+
                 /* 修改：先查再改 */
                 edit(account) {
                     this.editDialogFormVisible = true;
@@ -389,10 +416,25 @@
                         })
                 },
 
-                // 页码变更
+                /* 页码变更 */
                 handleCurrentChange(pageNumber) {
                     // console.log(pageNumber);
                     this.list(pageNumber, 10);
+                },
+
+                /* 对话框取消按钮 */
+                cancelDialog() {
+                    // 任何一个对话框的关闭，都需要不显示对应的对话框
+
+                    this.addDialogFormVisible = false;
+                    this.editDialogFormVisible = false;
+                    this.showDialogFormVisible = false;
+
+                    // 表单show和edit都是没有必要重置数据的，因为这两个一定会取选中的数据，没有显示空白的场景
+
+                    this.addForm = this.$options.data().addForm;
+                    //this.editForm = this.$options.data().editForm;
+                    //this.showForm = this.$options.data().editForm;
                 }
             }
         })
