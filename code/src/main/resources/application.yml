@@ -22,8 +22,8 @@ spring:
 ---
 #开发时使用命令行参数激活dev配置 --spring.profiles.active=dev
 debug: true
-server:
-  port: 12139
+#server:
+#  port: 12139
 spring:
   profiles: dev
   datasource:
