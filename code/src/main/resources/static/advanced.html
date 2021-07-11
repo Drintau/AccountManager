@@ -18,7 +18,21 @@
 
     <el-header height="30px" style="padding: 0;margin: 5px;">
         <el-button type="primary" size="mini" @click="add">新增账号</el-button>
-        <el-button type="primary" size="mini" onclick="window.location.href='/accountmanager/account/export'">导出数据</el-button>
+        <el-dropdown size="mini">
+            <el-button type="primary" size="mini">
+                高级操作<i class="el-icon-arrow-down el-icon--right"></i>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>
+                    <el-button type="text" size="small" onclick="window.location.href='/accountmanager/account/export'">导出</el-button>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                    <el-upload action="">
+                        <el-button type="text" size="small">导入</el-button>
+                    </el-upload>
+                </el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
         <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/index.html'">普通页面</el-button>
     </el-header>
 
