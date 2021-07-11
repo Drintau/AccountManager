@@ -14,7 +14,7 @@
 ### 软件使用方法
 1. 安装配置java环境；java11以上。
 2. 下载压缩包，解压到一个不带中文的目录。
-3. 网上找个AES秘钥，也可以执行`java -jar account-manager-1.x.x.jar --aesKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`aes.key=`后面。
+3. 执行`java -jar account-manager-1.x.x.jar --aesKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`aes.key=`后面。
 4. 执行`java -jar account-manager-1.x.x.jar`启动程序（windows可双击`startam.bat`）。
 
 ### 存储到云盘
