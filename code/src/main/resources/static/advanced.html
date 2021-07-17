@@ -273,7 +273,8 @@
                         .then((response) => {
                             const result = response.data;
                             if (result.code == '000000') {
-                                const accountsData = result.data;
+                                const resultData = result.data;
+                                const accountsData = resultData.list;
                                 this.editForm = accountsData[0];
                             } else {
                                 this.$message({
