@@ -12,7 +12,6 @@ import mjhct.accountmanager.util.BeanUtil;
 import mjhct.accountmanager.util.NumberUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,37 +31,55 @@ public class AccountManagerController {
     @Resource(name = "myAccountService")
     private MyAccountService myAccountService;
 
+    /**
+     * id 精确查询，且解密
+     * @return
+     */
+    @GetMapping("/get")
+    public CommonResult<MyAccountQueryResDTO> get(@RequestParam(value = "id") Integer id) {
+        if (!NumberUtil.isNotNullAndGreaterThanZero(id)) {
+            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "查询id非法！");
+        }
+        MyAccountInfoBO myAccountById = myAccountService.getMyAccountById(id);
+        if (myAccountById == null) {
+            throw new BusinessException(CommonCode.FAIL, "查询数据不存在，请刷新页面！");
+        }
+        MyAccountQueryResDTO myAccountQueryResDTO = BeanUtil.copy(myAccountById, MyAccountQueryResDTO.class);
+        return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTO);
+    }
+
+    /**
+     * 条件查询，返回带分页
+     * @param reqDTO
+     * @return
+     */
     @PostMapping("/query")
     public CommonResult<MyAccountListResDTO> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
-        if (!NumberUtil.isNotNullAndGreaterThanZero(reqDTO.getId()) && !StringUtils.hasText(reqDTO.getFuzzyName())) {
-            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "查询条件需要一个合理值！");
-        }
         MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
         MyAccountListBO myAccountListBO = myAccountService.queryMyAccount(condition);
         List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResDTO.class);
         MyAccountListResDTO myAccountListResDTO = new MyAccountListResDTO();
-        myAccountListResDTO.setPageNumber(myAccountListBO.getPageNumber());
-        myAccountListResDTO.setPageSize(myAccountListBO.getPageSize());
+        myAccountListResDTO.setPageNumber(reqDTO.getPageNumber());
+        myAccountListResDTO.setPageSize(reqDTO.getPageSize());
         myAccountListResDTO.setTotalPages(myAccountListBO.getTotalPages());
         myAccountListResDTO.setList(myAccountQueryResDTOList);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountListResDTO);
     }
 
-    @PostMapping("/add")
-    public CommonResult<MyAccountAddResDTO> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
-        MyAccountAddBeforeBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqDTO, MyAccountAddBeforeBO.class);
-        MyAccountInfoBO myAccount = myAccountService.addMyAccount(myAccountAddBeforeBO);
-        MyAccountAddResDTO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountAddResDTO.class);
-        return new CommonResult<>(CommonCode.SUCCESS, myAccountAddResDTO);
-    }
-
+    /**
+     * 不带条件的查询，返回带分页
+     * @param decrypt 是否解密
+     * @param pageNumber 页码
+     * @param pageSize 条数
+     * @return
+     */
     @GetMapping("/list")
     public CommonResult<MyAccountListResDTO> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt,
                                                   @RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
                                                   @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
         // 前端页面看到的第1页，分页参数是第0页
         if (pageNumber < 1) {
-            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "请求页数不能小于1");
+            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "请求页码不能小于1");
         }
         if (pageSize < 1) {
             throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
@@ -75,6 +92,14 @@ public class AccountManagerController {
         myAccountListResDTO.setTotalPages(myAccountListBO.getTotalPages());
         myAccountListResDTO.setList(myAccountQueryResDTOList);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountListResDTO);
+    }
+
+    @PostMapping("/add")
+    public CommonResult<MyAccountAddResDTO> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
+        MyAccountAddBeforeBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqDTO, MyAccountAddBeforeBO.class);
+        MyAccountInfoBO myAccount = myAccountService.addMyAccount(myAccountAddBeforeBO);
+        MyAccountAddResDTO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountAddResDTO.class);
+        return new CommonResult<>(CommonCode.SUCCESS, myAccountAddResDTO);
     }
 
     @PostMapping("/update")

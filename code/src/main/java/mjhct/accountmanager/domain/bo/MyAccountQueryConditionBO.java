@@ -5,23 +5,19 @@ package mjhct.accountmanager.domain.bo;
  */
 public class MyAccountQueryConditionBO {
 
-    private Integer id;
+    /**
+     * 前端页码
+     */
+    private Integer pageNumber;
+
+    /**
+     * 每页条数
+     */
+    private Integer pageSize;
 
     private String fuzzyName;
 
     private Boolean decrypt;
-
-    private Integer pageNumber;
-
-    private Integer pageSize;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getFuzzyName() {
         return fuzzyName;
@@ -53,5 +49,12 @@ public class MyAccountQueryConditionBO {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
+    }
+
+    /**
+     * 偏移页数 = 前端页码 - 1
+     */
+    public Integer getOffsetPageNumber() {
+        return pageNumber - 1;
     }
 }

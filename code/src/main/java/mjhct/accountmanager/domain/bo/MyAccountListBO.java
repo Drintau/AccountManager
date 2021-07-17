@@ -4,30 +4,42 @@ import java.util.List;
 
 public class MyAccountListBO {
 
-    Integer pageNumber;
+    /**
+     * 偏移页数
+     */
+    Integer offsetPageNumber;
 
+    /**
+     * 每页条数
+     */
     Integer pageSize;
 
+    /**
+     * 总页数
+     */
     Integer totalPages;
 
+    /**
+     * 当前页的记录
+     */
     List<MyAccountInfoBO> list;
 
     public MyAccountListBO() {
     }
 
-    public MyAccountListBO(Integer pageNumber, Integer pageSize, Integer totalPages, List<MyAccountInfoBO> list) {
-        this.pageNumber = pageNumber;
+    public MyAccountListBO(Integer offsetPageNumber, Integer pageSize,Integer totalPages, List<MyAccountInfoBO> list) {
+        this.offsetPageNumber = offsetPageNumber;
         this.pageSize = pageSize;
         this.totalPages = totalPages;
         this.list = list;
     }
 
-    public Integer getPageNumber() {
-        return pageNumber;
+    public Integer getOffsetPageNumber() {
+        return offsetPageNumber;
     }
 
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
+    public void setOffsetPageNumber(Integer offsetPageNumber) {
+        this.offsetPageNumber = offsetPageNumber;
     }
 
     public Integer getPageSize() {

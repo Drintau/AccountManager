@@ -7,28 +7,16 @@ public interface MyAccountService {
 
     MyAccountInfoBO getMyAccountById(Integer id);
 
-    MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize);
-
-    /**
-     *
-     * @param decrypt
-     * @return
-     */
-    /**
-     * 查询所有账号信息
-     * @param decrypt 是否要解密
-     * @param pageNumber 起始页
-     * @param pageSize 每页记录数
-     * @return
-     */
-    MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
-
-    /**
-     * 根据条件查询账号集合
-     * @param condition 条件集合体
-     * @return
-     */
     MyAccountListBO queryMyAccount(MyAccountQueryConditionBO condition);
+
+    /**
+     * 无条件分页查询
+     * @param decrypt 是否解密
+     * @param offsetPageNumber 偏移的页数，前端页码-1
+     * @param pageSize 条数
+     * @return
+     */
+    MyAccountListBO listMyAccount(Boolean decrypt, int offsetPageNumber, int pageSize);
 
     MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO);
 
