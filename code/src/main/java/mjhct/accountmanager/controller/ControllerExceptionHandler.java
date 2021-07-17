@@ -4,6 +4,8 @@ import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.exception.CommonException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -17,6 +19,8 @@ import java.util.List;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
     @ExceptionHandler(CommonException.class)
     @ResponseBody
@@ -51,6 +55,7 @@ public class ControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult handleOtherException(Exception e) {
+        logger.error("其他错误", e);
         return new CommonResult(CommonCode.FAIL, e.getMessage());
     }
 

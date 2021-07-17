@@ -9,8 +9,10 @@ import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.exception.CommonException;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
+import mjhct.accountmanager.util.NumberUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,11 +33,19 @@ public class AccountManagerController {
     private MyAccountService myAccountService;
 
     @PostMapping("/query")
-    public CommonResult<List<MyAccountQueryResDTO>> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
+    public CommonResult<MyAccountListResDTO> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
+        if (!NumberUtil.isNotNullAndGreaterThanZero(reqDTO.getId()) && !StringUtils.hasText(reqDTO.getFuzzyName())) {
+            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "查询条件需要一个合理值！");
+        }
         MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
-        List<MyAccountInfoBO> myAccountByCondition = myAccountService.queryMyAccount(condition);
-        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountByCondition, MyAccountQueryResDTO.class);
-        return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResDTOList);
+        MyAccountListBO myAccountListBO = myAccountService.queryMyAccount(condition);
+        List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResDTO.class);
+        MyAccountListResDTO myAccountListResDTO = new MyAccountListResDTO();
+        myAccountListResDTO.setPageNumber(myAccountListBO.getPageNumber());
+        myAccountListResDTO.setPageSize(myAccountListBO.getPageSize());
+        myAccountListResDTO.setTotalPages(myAccountListBO.getTotalPages());
+        myAccountListResDTO.setList(myAccountQueryResDTOList);
+        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResDTO);
     }
 
     @PostMapping("/add")

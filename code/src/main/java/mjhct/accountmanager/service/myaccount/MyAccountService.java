@@ -3,11 +3,11 @@ package mjhct.accountmanager.service.myaccount;
 import cn.hutool.poi.excel.ExcelWriter;
 import mjhct.accountmanager.domain.bo.*;
 
-import java.util.List;
-
 public interface MyAccountService {
 
     MyAccountInfoBO getMyAccountById(Integer id);
+
+    MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize);
 
     /**
      *
@@ -28,7 +28,7 @@ public interface MyAccountService {
      * @param condition 条件集合体
      * @return
      */
-    List<MyAccountInfoBO> queryMyAccount(MyAccountQueryConditionBO condition);
+    MyAccountListBO queryMyAccount(MyAccountQueryConditionBO condition);
 
     MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO);
 

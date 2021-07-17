@@ -3,6 +3,7 @@ package mjhct.accountmanager.service.myaccount.impl;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import mjhct.accountmanager.commons.CommonCode;
+import mjhct.accountmanager.commons.PageableConstant;
 import mjhct.accountmanager.dao.MyAccountRepository;
 import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
@@ -11,6 +12,7 @@ import mjhct.accountmanager.service.crypto.CryptoService;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
 import mjhct.accountmanager.util.DateTimeUtil;
+import mjhct.accountmanager.util.NumberUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.OffsetDateTime;
@@ -51,6 +54,21 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
+    public MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<MyAccountPO> pageData = myAccountRepository.findByAppNameContaining(appName, pageable);
+        List<MyAccountPO> dataList = pageData.getContent();
+        if (decrypt) {
+            for (MyAccountPO myAccount : dataList) {
+                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
+                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+            }
+        }
+        List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
+        return new MyAccountListBO(pageNumber, pageSize, pageData.getTotalPages(), myAccountInfoBOS);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO) {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
@@ -79,14 +97,34 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
-    public List<MyAccountInfoBO> queryMyAccount(MyAccountQueryConditionBO condition) {
-        List<MyAccountInfoBO> resultList = new ArrayList<>(16);
+    public MyAccountListBO queryMyAccount(MyAccountQueryConditionBO condition) {
+        // 按照条件的优先级进行查询，只要进行了某条件查询就返回
+
         // id优先
-        if (condition.getId() != null && condition.getId() > 0) {
+        if (NumberUtil.isNotNullAndGreaterThanZero(condition.getId())) {
+            List<MyAccountInfoBO> resultList = new ArrayList<>(2);
             MyAccountInfoBO myAccountById = getMyAccountById(condition.getId());
-            resultList.add(myAccountById);
+            if (myAccountById != null) {
+                resultList.add(myAccountById);
+            }
+            return new MyAccountListBO(PageableConstant.DEFAULT_PAGE_NUMBER, PageableConstant.DEFAULT_PAGE_SIZE, PageableConstant.DEFAULT_TOTAL_PAGES, resultList);
         }
-        return resultList;
+
+        // 按照应用名称模糊查询
+        if (StringUtils.hasText(condition.getFuzzyName())) {
+            if (condition.getDecrypt() == null) {
+                condition.setDecrypt(false);
+            }
+            if (!NumberUtil.isNotNullAndGreaterThanZero(condition.getPageNumber())) {
+                condition.setPageNumber(PageableConstant.DEFAULT_PAGE_NUMBER);
+            }
+            if (!NumberUtil.isNotNullAndGreaterThanZero(condition.getPageSize())) {
+                condition.setPageSize(PageableConstant.DEFAULT_PAGE_SIZE);
+            }
+            return listMyAccountByAppName(condition.getDecrypt(), condition.getFuzzyName(), condition.getPageNumber() - 1, condition.getPageSize());
+        }
+
+        return new MyAccountListBO();
     }
 
     @Override
