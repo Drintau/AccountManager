@@ -10,7 +10,6 @@
                 display: none !important;
             }
         </style>
-<!--        <link rel="stylesheet" href="http://127.0.0.1:12138/accountmanager/webjars/element-ui/2.14.0/lib/theme-chalk/index.css">-->
     </head>
     <body>
         <div id="app" v-cloak>
@@ -18,11 +17,19 @@
             <el-container>
 
             <el-header height="30px" style="padding: 0;margin: 5px;">
-                <el-button type="primary" @click="add" size="mini">新增账号</el-button>
-                <el-input size="mini" style="width: 200px;" placeholder="请输入应用名称" v-model="searchAppName">
-                    <el-button slot="append" size="mini" icon="el-icon-search" @click="list(1, 10)"></el-button>
-                </el-input>
-                <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/advanced.html'">高级页面</el-button>
+                <el-row>
+                <el-col :span="8">
+                    <el-button type="primary" @click="add" size="mini">新增账号</el-button>
+                </el-col>
+                <el-col :span="8">
+                    <el-input size="mini" placeholder="请输入应用名称" v-model="searchAppName">
+                        <el-button slot="append" size="mini" icon="el-icon-search" @click="list(1, 10)"></el-button>
+                    </el-input>
+                </el-col>
+                <el-col :span="8">
+                    <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/advanced.html'">高级页面</el-button>
+                </el-col>
+                </el-row>
             </el-header>
 
             <el-main style="padding: 0;margin: 5px;height: 600px;">
@@ -144,9 +151,6 @@
     <script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
     <script src="/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>
     <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
-<!--    <script src="http://127.0.0.1:12138/accountmanager/webjars/vue/2.6.11/vue.js"></script>-->
-<!--    <script src="http://127.0.0.1:12138/accountmanager/webjars/element-ui/2.14.0/lib/index.js"></script>-->
-<!--    <script src="http://127.0.0.1:12138/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>-->
 
     <script>
         var vm = new Vue({
@@ -245,7 +249,6 @@
                 /* 查看 */
                 show(account) {
                     this.showDialogFormVisible = true;
-                    //console.log(account.id);
                     axios.get('/accountmanager/account/get?id=' + account.id)
                     .then((response) => {
                         const result = response.data;
@@ -276,11 +279,10 @@
                         type: 'warning'
                     }).then(() => {
                         axios.post('/accountmanager/account/delete', {
-                                id: account.id
-                            })
+                            id: account.id
+                        })
                         .then((response) => {
                             const result = response.data;
-                            //console.log(result);
                             if (result.code == '000000') {
                                 location.reload();
                             } else {
@@ -296,7 +298,7 @@
                                 type: 'error',
                                 message: error.message
                             });
-                        })
+                        });
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -355,19 +357,16 @@
                     });
                 },
                 editOne(account) {
-                    //console.log(account);
-                    //console.log(account.password);
                     axios.post('/accountmanager/account/update', {
-                            id: account.id,
-                            name: account.name,
-                            url: account.url,
-                            username: account.username,
-                            password: account.password,
-                            remark: account.remark
-                        })
+                        id: account.id,
+                        name: account.name,
+                        url: account.url,
+                        username: account.username,
+                        password: account.password,
+                        remark: account.remark
+                    })
                     .then((response) => {
                         const result = response.data;
-                        //console.log(result);
                         if (result.code == '000000') {
                             location.reload();
                         } else {
@@ -391,18 +390,15 @@
                     this.addDialogFormVisible = true;
                 },
                 addOne(account) {
-                    //console.log(account);
-                    //console.log(account.password);
                     axios.post('/accountmanager/account/add', {
-                            name: account.name,
-                            url: account.url,
-                            username: account.username,
-                            password: account.password,
-                            remark: account.remark
-                        })
+                        name: account.name,
+                        url: account.url,
+                        username: account.username,
+                        password: account.password,
+                        remark: account.remark
+                    })
                     .then((response) => {
                         const result = response.data;
-                        //console.log(result);
                         if (result.code == '000000') {
                             location.reload();
                         } else {
@@ -423,7 +419,6 @@
 
                 /* 页码变更 */
                 handleCurrentChange(pageNumber) {
-                    // console.log(pageNumber);
                     this.list(pageNumber, 10);
                 },
                 

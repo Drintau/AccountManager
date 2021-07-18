@@ -17,23 +17,34 @@
     <el-container>
 
     <el-header height="30px" style="padding: 0;margin: 5px;">
-        <el-button type="primary" size="mini" @click="add">新增账号</el-button>
-        <el-dropdown size="mini">
-            <el-button type="primary" size="mini">
-                高级操作<i class="el-icon-arrow-down el-icon--right"></i>
-            </el-button>
-            <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
-                    <el-button type="text" size="small" onclick="window.location.href='/accountmanager/account/export'">导出</el-button>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                    <el-upload action="">
-                        <el-button type="text" size="small">导入</el-button>
-                    </el-upload>
-                </el-dropdown-item>
-            </el-dropdown-menu>
-        </el-dropdown>
-        <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/index.html'">普通页面</el-button>
+        <el-row>
+        <el-col :span="8">
+            <el-button type="primary" size="mini" @click="add">新增账号</el-button>
+            <el-dropdown size="mini">
+                <el-button type="primary" size="mini">
+                    高级操作<i class="el-icon-arrow-down el-icon--right"></i>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>
+                        <el-button type="text" size="small" onclick="window.location.href='/accountmanager/account/export'">导出</el-button>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                        <el-upload action="">
+                            <el-button type="text" size="small">导入</el-button>
+                        </el-upload>
+                    </el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </el-col>
+        <el-col :span="8">
+            <el-input size="mini" placeholder="请输入应用名称" v-model="searchAppName">
+                <el-button slot="append" size="mini" icon="el-icon-search" @click="list(1, 10)"></el-button>
+            </el-input>
+        </el-col>
+        <el-col :span="8">
+            <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/index.html'">普通页面</el-button>
+        </el-col>
+        </el-row>
     </el-header>
 
     <el-main style="padding: 0;margin: 5px;height: 600px;">
@@ -150,36 +161,42 @@
                         password: '',
                         remark: ''
                     },
+                    searchAppName: '',
                     totalPages: 1
                 }
             },
             mounted() {
                 axios.get('/accountmanager/account/list?decrypt=true&page_number=1&page_size=10')
-                    .then((response) => {
-                        const result = response.data;
-                        if (result.code == '000000') {
-                            this.totalPages = result.data.total_pages;
-                            const accountsData = result.data.list;
-                            this.accounts = accountsData;
-                        } else {
-                            this.$message({
-                                type: 'error',
-                                message: result.message
-                            });
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log(error);
+                .then((response) => {
+                    const result = response.data;
+                    if (result.code == '000000') {
+                        this.totalPages = result.data.total_pages;
+                        const accountsData = result.data.list;
+                        this.accounts = accountsData;
+                    } else {
                         this.$message({
                             type: 'error',
-                            message: error.message
+                            message: result.message
                         });
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                    this.$message({
+                        type: 'error',
+                        message: error.message
                     });
+                });
             },
             methods: {
-                /* 查询列表 */
+                /* 条件查询列表 */
                 list(pageNumber, pageSize) {
-                    axios.get('/accountmanager/account/list?decrypt=true&page_number=' + pageNumber + "&page_size=" + pageSize)
+                    axios.post('/accountmanager/account/query', {
+                        page_number: pageNumber,
+                        page_size: pageSize,
+                        decrypt: true,
+                        fuzzy_name: this.searchAppName
+                    })
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
@@ -210,27 +227,26 @@
                         type: 'warning'
                     }).then(() => {
                         axios.post('/accountmanager/account/delete', {
-                                id: account.id
-                            })
-                            .then((response) => {
-                                const result = response.data;
-                                //console.log(result);
-                                if (result.code == '000000') {
-                                    location.reload();
-                                } else {
-                                    this.$message({
-                                        type: 'error',
-                                        message: result.message
-                                    });
-                                }
-                            })
-                            .catch(function(error) {
-                                console.log(error);
+                            id: account.id
+                        })
+                        .then((response) => {
+                            const result = response.data;
+                            if (result.code == '000000') {
+                                location.reload();
+                            } else {
                                 this.$message({
                                     type: 'error',
-                                    message: error.message
+                                    message: result.message
                                 });
-                            })
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                            this.$message({
+                                type: 'error',
+                                message: error.message
+                            });
+                        });
                     }).catch(() => {
                         this.$message({
                             type: 'info',
@@ -267,15 +283,12 @@
                 /* 修改：先查再改 */
                 edit(account) {
                     this.editDialogFormVisible = true;
-                    axios.post('/accountmanager/account/query', {
-                            id: account.id
-                        })
-                        .then((response) => {
-                            const result = response.data;
-                            if (result.code == '000000') {
-                                const resultData = result.data;
-                                const accountsData = resultData.list;
-                                this.editForm = accountsData[0];
+                    axios.get('/accountmanager/account/get?id=' + account.id)
+                    .then((response) => {
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            const accountsData = result.data;
+                            this.editForm = accountsData;
                             } else {
                                 this.$message({
                                     type: 'error',
@@ -292,35 +305,32 @@
                         });
                 },
                 editOne(account) {
-                    //console.log(account);
-                    //console.log(account.password);
                     axios.post('/accountmanager/account/update', {
-                            id: account.id,
-                            name: account.name,
-                            url: account.url,
-                            username: account.username,
-                            password: account.password,
-                            remark: account.remark
-                        })
-                        .then((response) => {
-                            const result = response.data;
-                            //console.log(result);
-                            if (result.code == '000000') {
-                                location.reload();
-                            } else {
-                                this.$message({
-                                    type: 'error',
-                                    message: result.message
-                                });
-                            }
-                        })
-                        .catch((error) => {
-                            console.log(error);
+                        id: account.id,
+                        name: account.name,
+                        url: account.url,
+                        username: account.username,
+                        password: account.password,
+                        remark: account.remark
+                    })
+                    .then((response) => {
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            location.reload();
+                        } else {
                             this.$message({
                                 type: 'error',
-                                message: error.message
+                                message: result.message
                             });
-                        })
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$message({
+                            type: 'error',
+                            message: error.message
+                        });
+                    });
                 },
 
                 /* 添加 */
@@ -328,39 +338,35 @@
                     this.addDialogFormVisible = true;
                 },
                 addOne(account) {
-                    //console.log(account);
-                    //console.log(account.password);
                     axios.post('/accountmanager/account/add', {
-                            name: account.name,
-                            url: account.url,
-                            username: account.username,
-                            password: account.password,
-                            remark: account.remark
-                        })
-                        .then((response) => {
-                            const result = response.data;
-                            //console.log(result);
-                            if (result.code == '000000') {
-                                location.reload();
-                            } else {
-                                this.$message({
-                                    type: 'error',
-                                    message: result.message
-                                });
-                            }
-                        })
-                        .catch((error) => {
-                            console.log(error);
+                        name: account.name,
+                        url: account.url,
+                        username: account.username,
+                        password: account.password,
+                        remark: account.remark
+                    })
+                    .then((response) => {
+                        const result = response.data;
+                        if (result.code == '000000') {
+                            location.reload();
+                        } else {
                             this.$message({
                                 type: 'error',
-                                message: error.message
+                                message: result.message
                             });
-                        })
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$message({
+                            type: 'error',
+                            message: error.message
+                        });
+                    });
                 },
 
                 /* 页码变更 */
                 handleCurrentChange(pageNumber) {
-                    // console.log(pageNumber);
                     this.list(pageNumber, 10);
                 },
 
