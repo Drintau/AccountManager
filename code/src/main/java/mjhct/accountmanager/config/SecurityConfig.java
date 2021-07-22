@@ -7,28 +7,28 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * AES加解密配置类
+ * 秘钥配置类
  */
 @Component
-@ConfigurationProperties(prefix = "aes")
+@ConfigurationProperties(prefix = "am")
 @Validated
-public class AESConfig {
+public class SecurityConfig {
 
     @NotEmpty(message = "请配置密钥")
-    private String key;
+    private String securityKey;
 
-    public String getKey() {
-        return key;
+    public String getSecurityKey() {
+        return securityKey;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setSecurityKey(String securityKey) {
+        this.securityKey = securityKey;
     }
 
     @Override
     public String toString() {
-        return "AESConfig{" +
-                "key='" + key + '\'' +
+        return "SecurityConfig{" +
+                "securityKey='" + securityKey + '\'' +
                 '}';
     }
 }

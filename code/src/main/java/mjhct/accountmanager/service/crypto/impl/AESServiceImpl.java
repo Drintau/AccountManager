@@ -4,7 +4,7 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
 import mjhct.accountmanager.commons.CommonCode;
-import mjhct.accountmanager.config.AESConfig;
+import mjhct.accountmanager.config.SecurityConfig;
 import mjhct.accountmanager.exception.CommonException;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import org.slf4j.Logger;
@@ -23,13 +23,13 @@ public class AESServiceImpl implements CryptoService {
     private static final Logger logger = LoggerFactory.getLogger(AESServiceImpl.class);
 
     @Resource
-    private AESConfig aesConfig;
+    private SecurityConfig securityConfig;
 
     @Override
     public String decrypt(@NotBlank String ciphertext) {
         try {
             // 使用配置的密钥
-            byte[] key = aesConfig.getKey().getBytes();
+            byte[] key = securityConfig.getSecurityKey().getBytes();
             // 构建
             AES aes = SecureUtil.aes(key);
             // 解密为字符串
@@ -44,7 +44,7 @@ public class AESServiceImpl implements CryptoService {
     public String encrypt(@NotBlank String plaintext) {
         try {
             // 使用配置的密钥
-            byte[] key = aesConfig.getKey().getBytes();
+            byte[] key = securityConfig.getSecurityKey().getBytes();
             // 构建
             AES aes = SecureUtil.aes(key);
             // 加密为16进制表示
