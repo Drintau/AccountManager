@@ -1,5 +1,7 @@
 package mjhct.accountmanager.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
@@ -14,12 +16,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/account")
@@ -126,6 +131,24 @@ public class AccountManagerController {
             export.flush(outputStream, true);
         } catch (IOException e) {
             throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
+        }
+    }
+
+    @PostMapping("/import")
+    public void importAccounts(@RequestParam("file") MultipartFile file) {
+        try {
+            ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
+            Map<String, String> headerAlias = new HashMap<>(16);
+            headerAlias.put("应用名称", "appName");
+            headerAlias.put("应用网址", "appUrl");
+            headerAlias.put("登录名", "myUsername");
+            headerAlias.put("密码", "myPassword");
+            headerAlias.put("说明", "remark");
+            reader.setHeaderAlias(headerAlias);
+            List<MyAccountImportAndExportInfoBO> importAndExportInfoBOS = reader.readAll(MyAccountImportAndExportInfoBO.class);
+            logger.debug("{}", importAndExportInfoBOS);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
