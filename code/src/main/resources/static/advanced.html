@@ -29,7 +29,7 @@
                         <el-button type="text" size="small" onclick="window.location.href='/accountmanager/account/export'">导出</el-button>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                        <el-upload action="/accountmanager/account/import" :show-file-list="false">
+                        <el-upload action="/accountmanager/account/import" :show-file-list="false" :on-success="uploadSuccess" :on-error="uploadError">
                             <el-button type="text" size="small">导入</el-button>
                         </el-upload>
                     </el-dropdown-item>
@@ -377,7 +377,16 @@
 
                     this.addForm = this.$options.data().addForm;
                     //this.editForm = this.$options.data().editForm;
+                },
+
+                /* 文件上传 */
+                uploadSuccess() {
+                    location.reload();
+                }, 
+                uploadError() {
+                    this.$message.error('导入失败，请重试'); 
                 }
+
             }
         })
 </script>
