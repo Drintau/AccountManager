@@ -135,7 +135,7 @@ public class AccountManagerController {
     }
 
     @PostMapping("/import")
-    public void importAccounts(@RequestParam("file") MultipartFile file) {
+    public CommonResult importAccounts(@RequestParam("file") MultipartFile file) {
         try {
             ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
             Map<String, String> headerAlias = new HashMap<>(16);
@@ -145,11 +145,13 @@ public class AccountManagerController {
             headerAlias.put("密码", "myPassword");
             headerAlias.put("说明", "remark");
             reader.setHeaderAlias(headerAlias);
-            List<MyAccountImportAndExportInfoBO> importAndExportInfoBOS = reader.readAll(MyAccountImportAndExportInfoBO.class);
-            logger.debug("{}", importAndExportInfoBOS);
+            List<MyAccountImportAndExportInfoBO> importAccounts = reader.readAll(MyAccountImportAndExportInfoBO.class);
+            myAccountService.importAccounts(importAccounts);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("导入数据失败！", e);
+            return new CommonResult(CommonCode.FAIL, "导入数据失败！建议删除数据库文件重试。");
         }
+        return new CommonResult(CommonCode.SUCCESS);
     }
 
 }

@@ -3,6 +3,8 @@ package mjhct.accountmanager.service.myaccount;
 import cn.hutool.poi.excel.ExcelWriter;
 import mjhct.accountmanager.domain.bo.*;
 
+import java.util.List;
+
 public interface MyAccountService {
 
     MyAccountInfoBO getMyAccountById(Integer id);
@@ -25,5 +27,7 @@ public interface MyAccountService {
     void deleteMyAccount(Integer id);
 
     ExcelWriter export();
+
+    void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList);
 
 }

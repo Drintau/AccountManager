@@ -156,4 +156,14 @@ public class MyAccountServiceImpl implements MyAccountService {
         return writer;
     }
 
+    @Override
+    public void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList) {
+        for (MyAccountImportAndExportInfoBO importAccount : importDataList) {
+            MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
+            insertPO.setMyUsername(cryptoService.encrypt(insertPO.getMyUsername()));
+            insertPO.setMyPassword(cryptoService.encrypt(insertPO.getMyPassword()));
+            myAccountRepository.save(insertPO);
+        }
+    }
+
 }
