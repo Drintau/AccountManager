@@ -162,6 +162,9 @@ public class MyAccountServiceImpl implements MyAccountService {
             MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
             insertPO.setMyUsername(cryptoService.encrypt(insertPO.getMyUsername()));
             insertPO.setMyPassword(cryptoService.encrypt(insertPO.getMyPassword()));
+            OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
+            insertPO.setCreateTime(nowOffsetDateTime);
+            insertPO.setUpdateTime(nowOffsetDateTime);
             myAccountRepository.save(insertPO);
         }
     }
