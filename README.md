@@ -1,4 +1,4 @@
-## account-manager
+# account-manager
 账号管理者：自己想做的小型账号密码管理软件。
 
 ### 为什么做这个
@@ -14,8 +14,10 @@
 ### 软件使用方法
 1. 安装配置java环境；java11以上。
 2. 下载压缩包，解压到一个不带中文的目录。
-3. 执行`java -jar account-manager-1.x.x.jar --aesKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`aes.key=`后面。
-4. 执行`java -jar account-manager-1.x.x.jar`启动程序（windows可双击`startam.bat`）。
+3. 执行`java -jar account-manager-1.x.x.jar --securityKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`am.security-key=`后面。
+4. 配置`spring.datasource.url=`后面的数据文件路径为本机可访问的路径。
+5. 执行`java -jar account-manager-1.x.x.jar`启动程序（windows可双击`startam.bat`）。
+6. 配置请参考示例配置文件`application-example.properties`。
 
 ### 存储到云盘
 1. 腾讯微云同步助手有同步目录功能，修改后几秒钟就会同步。  
@@ -29,6 +31,6 @@
 
 ### 已知问题与解决方法
 ##### 一、文件占用无法同步
-1. 使用软件的同时开启网盘的自动备份，会出现密文文件占用导致无法同步到网盘的情况。 
+1. 使用软件的同时开启网盘的自动备份，会出现密文文件占用导致网盘无法同步的情况。（原因：https://h2database.com/html/features.html#database_file_locking）
 2. 步骤1现象出现后，如果本地密文文件又被修改了多次，就会出现本地与网盘数据版本相差太多而无法自动同步的情况，此时网盘和本地硬盘上会产生备份文件。 
 3. 解决办法：使用本软件时先不打开网盘软件（或暂时停用网盘的自动同步），关闭软件后再使用网盘的同步功能把数据更新到网盘。
