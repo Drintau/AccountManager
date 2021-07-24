@@ -18,9 +18,9 @@ import javax.validation.constraints.NotBlank;
  * AES对称加密服务
  */
 @Service("aesService")
-public class AESServiceImpl implements CryptoService {
+public class AesServiceImpl implements CryptoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AESServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AesServiceImpl.class);
 
     @Resource
     private SecurityConfig securityConfig;

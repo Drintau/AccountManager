@@ -5,6 +5,6 @@ package mjhct.accountmanager.commons;
  */
 public class AppLaunchArgsConstant {
 
-    public static final String GENERATE_AES_KEY = "aesKey";
+    public static final String GENERATE_AES_KEY = "securityKey";
 
 }
