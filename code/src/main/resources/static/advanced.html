@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,129 +10,141 @@
         [v-cloak] {
             display: none !important;
         }
+
+        body .el-table th.gutter {
+            display: table-cell !important;
+        }
     </style>
 </head>
+
 <body>
-<div id="app" v-cloak>
+    <div id="app" v-cloak>
+        <el-container>
 
-    <el-container>
+            <el-header height="30px" style="padding: 0;margin: 5px;">
+                <el-row>
+                    <el-col :span="8">
+                        <el-button type="primary" size="mini" @click="add">新增账号</el-button>
+                        <el-dropdown size="mini">
+                            <el-button type="primary" size="mini">
+                                高级操作<i class="el-icon-arrow-down el-icon--right"></i>
+                            </el-button>
+                            <el-dropdown-menu slot="dropdown">
+                                <el-dropdown-item>
+                                    <el-button type="text" size="small"
+                                        onclick="window.location.href='/accountmanager/account/export'">导出</el-button>
+                                </el-dropdown-item>
+                                <el-dropdown-item>
+                                    <el-upload action="/accountmanager/account/import" :show-file-list="false"
+                                        :on-success="uploadSuccess" :on-error="uploadError">
+                                        <el-button type="text" size="small">导入</el-button>
+                                    </el-upload>
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </el-dropdown>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-input size="mini" placeholder="请输入应用名称" v-model="searchAppName">
+                            <el-button slot="append" size="mini" icon="el-icon-search" @click="handleCurrentChange(1)">
+                            </el-button>
+                        </el-input>
+                    </el-col>
+                    <el-col :span="8">
+                        <el-button style="float: right;" type="success" size="mini"
+                            onclick="window.location.href='/accountmanager/index.html'">普通页面</el-button>
+                    </el-col>
+                </el-row>
+            </el-header>
 
-    <el-header height="30px" style="padding: 0;margin: 5px;">
-        <el-row>
-        <el-col :span="8">
-            <el-button type="primary" size="mini" @click="add">新增账号</el-button>
-            <el-dropdown size="mini">
-                <el-button type="primary" size="mini">
-                    高级操作<i class="el-icon-arrow-down el-icon--right"></i>
-                </el-button>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                        <el-button type="text" size="small" onclick="window.location.href='/accountmanager/account/export'">导出</el-button>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                        <el-upload action="/accountmanager/account/import" :show-file-list="false" :on-success="uploadSuccess" :on-error="uploadError">
-                            <el-button type="text" size="small">导入</el-button>
-                        </el-upload>
-                    </el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-        </el-col>
-        <el-col :span="8">
-            <el-input size="mini" placeholder="请输入应用名称" v-model="searchAppName">
-                <el-button slot="append" size="mini" icon="el-icon-search" @click="list(1, 10)"></el-button>
-            </el-input>
-        </el-col>
-        <el-col :span="8">
-            <el-button style="float: right;" type="success" size="mini" onclick="window.location.href='/accountmanager/index.html'">普通页面</el-button>
-        </el-col>
-        </el-row>
-    </el-header>
+            <el-main style="padding: 0;margin: 5px;height: 600px;">
+                <el-table :data="accounts" border>
+                    <el-table-column fixed type="index" label="序号" width="50">
+                    </el-table-column>
+                    <el-table-column v-if="false" prop="id">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="name" label="应用名称" min-width="100">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="url" label="应用网址" min-width="200">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="username" label="账号" min-width="150">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="password" label="密码" min-width="100">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="remark" label="备注" min-width="100">
+                    </el-table-column>
+                    <el-table-column prop="create_time" label="创建时间" width="160">
+                    </el-table-column>
+                    <el-table-column prop="update_time" label="更新时间" width="160">
+                    </el-table-column>
+                    <el-table-column fixed="right" label="操作" width="100">
+                        <template slot-scope="scope">
+                            <el-button @click="edit(scope.row)" type="text" size="mini">编辑</el-button>
+                            <el-button @click="deleteOne(scope.row)" type="text" size="mini">
+                                <span style="color: red;">删除</span>
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
 
-    <el-main style="padding: 0;margin: 5px;height: 600px;">
-    <el-table :data="accounts" border>
-        <el-table-column fixed type="index" label="序号" width="50">
-        </el-table-column>
-        <el-table-column v-if="false" prop="id">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="name" label="应用名称" min-width="100">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="url" label="应用网址" min-width="200">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="username" label="账号" min-width="150">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="password" label="密码" min-width="100">
-        </el-table-column>
-        <el-table-column show-overflow-tooltip prop="remark" label="备注" min-width="100">
-        </el-table-column>
-        <el-table-column prop="create_time" label="创建时间" width="160">
-        </el-table-column>
-        <el-table-column prop="update_time" label="更新时间" width="160">
-        </el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
-            <template slot-scope="scope">
-                <el-button @click="edit(scope.row)" type="text" size="mini">编辑</el-button>
-                <el-button @click="deleteOne(scope.row)" type="text" size="mini"><span style="color: red;">删除</span></el-button>
-            </template>
-        </el-table-column>
-    </el-table>
+                <el-dialog title="修改账号" :visible.sync="editDialogFormVisible" :width="dialogWidth">
+                    <el-form :model="editForm" :label-width="formLabelWidth" size='small'>
+                        <el-form-item label="应用名称">
+                            <el-input v-model="editForm.name" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                        <el-form-item label="应用网址">
+                            <el-input v-model="editForm.url" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                        <el-form-item label="账号">
+                            <el-input v-model="editForm.username" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码">
+                            <el-input v-model="editForm.password" autocomplete="off" style="width: 265px;"></el-input>
+                            <el-button type="primary" @click="getRandomPassword">随机密码</el-button>
+                        </el-form-item>
+                        <el-form-item label="备注">
+                            <el-input v-model="editForm.remark" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="cancelDialog" size='mini'>取 消</el-button>
+                        <el-button type="primary" @click="editOne(editForm)" size='mini'>确 定</el-button>
+                    </div>
+                </el-dialog>
 
-    <el-dialog title="修改账号" :visible.sync="editDialogFormVisible" :width="dialogWidth">
-        <el-form :model="editForm" :label-width="formLabelWidth" size='small'>
-            <el-form-item label="应用名称">
-                <el-input v-model="editForm.name" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-            <el-form-item label="应用网址">
-                <el-input v-model="editForm.url" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-            <el-form-item label="账号">
-                <el-input v-model="editForm.username" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-            <el-form-item label="密码">
-                <el-input v-model="editForm.password" autocomplete="off" style="width: 265px;"></el-input>
-                <el-button type="primary" @click="getRandomPassword">随机密码</el-button>
-            </el-form-item>
-            <el-form-item label="备注">
-                <el-input v-model="editForm.remark" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="cancelDialog" size='mini'>取 消</el-button>
-            <el-button type="primary" @click="editOne(editForm)" size='mini'>确 定</el-button>
-        </div>
-    </el-dialog>
+                <el-dialog title="新增账号" :visible.sync="addDialogFormVisible" :width="dialogWidth">
+                    <el-form :model="addForm" :label-width="formLabelWidth" size='small'>
+                        <el-form-item label="应用名称">
+                            <el-input v-model="addForm.name" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                        <el-form-item label="应用网址">
+                            <el-input v-model="addForm.url" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                        <el-form-item label="账号">
+                            <el-input v-model="addForm.username" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                        <el-form-item label="密码">
+                            <el-input v-model="addForm.password" autocomplete="off" style="width: 265px;"></el-input>
+                            <el-button type="primary" @click="getRandomPassword">随机密码</el-button>
+                        </el-form-item>
+                        <el-form-item label="备注">
+                            <el-input v-model="addForm.remark" autocomplete="off" style="width: 350px;"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="cancelDialog" size='mini'>取 消</el-button>
+                        <el-button type="primary" @click="addOne(addForm)" size='mini'>确 定</el-button>
+                    </div>
+                </el-dialog>
+            </el-main>
 
-    <el-dialog title="新增账号" :visible.sync="addDialogFormVisible" :width="dialogWidth">
-        <el-form :model="addForm" :label-width="formLabelWidth" size='small'>
-            <el-form-item label="应用名称">
-                <el-input v-model="addForm.name" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-            <el-form-item label="应用网址">
-                <el-input v-model="addForm.url" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-            <el-form-item label="账号">
-                <el-input v-model="addForm.username" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-            <el-form-item label="密码">
-                <el-input v-model="addForm.password" autocomplete="off" style="width: 265px;"></el-input>
-                <el-button type="primary" @click="getRandomPassword">随机密码</el-button>
-            </el-form-item>
-            <el-form-item label="备注">
-                <el-input v-model="addForm.remark" autocomplete="off" style="width: 350px;"></el-input>
-            </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="cancelDialog" size='mini'>取 消</el-button>
-            <el-button type="primary" @click="addOne(addForm)" size='mini'>确 定</el-button>
-        </div>
-    </el-dialog>
-    </el-main>
+            <el-footer height="30px" style="padding: 0;margin: 5px;">
+                <el-pagination style="float: right;" hide-on-single-page :page-count="totalPages" :page-size="pageSize"
+                    :current-page="pageNumber" @current-change="handleCurrentChange" layout="prev, pager, next">
+                </el-pagination>
+            </el-footer>
 
-    <el-footer height="30px" style="padding: 0;margin: 5px;">
-        <el-pagination style="float: right;" hide-on-single-page :page-count="totalPages" :page-size="10" @current-change="handleCurrentChange" layout="prev, pager, next"></el-pagination>
-    </el-footer>
-
-    </el-container>
-</div>
+        </el-container>
+    </div>
 </body>
 
 <script src="/accountmanager/webjars/vue/2.6.11/vue.js"></script>
@@ -139,36 +152,38 @@
 <script src="/accountmanager/webjars/axios/0.21.0/dist/axios.js"></script>
 
 <script>
-        var vm = new Vue({
-            el: '#app',
-            data() {
-                return {
-                    accounts: null,
-                    dialogWidth: '500px',
-                    formLabelWidth: '100px',
-                    editDialogFormVisible: false,
-                    editForm: {
-                        id: '',
-                        name: '',
-                        url: '',
-                        username: '',
-                        password: '',
-                        remark: ''
-                    },
-                    addDialogFormVisible: false,
-                    addForm: {
-                        name: '',
-                        url: '',
-                        username: '',
-                        password: '',
-                        remark: ''
-                    },
-                    searchAppName: '',
-                    totalPages: 1
-                }
-            },
-            mounted() {
-                axios.get('/accountmanager/account/list?decrypt=true&page_number=1&page_size=10')
+    var vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                accounts: null,
+                dialogWidth: '500px',
+                formLabelWidth: '100px',
+                editDialogFormVisible: false,
+                editForm: {
+                    id: '',
+                    name: '',
+                    url: '',
+                    username: '',
+                    password: '',
+                    remark: ''
+                },
+                addDialogFormVisible: false,
+                addForm: {
+                    name: '',
+                    url: '',
+                    username: '',
+                    password: '',
+                    remark: ''
+                },
+                searchAppName: '',
+                totalPages: 1,
+                pageSize: 10,
+                pageNumber: 1
+            }
+        },
+        mounted() {
+            axios.get('/accountmanager/account/list?decrypt=true&page_number=1&page_size=10')
                 .then((response) => {
                     const result = response.data;
                     if (result.code == '000000') {
@@ -182,7 +197,35 @@
                         });
                     }
                 })
-                .catch(function(error) {
+                .catch(function (error) {
+                    console.log(error);
+                    this.$message({
+                        type: 'error',
+                        message: error.message
+                    });
+                });
+        },
+        methods: {
+            /* 条件查询列表 */
+            list(pageNumber, pageSize) {
+                axios.post('/accountmanager/account/query', {
+                    page_number: pageNumber,
+                    page_size: pageSize,
+                    decrypt: true,
+                    fuzzy_name: this.searchAppName
+                }).then((response) => {
+                    const result = response.data;
+                    if (result.code == '000000') {
+                        this.totalPages = result.data.total_pages;
+                        const accountsData = result.data.list;
+                        this.accounts = accountsData;
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: result.message
+                        });
+                    }
+                }).catch(function (error) {
                     console.log(error);
                     this.$message({
                         type: 'error',
@@ -190,76 +233,44 @@
                     });
                 });
             },
-            methods: {
-                /* 条件查询列表 */
-                list(pageNumber, pageSize) {
-                    axios.post('/accountmanager/account/query', {
-                        page_number: pageNumber,
-                        page_size: pageSize,
-                        decrypt: true,
-                        fuzzy_name: this.searchAppName
-                    })
-                    .then((response) => {
+
+            /* 删除 */
+            deleteOne(account) {
+                this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post('/accountmanager/account/delete', {
+                        id: account.id
+                    }).then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
-                            this.totalPages = result.data.total_pages;
-                            const accountsData = result.data.list;
-                            this.accounts = accountsData;
+                            location.reload();
                         } else {
                             this.$message({
                                 type: 'error',
                                 message: result.message
                             });
                         }
-                    })
-                    .catch(function(error) {
+                    }).catch(function (error) {
                         console.log(error);
                         this.$message({
                             type: 'error',
                             message: error.message
                         });
                     });
-                },
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    })
+                });
+            },
 
-                /* 删除 */
-                deleteOne(account) {
-                    this.$confirm('此操作将永久删除该账号, 是否继续?', '提示', {
-                        confirmButtonText: '确定',
-                        cancelButtonText: '取消',
-                        type: 'warning'
-                    }).then(() => {
-                        axios.post('/accountmanager/account/delete', {
-                            id: account.id
-                        })
-                        .then((response) => {
-                            const result = response.data;
-                            if (result.code == '000000') {
-                                location.reload();
-                            } else {
-                                this.$message({
-                                    type: 'error',
-                                    message: result.message
-                                });
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                            this.$message({
-                                type: 'error',
-                                message: error.message
-                            });
-                        });
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: '已取消删除'
-                        })
-                    });
-                },
-
-                // 获取随机密码
-                getRandomPassword() {
-                    axios.get('/accountmanager/password/get')
+            // 获取随机密码
+            getRandomPassword() {
+                axios.get('/accountmanager/password/get')
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
@@ -273,52 +284,24 @@
                             });
                         }
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                         this.$message({
                             type: 'error',
                             message: error.message
                         });
                     });
-                },
+            },
 
-                /* 修改：先查再改 */
-                edit(account) {
-                    this.editDialogFormVisible = true;
-                    axios.get('/accountmanager/account/get?id=' + account.id)
+            /* 修改：先查再改 */
+            edit(account) {
+                this.editDialogFormVisible = true;
+                axios.get('/accountmanager/account/get?id=' + account.id)
                     .then((response) => {
                         const result = response.data;
                         if (result.code == '000000') {
                             const accountsData = result.data;
                             this.editForm = accountsData;
-                            } else {
-                                this.$message({
-                                    type: 'error',
-                                    message: result.message
-                                });
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                            this.$message({
-                                type: 'error',
-                                message: error.message
-                            });
-                        });
-                },
-                editOne(account) {
-                    axios.post('/accountmanager/account/update', {
-                        id: account.id,
-                        name: account.name,
-                        url: account.url,
-                        username: account.username,
-                        password: account.password,
-                        remark: account.remark
-                    })
-                    .then((response) => {
-                        const result = response.data;
-                        if (result.code == '000000') {
-                            location.reload();
                         } else {
                             this.$message({
                                 type: 'error',
@@ -326,71 +309,96 @@
                             });
                         }
                     })
-                    .catch((error) => {
+                    .catch(function (error) {
                         console.log(error);
                         this.$message({
                             type: 'error',
                             message: error.message
                         });
                     });
-                },
-
-                /* 添加 */
-                add() {
-                    this.addDialogFormVisible = true;
-                },
-                addOne(account) {
-                    axios.post('/accountmanager/account/add', {
-                        name: account.name,
-                        url: account.url,
-                        username: account.username,
-                        password: account.password,
-                        remark: account.remark
-                    })
-                    .then((response) => {
-                        const result = response.data;
-                        if (result.code == '000000') {
-                            location.reload();
-                        } else {
-                            this.$message({
-                                type: 'error',
-                                message: result.message
-                            });
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
+            },
+            editOne(account) {
+                axios.post('/accountmanager/account/update', {
+                    id: account.id,
+                    name: account.name,
+                    url: account.url,
+                    username: account.username,
+                    password: account.password,
+                    remark: account.remark
+                }).then((response) => {
+                    const result = response.data;
+                    if (result.code == '000000') {
+                        location.reload();
+                    } else {
                         this.$message({
                             type: 'error',
-                            message: error.message
+                            message: result.message
                         });
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.$message({
+                        type: 'error',
+                        message: error.message
                     });
-                },
+                });
+            },
 
-                /* 页码变更 */
-                handleCurrentChange(pageNumber) {
-                    this.list(pageNumber, 10);
-                },
+            /* 添加 */
+            add() {
+                this.addDialogFormVisible = true;
+            },
+            addOne(account) {
+                axios.post('/accountmanager/account/add', {
+                    name: account.name,
+                    url: account.url,
+                    username: account.username,
+                    password: account.password,
+                    remark: account.remark
+                }).then((response) => {
+                    const result = response.data;
+                    if (result.code == '000000') {
+                        location.reload();
+                    } else {
+                        this.$message({
+                            type: 'error',
+                            message: result.message
+                        });
+                    }
+                }).catch((error) => {
+                    console.log(error);
+                    this.$message({
+                        type: 'error',
+                        message: error.message
+                    });
+                });
+            },
 
-                /* 对话框取消按钮 */
-                cancelDialog() {
-                    this.addDialogFormVisible = false;
-                    this.editDialogFormVisible = false;
+            /* 页码变更 */
+            handleCurrentChange(pageNumber) {
+                this.pageNumber = pageNumber;
+                this.list(pageNumber, 10);
+            },
 
-                    this.addForm = this.$options.data().addForm;
-                    //this.editForm = this.$options.data().editForm;
-                },
+            /* 对话框取消按钮 */
+            cancelDialog() {
+                this.addDialogFormVisible = false;
+                this.editDialogFormVisible = false;
 
-                /* 文件上传 */
-                uploadSuccess() {
-                    location.reload();
-                }, 
-                uploadError() {
-                    this.$message.error('导入失败，请重试'); 
-                }
+                this.addForm = this.$options.data().addForm;
+                //this.editForm = this.$options.data().editForm;
+            },
 
+            /* 文件上传 */
+            uploadSuccess() {
+                location.reload();
+            },
+            uploadError() {
+                this.$message.error('导入失败，请重试');
             }
-        })
+
+        }
+    })
 </script>
 
 </html>
