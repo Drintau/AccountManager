@@ -8,5 +8,7 @@ body .el-table th.gutter{
     display: table-cell!important;
 }
 
-/* element-ui 表格边框线消失：不会解决，看后面升级版本官方有没有修复；不影响使用 */
+/* element-ui 表格边框线消失
+   高级页面表格最后一列的width小于110就会出现：该列左边框在一定条件（缩放）下才能显示，其实是倒数第二列的右边框
+*/
 
