@@ -1,0 +1,12 @@
+/* 防止页面闪烁 */
+[v-cloak] {
+    display: none !important;
+}
+
+/* element-ui 表格的表头与内容错位 */
+body .el-table th.gutter{
+    display: table-cell!important;
+}
+
+/* element-ui 表格边框线消失：不会解决，看后面升级版本官方有没有修复；不影响使用 */
+
