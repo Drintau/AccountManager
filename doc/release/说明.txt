@@ -1,5 +1,5 @@
-命令生成秘钥：java -jar account-manager-1.0.5.jar --securityKey
+命令生成秘钥：java -jar account-manager-1.0.6.jar --securityKey
 快速生成秘钥：双击generatekey.bat
 
-命令启动程序：java -jar account-manager-1.0.5.jar
+命令启动程序：java -jar account-manager-1.0.6.jar
 快速启动程序：双击startam.bat
