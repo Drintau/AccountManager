@@ -8,6 +8,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+
 @Component
 @Order(2)
 public class AfterInitCompletedRunner implements ApplicationRunner {
@@ -22,6 +26,20 @@ public class AfterInitCompletedRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        logger.info("欢迎访问：{}", "http://localhost:" + port + contextPath);
+        String localUrl = "http://localhost:" + port + contextPath;
+        logger.info("欢迎访问：{}", localUrl);
+
+        // 如果支持调用系统浏览器打开网址，则进行此操作
+        if (Desktop.isDesktopSupported()) {
+            URI uri = URI.create(localUrl);
+            Desktop desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    desktop.browse(uri);
+                } catch (IOException e) {
+                    logger.info("无法调用系统浏览器打开网址，请手动复制网址到浏览器打开。");
+                }
+            }
+        }
     }
 }

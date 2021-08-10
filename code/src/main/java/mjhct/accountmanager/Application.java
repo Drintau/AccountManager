@@ -4,8 +4,8 @@ import cn.hutool.core.util.HexUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import mjhct.accountmanager.commons.AppLaunchArgsConstant;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
@@ -37,7 +37,14 @@ public class Application {
             }
         }
 
-        SpringApplication.run(Application.class, args);
+        /*
+         * Spring Boot 应用默认情况下运行在headless模式，无法使用AWT GUI
+         * 参考解决：
+         * https://my.oschina.net/hava/blog/3047377
+         * https://blog.csdn.net/tudaodiaozhale/article/details/72620984
+         */
+        SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(Application.class);
+        springApplicationBuilder.headless(false).run(args);
 
     }
 
