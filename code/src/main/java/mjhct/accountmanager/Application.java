@@ -4,8 +4,8 @@ import cn.hutool.core.util.HexUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import mjhct.accountmanager.commons.AppLaunchArgsConstant;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
@@ -14,6 +14,26 @@ public class Application {
 
     public static void main(String[] args) {
 
+        // 不同传参处理
+        handleAppLaunchArgs(args);
+
+        /*
+         * 通过JVM传参来禁用headless模式 -Djava.awt.headless=false
+         */
+        SpringApplication.run(Application.class, args);
+
+        /*
+         * Spring Boot 应用默认情况下运行在headless模式，无法使用AWT GUI
+         * 参考解决：
+         * https://my.oschina.net/hava/blog/3047377
+         * https://www.cnblogs.com/huashengweilong/p/10807076.html
+        通过Spring设置来禁用headless模式
+        SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(Application.class);
+        springApplicationBuilder.headless(false).run(args);
+         */
+    }
+
+    private static void handleAppLaunchArgs(String[] args) {
         for (String arg : args) {
             if (arg.startsWith("--")) {
                 String optionText = arg.substring(2);
@@ -29,23 +49,13 @@ public class Application {
                         Thread.sleep(60000);
                     } catch (InterruptedException e) {
                         System.out.println("程序异常退出！");
-                        return;
+                        System.exit(0);
                     }
                     System.out.println("程序退出！");
-                    return;
+                    System.exit(0);
                 }
             }
         }
-
-        /*
-         * Spring Boot 应用默认情况下运行在headless模式，无法使用AWT GUI
-         * 参考解决：
-         * https://my.oschina.net/hava/blog/3047377
-         * https://blog.csdn.net/tudaodiaozhale/article/details/72620984
-         */
-        SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(Application.class);
-        springApplicationBuilder.headless(false).run(args);
-
     }
 
 }
