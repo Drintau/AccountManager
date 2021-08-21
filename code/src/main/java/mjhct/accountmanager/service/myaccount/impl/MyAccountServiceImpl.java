@@ -93,7 +93,7 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO) {
+    public MyAccountInfoBO addMyAccount(MyAccountAddInfoBO myAccountAddBO) {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
         addAccount.setMyUsername(cryptoService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(cryptoService.encrypt(addAccount.getMyPassword()));
@@ -106,7 +106,7 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public MyAccountInfoBO updateMyAccount(MyAccountUpdateBeforeBO myAccountUpdateBO) {
+    public MyAccountInfoBO updateMyAccount(MyAccountUpdateInfoBO myAccountUpdateBO) {
         Optional<MyAccountPO> old = myAccountRepository.findById(myAccountUpdateBO.getId());
         if (old.isPresent()) {
             MyAccountPO updateAccount = old.get();

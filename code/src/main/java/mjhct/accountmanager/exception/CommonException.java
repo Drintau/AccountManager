@@ -13,9 +13,9 @@ public class CommonException extends RuntimeException{
     private CommonCode exceptionCode;
 
     /**
-     * 异常信息
+     * 自定义的异常信息
      */
-    private String message;
+    private String exceptionMessage;
 
     public CommonException(String message) {
         super(message);
@@ -24,7 +24,7 @@ public class CommonException extends RuntimeException{
     public CommonException(CommonCode commonCode, String message) {
         super(message);
         this.exceptionCode = commonCode;
-        this.message = message;
+        this.exceptionMessage = message;
     }
 
     public CommonCode getExceptionCode() {
@@ -35,20 +35,19 @@ public class CommonException extends RuntimeException{
         this.exceptionCode = exceptionCode;
     }
 
-    @Override
-    public String getMessage() {
-        return message;
+    public String getExceptionMessage() {
+        return exceptionMessage;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setExceptionMessage(String exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
     }
 
     @Override
     public String toString() {
         return "CommonException{" +
                 "exceptionCode=" + exceptionCode +
-                ", message='" + message + '\'' +
+                ", exceptionMessage='" + exceptionMessage + '\'' +
                 '}';
     }
 }

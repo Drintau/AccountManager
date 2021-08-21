@@ -26,14 +26,14 @@ public class ControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult handleCommonException(CommonException ce) {
-        return new CommonResult(ce.getExceptionCode(), ce.getMessage());
+        return new CommonResult(ce.getExceptionCode(), ce.getExceptionMessage());
     }
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult handleBusinessException(BusinessException be) {
-        return new CommonResult(be.getExceptionCode(), be.getMessage());
+        return new CommonResult(be.getExceptionCode(), be.getExceptionMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

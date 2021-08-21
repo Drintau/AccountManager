@@ -100,18 +100,18 @@ public class AccountManagerController {
     }
 
     @PostMapping("/add")
-    public CommonResult<MyAccountAddResDTO> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
-        MyAccountAddBeforeBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqDTO, MyAccountAddBeforeBO.class);
+    public CommonResult<MyAccountQueryResDTO> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
+        MyAccountAddInfoBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqDTO, MyAccountAddInfoBO.class);
         MyAccountInfoBO myAccount = myAccountService.addMyAccount(myAccountAddBeforeBO);
-        MyAccountAddResDTO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountAddResDTO.class);
+        MyAccountQueryResDTO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountQueryResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountAddResDTO);
     }
 
     @PostMapping("/update")
-    public CommonResult<MyAccountUpdateResDTO> update(@RequestBody @Validated MyAccountUpdateReqDTO myAccountUpdateReqDTO) {
-        MyAccountUpdateBeforeBO myAccountUpdateBO = BeanUtil.copy(myAccountUpdateReqDTO, MyAccountUpdateBeforeBO.class);
+    public CommonResult<MyAccountQueryResDTO> update(@RequestBody @Validated MyAccountUpdateReqDTO myAccountUpdateReqDTO) {
+        MyAccountUpdateInfoBO myAccountUpdateBO = BeanUtil.copy(myAccountUpdateReqDTO, MyAccountUpdateInfoBO.class);
         MyAccountInfoBO myAccount = myAccountService.updateMyAccount(myAccountUpdateBO);
-        MyAccountUpdateResDTO myAccountUpdateResDTO = BeanUtil.copy(myAccount, MyAccountUpdateResDTO.class);
+        MyAccountQueryResDTO myAccountUpdateResDTO = BeanUtil.copy(myAccount, MyAccountQueryResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountUpdateResDTO);
     }
 

@@ -21,7 +21,7 @@ public class TraceIdFilter implements Filter {
     private static final Logger logger = LoggerFactory.getLogger(TraceIdFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         logger.info("日志唯一ID过滤器初始化。");
     }
 

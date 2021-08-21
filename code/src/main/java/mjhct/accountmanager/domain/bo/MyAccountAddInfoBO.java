@@ -1,6 +1,6 @@
 package mjhct.accountmanager.domain.bo;
 
-public class MyAccountAddBeforeBO {
+public class MyAccountAddInfoBO {
 
     private String appName;
 
@@ -52,14 +52,4 @@ public class MyAccountAddBeforeBO {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "MyAccountAddBeforeBO{" +
-                "appName='" + appName + '\'' +
-                ", appUrl='" + appUrl + '\'' +
-                ", myUsername='" + myUsername + '\'' +
-                ", myPassword='" + myPassword + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

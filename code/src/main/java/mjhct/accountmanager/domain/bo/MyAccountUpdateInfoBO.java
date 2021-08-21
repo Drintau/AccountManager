@@ -1,6 +1,6 @@
 package mjhct.accountmanager.domain.bo;
 
-public class MyAccountUpdateBeforeBO {
+public class MyAccountUpdateInfoBO {
 
     private Integer id;
 
@@ -62,15 +62,4 @@ public class MyAccountUpdateBeforeBO {
         this.remark = remark;
     }
 
-    @Override
-    public String toString() {
-        return "MyAccountUpdateBeforeBO{" +
-                "id=" + id +
-                ", appName='" + appName + '\'' +
-                ", appUrl='" + appUrl + '\'' +
-                ", myUsername='" + myUsername + '\'' +
-                ", myPassword='" + myPassword + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

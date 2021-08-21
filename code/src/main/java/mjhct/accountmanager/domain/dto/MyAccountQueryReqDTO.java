@@ -63,4 +63,14 @@ public class MyAccountQueryReqDTO {
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
+
+    @Override
+    public String toString() {
+        return "MyAccountQueryReqDTO{" +
+                "pageNumber=" + pageNumber +
+                ", pageSize=" + pageSize +
+                ", decrypt=" + decrypt +
+                ", fuzzyName='" + fuzzyName + '\'' +
+                '}';
+    }
 }

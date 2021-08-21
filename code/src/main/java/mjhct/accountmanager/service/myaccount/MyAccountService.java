@@ -20,9 +20,9 @@ public interface MyAccountService {
      */
     MyAccountListBO listMyAccount(Boolean decrypt, int offsetPageNumber, int pageSize);
 
-    MyAccountInfoBO addMyAccount(MyAccountAddBeforeBO myAccountAddBO);
+    MyAccountInfoBO addMyAccount(MyAccountAddInfoBO myAccountAddBO);
 
-    MyAccountInfoBO updateMyAccount(MyAccountUpdateBeforeBO myAccountUpdateBO);
+    MyAccountInfoBO updateMyAccount(MyAccountUpdateInfoBO myAccountUpdateBO);
 
     void deleteMyAccount(Integer id);
 
