@@ -37,7 +37,7 @@ public class AfterInitCompletedRunner implements ApplicationRunner {
                 try {
                     desktop.browse(uri);
                 } catch (IOException e) {
-                    logger.info("无法调用系统浏览器打开网址，请手动复制网址到浏览器打开。");
+                    logger.warn("无法调用系统浏览器打开网址，请手动复制网址到浏览器打开。");
                 }
             }
         }
