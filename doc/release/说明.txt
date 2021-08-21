@@ -1,6 +1,6 @@
-命令生成秘钥：java -jar account-manager-1.0.6.jar --securityKey
+命令生成秘钥：java -jar account-manager-1.0.7.jar --securityKey
 快速生成秘钥：双击generatekey.bat
 
-命令启动程序：java -jar account-manager-1.0.6.jar
+命令启动程序：java -jar account-manager-1.0.7.jar
 命令启动程序（启动完成后调用系统浏览器访问）：java -Djava.awt.headless=false -jar account-manager-1.0.7.jar
 快速启动程序：双击startam.bat
