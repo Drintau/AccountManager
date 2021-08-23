@@ -204,14 +204,15 @@
                 searchAppName: '',
                 totalPages: 1,
                 pageSize: 10,
-                pageNumber: 1
+                pageNumber: 1,
+                successCode: '000000'
             }
         },
         mounted() {
             axios.get('/accountmanager/account/list?decrypt=false&page_number=1&page_size=10')
                 .then((response) => {
                     const result = response.data;
-                    if (result.code == '000000') {
+                    if (this.successCode == result.code) {
                         this.totalPages = result.data.total_pages;
                         const accountsData = result.data.list;
                         this.accounts = accountsData;
@@ -240,7 +241,7 @@
                     fuzzy_name: this.searchAppName
                 }).then((response) => {
                     const result = response.data;
-                    if (result.code == '000000') {
+                    if (this.successCode == result.code) {
                         this.totalPages = result.data.total_pages;
                         const accountsData = result.data.list;
                         this.accounts = accountsData;
@@ -265,7 +266,7 @@
                 axios.get('/accountmanager/account/get?id=' + account.id)
                     .then((response) => {
                         const result = response.data;
-                        if (result.code == '000000') {
+                        if (this.successCode == result.code) {
                             const accountsData = result.data;
                             this.showForm = accountsData;
                         } else {
@@ -295,7 +296,7 @@
                         id: account.id
                     }).then((response) => {
                         const result = response.data;
-                        if (result.code == '000000') {
+                        if (this.successCode == result.code) {
                             location.reload();
                         } else {
                             this.$message({
@@ -323,7 +324,7 @@
                 axios.get('/accountmanager/password/get')
                     .then((response) => {
                         const result = response.data;
-                        if (result.code == '000000') {
+                        if (this.successCode == result.code) {
                             // 两个一起赋值，省去判断属于哪个对话框
                             this.addForm.password = result.data;
                             this.editForm.password = result.data;
@@ -348,7 +349,7 @@
                 axios.get('/accountmanager/account/get?id=' + account.id)
                     .then((response) => {
                         const result = response.data;
-                        if (result.code == '000000') {
+                        if (this.successCode == result.code) {
                             const accountsData = result.data;
                             this.editForm = accountsData;
                         } else {
@@ -376,7 +377,7 @@
                     remark: account.remark
                 }).then((response) => {
                     const result = response.data;
-                    if (result.code == '000000') {
+                    if (this.successCode == result.code) {
                         location.reload();
                     } else {
                         this.$message({
@@ -406,7 +407,7 @@
                     remark: account.remark
                 }).then((response) => {
                     const result = response.data;
-                    if (result.code == '000000') {
+                    if (this.successCode == result.code) {
                         location.reload();
                     } else {
                         this.$message({
