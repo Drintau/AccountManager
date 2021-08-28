@@ -12,10 +12,18 @@ import javax.validation.constraints.NotEmpty;
 @Component
 @ConfigurationProperties(prefix = "am")
 @Validated
-public class SecurityConfig {
+public class SettingConfig {
 
+    /**
+     * aes加解密秘钥
+     */
     @NotEmpty(message = "请配置密钥")
     private String securityKey;
+
+    /**
+     * 随机密码位数，默认10
+     */
+    private int passwordDigits = 10;
 
     public String getSecurityKey() {
         return securityKey;
@@ -25,10 +33,11 @@ public class SecurityConfig {
         this.securityKey = securityKey;
     }
 
-    @Override
-    public String toString() {
-        return "SecurityConfig{" +
-                "securityKey='" + securityKey + '\'' +
-                '}';
+    public int getPasswordDigits() {
+        return passwordDigits;
+    }
+
+    public void setPasswordDigits(int passwordDigits) {
+        this.passwordDigits = passwordDigits;
     }
 }
