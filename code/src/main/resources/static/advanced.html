@@ -176,7 +176,7 @@
             }
         },
         mounted() {
-            axios.get('/accountmanager/account/list?decrypt=true&page_number=1&page_size=10')
+            axios.get('/accountmanager/account/list?decrypt=true&page_number=1&page_size=' + this.pageSize)
                 .then((response) => {
                     const result = response.data;
                     if (this.successCode == result.code) {
@@ -239,7 +239,9 @@
                     }).then((response) => {
                         const result = response.data;
                         if (this.successCode == result.code) {
-                            location.reload();
+                            // location.reload();
+                            this.cancelDialog();
+                            this.handleCurrentChange(1);
                         } else {
                             this.$message({
                                 type: 'error',
@@ -321,7 +323,9 @@
                 }).then((response) => {
                     const result = response.data;
                     if (this.successCode == result.code) {
-                        location.reload();
+                        // location.reload();
+                        this.cancelDialog();
+                        this.handleCurrentChange(this.pageNumber);
                     } else {
                         this.$message({
                             type: 'error',
@@ -351,7 +355,9 @@
                 }).then((response) => {
                     const result = response.data;
                     if (this.successCode == result.code) {
-                        location.reload();
+                        // location.reload();
+                        this.cancelDialog();
+                        this.handleCurrentChange(1);
                     } else {
                         this.$message({
                             type: 'error',
@@ -370,7 +376,7 @@
             /* 页码变更 */
             handleCurrentChange(pageNumber) {
                 this.pageNumber = pageNumber;
-                this.list(pageNumber, 10);
+                this.list(pageNumber, this.pageSize);
             },
 
             /* 对话框取消按钮 */
