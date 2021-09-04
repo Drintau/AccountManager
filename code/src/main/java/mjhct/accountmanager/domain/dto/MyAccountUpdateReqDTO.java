@@ -32,6 +32,7 @@ public class MyAccountUpdateReqDTO {
     @NotEmpty(message = "密码不能为空")
 //    @Pattern(regexp = "^(?![a-z0-9]{6,12})(?![0-9A-Z]{6,12})(?![a-zA-Z]{6,12})[a-zA-Z0-9].{5,11}$",
 //            message = "密码长度6-12位，不能以特殊符号开头，且前6位不能仅有：小写字母+数字、大写字母+数字、大小写字母")
+    @Length(min = 1, max = 20, message = "密码长度为1-20")
     private String myPassword;
 
     @JsonProperty("remark")
