@@ -1,4 +1,6 @@
 debug: false
+maven:
+  package_time: @timestamp@
 server:
   port: 12138
   servlet:

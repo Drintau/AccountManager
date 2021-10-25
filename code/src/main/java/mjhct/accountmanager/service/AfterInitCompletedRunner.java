@@ -18,6 +18,9 @@ public class AfterInitCompletedRunner implements ApplicationRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(AfterInitCompletedRunner.class);
 
+    @Value("${maven.package_time}")
+    private String packageTime;
+
     @Value("${server.port}")
     private String port;
 
@@ -26,6 +29,9 @@ public class AfterInitCompletedRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        logger.info("版本号：{}", packageTime);
+        logger.info("构建时间：{}", packageTime);
+
         String localUrl = "http://localhost:" + port + contextPath;
         logger.info("欢迎访问：{}", localUrl);
 

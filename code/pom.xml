@@ -11,6 +11,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--指定时间格式-->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <!--maven.build.timestamp保存了maven编译时间戳-->
+        <timestamp>${maven.build.timestamp}</timestamp>
         <java.version>11</java.version>
         <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <hutool.version>5.6.7</hutool.version>
@@ -98,6 +102,15 @@
     </dependencies>
 
     <build>
+        <!-- 让application.yaml能读取pom的值 -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <!-- 最终打包名 -->
+        <finalName>AccountManager</finalName>
         <pluginManagement>
             <plugins>
                 <!-- maven插件 -->
