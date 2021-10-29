@@ -22,7 +22,7 @@ public class TraceIdFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) {
-        logger.info("日志唯一ID过滤器初始化。");
+        logger.debug("日志唯一ID过滤器初始化。");
     }
 
     @Override
@@ -37,6 +37,6 @@ public class TraceIdFilter implements Filter {
     @Override
     public void destroy() {
         MDC.clear();
-        logger.info("日志唯一ID过滤器销毁。");
+        logger.debug("日志唯一ID过滤器销毁。");
     }
 }

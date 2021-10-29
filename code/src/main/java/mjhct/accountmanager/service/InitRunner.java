@@ -18,7 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 @Component
-@Order(1)
+@Order(2)
 public class InitRunner implements ApplicationRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(InitRunner.class);
@@ -31,7 +31,6 @@ public class InitRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        logger.info("应用启动成功。");
         try {
             // 读取数据库脚本文件
             Resource resource = resourceLoader.getResource("classpath:db/init.sql");
@@ -57,5 +56,6 @@ public class InitRunner implements ApplicationRunner {
             // 抛出异常
             throw e;
         }
+        logger.info("应用启动成功。");
     }
 }

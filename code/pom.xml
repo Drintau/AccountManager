@@ -11,8 +11,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!--指定时间格式-->
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+        <!--指定时间格式：年-月-日 时:分:秒 时区-->
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss Z</maven.build.timestamp.format>
         <!--maven.build.timestamp保存了maven编译时间戳-->
         <timestamp>${maven.build.timestamp}</timestamp>
         <java.version>11</java.version>

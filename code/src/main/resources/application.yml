@@ -1,5 +1,6 @@
 debug: false
 maven:
+  version: @version@
   package_time: @timestamp@
 server:
   port: 12138
