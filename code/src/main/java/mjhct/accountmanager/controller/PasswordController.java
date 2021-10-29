@@ -2,7 +2,7 @@ package mjhct.accountmanager.controller;
 
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
-import mjhct.accountmanager.config.SettingConfig;
+import mjhct.accountmanager.config.AccountManagerConfig;
 import mjhct.accountmanager.service.myaccount.MyPasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +24,11 @@ public class PasswordController {
     private MyPasswordService myPasswordService;
 
     @Resource
-    private SettingConfig settingConfig;
+    private AccountManagerConfig accountManagerConfig;
 
     @GetMapping("/get")
     public CommonResult<String> getRandomPassword() {
-        String randomPassword = myPasswordService.getRandomPassword(settingConfig.getPasswordDigits());
+        String randomPassword = myPasswordService.getRandomPassword(accountManagerConfig.getPasswordDigits());
         return new CommonResult<>(CommonCode.SUCCESS, CommonCode.SUCCESS.message, randomPassword);
     }
 

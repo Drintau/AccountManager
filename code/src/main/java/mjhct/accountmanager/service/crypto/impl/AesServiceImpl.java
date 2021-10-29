@@ -4,7 +4,7 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.AES;
 import mjhct.accountmanager.commons.CommonCode;
-import mjhct.accountmanager.config.SettingConfig;
+import mjhct.accountmanager.config.AccountManagerConfig;
 import mjhct.accountmanager.exception.CommonException;
 import mjhct.accountmanager.service.crypto.CryptoService;
 import org.slf4j.Logger;
@@ -23,20 +23,20 @@ public class AesServiceImpl implements CryptoService {
     private static final Logger logger = LoggerFactory.getLogger(AesServiceImpl.class);
 
     @Resource
-    private SettingConfig settingConfig;
+    private AccountManagerConfig accountManagerConfig;
 
     @Override
     public String decrypt(@NotBlank String ciphertext) {
         try {
             // 使用配置的密钥
-            byte[] key = settingConfig.getSecurityKey().getBytes();
+            byte[] key = accountManagerConfig.getSecurityKey().getBytes();
             // 构建
             AES aes = SecureUtil.aes(key);
             // 解密为字符串
             return aes.decryptStr(ciphertext, CharsetUtil.CHARSET_UTF_8);
         } catch (Exception e) {
             logger.error("aes解密失败", e);
-            throw new CommonException(CommonCode.CRYPTO_ERROR, "aes解密失败，请检查秘钥");
+            throw new CommonException(CommonCode.SYSTEM_ERROR, "aes解密失败，请检查秘钥");
         }
     }
 
@@ -44,14 +44,14 @@ public class AesServiceImpl implements CryptoService {
     public String encrypt(@NotBlank String plaintext) {
         try {
             // 使用配置的密钥
-            byte[] key = settingConfig.getSecurityKey().getBytes();
+            byte[] key = accountManagerConfig.getSecurityKey().getBytes();
             // 构建
             AES aes = SecureUtil.aes(key);
             // 加密为16进制表示
             return aes.encryptHex(plaintext);
         } catch (Exception e) {
             logger.error("aes加密失败", e);
-            throw new CommonException(CommonCode.CRYPTO_ERROR, "aes加密失败，请检查秘钥");
+            throw new CommonException(CommonCode.SYSTEM_ERROR, "aes加密失败，请检查秘钥");
         }
     }
 }

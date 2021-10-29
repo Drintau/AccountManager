@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Component
 @ConfigurationProperties(prefix = "am")
 @Validated
-public class SettingConfig {
+public class AccountManagerConfig {
 
     /**
      * aes加解密秘钥
