@@ -6,7 +6,7 @@
 
     <groupId>mjhct</groupId>
     <artifactId>account-manager</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -110,7 +110,7 @@
             </resource>
         </resources>
         <!-- 最终打包名 -->
-        <finalName>AccountManager</finalName>
+        <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <!-- maven插件 -->
