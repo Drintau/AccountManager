@@ -22,6 +22,11 @@ spring:
   datasource:
     driver-class-name: org.h2.Driver
     # url: jdbc:h2:file:D:/h2db 文件数据库
+    hikari:
+      connection-timeout: 2000
+      idle-timeout: 120000
+      maximum-pool-size: 10
+      max-lifetime: 60000
 ---
 #开发时使用命令行参数激活dev配置 --spring.profiles.active=dev
 debug: true
