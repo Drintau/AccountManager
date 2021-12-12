@@ -4,33 +4,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+<!--        <artifactId>spring-boot-dependencies</artifactId>-->
+        <version>2.3.12.RELEASE</version>
+    </parent>
     <groupId>mjhct</groupId>
     <artifactId>account-manager</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--指定时间格式：年-月-日 时:分:秒 时区-->
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss Z</maven.build.timestamp.format>
         <!--maven.build.timestamp保存了maven编译时间戳-->
         <timestamp>${maven.build.timestamp}</timestamp>
+        <!-- 覆盖spring-boot-starter-parent指定的java版本1.8 -->
         <java.version>11</java.version>
-        <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
         <hutool.version>5.6.7</hutool.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <!-- Spring -->
@@ -102,67 +95,22 @@
     </dependencies>
 
     <build>
-        <!-- 让application.yaml能读取pom的值 -->
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <!-- 最终打包名 -->
         <finalName>${project.artifactId}</finalName>
-        <pluginManagement>
-            <plugins>
-                <!-- maven插件 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-clean-plugin</artifactId>
-                    <version>3.1.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.2.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <configuration>
-                        <excludes>
-                            <!-- 打成jar包时排除开发使用的日志配置文件 -->
-                            <exclude>
-                                log4j2-spring-dev.xml
-                            </exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-                <!-- springboot插件：https://docs.spring.io/spring-boot/docs/2.2.9.RELEASE/reference/html/build-tool-plugins.html#build-tool-plugins -->
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <!-- 打成jar包时排除开发使用的日志配置文件 -->
+                        <exclude>
+                            log4j2-spring-dev.xml
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
