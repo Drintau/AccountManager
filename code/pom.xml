@@ -22,6 +22,8 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <!-- 覆盖spring-boot-starter-parent指定的java版本1.8 -->
         <java.version>11</java.version>
+        <log4j2.version>2.16.0</log4j2.version>
+        <h2.version>1.4.200</h2.version>
         <hutool.version>5.6.7</hutool.version>
     </properties>
 
@@ -74,7 +76,7 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>1.4.200</version>
+            <version>${h2.version}</version>
         </dependency>
         <!-- 前端 -->
         <dependency>
