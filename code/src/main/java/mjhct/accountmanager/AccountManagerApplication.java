@@ -3,6 +3,7 @@ package mjhct.accountmanager;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
+import javafx.application.Application;
 import mjhct.accountmanager.commons.AppLaunchArgsConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,17 +11,19 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
-public class Application {
+public class AccountManagerApplication {
 
     public static void main(String[] args) {
 
+        Application.launch(FxApplication.class, args);
+
         // 不同传参处理
-        handleAppLaunchArgs(args);
+//        handleAppLaunchArgs(args);
 
         /*
          * 通过JVM传参来禁用headless模式 -Djava.awt.headless=false
          */
-        SpringApplication.run(Application.class, args);
+//        SpringApplication.run(AccountManagerApplication.class, args);
 
         /*
          * Spring Boot 应用默认情况下运行在headless模式，无法使用AWT GUI
