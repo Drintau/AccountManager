@@ -31,7 +31,10 @@ spring:
 #开发时使用命令行参数激活dev配置 --spring.profiles.active=dev
 debug: true
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile:
+        - dev
   datasource:
     url: jdbc:h2:mem:h2db
     username: root
