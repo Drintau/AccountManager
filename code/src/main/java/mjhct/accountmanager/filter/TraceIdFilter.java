@@ -28,7 +28,7 @@ public class TraceIdFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String oldTraceId = MDC.get(TRACE_ID_KEY);
-        if (StringUtils.isEmpty(oldTraceId)) {
+        if (!StringUtils.hasText(oldTraceId)) {
             MDC.put(TRACE_ID_KEY, IdUtil.fastSimpleUUID());
         }
         chain.doFilter(request, response);
