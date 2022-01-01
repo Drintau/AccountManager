@@ -13,7 +13,7 @@
     <div id="app" v-cloak>
         <el-container>
 
-            <el-header height="30px" style="padding: 0;margin: 5px;">
+            <el-header height="30px">
                 <el-row>
                     <el-col :span="8">
                         <el-button type="primary" @click="add" size="mini">新增账号</el-button>
@@ -33,7 +33,7 @@
                 </el-row>
             </el-header>
 
-            <el-main style="padding: 0;margin: 5px;height: 600px;">
+            <el-main style="height: 620px;width: 100%;">
                 <el-table :data="accounts" border>
                     <el-table-column fixed type="index" label="序号" width="50">
                     </el-table-column>
@@ -53,13 +53,11 @@
                     </el-table-column>
                     <el-table-column prop="update_time" label="更新时间" width="160">
                     </el-table-column>
-                    <el-table-column fixed="right" label="操作" width="150">
+                    <el-table-column fixed="right" label="操作" width="100">
                         <template slot-scope="scope">
-                            <el-button @click="show(scope.row)" type="text" size="mini">查看</el-button>
-                            <el-button @click="edit(scope.row)" type="text" size="mini">编辑</el-button>
-                            <el-button @click="deleteOne(scope.row)" type="text" size="mini">
-                                <span style="color: red;">删除</span>
-                            </el-button>
+                            <el-button @click="show(scope.row)" type="text" size="mini" icon="el-icon-view" style="color: green;"></el-button>
+                            <el-button @click="edit(scope.row)" type="text" size="mini" icon="el-icon-edit"></el-button>
+                            <el-button @click="deleteOne(scope.row)" type="text" size="mini" icon="el-icon-delete" style="color: red;"></el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -151,7 +149,7 @@
                 </el-dialog>
             </el-main>
 
-            <el-footer height="30px" style="padding: 0;margin: 5px;">
+            <el-footer height="30px">
                 <el-pagination style="float: right;" hide-on-single-page :page-count="totalPages" :page-size="pageSize"
                     :current-page="pageNumber" @current-change="handleCurrentChange" layout="prev, pager, next">
                 </el-pagination>
