@@ -1,8 +1,9 @@
 package mjhct.accountmanager.controller;
 
-import cn.hutool.poi.excel.ExcelReader;
-import cn.hutool.poi.excel.ExcelUtil;
-import cn.hutool.poi.excel.ExcelWriter;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.read.listener.PageReadListener;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
 import mjhct.accountmanager.domain.bo.*;
@@ -121,33 +122,26 @@ public class AccountManagerController {
         return new CommonResult(CommonCode.SUCCESS);
     }
 
-    @GetMapping("/export")
-    public void export(HttpServletResponse response) {
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        response.setHeader("Content-Disposition","attachment;filename=account_data.xlsx");
-
-        try (ExcelWriter export = myAccountService.export();
-             ServletOutputStream outputStream = response.getOutputStream()) {
-            export.flush(outputStream, true);
-        } catch (IOException e) {
-            throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
-        }
-    }
+//    @GetMapping("/export")
+//    public void export(HttpServletResponse response) {
+//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+//        response.setHeader("Content-Disposition","attachment;filename=account_data.xlsx");
+//
+//        try (ExcelWriter export = myAccountService.export();
+//             ServletOutputStream outputStream = response.getOutputStream()) {
+//            export.flush(outputStream, true);
+//        } catch (IOException e) {
+//            throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
+//        }
+//    }
 
     @PostMapping("/import")
     public CommonResult importAccounts(@RequestParam("file") MultipartFile file) {
         try {
-            ExcelReader reader = ExcelUtil.getReader(file.getInputStream());
-            Map<String, String> headerAlias = new HashMap<>(16);
-            headerAlias.put("应用名称", "appName");
-            headerAlias.put("应用网址", "appUrl");
-            headerAlias.put("登录名", "myUsername");
-            headerAlias.put("密码", "myPassword");
-            headerAlias.put("说明", "remark");
-            reader.setHeaderAlias(headerAlias);
-            List<MyAccountImportAndExportInfoBO> importAccounts = reader.readAll(MyAccountImportAndExportInfoBO.class);
-            myAccountService.importAccounts(importAccounts);
-        } catch (IOException e) {
+            EasyExcel.read(file.getInputStream(), MyAccountImportAndExportInfoBO.class,
+                    new PageReadListener<MyAccountImportAndExportInfoBO>(dataList -> myAccountService.importAccounts(dataList))
+            ).sheet().doRead();
+        } catch (Exception e) {
             logger.error("导入数据失败！", e);
             return new CommonResult(CommonCode.FAIL, "导入数据失败！建议删除数据库文件重试。");
         }
