@@ -1,8 +1,6 @@
 package mjhct.accountmanager.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelReader;
-import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.read.listener.PageReadListener;
 import mjhct.accountmanager.commons.CommonCode;
 import mjhct.accountmanager.commons.CommonResult;
@@ -20,12 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/account")
@@ -122,18 +117,19 @@ public class AccountManagerController {
         return new CommonResult(CommonCode.SUCCESS);
     }
 
-//    @GetMapping("/export")
-//    public void export(HttpServletResponse response) {
-//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-//        response.setHeader("Content-Disposition","attachment;filename=account_data.xlsx");
-//
-//        try (ExcelWriter export = myAccountService.export();
-//             ServletOutputStream outputStream = response.getOutputStream()) {
-//            export.flush(outputStream, true);
-//        } catch (IOException e) {
-//            throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
-//        }
-//    }
+    @GetMapping("/export")
+    public void export(HttpServletResponse response) {
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+        response.setHeader("Content-Disposition","attachment;filename=account_data.xlsx");
+
+        try {
+            EasyExcel.write(response.getOutputStream(), MyAccountImportAndExportInfoBO.class)
+                    .sheet("数据")
+                    .doWrite(() -> myAccountService.exportAccounts());
+        } catch (IOException e) {
+            throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
+        }
+    }
 
     @PostMapping("/import")
     public CommonResult importAccounts(@RequestParam("file") MultipartFile file) {

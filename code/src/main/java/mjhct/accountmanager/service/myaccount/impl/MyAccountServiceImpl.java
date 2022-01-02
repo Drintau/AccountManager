@@ -129,30 +129,18 @@ public class MyAccountServiceImpl implements MyAccountService {
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
 
-//    @Override
-//    public ExcelWriter export() {
-//        // 查询所有数据
-//        List<MyAccountPO> rawDataList = myAccountRepository.findAll();
-//        List<MyAccountImportAndExportInfoBO> importAndExportDataList = BeanUtil.copyList(rawDataList, MyAccountImportAndExportInfoBO.class);
-//        // 解密
-//        for (MyAccountImportAndExportInfoBO myAccount : importAndExportDataList) {
-//            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-//            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
-//        }
-//
-//        // 写到xlsx
-//        ExcelWriter writer = ExcelUtil.getWriter(true);
-//
-//        writer.addHeaderAlias("appName", "应用名称");
-//        writer.addHeaderAlias("appUrl", "应用网址");
-//        writer.addHeaderAlias("myUsername", "登录名");
-//        writer.addHeaderAlias("myPassword", "密码");
-//        writer.addHeaderAlias("remark", "说明");
-//
-//        writer.write(importAndExportDataList);
-//
-//        return writer;
-//    }
+    @Override
+    public List<MyAccountImportAndExportInfoBO> exportAccounts() {
+        // 查询所有数据
+        List<MyAccountPO> rawDataList = myAccountRepository.findAll();
+        List<MyAccountImportAndExportInfoBO> exportDataList = BeanUtil.copyList(rawDataList, MyAccountImportAndExportInfoBO.class);
+        // 解密
+        for (MyAccountImportAndExportInfoBO myAccount : exportDataList) {
+            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
+            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+        }
+        return exportDataList;
+    }
 
     @Override
     public void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList) {

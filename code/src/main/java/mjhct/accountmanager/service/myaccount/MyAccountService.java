@@ -25,7 +25,7 @@ public interface MyAccountService {
 
     void deleteMyAccount(Integer id);
 
-//    ExcelWriter export();
+    List<MyAccountImportAndExportInfoBO> exportAccounts();
 
     void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList);
 

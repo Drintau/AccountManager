@@ -1,18 +1,25 @@
 package mjhct.accountmanager.domain.bo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+
 /**
  * 导入导出功能用到的信息
  */
 public class MyAccountImportAndExportInfoBO {
 
+    @ExcelProperty("应用名称")
     private String appName;
 
+    @ExcelProperty("应用网址")
     private String appUrl;
 
+    @ExcelProperty("登录名")
     private String myUsername;
 
+    @ExcelProperty("密码")
     private String myPassword;
 
+    @ExcelProperty("说明")
     private String remark;
 
     public String getAppName() {
