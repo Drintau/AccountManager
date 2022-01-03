@@ -1,6 +1,5 @@
 package mjhct.accountmanager.filter;
 
-import cn.hutool.core.util.IdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -9,6 +8,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * 日志唯一ID过滤器
@@ -29,7 +29,7 @@ public class TraceIdFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String oldTraceId = MDC.get(TRACE_ID_KEY);
         if (!StringUtils.hasText(oldTraceId)) {
-            MDC.put(TRACE_ID_KEY, IdUtil.fastSimpleUUID());
+            MDC.put(TRACE_ID_KEY, UUID.randomUUID().toString());
         }
         chain.doFilter(request, response);
     }

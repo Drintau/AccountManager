@@ -5,7 +5,7 @@ import mjhct.accountmanager.dao.MyAccountRepository;
 import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
 import mjhct.accountmanager.exception.BusinessException;
-import mjhct.accountmanager.service.crypto.CryptoService;
+import mjhct.accountmanager.service.secure.SecureService;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.util.BeanUtil;
 import mjhct.accountmanager.util.DateTimeUtil;
@@ -28,8 +28,8 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     private static final Logger logger = LoggerFactory.getLogger(MyAccountServiceImpl.class);
 
-    @Resource(name = "aesService")
-    private CryptoService cryptoService;
+    @Resource
+    private SecureService secureService;
 
     @Resource
     private MyAccountRepository myAccountRepository;
@@ -40,8 +40,8 @@ public class MyAccountServiceImpl implements MyAccountService {
         if (byId.isPresent()) {
             MyAccountPO myAccountPO = byId.get();
             MyAccountInfoBO myAccount = BeanUtil.copy(myAccountPO, MyAccountInfoBO.class);
-            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+            myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
+            myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
             return myAccount;
         }
         return null;
@@ -66,8 +66,8 @@ public class MyAccountServiceImpl implements MyAccountService {
         List<MyAccountPO> dataList = pageData.getContent();
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
-                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+                myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
+                myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
             }
         }
         List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
@@ -81,8 +81,8 @@ public class MyAccountServiceImpl implements MyAccountService {
         List<MyAccountPO> dataList = pageData.getContent();
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
-                myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-                myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+                myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
+                myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
             }
         }
         List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
@@ -93,8 +93,8 @@ public class MyAccountServiceImpl implements MyAccountService {
     @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO addMyAccount(MyAccountAddInfoBO myAccountAddBO) {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
-        addAccount.setMyUsername(cryptoService.encrypt(addAccount.getMyUsername()));
-        addAccount.setMyPassword(cryptoService.encrypt(addAccount.getMyPassword()));
+        addAccount.setMyUsername(secureService.encrypt(addAccount.getMyUsername()));
+        addAccount.setMyPassword(secureService.encrypt(addAccount.getMyPassword()));
         OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
         addAccount.setCreateTime(nowOffsetDateTime);
         addAccount.setUpdateTime(nowOffsetDateTime);
@@ -109,8 +109,8 @@ public class MyAccountServiceImpl implements MyAccountService {
         if (old.isPresent()) {
             MyAccountPO updateAccount = old.get();
             BeanUtil.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
-            updateAccount.setMyUsername(cryptoService.encrypt(updateAccount.getMyUsername()));
-            updateAccount.setMyPassword(cryptoService.encrypt(updateAccount.getMyPassword()));
+            updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
+            updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
             updateAccount.setUpdateTime(DateTimeUtil.nowChinaOffsetDateTime());
             MyAccountPO updateRst = myAccountRepository.save(updateAccount);
             return BeanUtil.copy(updateRst, MyAccountInfoBO.class);
@@ -136,8 +136,8 @@ public class MyAccountServiceImpl implements MyAccountService {
         List<MyAccountImportAndExportInfoBO> exportDataList = BeanUtil.copyList(rawDataList, MyAccountImportAndExportInfoBO.class);
         // 解密
         for (MyAccountImportAndExportInfoBO myAccount : exportDataList) {
-            myAccount.setMyUsername(cryptoService.decrypt(myAccount.getMyUsername()));
-            myAccount.setMyPassword(cryptoService.decrypt(myAccount.getMyPassword()));
+            myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
+            myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
         }
         return exportDataList;
     }
@@ -146,8 +146,8 @@ public class MyAccountServiceImpl implements MyAccountService {
     public void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList) {
         for (MyAccountImportAndExportInfoBO importAccount : importDataList) {
             MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
-            insertPO.setMyUsername(cryptoService.encrypt(insertPO.getMyUsername()));
-            insertPO.setMyPassword(cryptoService.encrypt(insertPO.getMyPassword()));
+            insertPO.setMyUsername(secureService.encrypt(insertPO.getMyUsername()));
+            insertPO.setMyPassword(secureService.encrypt(insertPO.getMyPassword()));
             OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
             insertPO.setCreateTime(nowOffsetDateTime);
             insertPO.setUpdateTime(nowOffsetDateTime);

@@ -1,6 +1,5 @@
 package mjhct.accountmanager.service.myaccount.impl;
 
-import cn.hutool.core.util.RandomUtil;
 import mjhct.accountmanager.service.myaccount.MyPasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +8,16 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
-@Service(value = "myPasswordService")
+@Service
 public class MyPasswordServiceImpl implements MyPasswordService {
 
     private static final Logger logger = LoggerFactory.getLogger(MyPasswordServiceImpl.class);
 
     private static final List<String> passwordCharList = new ArrayList<>(100);
+
+    private Random random = new Random();
 
     static {
         // 去除一些较难分辨的字符，如：O、o、0、l、|、\、/ ……
@@ -33,7 +35,7 @@ public class MyPasswordServiceImpl implements MyPasswordService {
         StringBuilder randomPasswordBuilder = new StringBuilder();
         String randomChar;
         for (int i=0; i < digits; i++) {
-            int index = RandomUtil.randomInt(passwordCharList.size());
+            int index = random.nextInt(passwordCharList.size());
             randomChar = passwordCharList.get(index);
             randomPasswordBuilder.append(randomChar);
         }

@@ -1,10 +1,9 @@
-package mjhct.accountmanager.service.crypto;
+package mjhct.accountmanager.service.secure;
 
 /**
  * 加解密服务接口
- * crypto密码学
  */
-public interface CryptoService {
+public interface SecureService {
 
     /**
      * 解密

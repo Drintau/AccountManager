@@ -20,7 +20,7 @@ public class PasswordController {
 
     private static final Logger logger = LoggerFactory.getLogger(PasswordController.class);
 
-    @Resource(name = "myPasswordService")
+    @Resource
     private MyPasswordService myPasswordService;
 
     @Resource
