@@ -17,7 +17,7 @@ public class MyPasswordServiceImpl implements MyPasswordService {
 
     private static final List<String> passwordCharList = new ArrayList<>(100);
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     static {
         // 去除一些较难分辨的字符，如：O、o、0、l、|、\、/ ……
