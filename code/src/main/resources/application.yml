@@ -29,7 +29,7 @@ spring:
       max-lifetime: 60000
 ---
 #开发时使用命令行参数激活dev配置 --spring.profiles.active=dev
-debug: true
+debug: false
 spring:
   config:
     activate:
