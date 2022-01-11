@@ -12,10 +12,6 @@ spring:
   jackson:
     default-property-inclusion: non_null
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: none
   h2:
     console:
       enabled: true
@@ -39,9 +35,6 @@ spring:
     url: jdbc:h2:mem:h2db
     username: root
     password: h2database
-  jpa:
-    # 打印sql语句
-    show-sql: false
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
 #  password-digits: 10

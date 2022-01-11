@@ -12,6 +12,7 @@
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
     </Appenders>
+
     <Loggers>
         <Logger name="org" level="info" additivity="false">
             <AppenderRef ref="Console"/>
@@ -19,13 +20,9 @@
         <Logger name="com" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <!-- 打印sql语句的参数
-        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        -->
         <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
+
 </Configuration>
