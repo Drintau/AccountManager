@@ -5,10 +5,9 @@ import mjhct.accountmanager.dao.MyAccountRepository;
 import mjhct.accountmanager.domain.bo.*;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
 import mjhct.accountmanager.exception.BusinessException;
-import mjhct.accountmanager.service.secure.SecureService;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
+import mjhct.accountmanager.service.secure.SecureService;
 import mjhct.accountmanager.util.BeanUtil;
-import mjhct.accountmanager.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,9 +94,9 @@ public class MyAccountServiceImpl implements MyAccountService {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
         addAccount.setMyUsername(secureService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(secureService.encrypt(addAccount.getMyPassword()));
-        OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
-        addAccount.setCreateTime(nowOffsetDateTime);
-        addAccount.setUpdateTime(nowOffsetDateTime);
+        LocalDateTime now = LocalDateTime.now();
+        addAccount.setCreateTime(now);
+        addAccount.setUpdateTime(now);
         MyAccountPO save = myAccountRepository.save(addAccount);
         return BeanUtil.copy(save, MyAccountInfoBO.class);
     }
@@ -111,7 +110,6 @@ public class MyAccountServiceImpl implements MyAccountService {
             BeanUtil.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
             updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
-            updateAccount.setUpdateTime(DateTimeUtil.nowChinaOffsetDateTime());
             MyAccountPO updateRst = myAccountRepository.save(updateAccount);
             return BeanUtil.copy(updateRst, MyAccountInfoBO.class);
         }
@@ -148,9 +146,9 @@ public class MyAccountServiceImpl implements MyAccountService {
             MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
             insertPO.setMyUsername(secureService.encrypt(insertPO.getMyUsername()));
             insertPO.setMyPassword(secureService.encrypt(insertPO.getMyPassword()));
-            OffsetDateTime nowOffsetDateTime = DateTimeUtil.nowChinaOffsetDateTime();
-            insertPO.setCreateTime(nowOffsetDateTime);
-            insertPO.setUpdateTime(nowOffsetDateTime);
+            LocalDateTime now = LocalDateTime.now();
+            insertPO.setCreateTime(now);
+            insertPO.setUpdateTime(now);
             myAccountRepository.save(insertPO);
         }
     }

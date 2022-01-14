@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Data
 @Table("my_account")
@@ -31,8 +31,8 @@ public class MyAccountPO {
     private String remark;
 
     @Column("create_time")
-    private OffsetDateTime createTime;
+    private LocalDateTime createTime;
 
     @Column("update_time")
-    private OffsetDateTime updateTime;
+    private LocalDateTime updateTime;
 }

@@ -2,10 +2,12 @@ package mjhct.accountmanager.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MyAccountAddReqDTO {
 
@@ -33,55 +35,4 @@ public class MyAccountAddReqDTO {
     @JsonProperty("remark")
     @Length(max = 200, message = "备注最大长度为200")
     private String remark;
-
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
-
-    public String getAppUrl() {
-        return appUrl;
-    }
-
-    public void setAppUrl(String appUrl) {
-        this.appUrl = appUrl;
-    }
-
-    public String getMyUsername() {
-        return myUsername;
-    }
-
-    public void setMyUsername(String myUsername) {
-        this.myUsername = myUsername;
-    }
-
-    public String getMyPassword() {
-        return myPassword;
-    }
-
-    public void setMyPassword(String myPassword) {
-        this.myPassword = myPassword;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "MyAccountAddReqDTO{" +
-                "appName='" + appName + '\'' +
-                ", appUrl='" + appUrl + '\'' +
-                ", myUsername='" + myUsername + '\'' +
-                ", myPassword='" + myPassword + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }
