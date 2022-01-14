@@ -1,6 +1,7 @@
 package mjhct.accountmanager.domain.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -10,6 +11,7 @@ import java.time.OffsetDateTime;
 @Table("my_account")
 public class MyAccountPO {
 
+    @Id
     @Column("id")
     private Integer id;
 
