@@ -2,10 +2,12 @@ package mjhct.accountmanager.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+@Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MyAccountQueryReqDTO {
 
@@ -31,46 +33,4 @@ public class MyAccountQueryReqDTO {
      */
     @JsonProperty("fuzzy_name")
     private String fuzzyName;
-
-    public String getFuzzyName() {
-        return fuzzyName;
-    }
-
-    public void setFuzzyName(String fuzzyName) {
-        this.fuzzyName = fuzzyName;
-    }
-
-    public Boolean getDecrypt() {
-        return decrypt;
-    }
-
-    public void setDecrypt(Boolean decrypt) {
-        this.decrypt = decrypt;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    @Override
-    public String toString() {
-        return "MyAccountQueryReqDTO{" +
-                "pageNumber=" + pageNumber +
-                ", pageSize=" + pageSize +
-                ", decrypt=" + decrypt +
-                ", fuzzyName='" + fuzzyName + '\'' +
-                '}';
-    }
 }

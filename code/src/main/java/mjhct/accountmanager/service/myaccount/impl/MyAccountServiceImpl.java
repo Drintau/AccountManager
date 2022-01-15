@@ -110,6 +110,7 @@ public class MyAccountServiceImpl implements MyAccountService {
             BeanUtil.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
             updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
+            updateAccount.setUpdateTime(LocalDateTime.now());
             MyAccountPO updateRst = myAccountRepository.save(updateAccount);
             return BeanUtil.copy(updateRst, MyAccountInfoBO.class);
         }
