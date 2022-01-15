@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "my_account"
 (
-    "id" INT PRIMARY KEY AUTO_INCREMENT COMMENT '逻辑主键',
+    "id" INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '逻辑主键',
     "app_name" VARCHAR(20) NOT NULL COMMENT '应用名称',
     "app_url" VARCHAR(100) COMMENT '网址',
     "my_username" VARCHAR(200) NOT NULL COMMENT '加密用户名',

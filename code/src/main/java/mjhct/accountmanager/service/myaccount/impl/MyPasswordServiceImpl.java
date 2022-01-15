@@ -5,19 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class MyPasswordServiceImpl implements MyPasswordService {
 
     private static final Logger logger = LoggerFactory.getLogger(MyPasswordServiceImpl.class);
 
-    private static final List<String> passwordCharList = new ArrayList<>(100);
-
-    private final Random random = new Random();
+    private static final List<String> passwordCharList;
 
     static {
         // 去除一些较难分辨的字符，如：O、o、0、l、|、\、/ ……
@@ -27,7 +23,7 @@ public class MyPasswordServiceImpl implements MyPasswordService {
                 "2","3","4","5","6","7","8","9",
                 "@","#","$","%","&","+","-","*","=","_",".",":","?","(",")","[","]","<",">"
         };
-        passwordCharList.addAll(Arrays.asList(passwordCharArray));
+        passwordCharList = List.of(passwordCharArray);
     }
 
     @Override
@@ -35,7 +31,7 @@ public class MyPasswordServiceImpl implements MyPasswordService {
         StringBuilder randomPasswordBuilder = new StringBuilder();
         String randomChar;
         for (int i=0; i < digits; i++) {
-            int index = random.nextInt(passwordCharList.size());
+            int index = ThreadLocalRandom.current().nextInt(passwordCharList.size());
             randomChar = passwordCharList.get(index);
             randomPasswordBuilder.append(randomChar);
         }

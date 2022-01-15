@@ -8,10 +8,7 @@ public class NumberUtil {
      * @return
      */
     public static boolean isNotNullAndGreaterThanZero(Integer checkNumber) {
-        if (checkNumber != null && checkNumber > 0) {
-            return true;
-        }
-        return false;
+        return checkNumber != null && checkNumber > 0;
     }
 
 }

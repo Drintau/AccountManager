@@ -1,10 +1,16 @@
 package mjhct.accountmanager.exception;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import mjhct.accountmanager.commons.CommonCode;
 
 /**
  * 公共异常
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@ToString
 public class CommonException extends RuntimeException{
 
     /**
@@ -25,29 +31,5 @@ public class CommonException extends RuntimeException{
         super(message);
         this.exceptionCode = commonCode;
         this.exceptionMessage = message;
-    }
-
-    public CommonCode getExceptionCode() {
-        return exceptionCode;
-    }
-
-    public void setExceptionCode(CommonCode exceptionCode) {
-        this.exceptionCode = exceptionCode;
-    }
-
-    public String getExceptionMessage() {
-        return exceptionMessage;
-    }
-
-    public void setExceptionMessage(String exceptionMessage) {
-        this.exceptionMessage = exceptionMessage;
-    }
-
-    @Override
-    public String toString() {
-        return "CommonException{" +
-                "exceptionCode=" + exceptionCode +
-                ", exceptionMessage='" + exceptionMessage + '\'' +
-                '}';
     }
 }
