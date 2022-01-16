@@ -22,9 +22,16 @@
         <timestamp>${maven.build.timestamp}</timestamp>
         <!-- 覆盖spring-boot-starter-parent指定的java版本1.8 -->
         <java.version>11</java.version>
+
         <log4j2.version>2.17.0</log4j2.version>
         <h2.version>1.4.200</h2.version>
         <hikaricp.version>4.0.3</hikaricp.version>
+        <easyexcel.version>3.0.5</easyexcel.version>
+
+        <webjars-locator-core.version>0.48</webjars-locator-core.version>
+        <vue.version>2.6.14</vue.version>
+        <axios.version>0.24.0</axios.version>
+        <element-ui.version>2.15.6</element-ui.version>
     </properties>
 
     <dependencies>
@@ -75,29 +82,29 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
-            <version>3.0.5</version>
+            <version>${easyexcel.version}</version>
         </dependency>
         <!-- 前端 -->
         <!-- webjars-locator-core：Webjars版本定位工具，解决访问WebJars静态资源时必须携带版本号的问题 -->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-core</artifactId>
-            <version>0.48</version>
+            <version>${webjars-locator-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>vue</artifactId>
-            <version>2.6.14</version>
+            <version>${vue.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>axios</artifactId>
-            <version>0.24.0</version>
+            <version>${axios.version}</version>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>element-ui</artifactId>
-            <version>2.15.6</version>
+            <version>${element-ui.version}</version>
         </dependency>
     </dependencies>
 
