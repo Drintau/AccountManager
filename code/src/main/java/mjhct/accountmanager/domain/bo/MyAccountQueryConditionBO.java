@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
 public class MyAccountQueryConditionBO extends PageBO {
 
     private String fuzzyName;

@@ -14,10 +14,10 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="org" level="info" additivity="false">
+        <Logger name="org" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="com" level="info" additivity="false">
+        <Logger name="com" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="debug">
