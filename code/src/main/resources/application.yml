@@ -17,6 +17,8 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.h2.Driver
+    schema:
+      - classpath:db/init.sql
     # url: jdbc:h2:file:D:/h2db 文件数据库
     hikari:
       connection-timeout: 2000
@@ -37,6 +39,6 @@ spring:
     password: h2database
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
-#  password-digits: 10
+  password-digits: 10
 logging:
   config: classpath:log4j2-spring-dev.xml

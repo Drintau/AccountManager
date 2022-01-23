@@ -23,34 +23,34 @@ public class InitRunner implements ApplicationRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(InitRunner.class);
 
-    @Autowired
-    private ResourceLoader resourceLoader;
-
-    @Autowired
-    private DataSource dataSource;
+//    @Autowired
+//    private ResourceLoader resourceLoader;
+//
+//    @Autowired
+//    private DataSource dataSource;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         try {
             // 读取数据库脚本文件
-            Resource resource = resourceLoader.getResource("classpath:db/init.sql");
-            InputStream is = resource.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder dbInit = new StringBuilder();
-            String data;
-            while ((data = br.readLine()) != null) {
-                dbInit.append(data);
-            }
-            br.close();
-            isr.close();
-            is.close();
-
-            // 初始化数据库
-            Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(dbInit.toString());
-            preparedStatement.execute();
-            connection.close();
+//            Resource resource = resourceLoader.getResource("classpath:db/init.sql");
+//            InputStream is = resource.getInputStream();
+//            InputStreamReader isr = new InputStreamReader(is);
+//            BufferedReader br = new BufferedReader(isr);
+//            StringBuilder dbInit = new StringBuilder();
+//            String data;
+//            while ((data = br.readLine()) != null) {
+//                dbInit.append(data);
+//            }
+//            br.close();
+//            isr.close();
+//            is.close();
+//
+//            // 初始化数据库
+//            Connection connection = dataSource.getConnection();
+//            PreparedStatement preparedStatement = connection.prepareStatement(dbInit.toString());
+//            preparedStatement.execute();
+//            connection.close();
         } catch (Exception e) {
             logger.error("初始化数据失败！", e);
             // 抛出异常

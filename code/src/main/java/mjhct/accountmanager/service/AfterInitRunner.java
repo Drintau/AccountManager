@@ -24,10 +24,14 @@ public class AfterInitRunner implements ApplicationRunner {
     @Value("${server.servlet.context-path}")
     private String contextPath;
 
+    @Value("${spring.h2.console.path}")
+    private String h2ConsolePath;
+
     @Override
     public void run(ApplicationArguments args) {
         String localUrl = "http://localhost:" + port + contextPath;
         logger.info("欢迎访问：{}", localUrl);
+        logger.debug("h2控制台地址：{}", localUrl + h2ConsolePath);
 
         // 如果支持调用系统浏览器打开网址，则进行此操作
         if (Desktop.isDesktopSupported()) {
