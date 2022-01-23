@@ -20,9 +20,6 @@
         <Logger name="com" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.springframework.jdbc" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
         <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>

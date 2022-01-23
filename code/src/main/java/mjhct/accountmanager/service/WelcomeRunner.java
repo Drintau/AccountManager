@@ -1,5 +1,6 @@
 package mjhct.accountmanager.service;
 
+import mjhct.accountmanager.util.DateTimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +14,16 @@ import java.io.IOException;
 import java.net.URI;
 
 @Component
-@Order(3)
-public class AfterInitRunner implements ApplicationRunner {
+@Order(1)
+public class WelcomeRunner implements ApplicationRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(AfterInitRunner.class);
+    private static final Logger logger = LoggerFactory.getLogger(WelcomeRunner.class);
+
+    @Value("${maven.version}")
+    private String version;
+
+    @Value("${maven.package-time}")
+    private String packageTime;
 
     @Value("${server.port}")
     private String port;
@@ -29,6 +36,10 @@ public class AfterInitRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        logger.info("版本号：{}", version);
+        logger.info("构建时间：{}", DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(packageTime));
+        logger.info("应用启动成功。");
+
         String localUrl = "http://localhost:" + port + contextPath;
         logger.info("欢迎访问：{}", localUrl);
         logger.debug("h2控制台地址：{}", localUrl + h2ConsolePath);
