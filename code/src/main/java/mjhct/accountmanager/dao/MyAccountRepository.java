@@ -1,26 +1,24 @@
 package mjhct.accountmanager.dao;
 
+import mjhct.accountmanager.domain.bo.PageBO;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface MyAccountRepository extends PagingAndSortingRepository<MyAccountPO, Integer> {
+public interface MyAccountRepository {
 
-    List<MyAccountPO> findAll();
+    void save(MyAccountPO po);
 
-    // 需要自己拼%
-    Page<MyAccountPO> findByAppNameLike(String appName, Pageable pageable);
+    void batchSave(List<MyAccountPO> pos);
 
-    // appName%
-    Page<MyAccountPO> findByAppNameStartingWith(String appName, Pageable pageable);
+    void update(MyAccountPO po);
 
-    // %appName
-    Page<MyAccountPO> findByAppNameEndingWith(String appName, Pageable pageable);
+    void deleteById(Integer id);
 
-    // %appName%
-    Page<MyAccountPO> findByAppNameContaining(String appName, Pageable pageable);
+    MyAccountPO getById(Integer id);
+
+    List<MyAccountPO> listAll(PageBO pageBO);
+
+    List<MyAccountPO> listByAppName(String appName, PageBO pageBO);
 
 }

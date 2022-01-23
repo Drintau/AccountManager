@@ -10,17 +10,12 @@ import mjhct.accountmanager.service.secure.SecureService;
 import mjhct.accountmanager.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service(value = "myAccountService")
 public class MyAccountServiceImpl implements MyAccountService {
@@ -35,9 +30,8 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     @Override
     public MyAccountInfoBO getMyAccountById(Integer id) {
-        Optional<MyAccountPO> byId = myAccountRepository.findById(id);
-        if (byId.isPresent()) {
-            MyAccountPO myAccountPO = byId.get();
+        MyAccountPO myAccountPO = myAccountRepository.getById(id);
+        if (myAccountPO != null) {
             MyAccountInfoBO myAccount = BeanUtil.copy(myAccountPO, MyAccountInfoBO.class);
             myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
             myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
@@ -60,9 +54,8 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     private MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int offsetPageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(offsetPageNumber, pageSize);
-        Page<MyAccountPO> pageData = myAccountRepository.findByAppNameContaining(appName, pageable);
-        List<MyAccountPO> dataList = pageData.getContent();
+        MyAccountListBO myAccountListBO = new MyAccountListBO(offsetPageNumber, pageSize);
+        List<MyAccountPO> dataList = myAccountRepository.listByAppName(appName, myAccountListBO);
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
                 myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
@@ -70,14 +63,14 @@ public class MyAccountServiceImpl implements MyAccountService {
             }
         }
         List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
-        return new MyAccountListBO(pageData.getNumber(), pageData.getSize(), pageData.getTotalPages(), myAccountInfoBOS);
+        myAccountListBO.setList(myAccountInfoBOS);
+        return myAccountListBO;
     }
 
     @Override
     public MyAccountListBO listMyAccount(Boolean decrypt, int offsetPageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(offsetPageNumber, pageSize);
-        Page<MyAccountPO> pageData = myAccountRepository.findAll(pageable);
-        List<MyAccountPO> dataList = pageData.getContent();
+        MyAccountListBO myAccountListBO = new MyAccountListBO(offsetPageNumber, pageSize);
+        List<MyAccountPO> dataList = myAccountRepository.listAll(myAccountListBO);
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
                 myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
@@ -85,11 +78,11 @@ public class MyAccountServiceImpl implements MyAccountService {
             }
         }
         List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
-        return new MyAccountListBO(pageData.getNumber(), pageData.getSize(), pageData.getTotalPages(), myAccountInfoBOS);
+        myAccountListBO.setList(myAccountInfoBOS);
+        return myAccountListBO;
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO addMyAccount(MyAccountAddInfoBO myAccountAddBO) {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
         addAccount.setMyUsername(secureService.encrypt(addAccount.getMyUsername()));
@@ -97,41 +90,33 @@ public class MyAccountServiceImpl implements MyAccountService {
         LocalDateTime now = LocalDateTime.now();
         addAccount.setCreateTime(now);
         addAccount.setUpdateTime(now);
-        MyAccountPO save = myAccountRepository.save(addAccount);
-        return BeanUtil.copy(save, MyAccountInfoBO.class);
+        myAccountRepository.save(addAccount);
+        return BeanUtil.copy(addAccount, MyAccountInfoBO.class);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public MyAccountInfoBO updateMyAccount(MyAccountUpdateInfoBO myAccountUpdateBO) {
-        Optional<MyAccountPO> old = myAccountRepository.findById(myAccountUpdateBO.getId());
-        if (old.isPresent()) {
-            MyAccountPO updateAccount = old.get();
+        MyAccountPO updateAccount = myAccountRepository.getById(myAccountUpdateBO.getId());
+        if (updateAccount != null) {
             BeanUtil.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
             updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
             updateAccount.setUpdateTime(LocalDateTime.now());
-            MyAccountPO updateRst = myAccountRepository.save(updateAccount);
-            return BeanUtil.copy(updateRst, MyAccountInfoBO.class);
+            myAccountRepository.save(updateAccount);
+            return BeanUtil.copy(updateAccount, MyAccountInfoBO.class);
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void deleteMyAccount(Integer id) {
-        Optional<MyAccountPO> old = myAccountRepository.findById(id);
-        if (old.isPresent()) {
-            myAccountRepository.deleteById(id);
-            return;
-        }
-        throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
+        myAccountRepository.deleteById(id);
     }
 
     @Override
     public List<MyAccountImportAndExportInfoBO> exportAccounts() {
         // 查询所有数据
-        List<MyAccountPO> rawDataList = myAccountRepository.findAll();
+        List<MyAccountPO> rawDataList = myAccountRepository.listAll(new PageBO());
         List<MyAccountImportAndExportInfoBO> exportDataList = BeanUtil.copyList(rawDataList, MyAccountImportAndExportInfoBO.class);
         // 解密
         for (MyAccountImportAndExportInfoBO myAccount : exportDataList) {
