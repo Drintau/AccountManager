@@ -1,21 +1,12 @@
 package mjhct.accountmanager.dao;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import mjhct.accountmanager.domain.bo.PageBO;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
 
 import java.util.List;
 
-public interface MyAccountRepository {
-
-    void save(MyAccountPO po);
-
-    void batchSave(List<MyAccountPO> pos);
-
-    void update(MyAccountPO po);
-
-    void deleteById(Integer id);
-
-    MyAccountPO getById(Integer id);
+public interface MyAccountRepository extends IService<MyAccountPO> {
 
     List<MyAccountPO> listAll(PageBO pageBO);
 

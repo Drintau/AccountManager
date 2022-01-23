@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "myAccountService")
@@ -110,13 +111,13 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     @Override
     public void deleteMyAccount(Integer id) {
-        myAccountRepository.deleteById(id);
+        myAccountRepository.removeById(id);
     }
 
     @Override
     public List<MyAccountImportAndExportInfoBO> exportAccounts() {
         // 查询所有数据
-        List<MyAccountPO> rawDataList = myAccountRepository.listAll(new PageBO());
+        List<MyAccountPO> rawDataList = myAccountRepository.list();
         List<MyAccountImportAndExportInfoBO> exportDataList = BeanUtil.copyList(rawDataList, MyAccountImportAndExportInfoBO.class);
         // 解密
         for (MyAccountImportAndExportInfoBO myAccount : exportDataList) {
@@ -128,15 +129,14 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     @Override
     public void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList) {
+        List<MyAccountPO> importPOS = new ArrayList<>(importDataList.size() * 2);
         for (MyAccountImportAndExportInfoBO importAccount : importDataList) {
             MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
             insertPO.setMyUsername(secureService.encrypt(insertPO.getMyUsername()));
             insertPO.setMyPassword(secureService.encrypt(insertPO.getMyPassword()));
-            LocalDateTime now = LocalDateTime.now();
-            insertPO.setCreateTime(now);
-            insertPO.setUpdateTime(now);
-            myAccountRepository.save(insertPO);
+            importPOS.add(insertPO);
         }
+        myAccountRepository.saveBatch(importPOS);
     }
 
 }
