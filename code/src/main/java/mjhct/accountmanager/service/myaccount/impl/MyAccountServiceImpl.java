@@ -71,7 +71,7 @@ public class MyAccountServiceImpl implements MyAccountService {
     @Override
     public MyAccountListBO listMyAccount(Boolean decrypt, int offsetPageNumber, int pageSize) {
         MyAccountListBO myAccountListBO = new MyAccountListBO(offsetPageNumber, pageSize);
-        List<MyAccountPO> dataList = myAccountRepository.listAll(myAccountListBO);
+        List<MyAccountPO> dataList = myAccountRepository.list(myAccountListBO);
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
                 myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
@@ -111,7 +111,7 @@ public class MyAccountServiceImpl implements MyAccountService {
 
     @Override
     public void deleteMyAccount(Integer id) {
-        myAccountRepository.removeById(id);
+        myAccountRepository.deleteById(id);
     }
 
     @Override

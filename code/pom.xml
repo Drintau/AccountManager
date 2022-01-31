@@ -26,7 +26,6 @@
         <log4j2.version>2.17.0</log4j2.version>
         <h2.version>1.4.200</h2.version>
         <hikaricp.version>4.0.3</hikaricp.version>
-        <mybatis-plus.version>3.5.0</mybatis-plus.version>
         <easyexcel.version>3.0.5</easyexcel.version>
 
         <webjars-locator-core.version>0.48</webjars-locator-core.version>
@@ -61,9 +60,8 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <!-- 数据库 -->
         <dependency>
