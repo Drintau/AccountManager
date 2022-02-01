@@ -5,6 +5,7 @@ import mjhct.accountmanager.domain.bo.PageBO;
 import mjhct.accountmanager.domain.entity.MyAccountPO;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 参考博客：https://blog.csdn.net/u011179993/article/details/74791304
+ */
 @Repository
 public class MyAccountRepositoryImpl implements MyAccountRepository {
 
@@ -81,5 +85,19 @@ public class MyAccountRepositoryImpl implements MyAccountRepository {
         paramMap.put("limit", pageBO.getPageSize());
         paramMap.put("offset", pageBO.getOffset());
         return namedParameterJdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<>(MyAccountPO.class));
+    }
+
+    @Override
+    public Integer count() {
+        String sql = "select count(*) from my_account";
+        return namedParameterJdbcTemplate.queryForObject(sql, EmptySqlParameterSource.INSTANCE, Integer.class);
+    }
+
+    @Override
+    public Integer countByAppName(String appName) {
+        String sql = "select count(*) from my_account where app_name like %:appName%";
+        Map<String, String> paramMap = new HashMap<>();
+        paramMap.put("appName", appName);
+        return namedParameterJdbcTemplate.queryForObject(sql, paramMap, Integer.class);
     }
 }

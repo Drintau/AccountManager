@@ -85,7 +85,7 @@ public class AccountManagerController {
         if (pageSize < 1) {
             throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
         }
-        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber - 1, pageSize);
+        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber, pageSize);
         List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResDTO.class);
         MyAccountListResDTO myAccountListResDTO = new MyAccountListResDTO();
         myAccountListResDTO.setPageNumber(pageNumber);

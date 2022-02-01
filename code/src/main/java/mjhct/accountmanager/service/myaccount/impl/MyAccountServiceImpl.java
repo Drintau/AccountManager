@@ -8,6 +8,7 @@ import mjhct.accountmanager.exception.BusinessException;
 import mjhct.accountmanager.service.myaccount.MyAccountService;
 import mjhct.accountmanager.service.secure.SecureService;
 import mjhct.accountmanager.util.BeanUtil;
+import mjhct.accountmanager.util.PageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -47,16 +48,17 @@ public class MyAccountServiceImpl implements MyAccountService {
 
         // 按照应用名称模糊查询
         if (StringUtils.hasText(condition.getFuzzyName())) {
-            return listMyAccountByAppName(condition.getDecrypt(), condition.getFuzzyName(), condition.getOffsetPageNumber(), condition.getPageSize());
+            return listMyAccountByAppName(condition.getDecrypt(), condition.getFuzzyName(), condition.getPageNumber(), condition.getPageSize());
         }
 
         // 无条件分页查询
-        return listMyAccount(condition.getDecrypt(), condition.getOffsetPageNumber(), condition.getPageSize());
+        return listMyAccount(condition.getDecrypt(), condition.getPageNumber(), condition.getPageSize());
     }
 
-    private MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int offsetPageNumber, int pageSize) {
-        MyAccountListBO myAccountListBO = new MyAccountListBO(offsetPageNumber, pageSize);
+    private MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize) {
+        MyAccountListBO myAccountListBO = new MyAccountListBO(pageNumber, pageSize);
         List<MyAccountPO> dataList = myAccountRepository.listByAppName(appName, myAccountListBO);
+        Integer count = myAccountRepository.countByAppName(appName);
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
                 myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
@@ -65,13 +67,16 @@ public class MyAccountServiceImpl implements MyAccountService {
         }
         List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
         myAccountListBO.setList(myAccountInfoBOS);
+        myAccountListBO.setTotalRecords(count);
+        myAccountListBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
         return myAccountListBO;
     }
 
     @Override
-    public MyAccountListBO listMyAccount(Boolean decrypt, int offsetPageNumber, int pageSize) {
-        MyAccountListBO myAccountListBO = new MyAccountListBO(offsetPageNumber, pageSize);
+    public MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize) {
+        MyAccountListBO myAccountListBO = new MyAccountListBO(pageNumber, pageSize);
         List<MyAccountPO> dataList = myAccountRepository.list(myAccountListBO);
+        Integer count = myAccountRepository.count();
         if (decrypt) {
             for (MyAccountPO myAccount : dataList) {
                 myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
@@ -80,6 +85,8 @@ public class MyAccountServiceImpl implements MyAccountService {
         }
         List<MyAccountInfoBO> myAccountInfoBOS = BeanUtil.copyList(dataList, MyAccountInfoBO.class);
         myAccountListBO.setList(myAccountInfoBOS);
+        myAccountListBO.setTotalRecords(count);
+        myAccountListBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
         return myAccountListBO;
     }
 

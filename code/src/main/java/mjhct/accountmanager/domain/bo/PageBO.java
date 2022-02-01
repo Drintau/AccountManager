@@ -35,7 +35,7 @@ public class PageBO {
      * 偏移量页数 = 前端页码 - 1
      * 数据库分页用的
      */
-    public Integer getOffsetPageNumber() {
+    private Integer getOffsetPageNumber() {
         return pageNumber - 1;
     }
 

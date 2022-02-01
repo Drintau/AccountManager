@@ -13,11 +13,11 @@ public interface MyAccountService {
     /**
      * 无条件分页查询
      * @param decrypt 是否解密
-     * @param offsetPageNumber 偏移的页数，前端页码-1
+     * @param pageNumber 前端页码
      * @param pageSize 条数
      * @return
      */
-    MyAccountListBO listMyAccount(Boolean decrypt, int offsetPageNumber, int pageSize);
+    MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
 
     MyAccountInfoBO addMyAccount(MyAccountAddInfoBO myAccountAddBO);
 

@@ -22,4 +22,8 @@ public interface MyAccountRepository {
     List<MyAccountPO> list(PageBO pageBO);
 
     List<MyAccountPO> listByAppName(String appName, PageBO pageBO);
+
+    Integer count();
+
+    Integer countByAppName(String appName);
 }
