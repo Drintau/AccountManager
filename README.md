@@ -17,7 +17,7 @@
 2. 下载压缩包，解压到一个不带中文的目录。
 3. 复制一份参考示例配置文件`application-example.properties`，改名为`application.properties`。
 4. 执行`java -jar account-manager.jar --securityKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`am.security-key=`后面。
-5. 配置`spring.datasource.url=`后面的数据文件路径为本机可访问的路径。
+5. 配置`am.file-path=`后面的数据文件路径为本机可访问的路径。
 6. 执行`java -jar account-manager.jar`启动程序（windows可双击`startam.bat`）。
 
 ### 存储到云盘
