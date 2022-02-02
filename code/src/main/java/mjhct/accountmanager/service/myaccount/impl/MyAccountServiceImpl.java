@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,9 +94,6 @@ public class MyAccountServiceImpl implements MyAccountService {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
         addAccount.setMyUsername(secureService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(secureService.encrypt(addAccount.getMyPassword()));
-        LocalDateTime now = LocalDateTime.now();
-        addAccount.setCreateTime(now);
-        addAccount.setUpdateTime(now);
         myAccountRepository.save(addAccount);
         return BeanUtil.copy(addAccount, MyAccountInfoBO.class);
     }
@@ -106,11 +102,10 @@ public class MyAccountServiceImpl implements MyAccountService {
     public MyAccountInfoBO updateMyAccount(MyAccountUpdateInfoBO myAccountUpdateBO) {
         MyAccountPO updateAccount = myAccountRepository.getById(myAccountUpdateBO.getId());
         if (updateAccount != null) {
-            BeanUtil.copyProperties(myAccountUpdateBO, updateAccount, "id", "createTime", "updateTime");
+            updateAccount = BeanUtil.copy(myAccountUpdateBO, MyAccountPO.class);
             updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
-            updateAccount.setUpdateTime(LocalDateTime.now());
-            myAccountRepository.save(updateAccount);
+            myAccountRepository.update(updateAccount);
             return BeanUtil.copy(updateAccount, MyAccountInfoBO.class);
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");

@@ -1,7 +1,7 @@
 package mjhct.accountmanager.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +11,7 @@ import java.util.Base64;
 /**
  * 秘钥配置类
  */
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "am")
 @Validated
 public class AccountManagerConfig {
@@ -21,6 +21,8 @@ public class AccountManagerConfig {
      */
     @NotEmpty(message = "请配置密钥")
     private String securityKey;
+
+    private String filePath;
 
     /**
      * 随机密码位数，默认10
@@ -47,6 +49,14 @@ public class AccountManagerConfig {
 
     public void setSecurityKey(String securityKey) {
         this.securityKey = securityKey;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public int getPasswordDigits() {
