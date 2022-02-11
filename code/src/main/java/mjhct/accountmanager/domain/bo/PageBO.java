@@ -4,10 +4,10 @@ import lombok.Data;
 
 /**
  * 分页信息对象
- * 只能被继承，单独使用好像没什么用
+ * 只能被继承，抽象类没有存储数据的属性
  */
 @Data
-public class PageBO {
+public abstract class PageBO {
 
     /**
      * 页码
