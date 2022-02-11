@@ -41,6 +41,19 @@ spring:
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
-  file-path: testdb
+  file-path: memTestDB
 logging:
   config: classpath:log4j2-spring-dev.xml
+---
+#模拟真实使用场景
+spring:
+  config:
+    activate:
+      on-profile:
+        - mock
+server:
+  port: 12139
+am:
+  security-key: pq+Sjkd1We1wW44Yz4mN6Q==
+  password-digits: 10
+  file-path: E:/fileTestDB
