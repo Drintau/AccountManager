@@ -14,7 +14,7 @@
 
 ### 使用方法
 1. 安装配置java环境；java11以上。
-2. 下载压缩包，解压到一个不带中文的目录。
+2. 到 [这里](https://github.com/mjhct/AccountManager/releases) 下载压缩包，解压到一个不带中文的目录。
 3. 复制一份参考示例配置文件`application-example.properties`，改名为`application.properties`。
 4. 执行`java -jar account-manager.jar --securityKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`am.security-key=`后面。
 5. 配置`am.file-path=`后面的数据文件路径为本机可访问的路径。
