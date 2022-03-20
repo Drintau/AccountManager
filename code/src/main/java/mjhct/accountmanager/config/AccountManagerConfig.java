@@ -22,6 +22,9 @@ public class AccountManagerConfig {
     @NotEmpty(message = "请配置密钥")
     private String securityKey;
 
+    /**
+     * 数据库文件路径
+     */
     private String filePath;
 
     /**
