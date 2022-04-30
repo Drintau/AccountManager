@@ -1,3 +1,4 @@
+#命令行参数激活对应环境的配置： --spring.profiles.active=dev
 debug: false
 maven:
   version: @version@
@@ -30,7 +31,7 @@ spring:
       maximum-pool-size: 10
       max-lifetime: 60000
 ---
-#开发时使用命令行参数激活dev配置 --spring.profiles.active=dev
+#开发环境，使用内存数据库
 debug: true
 spring:
   config:
@@ -43,10 +44,11 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: memTestDB
+  backup-path: E:/backupTestDB
 logging:
   config: classpath:log4j2-spring-dev.xml
 ---
-#模拟真实使用场景
+#模拟环境，使用文件数据库
 spring:
   config:
     activate:

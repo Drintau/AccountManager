@@ -28,6 +28,11 @@ public class AccountManagerConfig {
     private String filePath;
 
     /**
+     * 数据库备份文件路径
+     */
+    private String backupPath;
+
+    /**
      * 随机密码位数，默认10
      */
     private int passwordDigits = 10;
@@ -60,6 +65,14 @@ public class AccountManagerConfig {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public String getBackupPath() {
+        return backupPath;
+    }
+
+    public void setBackupPath(String backupPath) {
+        this.backupPath = backupPath;
     }
 
     public int getPasswordDigits() {
