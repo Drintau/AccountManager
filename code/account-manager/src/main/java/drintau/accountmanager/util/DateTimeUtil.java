@@ -1,5 +1,7 @@
 package drintau.accountmanager.util;
 
+import org.springframework.util.StringUtils;
+
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -29,9 +31,12 @@ public class DateTimeUtil {
      * @param timeValue
      */
     public static ZonedDateTime offsetDateTimeStringToChinaZonedDateTime(String timeValue) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN_Y_M_D_H_M_S_Z);
-        OffsetDateTime offsetDateTime = OffsetDateTime.parse(timeValue, dateTimeFormatter);
-        return offsetDateTime.atZoneSameInstant(CHINA_ZONE_ID);
+        if (StringUtils.hasText(timeValue)) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN_Y_M_D_H_M_S_Z);
+            OffsetDateTime offsetDateTime = OffsetDateTime.parse(timeValue, dateTimeFormatter);
+            return offsetDateTime.atZoneSameInstant(CHINA_ZONE_ID);
+        }
+        return null;
     }
 
 

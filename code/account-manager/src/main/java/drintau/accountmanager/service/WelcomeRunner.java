@@ -19,10 +19,10 @@ public class WelcomeRunner implements ApplicationRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(WelcomeRunner.class);
 
-    @Value("${maven.version}")
+    @Value("${maven.version:}")
     private String version;
 
-    @Value("${maven.package-time}")
+    @Value("${maven.package-time:}")
     private String packageTime;
 
     @Value("${server.port}")
