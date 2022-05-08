@@ -10,6 +10,8 @@ public interface MyAccountService {
 
     MyAccountListBO queryMyAccount(MyAccountQueryConditionBO condition);
 
+    List<MyAccountInfoBO> listMyAccount(Boolean decrypt);
+
     /**
      * 无条件分页查询
      * @param decrypt 是否解密

@@ -54,6 +54,18 @@ public class MyAccountServiceImpl implements MyAccountService {
         return listMyAccount(condition.getDecrypt(), condition.getPageNumber(), condition.getPageSize());
     }
 
+    @Override
+    public List<MyAccountInfoBO> listMyAccount(Boolean decrypt) {
+        List<MyAccountPO> dataList = myAccountRepository.list();
+        if (decrypt) {
+            for (MyAccountPO myAccount : dataList) {
+                myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
+                myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
+            }
+        }
+        return BeanUtil.copyList(dataList, MyAccountInfoBO.class);
+    }
+
     private MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize) {
         MyAccountListBO myAccountListBO = new MyAccountListBO(pageNumber, pageSize);
         List<MyAccountPO> dataList = myAccountRepository.listByAppName(appName, myAccountListBO);
