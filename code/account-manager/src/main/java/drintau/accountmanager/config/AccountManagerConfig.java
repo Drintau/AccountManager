@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import java.util.Base64;
 
 /**
@@ -19,12 +19,13 @@ public class AccountManagerConfig {
     /**
      * 加解密秘钥
      */
-    @NotEmpty(message = "请配置密钥")
+    @NotBlank(message = "请配置密钥")
     private String securityKey;
 
     /**
      * 数据库文件路径
      */
+    @NotBlank(message = "请配置文件存储路径")
     private String filePath;
 
     /**
