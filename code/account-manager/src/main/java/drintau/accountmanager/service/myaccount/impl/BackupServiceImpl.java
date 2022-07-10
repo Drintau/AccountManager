@@ -30,7 +30,7 @@ public class BackupServiceImpl implements BackupService {
     @Resource
     private MyAccountBackupRepository backupRepository;
 
-//    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     @Override
     public void startBackup() {
         log.debug("开始备份:{}", DateTimeUtil.nowChinaOffsetDateTime());
