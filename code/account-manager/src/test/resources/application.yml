@@ -18,8 +18,8 @@ spring:
     initialization-mode: always
     schema:
       - classpath:db/init.sql
-#    url: jdbc:h2:file:${am.file-path}
-    url: jdbc:h2:mem:${am.file-path}
+    url: jdbc:h2:file:${am.file-path}
+#    url: jdbc:h2:mem:${am.file-path}
     username: root
     password: h2database
     hikari:
@@ -30,5 +30,5 @@ spring:
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
-  file-path: memTestDB
+  file-path: E:/testDB
   backup-path: E:/backupTestDB
