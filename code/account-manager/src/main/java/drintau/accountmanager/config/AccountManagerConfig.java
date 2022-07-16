@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotBlank;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * 秘钥配置类
@@ -31,7 +32,7 @@ public class AccountManagerConfig {
     /**
      * 数据库备份文件路径
      */
-    private String backupPath;
+    private List<String> backupPaths;
 
     /**
      * 随机密码位数，默认10
@@ -68,12 +69,12 @@ public class AccountManagerConfig {
         this.filePath = filePath;
     }
 
-    public String getBackupPath() {
-        return backupPath;
+    public List<String> getBackupPaths() {
+        return backupPaths;
     }
 
-    public void setBackupPath(String backupPath) {
-        this.backupPath = backupPath;
+    public void setBackupPaths(List<String> backupPaths) {
+        this.backupPaths = backupPaths;
     }
 
     public int getPasswordDigits() {

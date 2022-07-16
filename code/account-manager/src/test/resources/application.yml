@@ -31,4 +31,6 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: E:/testDB
-  backup-path: E:/backupTestDB
+  backup-paths:
+    - E:/backupTestDB
+    - E:/backupTestDB2
