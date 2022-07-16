@@ -16,14 +16,7 @@ public class BackupTest {
 
     @Test
     public void testBackup() {
-        while (true) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            log.debug("测试中...");
-        }
+        backupService.startBackup();
     }
 
 }
