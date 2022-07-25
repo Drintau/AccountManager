@@ -61,6 +61,8 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: E:/fileTestDB
-  backup-path: E:/backupTestDB
+  backup-paths:
+    - E:/backupTestDB
+    - E:/backupTestDB2
 logging:
   config: classpath:log4j2-spring-dev.xml

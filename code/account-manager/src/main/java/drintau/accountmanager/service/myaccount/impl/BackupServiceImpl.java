@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -25,10 +26,11 @@ public class BackupServiceImpl implements BackupService {
     @Resource
     private HikariDataSource dataSource;
 
+    @PreDestroy
     @Override
     public void backup() {
         log.debug("开始备份:{}", DateTimeUtil.nowChinaOffsetDateTime());
-        log.debug("db路径:{}", accountManagerConfig.getFilePath());
+        log.debug("数据路径:{}", accountManagerConfig.getFilePath());
         log.debug("备份路径:{}", accountManagerConfig.getBackupPaths());
         List<String> backupPaths = accountManagerConfig.getBackupPaths();
         if (CollectionUtils.isEmpty(backupPaths)) {

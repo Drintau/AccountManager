@@ -30,7 +30,7 @@ spring:
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
-  file-path: E:/testDB
+  file-path: E:/fileTestDB
   backup-paths:
     - E:/backupTestDB
     - E:/backupTestDB2
