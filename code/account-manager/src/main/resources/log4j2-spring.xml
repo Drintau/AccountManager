@@ -11,6 +11,9 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
+        <File name="ErrFile" fileName="logs/error.log">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </File>
     </Appenders>
 
     <Loggers>
@@ -22,6 +25,9 @@
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
+        </Root>
+        <Root level="error">
+            <AppenderRef ref="ErrFile"/>
         </Root>
     </Loggers>
 
