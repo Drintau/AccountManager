@@ -4,6 +4,7 @@ import drintau.accountmanager.config.AccountManagerConfig;
 import drintau.accountmanager.service.myaccount.BackupService;
 import drintau.accountmanager.util.DateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -11,6 +12,7 @@ import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.util.List;
 
+@ConditionalOnProperty(prefix = "am", name = {"enable-backup"}, havingValue = "true")
 @Slf4j
 @Service
 public class BackupServiceImpl implements BackupService {

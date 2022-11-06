@@ -27,7 +27,7 @@ spring:
     hikari:
       connection-timeout: 2000
 #      idle-timeout: 120000
-      maximum-pool-size: 10
+      maximum-pool-size: 2
       max-lifetime: 60000
 ---
 #开发环境1，使用内存数据库
@@ -45,6 +45,7 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: memTestDB
+  enable-backup: false
 logging:
   config: classpath:log4j2-spring-dev.xml
 ---
@@ -61,8 +62,9 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: E:/fileTestDB
+  enable-backup: true
   backup-paths:
-    - E:/backupTestDB
-    - E:/backupTestDB2
+#    - E:/backupTestDB
+#    - E:/backupTestDB2
 logging:
   config: classpath:log4j2-spring-dev.xml
