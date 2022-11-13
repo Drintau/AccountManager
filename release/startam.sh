@@ -1,2 +1,3 @@
 #! /bin/bash
-echo 启动程序
+echo 正在启动account-manager...
+java -jar account-manager.jar

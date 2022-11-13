@@ -1,2 +1,3 @@
 #! /bin/bash
-echo 生成密钥
+echo 正在生成秘钥...
+java -jar account-manager.jar --securityKey
