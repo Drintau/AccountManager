@@ -64,7 +64,7 @@ am:
   file-path: E:/fileTestDB
   enable-backup: true
   backup-paths:
-#    - E:/backupTestDB
-#    - E:/backupTestDB2
+    - E:/backupTestDB
+    - E:/backupTestDB2
 logging:
   config: classpath:log4j2-spring-dev.xml
