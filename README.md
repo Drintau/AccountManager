@@ -2,7 +2,7 @@
 账号管理器：管理自己在网站、应用的账号密码。
 
 ### 诞生
-已有的一些 [密码管理软件](https://www.zhihu.com/question/27338793) 有些地方不满意，所以做一个自己满意的。  
+已有的一些 [密码管理软件](https://www.zhihu.com/question/27338793) 不符合定制需求，所以定制一个。  
 
 ### 特点
 1. 经济性：跨平台，免费。
@@ -15,10 +15,10 @@
 ### 安装与使用
 1. 安装配置java环境，java11以上。
 2. 到 [这里](https://github.com/drintau/AccountManager/releases) 下载最新版压缩包，解压到一个不带中文的目录。
-3. 复制一份参考示例配置文件`application-win.properties`，改名为`application.properties`。
-4. 执行`java -jar account-manager.jar --securityKey`获得一个随机秘钥（windows可双击`generatekey.bat`）；把秘钥填到`application.properties`的`am.security-key=`后面。
+3. 复制一份对应操作系统的示例配置文件`application-xxx.properties`，改名为`application.properties`。
+4. 执行`java -jar account-manager.jar --securityKey`获得一个随机秘钥；把秘钥填到`application.properties`的`am.security-key=`后面。
 5. 配置`am.file-path=`后面的数据文件路径为本机可访问的路径。
-6. 执行`java -jar account-manager.jar`启动程序（windows可双击`startam.bat`）。
+6. 执行`java -jar account-manager.jar`启动程序。
 
 ### 云盘同步
 1. 把数据库文件放置在云盘的同步目录，即可实现自动更新到云盘。
