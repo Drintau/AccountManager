@@ -62,7 +62,7 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: E:/fileTestDB
-  enable-backup: true
+  enable-backup: false
   backup-paths:
     - E:/backupTestDB
     - E:/backupTestDB2
