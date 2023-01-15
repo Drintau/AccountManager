@@ -11,7 +11,7 @@ spring:
     name: account-manager
   jackson:
     default-property-inclusion: non_null
-    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+    property-naming-strategy: SNAKE_CASE
   h2:
     console:
       enabled: true
