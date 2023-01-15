@@ -24,7 +24,7 @@
 
         <h2.version>2.1.214</h2.version>
         <hikaricp.version>4.0.3</hikaricp.version>
-        <easyexcel.version>3.0.5</easyexcel.version>
+        <easyexcel.version>3.1.5</easyexcel.version>
 
         <vue.version>2.6.14</vue.version>
         <axios.version>0.24.0</axios.version>
