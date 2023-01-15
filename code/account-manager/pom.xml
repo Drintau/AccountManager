@@ -27,8 +27,8 @@
         <easyexcel.version>3.1.5</easyexcel.version>
 
         <vue.version>2.6.14</vue.version>
-        <axios.version>0.24.0</axios.version>
-        <element-ui.version>2.15.6</element-ui.version>
+        <axios.version>1.2.2</axios.version>
+        <element-ui.version>2.15.10</element-ui.version>
     </properties>
 
     <dependencies>
@@ -64,7 +64,6 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
         </dependency>
         <!-- 工具类 -->
         <dependency>
