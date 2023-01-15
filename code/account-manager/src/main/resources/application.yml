@@ -11,17 +11,20 @@ spring:
     name: account-manager
   jackson:
     default-property-inclusion: non_null
-    property-naming-strategy: SNAKE_CASE
+    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
   h2:
     console:
       enabled: true
       path: /h2-console
-  sql:
-    init:
-      mode: always
-      schema-locations:
-        - classpath:db/init.sql
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations:
+#        - classpath:db/init.sql
   datasource:
+    initialization-mode: always
+    schema:
+      - classpath:db/init.sql
     driver-class-name: org.h2.Driver
     url: jdbc:h2:file:${am.file-path}
     username: root
@@ -64,9 +67,8 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   password-digits: 10
   file-path: E:/fileTestDB
-  enable-backup: false
+  enable-backup: true
   backup-paths:
     - E:/backupTestDB
-    - E:/backupTestDB2
 logging:
   config: classpath:log4j2-spring-dev.xml
