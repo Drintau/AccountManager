@@ -1,12 +1,12 @@
 package drintau.accountmanager.service.myaccount.impl;
 
-import drintau.accountmanager.config.AccountManagerConfig;
 import drintau.accountmanager.dao.MyAccountRepository;
 import drintau.accountmanager.domain.entity.MyAccountPO;
 import drintau.accountmanager.service.myaccount.BackupService;
 import drintau.accountmanager.util.DateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PreDestroy;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -28,22 +27,23 @@ import java.util.List;
 @Service
 public class BackupServiceImpl implements BackupService {
 
+    @Value("${am.file-path}")
+    private String filePath;
+
+    @Value("${am.backup-paths}")
+    private List<String> backupPaths;
+
     @Autowired
     private ResourceLoader resourceLoader;
 
     @Autowired
-    private AccountManagerConfig accountManagerConfig;
-
-    @Autowired
     private MyAccountRepository myAccountRepository;
 
-    @PreDestroy
     @Override
     public void backup() {
         log.debug("开始备份:{}", DateTimeUtil.nowChinaOffsetDateTime());
-        log.debug("数据路径:{}", accountManagerConfig.getFilePath());
-        log.debug("备份路径:{}", accountManagerConfig.getBackupPaths());
-        List<String> backupPaths = accountManagerConfig.getBackupPaths();
+        log.debug("数据路径:{}", filePath);
+        log.debug("备份路径:{}", backupPaths);
         if (CollectionUtils.isEmpty(backupPaths)) {
             return;
         }

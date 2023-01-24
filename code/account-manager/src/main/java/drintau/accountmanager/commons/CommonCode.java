@@ -14,8 +14,8 @@ public enum CommonCode {
     // 业务失败响应
     FAIL("999999", "业务失败");
 
-    public String code;
-    public String message;
+    public final String code;
+    public final String message;
 
     CommonCode(String code, String message) {
         this.code = code;
