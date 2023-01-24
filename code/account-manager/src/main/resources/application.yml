@@ -3,35 +3,34 @@ maven:
   version: @version@
   package-time: @timestamp@
 server:
+  shutdown: "graceful"
   port: 12138
   servlet:
     context-path: /accountmanager
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: "10s"
   application:
     name: account-manager
   jackson:
     default-property-inclusion: non_null
-    property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+    property-naming-strategy: SNAKE_CASE
   h2:
     console:
       enabled: true
       path: /h2-console
-#  sql:
-#    init:
-#      mode: always
-#      schema-locations:
-#        - classpath:db/init.sql
+  sql:
+    init:
+      mode: always
+      schema-locations:
+        - classpath:db/init.sql
   datasource:
-    initialization-mode: always
-    schema:
-      - classpath:db/init.sql
     driver-class-name: org.h2.Driver
     url: jdbc:h2:file:${am.file-path}
     username: root
     password: h2database
     hikari:
       connection-timeout: 2000
-#      idle-timeout: 120000
       maximum-pool-size: 2
       max-lifetime: 60000
 ---
