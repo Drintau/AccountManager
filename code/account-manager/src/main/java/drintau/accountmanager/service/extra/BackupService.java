@@ -1,4 +1,4 @@
-package drintau.accountmanager.service.myaccount;
+package drintau.accountmanager.service.extra;
 
 public interface BackupService {
 

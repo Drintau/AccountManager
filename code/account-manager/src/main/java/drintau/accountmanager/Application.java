@@ -35,8 +35,8 @@ public class Application {
         for (String arg : args) {
             if (arg.startsWith("--")) {
                 String optionText = arg.substring(2);
-                if (AppLaunchArgsConstant.GENERATE_AES_KEY.equals(optionText)) {
-                    System.out.println("===生成AES秘钥===");
+                if (AppLaunchArgsConstant.GENERATE_KEY.equals(optionText)) {
+                    System.out.println("===生成加解密秘钥===");
                     try {
                         System.out.println(SecureUtil.genSecureKey());
                     } catch (Exception e) {

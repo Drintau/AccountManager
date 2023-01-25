@@ -1,7 +1,6 @@
 package drintau.accountmanager.filter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 
@@ -14,15 +13,14 @@ import java.util.UUID;
  * 日志唯一ID过滤器
  */
 @WebFilter(filterName = "traceIdFilter",urlPatterns = "/*")
+@Slf4j
 public class TraceIdFilter implements Filter {
 
     private static final String TRACE_ID_KEY = "TRACE_ID";
 
-    private static final Logger logger = LoggerFactory.getLogger(TraceIdFilter.class);
-
     @Override
     public void init(FilterConfig filterConfig) {
-        logger.debug("日志唯一ID过滤器初始化。");
+        log.debug("日志唯一ID过滤器初始化。");
     }
 
     @Override
@@ -37,6 +35,6 @@ public class TraceIdFilter implements Filter {
     @Override
     public void destroy() {
         MDC.clear();
-        logger.debug("日志唯一ID过滤器销毁。");
+        log.debug("日志唯一ID过滤器销毁。");
     }
 }

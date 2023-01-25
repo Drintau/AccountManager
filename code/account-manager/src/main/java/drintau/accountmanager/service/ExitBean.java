@@ -1,6 +1,6 @@
 package drintau.accountmanager.service;
 
-import drintau.accountmanager.service.myaccount.BackupService;
+import drintau.accountmanager.service.extra.BackupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,11 @@ public class ExitBean implements DisposableBean {
         if (backupService != null) {
             backupService.backup();
         }
-        log.info("应用程序即将退出");
+        log.info("感谢使用！程序即将退出。");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ignored) {
+
+        }
     }
 }

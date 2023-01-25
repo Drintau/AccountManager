@@ -5,6 +5,6 @@ package drintau.accountmanager.commons;
  */
 public class AppLaunchArgsConstant {
 
-    public static final String GENERATE_AES_KEY = "securityKey";
+    public static final String GENERATE_KEY = "securityKey";
 
 }

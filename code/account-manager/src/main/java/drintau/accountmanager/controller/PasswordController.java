@@ -4,8 +4,7 @@ import drintau.accountmanager.commons.CommonCode;
 import drintau.accountmanager.commons.CommonResult;
 import drintau.accountmanager.config.AccountManagerConfig;
 import drintau.accountmanager.service.myaccount.MyPasswordService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +15,8 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/password")
 @CrossOrigin
+@Slf4j
 public class PasswordController {
-
-    private static final Logger logger = LoggerFactory.getLogger(PasswordController.class);
 
     @Resource
     private MyPasswordService myPasswordService;

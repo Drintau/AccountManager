@@ -11,8 +11,7 @@ import drintau.accountmanager.exception.CommonException;
 import drintau.accountmanager.service.myaccount.MyAccountService;
 import drintau.accountmanager.util.BeanUtil;
 import drintau.accountmanager.util.NumberUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,9 +24,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/account")
 @CrossOrigin
+@Slf4j
 public class AccountManagerController {
-
-    public static final Logger logger = LoggerFactory.getLogger(AccountManagerController.class);
 
     @Resource(name = "myAccountService")
     private MyAccountService myAccountService;
@@ -138,7 +136,7 @@ public class AccountManagerController {
                     new PageReadListener<MyAccountImportAndExportInfoBO>(dataList -> myAccountService.importAccounts(dataList))
             ).sheet().doRead();
         } catch (Exception e) {
-            logger.error("导入数据失败！", e);
+            log.error("导入数据失败！", e);
             return new CommonResult(CommonCode.FAIL, "导入数据失败！建议删除数据库文件重试。");
         }
         return new CommonResult(CommonCode.SUCCESS);

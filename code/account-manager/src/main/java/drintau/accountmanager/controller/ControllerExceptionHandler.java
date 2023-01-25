@@ -4,8 +4,7 @@ import drintau.accountmanager.commons.CommonCode;
 import drintau.accountmanager.commons.CommonResult;
 import drintau.accountmanager.exception.BusinessException;
 import drintau.accountmanager.exception.CommonException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -18,9 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
 @ControllerAdvice
+@Slf4j
 public class ControllerExceptionHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
 
     @ExceptionHandler(CommonException.class)
     @ResponseBody
@@ -55,7 +53,7 @@ public class ControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult handleOtherException(Exception e) {
-        logger.error("其他错误", e);
+        log.error("其他错误", e);
         return new CommonResult(CommonCode.FAIL, e.getMessage());
     }
 

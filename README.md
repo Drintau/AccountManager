@@ -14,11 +14,12 @@
 
 ### 安装与使用
 1. 安装配置java环境，java11以上。
-2. 到 [这里](https://github.com/drintau/AccountManager/releases) 下载最新版压缩包，解压到一个不带中文的目录。
+2. 到 [发布页面](https://github.com/drintau/AccountManager/releases) 下载最新版压缩包，解压到一个不带中文的目录。
 3. 复制一份对应操作系统的示例配置文件`application-xxx.properties`，改名为`application.properties`。
 4. 执行`java -jar account-manager.jar --securityKey`获得一个随机秘钥；把秘钥填到`application.properties`的`am.security-key=`后面。
 5. 配置`am.file-path=`后面的数据文件路径为本机可访问的路径。
 6. 执行`java -jar account-manager.jar`启动程序。
+7. 更多请阅读`说明.txt`
 
 ### 云盘同步
 1. 启用备份功能，把备份目录设置为云盘同步目录。

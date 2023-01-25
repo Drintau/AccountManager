@@ -9,8 +9,7 @@ import drintau.accountmanager.service.myaccount.MyAccountService;
 import drintau.accountmanager.service.secure.SecureService;
 import drintau.accountmanager.util.BeanUtil;
 import drintau.accountmanager.util.PageUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,9 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service(value = "myAccountService")
+@Slf4j
 public class MyAccountServiceImpl implements MyAccountService {
-
-    private static final Logger logger = LoggerFactory.getLogger(MyAccountServiceImpl.class);
 
     @Resource
     private SecureService secureService;
