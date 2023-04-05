@@ -1,1 +1,10 @@
-theme: jekyll-theme-cayman
+title: Account Manager
+description: 账号管理器
+show_downloads: true
+
+theme: jekyll-theme-architect
+
+lang: zh-CN
+
+# markdown处理器，不填或选填：kramdown 或 GFM
+markdown: GFM
