@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Account Manager
+title: AccountManager
 ---
 
 ## 诞生
