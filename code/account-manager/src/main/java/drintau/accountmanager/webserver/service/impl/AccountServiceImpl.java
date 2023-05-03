@@ -1,12 +1,12 @@
-package drintau.accountmanager.webserver.service.myaccount.impl;
+package drintau.accountmanager.webserver.service.impl;
 
 import drintau.accountmanager.commons.CommonCode;
 import drintau.accountmanager.webserver.dao.MyAccountRepository;
 import drintau.accountmanager.webserver.domain.bo.*;
 import drintau.accountmanager.webserver.domain.entity.MyAccountPO;
 import drintau.accountmanager.exception.BusinessException;
-import drintau.accountmanager.webserver.service.myaccount.MyAccountService;
-import drintau.accountmanager.webserver.service.secure.SecureService;
+import drintau.accountmanager.webserver.service.AccountService;
+import drintau.accountmanager.webserver.service.SecureService;
 import drintau.accountmanager.util.BeanUtil;
 import drintau.accountmanager.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +17,9 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(value = "myAccountService")
+@Service(value = "accountService")
 @Slf4j
-public class MyAccountServiceImpl implements MyAccountService {
+public class AccountServiceImpl implements AccountService {
 
     @Resource
     private SecureService secureService;

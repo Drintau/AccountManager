@@ -11,7 +11,6 @@ public class Application {
 
     public static void main(String[] args) {
         List<PluginInterface> startPlugins = new ArrayList<>();
-        startPlugins.add(new SayHelloPlugin());
         startPlugins.add(new LaunchArgsPlugin(args));
         for (PluginInterface startPlugin : startPlugins) {
             startPlugin.execute();
@@ -24,7 +23,6 @@ public class Application {
 
         List<PluginInterface> endPlugins = new ArrayList<>();
         endPlugins.add(new BackupPlugin());
-        endPlugins.add(new SayByePlugin());
         for (PluginInterface endPlugin : endPlugins) {
             endPlugin.execute();
         }

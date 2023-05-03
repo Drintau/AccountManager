@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.service;
+package drintau.accountmanager.webserver;
 
 import drintau.accountmanager.util.DateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.net.URI;
 @Component
 @Order(1)
 @Slf4j
-public class WelcomeRunner implements ApplicationRunner {
+public class SayHello implements ApplicationRunner {
 
     @Value("${maven.version:}")
     private String version;

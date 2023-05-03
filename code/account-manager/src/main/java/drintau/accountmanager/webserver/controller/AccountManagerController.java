@@ -8,7 +8,7 @@ import drintau.accountmanager.webserver.domain.bo.*;
 import drintau.accountmanager.webserver.domain.dto.*;
 import drintau.accountmanager.exception.BusinessException;
 import drintau.accountmanager.exception.CommonException;
-import drintau.accountmanager.webserver.service.myaccount.MyAccountService;
+import drintau.accountmanager.webserver.service.AccountService;
 import drintau.accountmanager.util.BeanUtil;
 import drintau.accountmanager.util.NumberUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +27,8 @@ import java.util.List;
 @Slf4j
 public class AccountManagerController {
 
-    @Resource(name = "myAccountService")
-    private MyAccountService myAccountService;
+    @Resource(name = "accountService")
+    private AccountService accountService;
 
     /**
      * id 精确查询，且解密
@@ -39,7 +39,7 @@ public class AccountManagerController {
         if (!NumberUtil.isNotNullAndGreaterThanZero(id)) {
             throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "查询id非法！");
         }
-        MyAccountInfoBO myAccountById = myAccountService.getMyAccountById(id);
+        MyAccountInfoBO myAccountById = accountService.getMyAccountById(id);
         if (myAccountById == null) {
             throw new BusinessException(CommonCode.FAIL, "查询数据不存在，请刷新页面！");
         }
@@ -55,7 +55,7 @@ public class AccountManagerController {
     @PostMapping("/query")
     public CommonResult<MyAccountListResDTO> query(@RequestBody @Validated MyAccountQueryReqDTO reqDTO) {
         MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
-        MyAccountListBO myAccountListBO = myAccountService.queryMyAccount(condition);
+        MyAccountListBO myAccountListBO = accountService.queryMyAccount(condition);
         List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResDTO.class);
         MyAccountListResDTO myAccountListResDTO = new MyAccountListResDTO();
         myAccountListResDTO.setPageNumber(reqDTO.getPageNumber());
@@ -83,7 +83,7 @@ public class AccountManagerController {
         if (pageSize < 1) {
             throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
         }
-        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber, pageSize);
+        MyAccountListBO myAccountListBO = accountService.listMyAccount(decrypt, pageNumber, pageSize);
         List<MyAccountQueryResDTO> myAccountQueryResDTOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResDTO.class);
         MyAccountListResDTO myAccountListResDTO = new MyAccountListResDTO();
         myAccountListResDTO.setPageNumber(pageNumber);
@@ -96,7 +96,7 @@ public class AccountManagerController {
     @PostMapping("/add")
     public CommonResult<MyAccountQueryResDTO> add(@RequestBody @Validated MyAccountAddReqDTO myAccountAddReqDTO) {
         MyAccountAddInfoBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqDTO, MyAccountAddInfoBO.class);
-        MyAccountInfoBO myAccount = myAccountService.addMyAccount(myAccountAddBeforeBO);
+        MyAccountInfoBO myAccount = accountService.addMyAccount(myAccountAddBeforeBO);
         MyAccountQueryResDTO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountQueryResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountAddResDTO);
     }
@@ -104,14 +104,14 @@ public class AccountManagerController {
     @PostMapping("/update")
     public CommonResult<MyAccountQueryResDTO> update(@RequestBody @Validated MyAccountUpdateReqDTO myAccountUpdateReqDTO) {
         MyAccountUpdateInfoBO myAccountUpdateBO = BeanUtil.copy(myAccountUpdateReqDTO, MyAccountUpdateInfoBO.class);
-        MyAccountInfoBO myAccount = myAccountService.updateMyAccount(myAccountUpdateBO);
+        MyAccountInfoBO myAccount = accountService.updateMyAccount(myAccountUpdateBO);
         MyAccountQueryResDTO myAccountUpdateResDTO = BeanUtil.copy(myAccount, MyAccountQueryResDTO.class);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountUpdateResDTO);
     }
 
     @PostMapping("/delete")
     public CommonResult delete(@RequestBody @Validated MyAccountDeleteReqDTO myAccountDeleteReqDTO) {
-        myAccountService.deleteMyAccount(myAccountDeleteReqDTO.getId());
+        accountService.deleteMyAccount(myAccountDeleteReqDTO.getId());
         return new CommonResult(CommonCode.SUCCESS);
     }
 
@@ -123,7 +123,7 @@ public class AccountManagerController {
         try {
             EasyExcel.write(response.getOutputStream(), MyAccountImportAndExportInfoBO.class)
                     .sheet("数据")
-                    .doWrite(() -> myAccountService.exportAccounts());
+                    .doWrite(() -> accountService.exportAccounts());
         } catch (IOException e) {
             throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
         }
@@ -133,7 +133,7 @@ public class AccountManagerController {
     public CommonResult importAccounts(@RequestParam("file") MultipartFile file) {
         try {
             EasyExcel.read(file.getInputStream(), MyAccountImportAndExportInfoBO.class,
-                    new PageReadListener<MyAccountImportAndExportInfoBO>(dataList -> myAccountService.importAccounts(dataList))
+                    new PageReadListener<MyAccountImportAndExportInfoBO>(dataList -> accountService.importAccounts(dataList))
             ).sheet().doRead();
         } catch (Exception e) {
             log.error("导入数据失败！", e);

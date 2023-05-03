@@ -1,10 +1,10 @@
-package drintau.accountmanager.webserver.service.myaccount;
+package drintau.accountmanager.webserver.service;
 
 import drintau.accountmanager.webserver.domain.bo.*;
 
 import java.util.List;
 
-public interface MyAccountService {
+public interface AccountService {
 
     MyAccountInfoBO getMyAccountById(Integer id);
 

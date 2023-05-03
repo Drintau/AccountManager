@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.service.secure;
+package drintau.accountmanager.webserver.service;
 
 /**
  * 加解密服务接口

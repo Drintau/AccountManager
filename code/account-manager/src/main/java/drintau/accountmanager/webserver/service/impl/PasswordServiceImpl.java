@@ -1,6 +1,6 @@
-package drintau.accountmanager.webserver.service.myaccount.impl;
+package drintau.accountmanager.webserver.service.impl;
 
-import drintau.accountmanager.webserver.service.myaccount.MyPasswordService;
+import drintau.accountmanager.webserver.service.PasswordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class MyPasswordServiceImpl implements MyPasswordService {
+public class PasswordServiceImpl implements PasswordService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MyPasswordServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(PasswordServiceImpl.class);
 
     private static final List<String> passwordCharList;
 
