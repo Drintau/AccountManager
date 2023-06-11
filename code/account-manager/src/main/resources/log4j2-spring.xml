@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration name="account-manager-application"
-               xmlns="http://logging.apache.org/log4j/2.0/config"
-               status="error">
+<Configuration name="account-manager-application" status="error">
 
     <Properties>
-        <Property name="CONSOLE_PATTERN">%X{TRACE_ID} %date{DEFAULT} [%-5level] (%file:%line) - %msg%n</Property>
+        <Property name="CONSOLE_PATTERN">%date{DEFAULT} [%-5level] %X{TRACE_ID} (%file:%line) - %msg%n</Property>
+        <Property name="FILE_PATTERN">%date{DEFAULT} [%-5level] %X{TRACE_ID} (%file:%line) - %msg%n</Property>
     </Properties>
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
+        <File name="WarnFile" fileName="logs/app-warn.log">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+        </File>
     </Appenders>
 
     <Loggers>
@@ -22,6 +25,7 @@
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="WarnFile"/>
         </Root>
     </Loggers>
 
