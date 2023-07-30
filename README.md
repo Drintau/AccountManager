@@ -43,5 +43,3 @@
 ## 软件截图
 ![](images/普通页面-列表.png)
 ![](images/普通页面-新增.png)
-![](images/普通页面-查看.png)
-![](images/高级页面-列表.png)

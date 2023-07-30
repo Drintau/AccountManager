@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Account Manager
+title: 账号管理器
 ---
 
 ## 诞生
@@ -44,5 +44,3 @@ title: Account Manager
 ## 软件截图
 ![](images/普通页面-列表.png)
 ![](images/普通页面-新增.png)
-![](images/普通页面-查看.png)
-![](images/高级页面-列表.png)

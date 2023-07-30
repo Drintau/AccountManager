@@ -1,8 +1,8 @@
-title: Account Manager
-description: 账号管理器
+title: 账号管理器
+description: Account Manager
 show_downloads: true
 
-theme: jekyll-theme-leap-day
+theme: jekyll-theme-architect
 
 lang: zh-CN
 
