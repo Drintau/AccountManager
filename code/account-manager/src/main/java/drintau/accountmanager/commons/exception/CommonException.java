@@ -1,9 +1,9 @@
-package drintau.accountmanager.exception;
+package drintau.accountmanager.commons.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import drintau.accountmanager.commons.CommonCode;
+import drintau.accountmanager.commons.domain.CommonCode;
 
 /**
  * 公共异常

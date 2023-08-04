@@ -1,6 +1,6 @@
 package drintau.accountmanager.webserver;
 
-import drintau.accountmanager.util.DateTimeUtil;
+import drintau.accountmanager.commons.util.DateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;

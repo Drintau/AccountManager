@@ -1,9 +1,9 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.CommonCode;
-import drintau.accountmanager.commons.CommonResult;
-import drintau.accountmanager.exception.BusinessException;
-import drintau.accountmanager.exception.CommonException;
+import drintau.accountmanager.commons.domain.CommonCode;
+import drintau.accountmanager.commons.domain.CommonResult;
+import drintau.accountmanager.commons.exception.BusinessException;
+import drintau.accountmanager.commons.exception.CommonException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;

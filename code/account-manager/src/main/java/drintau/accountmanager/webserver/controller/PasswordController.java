@@ -1,7 +1,7 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.CommonCode;
-import drintau.accountmanager.commons.CommonResult;
+import drintau.accountmanager.commons.domain.CommonCode;
+import drintau.accountmanager.commons.domain.CommonResult;
 import drintau.accountmanager.webserver.config.AccountManagerConfig;
 import drintau.accountmanager.webserver.service.PasswordService;
 import lombok.extern.slf4j.Slf4j;

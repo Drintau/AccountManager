@@ -1,5 +1,6 @@
-package drintau.accountmanager.commons;
+package drintau.accountmanager.commons.domain;
 
+import drintau.accountmanager.commons.domain.CommonCode;
 import lombok.Data;
 
 import java.io.Serializable;

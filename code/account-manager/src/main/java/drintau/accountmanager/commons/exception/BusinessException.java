@@ -1,6 +1,6 @@
-package drintau.accountmanager.exception;
+package drintau.accountmanager.commons.exception;
 
-import drintau.accountmanager.commons.CommonCode;
+import drintau.accountmanager.commons.domain.CommonCode;
 
 /**
  * 业务异常

@@ -1,4 +1,4 @@
-package drintau.accountmanager.util;
+package drintau.accountmanager.commons.util;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

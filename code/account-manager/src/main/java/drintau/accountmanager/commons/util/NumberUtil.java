@@ -1,4 +1,4 @@
-package drintau.accountmanager.util;
+package drintau.accountmanager.commons.util;
 
 public class NumberUtil {
 

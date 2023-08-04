@@ -1,7 +1,7 @@
 package drintau.accountmanager.plugin;
 
-import drintau.accountmanager.commons.AppLaunchArgsConstant;
-import drintau.accountmanager.util.SecureUtil;
+import drintau.accountmanager.commons.constant.AppLaunchArgsConstant;
+import drintau.accountmanager.commons.util.SecureUtil;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

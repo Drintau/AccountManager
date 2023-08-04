@@ -1,10 +1,10 @@
 package drintau.accountmanager.webserver.service.impl;
 
-import drintau.accountmanager.commons.CommonCode;
+import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.webserver.config.AccountManagerConfig;
-import drintau.accountmanager.exception.CommonException;
+import drintau.accountmanager.commons.exception.CommonException;
 import drintau.accountmanager.webserver.service.SecureService;
-import drintau.accountmanager.util.SecureUtil;
+import drintau.accountmanager.commons.util.SecureUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package drintau.accountmanager.commons;
+package drintau.accountmanager.commons.domain;
 
 public enum CommonCode {
 

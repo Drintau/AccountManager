@@ -10,6 +10,8 @@ import java.util.List;
 public class Application {
 
     public static void main(String[] args) {
+        // 如果操作系统有图形化桌面，使用图形化；否则是命令行程序
+
 //        List<PluginInterface> startPlugins = new ArrayList<>();
 //        startPlugins.add(new LaunchArgsPlugin(args));
 //        for (PluginInterface startPlugin : startPlugins) {

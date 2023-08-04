@@ -1,4 +1,4 @@
-package drintau.accountmanager.util;
+package drintau.accountmanager.commons.util;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
