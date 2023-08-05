@@ -15,8 +15,11 @@ public class MainUI extends Application {
     public void start(Stage stage) {
 
         // 控件
-        Button stop = new Button("停止");
         Button start = new Button("启动");
+        start.setOnAction(AMUIEventContainer.getInstance().getWebServerStartEvent());
+
+        Button stop = new Button("停止");
+        stop.setOnAction(AMUIEventContainer.getInstance().getWebServerStopEvent());
 
         // 布局
         VBox vBox = new VBox();

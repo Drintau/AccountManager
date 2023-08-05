@@ -1,5 +1,6 @@
 package drintau.accountmanager;
 
+import drintau.accountmanager.gui.AMUIEventContainer;
 import drintau.accountmanager.gui.MainUI;
 import drintau.accountmanager.plugin.*;
 import drintau.accountmanager.webserver.WebServerConfiguration;
@@ -12,6 +13,7 @@ public class Application {
 
     public static void main(String[] args) {
         // 如果操作系统有图形化桌面，使用图形化；否则是命令行程序
+        AMUIEventContainer.getInstance().setArgs(args);
         javafx.application.Application.launch(MainUI.class, args);
 
 //        List<PluginInterface> startPlugins = new ArrayList<>();
