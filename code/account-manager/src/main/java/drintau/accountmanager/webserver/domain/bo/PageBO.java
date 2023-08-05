@@ -10,8 +10,7 @@ import lombok.Data;
 public abstract class PageBO {
 
     /**
-     * 页码
-     * 人看到的，前端页码
+     * 页码：人看到的，前端页码
      */
     private Integer pageNumber;
 
@@ -30,22 +29,13 @@ public abstract class PageBO {
      */
     private Integer totalRecords;
 
-
-    /**
-     * 偏移量页数 = 前端页码 - 1
-     * 数据库分页用的
-     */
-    private Integer getOffsetPageNumber() {
-        return pageNumber - 1;
-    }
-
     /**
      * 偏移量 = (pageNumber - 1) * pageSize
      * 数据库分页用的
      * @return
      */
     public Integer getOffset() {
-        return getOffsetPageNumber() * pageSize;
+        return (pageNumber - 1) * pageSize;
     }
 
     public PageBO() {

@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.domain.dto;
+package drintau.accountmanager.webserver.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MyAccountUpdateReqDTO {
+public class MyAccountUpdateReqVO {
 
     @JsonProperty("id")
-    @NotNull
+    @NotNull(message = "修改记录的id不能为空")
     private Integer id;
 
     @JsonProperty("name")

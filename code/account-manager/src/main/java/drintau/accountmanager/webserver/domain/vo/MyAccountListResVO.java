@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.domain.dto;
+package drintau.accountmanager.webserver.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MyAccountListResDTO {
+public class MyAccountListResVO {
 
     @JsonProperty("page_number")
     Integer pageNumber;
@@ -18,5 +18,5 @@ public class MyAccountListResDTO {
     Integer totalPages;
 
     @JsonProperty("list")
-    List<MyAccountQueryResDTO> list;
+    List<MyAccountQueryResVO> list;
 }

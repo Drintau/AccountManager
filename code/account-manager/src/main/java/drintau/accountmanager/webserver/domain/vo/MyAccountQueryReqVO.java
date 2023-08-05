@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.domain.dto;
+package drintau.accountmanager.webserver.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MyAccountQueryReqDTO {
+public class MyAccountQueryReqVO {
 
     // 页码和条数是必须的
     @JsonProperty("page_number")

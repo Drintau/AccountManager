@@ -11,8 +11,6 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class PasswordServiceImpl implements PasswordService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PasswordServiceImpl.class);
-
     private static final List<String> passwordCharList;
 
     static {

@@ -4,13 +4,13 @@ import drintau.accountmanager.webserver.domain.bo.*;
 
 import java.util.List;
 
-public interface AccountService {
+public interface MyAccountService {
 
-    MyAccountInfoBO getMyAccountById(Integer id);
+    MyAccountBO getMyAccountById(Integer id);
 
     MyAccountListBO queryMyAccount(MyAccountQueryConditionBO condition);
 
-    List<MyAccountInfoBO> listMyAccount(Boolean decrypt);
+    List<MyAccountBO> listMyAccount(Boolean decrypt);
 
     /**
      * 无条件分页查询
@@ -21,14 +21,14 @@ public interface AccountService {
      */
     MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
 
-    MyAccountInfoBO addMyAccount(MyAccountAddInfoBO myAccountAddBO);
+    MyAccountBO addMyAccount(MyAccountBO myAccountAddBO);
 
-    MyAccountInfoBO updateMyAccount(MyAccountUpdateInfoBO myAccountUpdateBO);
+    MyAccountBO updateMyAccount(MyAccountBO myAccountUpdateBO);
 
     void deleteMyAccount(Integer id);
 
-    List<MyAccountImportAndExportInfoBO> exportAccounts();
+    List<MyAccountImportAndExportBO> exportMyAccounts();
 
-    void importAccounts(List<MyAccountImportAndExportInfoBO> importDataList);
+    void importMyAccounts(List<MyAccountImportAndExportBO> importDataList);
 
 }

@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.domain.dto;
+package drintau.accountmanager.webserver.domain.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,7 +8,7 @@ import drintau.accountmanager.commons.util.DateTimeUtil;
 import java.time.LocalDateTime;
 
 @Data
-public class MyAccountQueryResDTO {
+public class MyAccountQueryResVO {
 
     @JsonProperty("id")
     private Integer id;

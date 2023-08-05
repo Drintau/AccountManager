@@ -7,7 +7,7 @@ import lombok.Data;
  * 导入导出功能用到的信息
  */
 @Data
-public class MyAccountImportAndExportInfoBO {
+public class MyAccountImportAndExportBO {
 
     @ExcelProperty("应用名称")
     private String appName;
