@@ -16,10 +16,10 @@ public class MainUI extends Application {
 
         // 控件
         Button start = new Button("启动");
-        start.setOnAction(AMUIEventContainer.getInstance().getWebServerStartEvent());
+        start.setOnAction(new WebServerStartEvent());
 
         Button stop = new Button("停止");
-        stop.setOnAction(AMUIEventContainer.getInstance().getWebServerStopEvent());
+        stop.setOnAction(new WebServerStopEvent());
 
         // 布局
         VBox vBox = new VBox();

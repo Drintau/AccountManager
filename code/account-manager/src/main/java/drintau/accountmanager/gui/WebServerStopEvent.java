@@ -5,13 +5,14 @@ import javafx.event.EventHandler;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class WebServerStopEvent implements EventHandler<ActionEvent> {
+
     @Override
     public void handle(ActionEvent actionEvent) {
-        AMContext amContext = AMContext.getInstance();
-        ConfigurableApplicationContext webServerContext = amContext.getWebServerContext();
-        if (webServerContext != null && webServerContext.isActive()) {
+        AMUIContext amuiContext = AMUIContext.getInstance();
+        ConfigurableApplicationContext webServerContext = amuiContext.getWebServerContext();
+        if (webServerContext != null && webServerContext.isRunning()) {
             webServerContext.close();
-            amContext.setWebServerContext(null);
+            amuiContext.setWebServerContext(null);
         }
     }
 }

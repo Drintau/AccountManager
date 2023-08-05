@@ -4,17 +4,19 @@ import lombok.Data;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * 应用容器：单例
- * 里面的属性应该都是单例的
+ * 应用GUI容器：单例
  */
 @Data
-public class AMContext {
+public class AMUIContext {
 
-    private AMContext(){}
-    private static final AMContext instance = new AMContext();
-    public static AMContext getInstance(){
+    private AMUIContext(){}
+    private static final AMUIContext instance = new AMUIContext();
+    public static AMUIContext getInstance(){
         return instance;
     }
+
+    // 启动参数
+    private String[] args;
 
     // webserver实例
     private ConfigurableApplicationContext webServerContext;
