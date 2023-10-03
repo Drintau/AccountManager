@@ -13,17 +13,21 @@ public class MainUI extends Application {
 
     @Override
     public void start(Stage stage) {
+        AMUIContext amuiContext = AMUIContext.getInstance();
 
         // 控件
-        Button start = new Button("启动");
-        start.setOnAction(new WebServerStartEvent());
+        Button startButton = new Button("启动");
+        startButton.setOnAction(new WebServerStartEvent());
+        amuiContext.setStartButton(startButton);
 
-        Button stop = new Button("停止");
-        stop.setOnAction(new WebServerStopEvent());
+        Button stopButton = new Button("停止");
+        stopButton.setOnAction(new WebServerStopEvent());
+        stopButton.setDisable(true);
+        amuiContext.setStopButton(stopButton);
 
         // 布局
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(start, stop);
+        vBox.getChildren().addAll(startButton, stopButton);
 
         // 场景
         Scene scene = new Scene(vBox);

@@ -11,6 +11,8 @@ public class WebServerStopEvent implements EventHandler<ActionEvent> {
         AMUIContext amuiContext = AMUIContext.getInstance();
         ConfigurableApplicationContext webServerContext = amuiContext.getWebServerContext();
         if (webServerContext != null && webServerContext.isRunning()) {
+            amuiContext.getStopButton().setDisable(true);
+            amuiContext.getStartButton().setDisable(false);
             webServerContext.close();
             amuiContext.setWebServerContext(null);
         }

@@ -13,6 +13,8 @@ public class WebServerStartEvent implements EventHandler<ActionEvent> {
         AMUIContext amuiContext = AMUIContext.getInstance();
         ConfigurableApplicationContext webServerContext = amuiContext.getWebServerContext();
         if (webServerContext == null || !webServerContext.isRunning()) {
+            amuiContext.getStartButton().setDisable(true);
+            amuiContext.getStopButton().setDisable(false);
             SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(WebServerConfiguration.class).headless(false);
             webServerContext = springApplicationBuilder.run(amuiContext.getArgs());
             amuiContext.setWebServerContext(webServerContext);

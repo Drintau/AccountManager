@@ -1,5 +1,6 @@
 package drintau.accountmanager.gui;
 
+import javafx.scene.control.Button;
 import lombok.Data;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -20,5 +21,9 @@ public class AMUIContext {
 
     // webserver实例
     private ConfigurableApplicationContext webServerContext;
+
+    // 控件引用
+    private Button startButton;
+    private Button stopButton;
 
 }
