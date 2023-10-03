@@ -37,6 +37,7 @@ public class MainUI extends Application {
         stage.setTitle("账号管理器");
         stage.setWidth(600);
         stage.setHeight(400);
+        stage.setOnCloseRequest(new CloseEvent());
         stage.show();
     }
 
