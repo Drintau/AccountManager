@@ -28,11 +28,16 @@ public class MainUI extends Application {
         stopButton.setDisable(true);
         amuiContext.setStopButton(stopButton);
 
+        Button openBrowserButton = new Button("在浏览器访问");
+        openBrowserButton.setOnAction(new OpenBrowserEvent());
+        openBrowserButton.setDisable(true);
+        amuiContext.setOpenBrowserButton(openBrowserButton);
+
         // 布局
         // 控件分布：一行
         HBox topHBox = new HBox(20);
         topHBox.setPadding(new Insets(10,10,10,10));
-        topHBox.getChildren().addAll(startButton, stopButton);
+        topHBox.getChildren().addAll(startButton, stopButton, openBrowserButton);
         // 控件分布：上中下左右
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topHBox);

@@ -25,5 +25,6 @@ public class AMUIContext {
     // 控件引用
     private Button startButton;
     private Button stopButton;
+    private Button openBrowserButton;
 
 }
