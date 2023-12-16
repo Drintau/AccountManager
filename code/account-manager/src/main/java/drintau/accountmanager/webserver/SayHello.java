@@ -42,26 +42,29 @@ public class SayHello implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         log.info("版本号：{}", version);
         log.info("构建时间：{}", DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(packageTime));
-        log.info("应用启动成功。");
+        log.info("服务启动成功。");
 
         String localUrl = "http://localhost:" + port + contextPath;
         log.info("欢迎访问：{}", localUrl);
         log.debug("h2控制台地址：{}", localUrl + h2ConsolePath);
 
-        // 如果支持调用系统浏览器打开网址，则进行此操作
+        // 有GUI的环境
         if (Desktop.isDesktopSupported()) {
             AMUIContext amuiContext = AMUIContext.getInstance();
             amuiContext.setLocalUrl(localUrl);
             amuiContext.setFilePath(webServerConfig.getFilePath());
             amuiContext.setEnableBackup(webServerConfig.getEnableBackup());
             amuiContext.setBackupPaths(webServerConfig.getBackupPaths());
-            URI uri = URI.create(localUrl);
-            Desktop desktop = Desktop.getDesktop();
-            if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                try {
-                    desktop.browse(uri);
-                } catch (IOException e) {
-                    log.warn("无法调用系统浏览器打开网址，请手动复制网址到浏览器打开。");
+            // 配置了 服务启动后自动访问
+            if (webServerConfig.getAutoAccessAfterStartup() != null && webServerConfig.getAutoAccessAfterStartup()) {
+                URI uri = URI.create(localUrl);
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                    try {
+                        desktop.browse(uri);
+                    } catch (IOException e) {
+                        log.warn("无法调用系统浏览器访问，请手动复制网址到浏览器访问。");
+                    }
                 }
             }
         }

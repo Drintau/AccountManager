@@ -10,6 +10,6 @@ public class SayBye implements DisposableBean {
 
     @Override
     public void destroy() {
-        log.info("感谢使用！程序即将退出。");
+        log.info("感谢使用！服务即将停止。");
     }
 }

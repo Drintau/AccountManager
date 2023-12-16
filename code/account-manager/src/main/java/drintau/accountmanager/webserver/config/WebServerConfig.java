@@ -1,5 +1,6 @@
 package drintau.accountmanager.webserver.config;
 
+import drintau.accountmanager.commons.util.SecureUtil;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +40,7 @@ public class WebServerConfig {
     /**
      * 是否启用备份功能
      */
-    private Boolean enableBackup;
+    private Boolean enableBackup = false;
 
     /**
      * 数据库备份文件路径
@@ -47,13 +48,21 @@ public class WebServerConfig {
     private List<String> backupPaths;
 
     /**
+     * 启动后自动访问
+     */
+    private Boolean autoAccessAfterStartup = false;
+
+    /**
      * 秘钥二进制字节数组
      */
     private byte[] securityKeyByteArray;
 
+    /**
+     * Bean被构造并且依赖被注入后执行初始化逻辑，把密钥转换为二进制方便后面使用
+     */
     @PostConstruct
     private void initSecurityKeyByteArray() {
-        securityKeyByteArray = Base64.getDecoder().decode(securityKey);
+        securityKeyByteArray = SecureUtil.stringKeyToByteKey(securityKey);
     }
 
     public void setSecurityKey(String securityKey) {
@@ -75,5 +84,9 @@ public class WebServerConfig {
 
     public void setBackupPaths(List<String> backupPaths) {
         this.backupPaths = backupPaths;
+    }
+
+    public void setAutoAccessAfterStartup(Boolean autoAccessAfterStartup) {
+        this.autoAccessAfterStartup = autoAccessAfterStartup;
     }
 }

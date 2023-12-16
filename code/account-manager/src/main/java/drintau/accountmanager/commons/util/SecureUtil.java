@@ -17,7 +17,25 @@ public class SecureUtil {
      */
     public static String genSecureKey() throws Exception {
         byte[] key = AesUtil.genAesKey();
+        return byteKeyToStringKey(key);
+    }
+
+    /**
+     * 密钥字节数组转换为字符串
+     * @param key
+     * @return
+     */
+    public static String byteKeyToStringKey(byte[] key) {
         return Base64.getEncoder().encodeToString(key);
+    }
+
+    /**
+     * 密钥符串转换为字字节数组
+     * @param key
+     * @return
+     */
+    public static byte[] stringKeyToByteKey(String key) {
+        return Base64.getDecoder().decode(key);
     }
 
     /**

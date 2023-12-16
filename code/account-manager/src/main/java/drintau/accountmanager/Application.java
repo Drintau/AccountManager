@@ -17,6 +17,7 @@ public class Application {
         }
 
         // 如果操作系统有图形化桌面，使用图形化；否则不使用图形化
+        // 启动参数 -Djava.awt.headless=false 可以控制
         if (Desktop.isDesktopSupported()) {
             AMUIContext.getInstance().setArgs(args);
             javafx.application.Application.launch(MainUI.class, args);
