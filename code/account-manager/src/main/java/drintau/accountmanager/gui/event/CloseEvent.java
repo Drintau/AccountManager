@@ -1,5 +1,6 @@
-package drintau.accountmanager.gui;
+package drintau.accountmanager.gui.event;
 
+import drintau.accountmanager.gui.AMUIContext;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 import org.springframework.context.ConfigurableApplicationContext;

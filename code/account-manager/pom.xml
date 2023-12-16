@@ -79,6 +79,10 @@
             <artifactId>easyexcel</artifactId>
             <version>${easyexcel.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
         <!-- 前端 -->
         <!-- webjars-locator-core：Webjars版本定位工具，解决访问WebJars静态资源时必须携带版本号的问题 -->
         <dependency>

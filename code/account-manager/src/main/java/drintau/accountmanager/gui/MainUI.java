@@ -1,12 +1,17 @@
 package drintau.accountmanager.gui;
 
+import drintau.accountmanager.commons.util.YamlUtil;
+import drintau.accountmanager.gui.domain.ConfigValue;
+import drintau.accountmanager.gui.event.CloseEvent;
+import drintau.accountmanager.gui.event.OpenBrowserEvent;
+import drintau.accountmanager.gui.event.WebServerStartEvent;
+import drintau.accountmanager.gui.event.WebServerStopEvent;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -17,6 +22,10 @@ public class MainUI extends Application {
     @Override
     public void start(Stage stage) {
         AMUIContext amuiContext = AMUIContext.getInstance();
+
+        // 读取配置文件的配置
+        ConfigValue configValue = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), ConfigValue.class);
+        amuiContext.setConfigValue(configValue);
 
         // 控件
         Button startButton = new Button("启动");
