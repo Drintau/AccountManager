@@ -7,8 +7,8 @@ public class NumberUtil {
      * @param checkNumber 校验的整数
      * @return
      */
-    public static boolean isNotNullAndGreaterThanZero(Integer checkNumber) {
-        return checkNumber != null && checkNumber > 0;
+    public static boolean isNotNullAndGreaterThanZero(Number checkNumber) {
+        return checkNumber != null && checkNumber.doubleValue() > 0;
     }
 
 }
