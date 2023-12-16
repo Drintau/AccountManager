@@ -2,6 +2,7 @@ package drintau.accountmanager.webserver;
 
 import drintau.accountmanager.commons.util.DateTimeUtil;
 import drintau.accountmanager.gui.AMUIContext;
+import drintau.accountmanager.webserver.config.WebServerConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -9,6 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -33,6 +35,9 @@ public class SayHello implements ApplicationRunner {
     @Value("${spring.h2.console.path}")
     private String h2ConsolePath;
 
+    @Resource
+    private WebServerConfig webServerConfig;
+
     @Override
     public void run(ApplicationArguments args) {
         log.info("版本号：{}", version);
@@ -45,7 +50,11 @@ public class SayHello implements ApplicationRunner {
 
         // 如果支持调用系统浏览器打开网址，则进行此操作
         if (Desktop.isDesktopSupported()) {
-            AMUIContext.getInstance().setLocalUrl(localUrl);
+            AMUIContext amuiContext = AMUIContext.getInstance();
+            amuiContext.setLocalUrl(localUrl);
+            amuiContext.setFilePath(webServerConfig.getFilePath());
+            amuiContext.setEnableBackup(webServerConfig.getEnableBackup());
+            amuiContext.setBackupPaths(webServerConfig.getBackupPaths());
             URI uri = URI.create(localUrl);
             Desktop desktop = Desktop.getDesktop();
             if (desktop.isSupported(Desktop.Action.BROWSE)) {

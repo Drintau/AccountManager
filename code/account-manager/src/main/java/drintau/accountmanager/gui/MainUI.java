@@ -32,16 +32,16 @@ public class MainUI extends Application {
         amuiContext.setConfigValue(configValue);
 
         // 控件
-        Button startButton = new Button("启动");
+        Button startButton = new Button("启动服务");
         startButton.setOnAction(new WebServerStartEvent());
         amuiContext.setStartButton(startButton);
 
-        Button stopButton = new Button("停止");
+        Button stopButton = new Button("停止服务");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
         amuiContext.setStopButton(stopButton);
 
-        Button openBrowserButton = new Button("在浏览器访问");
+        Button openBrowserButton = new Button("打开浏览器访问");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
         amuiContext.setOpenBrowserButton(openBrowserButton);

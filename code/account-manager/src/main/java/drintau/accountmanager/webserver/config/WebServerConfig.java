@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotBlank;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * WEB服务配置参数
@@ -36,6 +37,16 @@ public class WebServerConfig {
     private int passwordDigits = 10;
 
     /**
+     * 是否启用备份功能
+     */
+    private Boolean enableBackup;
+
+    /**
+     * 数据库备份文件路径
+     */
+    private List<String> backupPaths;
+
+    /**
      * 秘钥二进制字节数组
      */
     private byte[] securityKeyByteArray;
@@ -55,5 +66,14 @@ public class WebServerConfig {
 
     public void setPasswordDigits(int passwordDigits) {
         this.passwordDigits = passwordDigits;
+    }
+
+
+    public void setEnableBackup(Boolean enableBackup) {
+        this.enableBackup = enableBackup;
+    }
+
+    public void setBackupPaths(List<String> backupPaths) {
+        this.backupPaths = backupPaths;
     }
 }
