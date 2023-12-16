@@ -20,8 +20,11 @@ public class AMUIContext {
     // 启动参数
     private String[] args;
 
-    // 配置参数
+    // 从配置文件读取的需要用到的参数
     private ConfigValue configValue;
+
+    // 本地访问地址，由webServer进行时赋值
+    private String localUrl;
 
     // webserver实例
     private ConfigurableApplicationContext webServerContext;

@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ConfigValue {
 
-    private Server server;
+    private Maven maven;
 }

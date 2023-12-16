@@ -1,5 +1,6 @@
 package drintau.accountmanager.gui;
 
+import drintau.accountmanager.commons.util.DateTimeUtil;
 import drintau.accountmanager.commons.util.YamlUtil;
 import drintau.accountmanager.gui.domain.ConfigValue;
 import drintau.accountmanager.gui.event.CloseEvent;
@@ -8,8 +9,11 @@ import drintau.accountmanager.gui.event.WebServerStartEvent;
 import drintau.accountmanager.gui.event.WebServerStopEvent;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -43,13 +47,25 @@ public class MainUI extends Application {
         amuiContext.setOpenBrowserButton(openBrowserButton);
 
         // 布局
-        // 控件分布：一行
+        // 顶部内容
         HBox topHBox = new HBox(20);
         topHBox.setPadding(new Insets(10,10,10,10));
-        topHBox.getChildren().addAll(startButton, stopButton, openBrowserButton);
+        topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
+
+        // 底部内容
+        Label versionLabel = new Label("版本号：" +
+                AMUIContext.getInstance().getConfigValue().getMaven().getVersion());
+        Label packageTimeLabel = new Label("构建时间：" +
+                DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(AMUIContext.getInstance().getConfigValue().getMaven().getPackageTime()));
+        HBox bottomHBox = new HBox(20);
+        bottomHBox.setPadding(new Insets(10,10,10,10));
+        bottomHBox.getChildren().addAll(versionLabel, packageTimeLabel);
+        bottomHBox.setAlignment(Pos.CENTER);
+
         // 控件分布：上中下左右
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topHBox);
+        borderPane.setBottom(bottomHBox);
 
         // 场景
         Scene scene = new Scene(borderPane);
@@ -60,6 +76,7 @@ public class MainUI extends Application {
         stage.setWidth(600);
         stage.setHeight(400);
         stage.setResizable(false);
+        stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
         stage.show();
     }

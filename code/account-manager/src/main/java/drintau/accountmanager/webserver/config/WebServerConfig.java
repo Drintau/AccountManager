@@ -8,16 +8,15 @@ import org.springframework.validation.annotation.Validated;
 import javax.annotation.PostConstruct;
 import javax.validation.constraints.NotBlank;
 import java.util.Base64;
-import java.util.List;
 
 /**
- * 配置类
+ * WEB服务配置参数
  */
 @Configuration
 @ConfigurationProperties(prefix = "am")
 @Validated
 @Getter
-public class AccountManagerConfig {
+public class WebServerConfig {
 
     /**
      * 加解密秘钥
@@ -35,16 +34,6 @@ public class AccountManagerConfig {
      * 随机密码位数，默认10
      */
     private int passwordDigits = 10;
-
-    /**
-     * 是否启用备份功能
-     */
-    private Boolean enableBackup;
-
-    /**
-     * 数据库备份文件路径
-     */
-    private List<String> backupPaths;
 
     /**
      * 秘钥二进制字节数组
@@ -66,13 +55,5 @@ public class AccountManagerConfig {
 
     public void setPasswordDigits(int passwordDigits) {
         this.passwordDigits = passwordDigits;
-    }
-
-    public void setEnableBackup(Boolean enableBackup) {
-        this.enableBackup = enableBackup;
-    }
-
-    public void setBackupPaths(List<String> backupPaths) {
-        this.backupPaths = backupPaths;
     }
 }

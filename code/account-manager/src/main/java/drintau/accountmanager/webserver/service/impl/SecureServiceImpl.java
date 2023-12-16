@@ -1,7 +1,7 @@
 package drintau.accountmanager.webserver.service.impl;
 
 import drintau.accountmanager.commons.domain.CommonCode;
-import drintau.accountmanager.webserver.config.AccountManagerConfig;
+import drintau.accountmanager.webserver.config.WebServerConfig;
 import drintau.accountmanager.commons.exception.CommonException;
 import drintau.accountmanager.webserver.service.SecureService;
 import drintau.accountmanager.commons.util.SecureUtil;
@@ -19,12 +19,12 @@ import javax.validation.constraints.NotBlank;
 public class SecureServiceImpl implements SecureService {
 
     @Resource
-    private AccountManagerConfig accountManagerConfig;
+    private WebServerConfig webServerConfig;
 
     @Override
     public String decrypt(@NotBlank String ciphertext) {
         try {
-            return SecureUtil.decrypt(accountManagerConfig.getSecurityKeyByteArray(), ciphertext);
+            return SecureUtil.decrypt(webServerConfig.getSecurityKeyByteArray(), ciphertext);
         } catch (Exception e) {
             log.error("解密失败", e);
             throw new CommonException(CommonCode.SYSTEM_ERROR, "解密失败，请检查秘钥");
@@ -34,7 +34,7 @@ public class SecureServiceImpl implements SecureService {
     @Override
     public String encrypt(@NotBlank String plaintext) {
         try {
-            return SecureUtil.encrypt(accountManagerConfig.getSecurityKeyByteArray(), plaintext);
+            return SecureUtil.encrypt(webServerConfig.getSecurityKeyByteArray(), plaintext);
         } catch (Exception e) {
             log.error("加密失败", e);
             throw new CommonException(CommonCode.SYSTEM_ERROR, "加密失败，请检查秘钥");

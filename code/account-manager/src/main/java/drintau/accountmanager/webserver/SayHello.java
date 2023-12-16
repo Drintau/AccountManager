@@ -1,6 +1,7 @@
 package drintau.accountmanager.webserver;
 
 import drintau.accountmanager.commons.util.DateTimeUtil;
+import drintau.accountmanager.gui.AMUIContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -44,6 +45,7 @@ public class SayHello implements ApplicationRunner {
 
         // 如果支持调用系统浏览器打开网址，则进行此操作
         if (Desktop.isDesktopSupported()) {
+            AMUIContext.getInstance().setLocalUrl(localUrl);
             URI uri = URI.create(localUrl);
             Desktop desktop = Desktop.getDesktop();
             if (desktop.isSupported(Desktop.Action.BROWSE)) {

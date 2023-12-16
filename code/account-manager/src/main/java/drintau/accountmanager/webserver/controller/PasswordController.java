@@ -2,7 +2,7 @@ package drintau.accountmanager.webserver.controller;
 
 import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.webserver.config.AccountManagerConfig;
+import drintau.accountmanager.webserver.config.WebServerConfig;
 import drintau.accountmanager.webserver.service.PasswordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,11 +22,11 @@ public class PasswordController {
     private PasswordService passwordService;
 
     @Resource
-    private AccountManagerConfig accountManagerConfig;
+    private WebServerConfig webServerConfig;
 
     @GetMapping("/get")
     public CommonResult<String> getRandomPassword() {
-        String randomPassword = passwordService.getRandomPassword(accountManagerConfig.getPasswordDigits());
+        String randomPassword = passwordService.getRandomPassword(webServerConfig.getPasswordDigits());
         return new CommonResult<>(CommonCode.SUCCESS, CommonCode.SUCCESS.message, randomPassword);
     }
 

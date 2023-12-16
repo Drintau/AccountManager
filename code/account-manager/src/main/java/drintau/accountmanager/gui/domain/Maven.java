@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Servlet {
+public class Maven {
 
-    @JsonProperty("context-path")
-    private String contextPath;
+    private String version;
+
+    @JsonProperty("package-time")
+    private String packageTime;
 
 }
