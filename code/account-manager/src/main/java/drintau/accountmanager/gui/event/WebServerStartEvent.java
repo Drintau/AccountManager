@@ -1,7 +1,7 @@
 package drintau.accountmanager.gui.event;
 
-import drintau.accountmanager.gui.AMUIContext;
-import drintau.accountmanager.webserver.WebServerConfiguration;
+import drintau.accountmanager.gui.GUIContext;
+import drintau.accountmanager.webserver.WebServerMainClass;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -11,16 +11,16 @@ public class WebServerStartEvent implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        AMUIContext amuiContext = AMUIContext.getInstance();
-        ConfigurableApplicationContext webServerContext = amuiContext.getWebServerContext();
+        GUIContext guiContext = GUIContext.getInstance();
+        ConfigurableApplicationContext webServerContext = guiContext.getWebServerContext();
         if (webServerContext == null || !webServerContext.isRunning()) {
-            amuiContext.getStartButton().setDisable(true);
-            amuiContext.getStopButton().setDisable(false);
-            amuiContext.getOpenBrowserButton().setDisable(false);
+            guiContext.getStartButton().setDisable(true);
+            guiContext.getStopButton().setDisable(false);
+            guiContext.getOpenBrowserButton().setDisable(false);
             // .headless(false) 能使用图形化界面的情况下，springboot也要用图形化模式
-            SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(WebServerConfiguration.class).headless(false);
-            webServerContext = springApplicationBuilder.run(amuiContext.getArgs());
-            amuiContext.setWebServerContext(webServerContext);
+            SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(WebServerMainClass.class).headless(false);
+            webServerContext = springApplicationBuilder.run(guiContext.getArgs());
+            guiContext.setWebServerContext(webServerContext);
         }
     }
 }

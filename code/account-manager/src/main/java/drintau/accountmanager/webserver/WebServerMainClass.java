@@ -5,7 +5,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
-public class WebServerConfiguration {
+public class WebServerMainClass {
 
     /**
      * Spring Boot 应用默认情况下运行在headless模式，无法使用AWT GUI

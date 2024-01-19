@@ -11,11 +11,11 @@ import java.util.List;
  * 应用GUI容器：单例
  */
 @Data
-public class AMUIContext {
+public class GUIContext {
 
-    private AMUIContext(){}
-    private static final AMUIContext instance = new AMUIContext();
-    public static AMUIContext getInstance(){
+    private GUIContext(){}
+    private static final GUIContext instance = new GUIContext();
+    public static GUIContext getInstance(){
         return instance;
     }
 

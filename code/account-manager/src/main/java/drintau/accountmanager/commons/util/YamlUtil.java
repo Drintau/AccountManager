@@ -22,8 +22,7 @@ public class YamlUtil {
 
     public static <T> T readYamlToObj(InputStream yamlFile, Class<T> targetClass) {
         try {
-            T t = objectMapper.readValue(yamlFile, targetClass);
-            return t;
+            return objectMapper.readValue(yamlFile, targetClass);
         } catch (IOException e) {
             log.error("", e);
             throw new CommonException(CommonCode.SYSTEM_ERROR, "解析yaml文件失败");

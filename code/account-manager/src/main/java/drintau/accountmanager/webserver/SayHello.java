@@ -1,7 +1,7 @@
 package drintau.accountmanager.webserver;
 
 import drintau.accountmanager.commons.util.DateTimeUtil;
-import drintau.accountmanager.gui.AMUIContext;
+import drintau.accountmanager.gui.GUIContext;
 import drintau.accountmanager.webserver.config.WebServerConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,11 +50,11 @@ public class SayHello implements ApplicationRunner {
 
         // 有GUI的环境
         if (Desktop.isDesktopSupported()) {
-            AMUIContext amuiContext = AMUIContext.getInstance();
-            amuiContext.setLocalUrl(localUrl);
-            amuiContext.setFilePath(webServerConfig.getFilePath());
-            amuiContext.setEnableBackup(webServerConfig.getEnableBackup());
-            amuiContext.setBackupPaths(webServerConfig.getBackupPaths());
+            GUIContext guiContext = GUIContext.getInstance();
+            guiContext.setLocalUrl(localUrl);
+            guiContext.setFilePath(webServerConfig.getFilePath());
+            guiContext.setEnableBackup(webServerConfig.getEnableBackup());
+            guiContext.setBackupPaths(webServerConfig.getBackupPaths());
             // 配置了 服务启动后自动访问
             if (webServerConfig.getAutoAccessAfterStartup() != null && webServerConfig.getAutoAccessAfterStartup()) {
                 URI uri = URI.create(localUrl);

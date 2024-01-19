@@ -21,30 +21,30 @@ import javafx.stage.Stage;
 /**
  * 主页面
  */
-public class MainUI extends Application {
+public class GUIMainClass extends Application {
 
     @Override
     public void start(Stage stage) {
-        AMUIContext amuiContext = AMUIContext.getInstance();
+        GUIContext guiContext = GUIContext.getInstance();
 
         // 读取配置文件的配置
         ConfigValue configValue = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), ConfigValue.class);
-        amuiContext.setConfigValue(configValue);
+        guiContext.setConfigValue(configValue);
 
         // 控件
         Button startButton = new Button("启动服务");
         startButton.setOnAction(new WebServerStartEvent());
-        amuiContext.setStartButton(startButton);
+        guiContext.setStartButton(startButton);
 
         Button stopButton = new Button("停止服务");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
-        amuiContext.setStopButton(stopButton);
+        guiContext.setStopButton(stopButton);
 
         Button openBrowserButton = new Button("打开浏览器访问");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
-        amuiContext.setOpenBrowserButton(openBrowserButton);
+        guiContext.setOpenBrowserButton(openBrowserButton);
 
         // 布局
         // 顶部内容
@@ -54,9 +54,9 @@ public class MainUI extends Application {
 
         // 底部内容
         Label versionLabel = new Label("版本号：" +
-                AMUIContext.getInstance().getConfigValue().getMaven().getVersion());
+                guiContext.getConfigValue().getMaven().getVersion());
         Label packageTimeLabel = new Label("构建时间：" +
-                DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(AMUIContext.getInstance().getConfigValue().getMaven().getPackageTime()));
+                DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(guiContext.getConfigValue().getMaven().getPackageTime()));
         HBox bottomHBox = new HBox(20);
         bottomHBox.setPadding(new Insets(10,10,10,10));
         bottomHBox.getChildren().addAll(versionLabel, packageTimeLabel);

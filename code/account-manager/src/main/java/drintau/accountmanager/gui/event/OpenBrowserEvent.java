@@ -1,10 +1,9 @@
 package drintau.accountmanager.gui.event;
 
-import drintau.accountmanager.gui.AMUIContext;
+import drintau.accountmanager.gui.GUIContext;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.awt.*;
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class OpenBrowserEvent implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        URI uri = URI.create(AMUIContext.getInstance().getLocalUrl());
+        URI uri = URI.create(GUIContext.getInstance().getLocalUrl());
         Desktop desktop = Desktop.getDesktop();
         try {
             desktop.browse(uri);

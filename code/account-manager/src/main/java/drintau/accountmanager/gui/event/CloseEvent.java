@@ -1,7 +1,7 @@
 package drintau.accountmanager.gui.event;
 
 import drintau.accountmanager.commons.util.FileUtil;
-import drintau.accountmanager.gui.AMUIContext;
+import drintau.accountmanager.gui.GUIContext;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 import org.apache.commons.collections4.CollectionUtils;
@@ -11,19 +11,19 @@ import org.springframework.util.StringUtils;
 public class CloseEvent implements EventHandler<WindowEvent> {
     @Override
     public void handle(WindowEvent windowEvent) {
-        AMUIContext amuiContext = AMUIContext.getInstance();
-        ConfigurableApplicationContext webServerContext = amuiContext.getWebServerContext();
+        GUIContext guiContext = GUIContext.getInstance();
+        ConfigurableApplicationContext webServerContext = guiContext.getWebServerContext();
         if (webServerContext != null && webServerContext.isRunning()) {
-            amuiContext.getStopButton().setDisable(true);
-            amuiContext.getOpenBrowserButton().setDisable(true);
-            amuiContext.getStartButton().setDisable(true);
+            guiContext.getStopButton().setDisable(true);
+            guiContext.getOpenBrowserButton().setDisable(true);
+            guiContext.getStartButton().setDisable(true);
             webServerContext.close();
-            amuiContext.setWebServerContext(null);
+            guiContext.setWebServerContext(null);
         }
-        if (amuiContext.getEnableBackup() != null && amuiContext.getEnableBackup()) {
-            if (StringUtils.hasText(amuiContext.getFilePath()) && CollectionUtils.isNotEmpty(amuiContext.getBackupPaths())) {
-                for (String backupPath : amuiContext.getBackupPaths()) {
-                    FileUtil.copyFile(amuiContext.getFilePath() + ".mv.db", backupPath + ".mv.db");
+        if (guiContext.getEnableBackup() != null && guiContext.getEnableBackup()) {
+            if (StringUtils.hasText(guiContext.getFilePath()) && CollectionUtils.isNotEmpty(guiContext.getBackupPaths())) {
+                for (String backupPath : guiContext.getBackupPaths()) {
+                    FileUtil.copyFile(guiContext.getFilePath() + ".mv.db", backupPath + ".mv.db");
                 }
             }
         }

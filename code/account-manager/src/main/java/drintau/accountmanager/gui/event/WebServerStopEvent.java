@@ -1,6 +1,6 @@
 package drintau.accountmanager.gui.event;
 
-import drintau.accountmanager.gui.AMUIContext;
+import drintau.accountmanager.gui.GUIContext;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -9,14 +9,14 @@ public class WebServerStopEvent implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent actionEvent) {
-        AMUIContext amuiContext = AMUIContext.getInstance();
-        ConfigurableApplicationContext webServerContext = amuiContext.getWebServerContext();
+        GUIContext guiContext = GUIContext.getInstance();
+        ConfigurableApplicationContext webServerContext = guiContext.getWebServerContext();
         if (webServerContext != null && webServerContext.isRunning()) {
-            amuiContext.getStopButton().setDisable(true);
-            amuiContext.getOpenBrowserButton().setDisable(true);
-            amuiContext.getStartButton().setDisable(false);
+            guiContext.getStopButton().setDisable(true);
+            guiContext.getOpenBrowserButton().setDisable(true);
+            guiContext.getStartButton().setDisable(false);
             webServerContext.close();
-            amuiContext.setWebServerContext(null);
+            guiContext.setWebServerContext(null);
         }
     }
 }
