@@ -1,9 +1,9 @@
-package drintau.accountmanager.assist;
+package drintau.accountmanager.launcharg;
 
 /**
  * 启动参数处理程序
  */
-public class LaunchArgsHandler {
+public class ArgsHandler {
 
     public void execute(String[] args) {
         ArgHandlerFactory argHandlerFactory = new ArgHandlerFactory();

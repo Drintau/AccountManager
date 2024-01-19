@@ -17,6 +17,7 @@ public class WebServerStartEvent implements EventHandler<ActionEvent> {
             amuiContext.getStartButton().setDisable(true);
             amuiContext.getStopButton().setDisable(false);
             amuiContext.getOpenBrowserButton().setDisable(false);
+            // .headless(false) 能使用图形化界面的情况下，springboot也要用图形化模式
             SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(WebServerConfiguration.class).headless(false);
             webServerContext = springApplicationBuilder.run(amuiContext.getArgs());
             amuiContext.setWebServerContext(webServerContext);

@@ -1,4 +1,4 @@
-package drintau.accountmanager.assist;
+package drintau.accountmanager.launcharg;
 
 public interface ArgHandlerInterface {
 

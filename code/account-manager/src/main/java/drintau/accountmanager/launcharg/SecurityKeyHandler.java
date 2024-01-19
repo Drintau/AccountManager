@@ -1,11 +1,11 @@
-package drintau.accountmanager.assist;
+package drintau.accountmanager.launcharg;
 
 import drintau.accountmanager.commons.util.SecureUtil;
 
 /**
  * 生成密钥处理程序
  */
-public class GenKeyHandler implements ArgHandlerInterface {
+public class SecurityKeyHandler implements ArgHandlerInterface {
 
     @Override
     public void execute() {
@@ -30,6 +30,6 @@ public class GenKeyHandler implements ArgHandlerInterface {
 
     @Override
     public String argName() {
-        return "securityKey";
+        return ArgsContext.ARG_NAME_SECURITY_KEY;
     }
 }
