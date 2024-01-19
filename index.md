@@ -5,7 +5,7 @@ title: 账号管理器
 
 ## 诞生
 
-已有的一些 [密码管理软件](https://www.zhihu.com/question/27338793) 不符合定制需求，所以定制一个。
+一些优秀的 [密码管理软件](https://www.zhihu.com/question/27338793) ，但是我想用自己做的。
 
 ## 特点
 
@@ -19,20 +19,19 @@ title: 账号管理器
 ## 安装与使用
 
 1. 安装配置java环境，java11以上。
-2. 到 [发布页面](https://github.com/drintau/AccountManager/releases) 下载最新版压缩包，解压到一个不带中文的目录。
+2. 到 [发布页面](https://github.com/drintau/AccountManager/releases) 下载最新版压缩包，解压。
 3. 复制一份对应操作系统的示例配置文件`application-xxx.properties`，改名为`application.properties`。
-4. 执行`java -jar account-manager.jar --securityKey`获得一个随机秘钥；把秘钥填到`application.properties`的`am.security-key=`后面。
+4. 执行对应操作系统的脚本`account-manager-key`获得一个随机秘钥；把秘钥填到`application.properties`的`am.security-key=`后面。
 5. 配置`am.file-path=`后面的数据文件路径为本机可访问的路径。
-6. 执行`java -jar account-manager.jar`启动程序。
-7. 更多请阅读`说明.txt`
+6. 执行对应操作系统的脚本`account-manager-start`启动程序。
+7. 更多请阅读压缩包里面的`说明.txt`
 
 ## 云盘同步
 
 1. 启用备份功能，把备份目录设置为云盘同步目录。
 2. 每次程序退出，会自动把当前密文文件拷贝一份到备份目录。
-3. 腾讯微云同步助手/百度网盘/坚果云都有同步目录功能，会把同步目录内变动的文件同步到云。
-4. 还有其他网盘请自行尝试。
-5. 注意：程序使用的密文文件不能作为同步文件，多个程序访问密文文件会导致文件损坏，此时只能找备份恢复使用。
+3. 腾讯微云同步助手/百度网盘/坚果云等网盘都有同步目录功能。
+4. 注意：程序使用的密文文件不能作为同步文件，多个程序访问密文文件会导致文件损坏，此时只能找备份恢复使用。
 
 ## 建议
 
