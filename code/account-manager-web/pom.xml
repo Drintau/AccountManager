@@ -11,27 +11,8 @@
         <relativePath>../account-manager-parent/pom.xml</relativePath>
     </parent>
     <artifactId>account-manager-web</artifactId>
-    <version>1.3.1</version>
+<!--    <version>1.3.1</version>-->
     <packaging>jar</packaging>
-
-    <properties>
-        <!--指定时间格式：年-月-日 时:分:秒 时区-->
-        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss Z</maven.build.timestamp.format>
-        <!--maven.build.timestamp保存了maven编译时间戳-->
-        <timestamp>${maven.build.timestamp}</timestamp>
-        <!-- 覆盖spring-boot-starter-parent指定的java版本1.8 -->
-        <java.version>11</java.version>
-
-        <h2.version>2.1.214</h2.version>
-        <hikaricp.version>5.0.1</hikaricp.version>
-        <easyexcel.version>3.1.5</easyexcel.version>
-
-        <vue.version>2.6.14</vue.version>
-        <axios.version>1.2.2</axios.version>
-        <element-ui.version>2.15.10</element-ui.version>
-
-        <javafx.version>19.0.2.1</javafx.version>
-    </properties>
 
     <dependencies>
         <!-- Spring -->
