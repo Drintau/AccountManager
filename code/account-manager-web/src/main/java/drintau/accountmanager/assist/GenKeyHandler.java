@@ -30,6 +30,6 @@ public class GenKeyHandler implements ArgHandlerInterface {
 
     @Override
     public String argName() {
-        return "genKey";
+        return "securityKey";
     }
 }
