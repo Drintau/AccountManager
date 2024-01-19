@@ -9,3 +9,5 @@ windows脚本
 linux脚本
 1. 生成秘钥：account-manager-key.sh
 2. 启动程序：account-manager-start.sh
+
+脚本中有多个命令，可以根据实际情况选择使用。
