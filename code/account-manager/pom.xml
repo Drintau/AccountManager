@@ -20,7 +20,7 @@
         <!--maven.build.timestamp保存了maven编译时间戳-->
         <timestamp>${maven.build.timestamp}</timestamp>
         <!-- 覆盖spring-boot-starter-parent指定的java版本1.8 -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <h2.version>2.1.214</h2.version>
         <hikaricp.version>5.0.1</hikaricp.version>
