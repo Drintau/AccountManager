@@ -17,7 +17,7 @@
 
 ## 安装与使用
 
-1. 安装配置java环境，java11以上。
+1. 安装配置java环境，建议java17以上。
 2. 到 [发布页面](https://github.com/drintau/AccountManager/releases) 下载最新版压缩包，解压。
 3. 复制一份对应操作系统的示例配置文件`application-xxx.properties`，改名为`application.properties`。
 4. 执行对应操作系统的脚本`account-manager-key`获得一个随机秘钥；把秘钥填到`application.properties`的`am.security-key=`后面。
@@ -37,8 +37,4 @@
 1. 配置文件多几个备份，免得配置文件坏了解不出账号密码；密文文件也可以多几个备份。
 2. 配置文件和密文文件放在同一个网盘比较容易找到。
 3. 只有自己一个人看密码时才可点击“高级页面”！
-4. 每次升级前，先导出现有数据做备份。
-
-## 软件截图
-![](images/普通页面-列表.png)
-![](images/普通页面-新增.png)
+4. 每次升级前，建议先导出现有数据做备份。
