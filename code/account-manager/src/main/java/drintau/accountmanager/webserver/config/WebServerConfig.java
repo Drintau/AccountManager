@@ -1,14 +1,13 @@
 package drintau.accountmanager.webserver.config;
 
 import drintau.accountmanager.commons.util.SecureUtil;
+import jakarta.annotation.PostConstruct;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
 
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotBlank;
-import java.util.Base64;
 import java.util.List;
 
 /**

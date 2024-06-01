@@ -3,6 +3,7 @@ package drintau.accountmanager.webserver;
 import drintau.accountmanager.commons.util.DateTimeUtil;
 import drintau.accountmanager.gui.GUIContext;
 import drintau.accountmanager.webserver.config.WebServerConfig;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -10,7 +11,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;

@@ -4,13 +4,12 @@ import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
 import drintau.accountmanager.webserver.config.WebServerConfig;
 import drintau.accountmanager.webserver.service.PasswordService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/password")

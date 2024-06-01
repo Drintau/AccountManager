@@ -3,6 +3,7 @@ package drintau.accountmanager.webserver.dao.impl;
 import drintau.accountmanager.webserver.dao.MyAccountRepository;
 import drintau.accountmanager.webserver.domain.bo.PageBO;
 import drintau.accountmanager.webserver.domain.entity.MyAccountPO;
+import jakarta.annotation.Resource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
@@ -10,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
