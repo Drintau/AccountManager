@@ -27,7 +27,7 @@
         <easyexcel.version>3.1.5</easyexcel.version>
 
         <vue.version>2.6.14</vue.version>
-        <axios.version>1.2.2</axios.version>
+        <axios.version>1.7.1</axios.version>
         <element-ui.version>2.15.10</element-ui.version>
 
         <javafx.version>19.0.2.1</javafx.version>
