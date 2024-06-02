@@ -1,6 +1,6 @@
 java命令
 1. 生成秘钥：java -jar account-manager.jar --securityKey
-2. 启动程序：java -jar account-manager.jar
+2. 启动程序：java -jar account-manager.jar 或 java -jar account-manager.jar --useGUI
 
 windows脚本
 1. 生成秘钥：account-manager-key.bat
