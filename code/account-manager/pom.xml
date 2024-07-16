@@ -20,13 +20,12 @@
         <!--maven.build.timestamp保存了maven编译时间戳-->
         <timestamp>${maven.build.timestamp}</timestamp>
 
-        <easyexcel.version>3.1.5</easyexcel.version>
+        <easyexcel.version>4.0.1</easyexcel.version>
 
-        <vue.version>2.6.14</vue.version>
-        <axios.version>1.7.1</axios.version>
-        <element-ui.version>2.15.10</element-ui.version>
+        <vue.version>3.4.31</vue.version>
+        <axios.version>1.7.2</axios.version>
 
-        <!-- 建议选择LTS版本 -->
+        <!-- 使用LTS版本 -->
         <javafx.version>21.0.3</javafx.version>
     </properties>
 
@@ -95,11 +94,6 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>axios</artifactId>
             <version>${axios.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>element-ui</artifactId>
-            <version>${element-ui.version}</version>
         </dependency>
         <!-- GUI -->
         <dependency>
