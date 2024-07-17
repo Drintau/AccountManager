@@ -24,6 +24,7 @@
 
         <vue.version>3.4.31</vue.version>
         <axios.version>1.7.2</axios.version>
+        <ant-design-vue.version>4.2.3</ant-design-vue.version>
 
         <!-- 使用LTS版本 -->
         <javafx.version>21.0.3</javafx.version>
@@ -94,6 +95,11 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>axios</artifactId>
             <version>${axios.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>ant-design-vue</artifactId>
+            <version>${ant-design-vue.version}</version>
         </dependency>
         <!-- GUI -->
         <dependency>
