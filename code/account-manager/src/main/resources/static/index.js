@@ -1,9 +1,7 @@
-const mydata = {
-    data() {
-        return {
-            msg: "测试内容",
-        };
-    },
-};
+const { createApp } = Vue
+const { createVuetify } = Vuetify
 
-Vue.createApp(mydata).mount("#app");
+const vuetify = createVuetify()
+
+const app = createApp()
+app.use(vuetify).mount('#app')
