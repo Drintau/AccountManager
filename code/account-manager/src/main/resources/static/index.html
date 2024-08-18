@@ -4,16 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/accountmanager/webjars/vuetify/dist/vuetify.min.css">
     <link rel="stylesheet" href="style.css">
     <title>账号管理器</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
     <script src="/accountmanager/webjars/vue/dist/vue.global.prod.js"></script>
     <script src="/accountmanager/webjars/axios/dist/axios.min.js"></script>
+    <script src="/accountmanager/webjars/vuetify/dist/vuetify.min.js"></script>
 </head>
 
 <body>
 <div id="app">
-    <h1>{{ msg }}</h1>
+    <div>
+        <button>新增账号</button>
+        <button>搜索</button>
+        <button>切换视图</button>
+    </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>列标题1</th>
+                <th>列标题2</th>
+                <th>列标题3</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>行1，列1</td>
+                <td>行1，列2</td>
+                <td>行1，列3</td>
+            </tr>
+            <tr>
+                <td>行2，列1</td>
+                <td>行2，列2</td>
+                <td>行2，列3</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="index.js"></script>
