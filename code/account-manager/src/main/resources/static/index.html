@@ -14,36 +14,44 @@
 </head>
 
 <body>
-<div id="app">
-    <div>
-        <v-btn density="comfortable">新增账号</v-btn>
-        <v-text-field label="搜索"></v-text-field>
-        <v-btn density="comfortable">切换视图</v-btn>
-    </div>
-    <div>
-        <table>
-            <thead>
-            <tr>
-                <th>列标题1</th>
-                <th>列标题2</th>
-                <th>列标题3</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>行1，列1</td>
-                <td>行1，列2</td>
-                <td>行1，列3</td>
-            </tr>
-            <tr>
-                <td>行2，列1</td>
-                <td>行2，列2</td>
-                <td>行2，列3</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+<v-app id="app">
+    <v-container>
+        <v-row>
+            <v-col>
+                <v-btn density="comfortable">新增账号</v-btn>
+            </v-col>
+            <v-col>
+                <v-text-field label="搜索"></v-text-field>
+            </v-col>
+            <v-col>
+                <v-btn density="comfortable">切换视图</v-btn>
+            </v-col>
+        </v-row>
+        <v-row>
+            <table>
+                <thead>
+                <tr>
+                    <th>列标题1</th>
+                    <th>列标题2</th>
+                    <th>列标题3</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>行1，列1</td>
+                    <td>行1，列2</td>
+                    <td>行1，列3</td>
+                </tr>
+                <tr>
+                    <td>行2，列1</td>
+                    <td>行2，列2</td>
+                    <td>行2，列3</td>
+                </tr>
+                </tbody>
+            </table>
+        </v-row>
+    </v-container>
+</v-app>
 
 <script src="index.js"></script>
 </body>
