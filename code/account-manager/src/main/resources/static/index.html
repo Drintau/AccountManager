@@ -19,25 +19,15 @@
         <v-row>
             <v-col>
                 <v-btn density="comfortable">新增账号</v-btn>
+                <v-btn density="comfortable">导入</v-btn>
+                <v-btn density="comfortable">导出</v-btn>
             </v-col>
             <v-col>
                 <v-text-field label="搜索"></v-text-field>
             </v-col>
-            <v-col>
-                <v-btn density="comfortable">切换视图</v-btn>
-            </v-col>
         </v-row>
         <v-row>
-            <v-data-table-server
-            v-model:items-per-page="itemsPerPage"
-            :headers="headers"
-            :items="serverItems"
-            :items-length="totalItems"
-            :loading="loading"
-            :search="search"
-            item-value="name"
-            @update:options="loadItems"
-          ></v-data-table-server>
+
         </v-row>
     </v-container>
 </v-app>
