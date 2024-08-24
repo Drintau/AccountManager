@@ -25,6 +25,7 @@
         <vue.version>3.4.31</vue.version>
         <axios.version>1.7.2</axios.version>
         <vuetify.version>3.6.6</vuetify.version>
+        <fortawesome.version>6.5.2</fortawesome.version>
 
         <!-- 使用LTS版本 -->
         <javafx.version>21.0.3</javafx.version>
@@ -100,6 +101,12 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>vuetify</artifactId>
             <version>${vuetify.version}</version>
+        </dependency>
+        <!-- 图标库 -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>fortawesome__fontawesome-free</artifactId>
+            <version>${fortawesome.version}</version>
         </dependency>
         <!-- GUI -->
         <dependency>

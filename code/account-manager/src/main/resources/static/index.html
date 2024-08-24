@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/accountmanager/webjars/vuetify/dist/vuetify.min.css">
+    <link rel="stylesheet" href="/accountmanager/webjars/fortawesome__fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <title>账号管理器</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
@@ -18,12 +19,19 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-btn density="comfortable">新增账号</v-btn>
+                <v-btn density="comfortable" @click="onClick">新增账号</v-btn>
                 <v-btn density="comfortable">导入</v-btn>
                 <v-btn density="comfortable">导出</v-btn>
             </v-col>
             <v-col>
-                <v-text-field label="搜索"></v-text-field>
+                <v-text-field 
+                append-inner-icon="fas fa-search"
+                density="comfortable"
+                label="搜索" 
+                variant="underlined" 
+                single-line 
+                @click:append-inner="onClick2">
+                </v-text-field>
             </v-col>
         </v-row>
         <v-row>
