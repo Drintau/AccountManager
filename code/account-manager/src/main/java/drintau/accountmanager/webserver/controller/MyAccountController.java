@@ -61,6 +61,7 @@ public class MyAccountController {
         myAccountListResVO.setPageNumber(reqDTO.getPageNumber());
         myAccountListResVO.setPageSize(reqDTO.getPageSize());
         myAccountListResVO.setTotalPages(myAccountListBO.getTotalPages());
+        myAccountListResVO.setTotalRecords(myAccountListBO.getTotalRecords());
         myAccountListResVO.setList(myAccountQueryResVOList);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
     }

@@ -7,7 +7,20 @@ const App = {
 
     data() {
         return {
-
+            itemsPerPage: 5,
+            search: null,
+            headers: [
+              { key: 'name', title: '名称', sortable: false},
+              { key: 'url', title: '网址', sortable: false},
+              { key: 'username', title: '账号', sortable: false},
+              { key: 'password', title: '密码', sortable: false},
+              { key: 'remark', title: '备注', sortable: false},
+              { key: 'create_time', title: '创建时间', sortable: false},
+              { key: 'update_time', title: '更新时间', sortable: false},
+            ],
+            serverItems: [],
+            totalItems: 0,
+            loading: true,
         }
     },
 
@@ -36,6 +49,7 @@ const App = {
 
         // 列表查询
         list(pageNumber, pageSize, decryptFlag) {
+            this.loading = true;
             axios.post('/accountmanager/account/query', {
                 page_number: pageNumber,
                 page_size: pageSize,
@@ -44,6 +58,10 @@ const App = {
             })
             .then(function (response) {
                 console.log(response.data);
+                let resData = response.data;
+                this.serverItems = resData.data;
+                this.totalItems = resData.total_records;
+                this.loading = false;
             })
             .catch(function (error) {
 

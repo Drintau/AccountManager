@@ -17,6 +17,9 @@ public class MyAccountListResVO {
     @JsonProperty("total_pages")
     Integer totalPages;
 
+    @JsonProperty("total_records")
+    private Integer totalRecords;
+
     @JsonProperty("list")
     List<MyAccountQueryResVO> list;
 }

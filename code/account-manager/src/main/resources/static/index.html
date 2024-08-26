@@ -35,7 +35,18 @@
             </v-col>
         </v-row>
         <v-row>
-
+            <v-col>
+                <v-data-table-server
+                v-model:items-per-page="itemsPerPage"
+                :headers="headers"
+                :search="search"
+                :items="serverItems"
+                :items-length="totalItems"
+                :loading="loading"
+                @update:options="list(1, 10, true)"
+                >
+                </v-data-table-server>
+            </v-col>
         </v-row>
     </v-container>
 </v-app>
