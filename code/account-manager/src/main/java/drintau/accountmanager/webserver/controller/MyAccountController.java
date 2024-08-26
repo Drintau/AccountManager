@@ -34,8 +34,7 @@ public class MyAccountController {
     private MyAccountService myAccountService;
 
     /**
-     * id 精确查询，且解密
-     * @return
+     * 根据 id 查询，且解密
      */
     @GetMapping("/get")
     public CommonResult<MyAccountQueryResVO> get(@RequestParam(value = "id") Integer id) {
@@ -51,9 +50,7 @@ public class MyAccountController {
     }
 
     /**
-     * 条件查询，返回带分页
-     * @param reqDTO
-     * @return
+     * 根据条件查询列表
      */
     @PostMapping("/query")
     public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
@@ -70,31 +67,27 @@ public class MyAccountController {
 
     /**
      * 不带条件的查询，返回带分页
-     * @param decrypt 是否解密
-     * @param pageNumber 页码
-     * @param pageSize 条数
-     * @return
      */
-    @GetMapping("/list")
-    public CommonResult<MyAccountListResVO> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt,
-                                                 @RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
-                                                 @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
-        // 前端页面看到的第1页，分页参数是第0页
-        if (pageNumber < 1) {
-            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "请求页码不能小于1");
-        }
-        if (pageSize < 1) {
-            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
-        }
-        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber, pageSize);
-        List<MyAccountQueryResVO> myAccountQueryResVOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResVO.class);
-        MyAccountListResVO myAccountListResVO = new MyAccountListResVO();
-        myAccountListResVO.setPageNumber(pageNumber);
-        myAccountListResVO.setPageSize(pageSize);
-        myAccountListResVO.setTotalPages(myAccountListBO.getTotalPages());
-        myAccountListResVO.setList(myAccountQueryResVOList);
-        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
-    }
+//    @GetMapping("/list")
+//    public CommonResult<MyAccountListResVO> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt,
+//                                                 @RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
+//                                                 @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
+//        // 前端页面看到的第1页，分页参数是第0页
+//        if (pageNumber < 1) {
+//            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "请求页码不能小于1");
+//        }
+//        if (pageSize < 1) {
+//            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
+//        }
+//        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber, pageSize);
+//        List<MyAccountQueryResVO> myAccountQueryResVOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResVO.class);
+//        MyAccountListResVO myAccountListResVO = new MyAccountListResVO();
+//        myAccountListResVO.setPageNumber(pageNumber);
+//        myAccountListResVO.setPageSize(pageSize);
+//        myAccountListResVO.setTotalPages(myAccountListBO.getTotalPages());
+//        myAccountListResVO.setList(myAccountQueryResVOList);
+//        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
+//    }
 
     @PostMapping("/add")
     public CommonResult<MyAccountQueryResVO> add(@RequestBody @Validated MyAccountAddReqVO myAccountAddReqVO) {

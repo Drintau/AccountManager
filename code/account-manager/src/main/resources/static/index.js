@@ -16,11 +16,8 @@ const App = {
         onClick () {
             console.log("Hello");
         },
-        onClick2 () {
-            console.log("Hello2");
-        },
 
-        // 获取随机密码
+        // 随机密码
         getRandomPassword() {
             axios.get('/accountmanager/password/get')
                 .then(function (response) {
@@ -35,6 +32,25 @@ const App = {
                 .finally(function () {
                     console.log("发出请求");
                 });
+        },
+
+        // 列表查询
+        list(pageNumber, pageSize, decryptFlag) {
+            axios.post('/accountmanager/account/query', {
+                page_number: pageNumber,
+                page_size: pageSize,
+                decrypt: decryptFlag,
+                fuzzy_name: null
+            })
+            .then(function (response) {
+                console.log(response.data);
+            })
+            .catch(function (error) {
+
+            })
+            .finally(function () {
+                console.log("发出请求");
+            });
         },
 
     },

@@ -21,7 +21,7 @@
             <v-col>
                 <v-btn density="comfortable" @click="onClick">新增账号</v-btn>
                 <v-btn density="comfortable" @click="getRandomPassword">导入</v-btn>
-                <v-btn density="comfortable" @click="getRandomPassword">导出</v-btn>
+                <v-btn density="comfortable" @click="list(1, 10, true)">导出</v-btn>
             </v-col>
             <v-col>
                 <v-text-field 
@@ -30,7 +30,7 @@
                 label="搜索" 
                 variant="underlined" 
                 single-line 
-                @click:append-inner="onClick2">
+                @click:append-inner="onClick">
                 </v-text-field>
             </v-col>
         </v-row>
