@@ -20,62 +20,58 @@ const App = {
             ],
             serverItems: [],
             totalItems: 0,
-            loading: true,
+            loading: false,
+            randomPassword: null,
+            decryptFlag: true,
         }
     },
 
     methods: {
 
-        onClick () {
-            let resJson = this.apiGetRandomPassword();
-            console.log(resJson);
-        },
-
-        // 列表查询
-        list(pageNumber, pageSize, decryptFlag) {
-            this.loading = true;
-            axios.post('/accountmanager/account/query', {
-                page_number: pageNumber,
-                page_size: pageSize,
-                decrypt: decryptFlag,
-                fuzzy_name: null
-            })
-            .then(function (response) {
-                console.log(response.data);
-                let resData = response.data;
-                this.serverItems = resData.data;
-                this.totalItems = resData.total_records;
-                this.loading = false;
-            })
-            .catch(function (error) {
-
-            })
-            .finally(function () {
-                console.log("发出请求");
-            });
-        },
-
-        // 请求后端api
         // 随机密码
         apiGetRandomPassword() {
             axios.get('/accountmanager/password/get')
                 .then(function (response) {
-                    console.log(response.data);
-                    return response.data;
+                    let resJson = response.data;
+                    randomPassword = resJson.data;
+                    console.log(randomPassword);
                 })
                 .catch(function (error) {
-                    console.log(error);
                 })
                 .finally(function () {
-                    console.log("发出请求");
                 });
-        }   
+        },
+
         // 根据id查询
+
         // 列表查询
+        apiQueryList(pageNumber, pageSize) {
+            axios.post('/accountmanager/account/query', {
+                page_number: pageNumber,
+                page_size: pageSize,
+                decrypt: this.decryptFlag,
+                fuzzy_name: null
+            })
+            .then(function (response) {
+                let resJson = response.data;
+                console.log(resJson);
+                this.serverItems = resJson.data.list;
+                this.totalItems = resJson.data.total_records;
+            })
+            .catch(function (error) {
+            })
+            .finally(function () {
+            });
+        },
+
         // 新增
+
         // 修改
+
         // 删除
+
         // 导入
+        
         // 导出
 
     },

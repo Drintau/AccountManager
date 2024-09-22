@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/accountmanager/webjars/vuetify/dist/vuetify.min.css">
     <link rel="stylesheet" href="/accountmanager/webjars/fortawesome__fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="index.css">
     <title>账号管理器</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
     <script src="/accountmanager/webjars/vue/dist/vue.global.prod.js"></script>
@@ -19,9 +19,9 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-btn density="comfortable" @click="onClick">新增账号</v-btn>
-                <v-btn density="comfortable" @click="onClick">导入</v-btn>
-                <v-btn density="comfortable" @click="onClick">导出</v-btn>
+                <v-btn density="comfortable" @click="apiGetRandomPassword">新增账号</v-btn>
+                <v-btn density="comfortable" @click="apiGetRandomPassword">导入</v-btn>
+                <v-btn density="comfortable" @click="apiGetRandomPassword">导出</v-btn>
             </v-col>
             <v-col>
                 <v-text-field 
@@ -30,11 +30,11 @@
                 label="搜索" 
                 variant="underlined" 
                 single-line 
-                @click:append-inner="onClick">
+                @click:append-inner="apiGetRandomPassword">
                 </v-text-field>
             </v-col>
         </v-row>
-        <!-- <v-row>
+        <v-row>
             <v-col>
                 <v-data-table-server
                 v-model:items-per-page="itemsPerPage"
@@ -43,11 +43,11 @@
                 :items="serverItems"
                 :items-length="totalItems"
                 :loading="loading"
-                @update:options="list(1, 10, true)"
+                @update:options="apiQueryList(1, 10)"
                 >
                 </v-data-table-server>
             </v-col>
-        </v-row> -->
+        </v-row>
     </v-container>
 </v-app>
 
