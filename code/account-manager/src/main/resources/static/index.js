@@ -7,8 +7,16 @@ const App = {
 
     data() {
         return {
-            itemsPerPage: 5,
-            search: null,
+
+            // 搜索框
+            
+
+            // 分页
+            pageNumber: 1,
+            pageSize: 10,
+            totalRecords: 1,
+            
+            // 列表表头、内容
             headers: [
               { key: 'name', title: '名称', sortable: false},
               { key: 'url', title: '网址', sortable: false},
@@ -18,8 +26,19 @@ const App = {
               { key: 'create_time', title: '创建时间', sortable: false},
               { key: 'update_time', title: '更新时间', sortable: false},
             ],
-            serverItems: [],
-            totalItems: 0,
+            serverDatas: [
+                {
+                    "id": 123,
+                    "name": "AA",
+                    "url": "BB",
+                    "username": "BB",
+                    "password": "BB",
+                    "remark": "BB",
+                    "create_time": "BB",
+                    "update_time": "BB",
+                }
+            ],
+            
             loading: false,
             randomPassword: null,
             decryptFlag: true,
@@ -45,18 +64,21 @@ const App = {
         // 根据id查询
 
         // 列表查询
-        apiQueryList(pageNumber, pageSize) {
+        apiQueryList() {
+            this.loading = true;
             axios.post('/accountmanager/account/query', {
-                page_number: pageNumber,
-                page_size: pageSize,
+                page_number: this.pageNumber,
+                page_size: this.pageSize,
                 decrypt: this.decryptFlag,
                 fuzzy_name: null
             })
             .then(function (response) {
                 let resJson = response.data;
                 console.log(resJson);
-                this.serverItems = resJson.data.list;
-                this.totalItems = resJson.data.total_records;
+                this.loading = false;
+                this.serverDatas = [];
+                this.totalRecords = resJson.data.total_records;
+                
             })
             .catch(function (error) {
             })

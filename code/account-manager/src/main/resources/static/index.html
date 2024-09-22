@@ -20,8 +20,8 @@
         <v-row>
             <v-col>
                 <v-btn density="comfortable" @click="apiGetRandomPassword">新增账号</v-btn>
-                <v-btn density="comfortable" @click="apiGetRandomPassword">导入</v-btn>
-                <v-btn density="comfortable" @click="apiGetRandomPassword">导出</v-btn>
+                <!-- <v-btn density="comfortable" @click="apiGetRandomPassword">导入</v-btn> -->
+                <!-- <v-btn density="comfortable" @click="apiGetRandomPassword">导出</v-btn> -->
             </v-col>
             <v-col>
                 <v-text-field 
@@ -30,20 +30,19 @@
                 label="搜索" 
                 variant="underlined" 
                 single-line 
-                @click:append-inner="apiGetRandomPassword">
+                @click:append-inner="apiQueryList">
                 </v-text-field>
             </v-col>
         </v-row>
         <v-row>
             <v-col>
                 <v-data-table-server
-                v-model:items-per-page="itemsPerPage"
+                v-model:items-per-page="pageSize"
                 :headers="headers"
-                :search="search"
-                :items="serverItems"
-                :items-length="totalItems"
+                :items="serverDatas"
+                :items-length="totalRecords"
                 :loading="loading"
-                @update:options="apiQueryList(1, 10)"
+                @update:options="apiQueryList"
                 >
                 </v-data-table-server>
             </v-col>
