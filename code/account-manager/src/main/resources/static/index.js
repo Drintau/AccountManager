@@ -27,24 +27,8 @@ const App = {
     methods: {
 
         onClick () {
-            console.log("Hello");
-        },
-
-        // 随机密码
-        getRandomPassword() {
-            axios.get('/accountmanager/password/get')
-                .then(function (response) {
-                    console.log(response.data);
-                    console.log(response.data.code);
-                    console.log(response.data.message);
-                    console.log(response.data.data);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-                .finally(function () {
-                    console.log("发出请求");
-                });
+            let resJson = this.apiGetRandomPassword();
+            console.log(resJson);
         },
 
         // 列表查询
@@ -70,6 +54,29 @@ const App = {
                 console.log("发出请求");
             });
         },
+
+        // 请求后端api
+        // 随机密码
+        apiGetRandomPassword() {
+            axios.get('/accountmanager/password/get')
+                .then(function (response) {
+                    console.log(response.data);
+                    return response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+                    console.log("发出请求");
+                });
+        }   
+        // 根据id查询
+        // 列表查询
+        // 新增
+        // 修改
+        // 删除
+        // 导入
+        // 导出
 
     },
 
