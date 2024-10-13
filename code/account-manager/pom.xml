@@ -20,15 +20,15 @@
         <!--maven.build.timestamp保存了maven编译时间戳-->
         <timestamp>${maven.build.timestamp}</timestamp>
 
-        <easyexcel.version>4.0.1</easyexcel.version>
+        <easyexcel.version>4.0.3</easyexcel.version>
 
-        <vue.version>3.4.31</vue.version>
-        <axios.version>1.7.2</axios.version>
-        <vuetify.version>3.6.6</vuetify.version>
-        <fortawesome.version>6.5.2</fortawesome.version>
+        <vue.version>3.5.12</vue.version>
+        <axios.version>1.7.7</axios.version>
+        <vuetify.version>3.7.2</vuetify.version>
+        <fortawesome.version>6.6.0</fortawesome.version>
 
         <!-- 使用LTS版本 -->
-        <javafx.version>21.0.3</javafx.version>
+        <javafx.version>21.0.4</javafx.version>
     </properties>
 
     <dependencies>
