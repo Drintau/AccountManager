@@ -1,6 +1,25 @@
 const { createApp } = Vue
 const { createVuetify } = Vuetify
 
+// 同步请求后端接口获取数据的函数，命名方式：api + xxxx
+async function apiQueryList(pageNumber, pageSize, decryptFlag) {
+  try {
+    let response = await axios.post('/accountmanager/account/query', 
+                                {
+                                  page_number: pageNumber,
+                                  page_size: pageSize,
+                                  decrypt: decryptFlag,
+                                  fuzzy_name: null
+                                });
+    let resJson = response.data;
+    console.log("111");
+    console.log(resJson);
+    return resJson;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const vuetify = createVuetify()
 
 const FakeAPI = {
@@ -87,6 +106,12 @@ const App = {
               this.loading = false;
             })
           },
+
+        async test() {
+          let resJson = await apiQueryList(1, 10, true);
+          console.log("222");
+          console.log(resJson);
+        }
         // apiQueryList() {
         //     this.loading = true;
         //     axios.post('/accountmanager/account/query', {
