@@ -3,6 +3,31 @@ const { createVuetify } = Vuetify
 
 const vuetify = createVuetify()
 
+const FakeAPI = {
+    async fetch ({ page, itemsPerPage, sortBy }) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          axios.post('/accountmanager/account/query', {
+            page_number: page,
+            page_size: 10,
+            decrypt: true,
+            fuzzy_name: null
+        })
+        .then(function (response) {
+            let resJson = response.data;
+            console.log(resJson);
+            resolve({ items: resJson.data.list, total: resJson.data.total_records })
+        })
+        .catch(function (error) {
+        })
+        .finally(function () {
+        });
+
+        }, 500)
+      })
+    },
+  }
+
 const App = {
 
     data() {
@@ -14,7 +39,7 @@ const App = {
             // 分页
             pageNumber: 1,
             pageSize: 10,
-            totalRecords: 1,
+            totalRecords: 0,
             
             // 列表表头、内容
             headers: [
@@ -26,18 +51,7 @@ const App = {
               { key: 'create_time', title: '创建时间', sortable: false},
               { key: 'update_time', title: '更新时间', sortable: false},
             ],
-            serverDatas: [
-                {
-                    "id": 123,
-                    "name": "AA",
-                    "url": "BB",
-                    "username": "BB",
-                    "password": "BB",
-                    "remark": "BB",
-                    "create_time": "BB",
-                    "update_time": "BB",
-                }
-            ],
+            serverDatas: [],
             
             loading: false,
             randomPassword: null,
@@ -64,27 +78,36 @@ const App = {
         // 根据id查询
 
         // 列表查询
-        apiQueryList() {
+        loadItems ({ page, pageSize, sortBy }) {
             this.loading = true;
-            axios.post('/accountmanager/account/query', {
-                page_number: this.pageNumber,
-                page_size: this.pageSize,
-                decrypt: this.decryptFlag,
-                fuzzy_name: null
+            FakeAPI.fetch({ page, pageSize, sortBy }).then(({ items, total }) => {
+                console.log(items);
+              this.serverDatas = items;
+              this.totalRecords = total;
+              this.loading = false;
             })
-            .then(function (response) {
-                let resJson = response.data;
-                console.log(resJson);
-                this.loading = false;
-                this.serverDatas = [];
-                this.totalRecords = resJson.data.total_records;
+          },
+        // apiQueryList() {
+        //     this.loading = true;
+        //     axios.post('/accountmanager/account/query', {
+        //         page_number: this.pageNumber,
+        //         page_size: this.pageSize,
+        //         decrypt: this.decryptFlag,
+        //         fuzzy_name: null
+        //     })
+        //     .then(function (response) {
+        //         let resJson = response.data;
+        //         console.log(resJson);
+        //         this.loading = false;
+        //         this.serverDatas = [];
+        //         this.totalRecords = resJson.data.total_records;
                 
-            })
-            .catch(function (error) {
-            })
-            .finally(function () {
-            });
-        },
+        //     })
+        //     .catch(function (error) {
+        //     })
+        //     .finally(function () {
+        //     });
+        // },
 
         // 新增
 
