@@ -19,18 +19,18 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-btn density="comfortable" @click="apiGetRandomPassword">新增账号</v-btn>
-                <v-btn density="comfortable" @click="apiGetRandomPassword">导入</v-btn>
-                <v-btn density="comfortable" @click="test">导出</v-btn>
+                <v-btn density="comfortable" @click="">新增账号</v-btn>
+                <v-btn density="comfortable" @click="">导入</v-btn>
+                <v-btn density="comfortable" @click="">导出</v-btn>
             </v-col>
             <v-col>
                 <v-text-field 
-                append-inner-icon="fas fa-search"
+                append-inner-icon="fa-solid fa-magnifying-glass"
                 density="comfortable"
                 label="搜索" 
                 variant="underlined" 
                 single-line 
-                @click:append-inner="apiQueryList">
+                @click:append-inner="loadItems">
                 </v-text-field>
             </v-col>
         </v-row>
@@ -38,11 +38,18 @@
             <v-col>
                 <v-data-table-server
                 v-model:items-per-page="pageSize"
+                :items-per-page-options="pageSizeOptions"
+                :items-per-page-text="pageSizeOptionsText"
+                :page="pageNumber"
                 :headers="headers"
-                :items="serverDatas"
-                :items-length="totalRecords"
+                :items="serverItems"
+                :items-length="totalItems"
                 :loading="loading"
                 @update:options="loadItems"
+                first-icon="fa-solid fa-angles-left"
+                prev-icon="fa-solid fa-angle-left"
+                next-icon="fa-solid fa-angle-right"
+                last-icon="fa-solid fa-angles-right"
                 >
                 </v-data-table-server>
             </v-col>
