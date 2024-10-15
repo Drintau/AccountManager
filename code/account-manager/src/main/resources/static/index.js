@@ -22,7 +22,7 @@ const App = {
             pageSize: 5,
             pageSizeOptions: [{value: 5, title: '5'},{value: 10, title: '10'}],
             pageSizeOptionsText: "每页记录数",
-            totalItems: 0,
+            totalRecords: 0,
             
             // 数据列表
             headers: [
@@ -34,14 +34,18 @@ const App = {
               { key: 'create_time', title: '创建时间', sortable: false},
               { key: 'update_time', title: '更新时间', sortable: false},
             ],
-            serverItems: [],
+            pageItems: [],
             loading: false,
-            
             
         }
     },
 
     methods: {
+
+        // 测试方法
+        async test(page) {
+          console.log(page);
+        },
 
         // 随机密码
         apiGetRandomPassword() {
@@ -71,8 +75,8 @@ const App = {
                                           fuzzy_name: null
                                         });
             let resJson = response.data;
-            this.serverItems = resJson.data.list;
-            this.totalItems = resJson.data.total_records;
+            this.pageItems = resJson.data.list;
+            this.totalRecords = resJson.data.total_records;
             this.loading = false;
           } catch (error) {
             console.error(error);
