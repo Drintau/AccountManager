@@ -46,7 +46,7 @@
                 :items-length="totalRecords"
                 :loading="loading"
                 @update:options="loadItems"
-                @update:page="test(page)"
+                @update:page="handlePageChange"
                 show-current-page="true"
                 first-icon="fa-solid fa-angles-left"
                 prev-icon="fa-solid fa-angle-left"

@@ -42,11 +42,6 @@ const App = {
 
     methods: {
 
-        // 测试方法
-        async test(page) {
-          console.log(page);
-        },
-
         // 随机密码
         apiGetRandomPassword() {
             axios.get('/accountmanager/password/get')
@@ -63,6 +58,11 @@ const App = {
 
         // 根据id查询
 
+        // 分页页码变更
+        handlePageChange(newPageNumber) {
+          this.pageNumber = newPageNumber;
+        },
+        
         // 列表查询
         async loadItems() {
           this.loading = true;
