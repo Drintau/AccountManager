@@ -7,15 +7,13 @@ const App = {
 
     data() {
         return {
+            // 规定：js 数据里面的属性命名倾向后端含义，方便传参识别，前端框架的属性命名是框架的规则
 
             // 是否解密
             decryptFlag: true,
 
-            // 随机密码
-            randomPassword: null,
-
             // 搜索框
-            
+            fuzzyName: null,
 
             // 分页
             pageNumber: 1,
@@ -34,26 +32,26 @@ const App = {
               { key: 'create_time', title: '创建时间', sortable: false},
               { key: 'update_time', title: '更新时间', sortable: false},
             ],
-            pageItems: [],
+            pageData: [],
             loading: false,
             
+            // 随机密码
+            randomPassword: null,
         }
     },
 
     methods: {
+        // 规定：这里的方法属于前端使用，命令跟前端操作或者数据变更含义一致，里面调用后端的方法只是其操作的一部分
 
         // 随机密码
-        apiGetRandomPassword() {
-            axios.get('/accountmanager/password/get')
-                .then(function (response) {
-                    let resJson = response.data;
-                    randomPassword = resJson.data;
-                    console.log(randomPassword);
-                })
-                .catch(function (error) {
-                })
-                .finally(function () {
-                });
+        async getRandomPassword() {
+          try {
+            let response = await axios.get('/accountmanager/password/get');
+            let resJson = response.data;
+            this.randomPassword = resJson.data;
+          } catch (error) {
+            console.error(error);
+          }
         },
 
         // 根据id查询
@@ -72,10 +70,10 @@ const App = {
                                           page_number: this.pageNumber,
                                           page_size: this.pageSize,
                                           decrypt: this.decryptFlag,
-                                          fuzzy_name: null
+                                          fuzzy_name: this.fuzzyName
                                         });
             let resJson = response.data;
-            this.pageItems = resJson.data.list;
+            this.pageData = resJson.data.list;
             this.totalRecords = resJson.data.total_records;
             this.loading = false;
           } catch (error) {
