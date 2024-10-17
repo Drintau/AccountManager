@@ -55,6 +55,9 @@ const App = {
         },
 
         // 根据id查询
+        async queryById() {
+
+        },
 
         // 分页页码变更
         handlePageChange(newPageNumber) {
@@ -79,17 +82,32 @@ const App = {
           } catch (error) {
             console.error(error);
           }
-        }
+        },
 
         // 新增
+        async addAccount() {
+
+        },
 
         // 修改
+        async editAccount() {
+
+        },
 
         // 删除
+        async deleteAccount() {
+
+        },
 
         // 导入
+        async importAccount() {
+
+        },
         
         // 导出
+        async exportAccount() {
+
+        },
 
     },
 
