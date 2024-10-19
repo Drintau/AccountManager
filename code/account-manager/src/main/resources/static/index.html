@@ -19,7 +19,7 @@
     <v-container>
         <v-row>
             <v-col>
-                <v-btn density="comfortable" @click="">新增账号</v-btn>
+                <v-btn density="comfortable" @click="dialog = true">新增账号</v-btn>
                 <v-btn density="comfortable" @click="">导入</v-btn>
                 <v-btn density="comfortable" @click="">导出</v-btn>
             </v-col>
@@ -56,6 +56,27 @@
                 </v-data-table-server>
             </v-col>
         </v-row>
+
+        <v-dialog
+        v-model="dialog"
+        width="auto"
+      >
+        <v-card
+          max-width="400"
+          prepend-icon="mdi-update"
+          text="Your application will relaunch automatically after the update is complete."
+          title="Update in progress"
+        >
+          <template v-slot:actions>
+            <v-btn
+              class="ms-auto"
+              text="Ok"
+              @click="dialog = false"
+            ></v-btn>
+          </template>
+        </v-card>
+      </v-dialog>
+
     </v-container>
 </v-app>
 

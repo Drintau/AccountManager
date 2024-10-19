@@ -18,7 +18,7 @@ const App = {
             // 分页
             pageNumber: 1,
             pageSize: 5,
-            pageSizeOptions: [{value: 5, title: '5'},{value: 10, title: '10'}],
+            pageSizeOptions: [{value: 5, title: '5'},{value: 8, title: '8'},{value: 10, title: '10'}],
             pageSizeOptionsText: "每页记录数",
             totalRecords: 0,
             
@@ -37,6 +37,9 @@ const App = {
             
             // 随机密码
             randomPassword: null,
+
+            // 对话框
+            dialog: false,
         }
     },
 
