@@ -60,6 +60,7 @@ const App = {
         let resJson = response.data;
         this.handleResJson(resJson);
         this.randomPassword = resJson.data;
+        return resJson.data;
       } catch (error) {
         console.error(error);
       }
@@ -116,6 +117,12 @@ const App = {
       }
     },
 
+    // 新增 随机密码
+    async addRandomPassword() {
+      let randomPassword = await this.getRandomPassword();
+      this.addPassword = randomPassword;
+    },
+
     // 修改
     async editAccount() {
 
@@ -138,7 +145,12 @@ const App = {
 
     // 处理响应
     handleResJson(resJson) {
-      console.log(resJson);
+      let bizCode = resJson.code;
+      if("000000" == bizCode) {
+
+      } else {
+        console.log(resJson);
+      }
     },
 
     // 清空新增对话框内容

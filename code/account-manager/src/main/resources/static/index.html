@@ -61,7 +61,11 @@
             <v-text-field label="名称" v-model="addAppName"></v-text-field>
             <v-text-field label="网址" v-model="addAppUrl"></v-text-field>
             <v-text-field label="账号" v-model="addUsername"></v-text-field>
-            <v-text-field label="密码" v-model="addPassword"></v-text-field>
+            <v-text-field label="密码" 
+                          v-model="addPassword"
+                          append-inner-icon="fa-solid fa-shuffle"
+                          @click:append-inner="addRandomPassword">
+            </v-text-field>
             <v-text-field label="备注" v-model="addRemark"></v-text-field>
           </v-form>
           <v-card-actions>
