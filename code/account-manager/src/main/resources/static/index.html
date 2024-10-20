@@ -28,7 +28,9 @@
                         density="comfortable" 
                         label="搜索"
                         variant="underlined" 
-                        single-line @click:append-inner="loadItems">
+                        v-model="fuzzyName" 
+                        single-line 
+                        @click:append-inner="loadItems">
           </v-text-field>
         </v-col>
       </v-row>
@@ -56,15 +58,15 @@
       <v-dialog v-model="addDialog" width="auto">
         <v-card max-height="600" width="500" title="新增账号">
           <v-form>
-            <v-text-field label="名称"></v-text-field>
-            <v-text-field label="网址"></v-text-field>
-            <v-text-field label="账号"></v-text-field>
-            <v-text-field label="密码"></v-text-field>
-            <v-text-field label="备注"></v-text-field>
+            <v-text-field label="名称" v-model="addAppName"></v-text-field>
+            <v-text-field label="网址" v-model="addAppUrl"></v-text-field>
+            <v-text-field label="账号" v-model="addUsername"></v-text-field>
+            <v-text-field label="密码" v-model="addPassword"></v-text-field>
+            <v-text-field label="备注" v-model="addRemark"></v-text-field>
           </v-form>
           <v-card-actions>
-            <v-btn @click="addDialog = false">取消</v-btn>
-            <v-btn @click="addDialog = false" color="green">提交</v-btn>
+            <v-btn @click="clearAddDialog">取消</v-btn>
+            <v-btn color="green" @click="addAccount">提交</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

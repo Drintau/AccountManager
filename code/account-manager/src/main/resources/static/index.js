@@ -41,6 +41,11 @@ const App = {
 
       // 新增对话框
       addDialog: false,
+      addAppName: null,
+      addAppUrl: null,
+      addUsername: null,
+      addPassword: null,
+      addRemark: null,
     }
   },
 
@@ -53,6 +58,7 @@ const App = {
       try {
         let response = await axios.get('/accountmanager/password/get');
         let resJson = response.data;
+        this.handleResJson(resJson);
         this.randomPassword = resJson.data;
       } catch (error) {
         console.error(error);
@@ -74,13 +80,14 @@ const App = {
       this.loading = true;
       try {
         let response = await axios.post('/accountmanager/account/query',
-          {
-            page_number: this.pageNumber,
-            page_size: this.pageSize,
-            decrypt: this.decryptFlag,
-            fuzzy_name: this.fuzzyName
-          });
+                                       {
+                                         page_number: this.pageNumber,
+                                         page_size: this.pageSize,
+                                         decrypt: this.decryptFlag,
+                                         fuzzy_name: this.fuzzyName
+                                       });
         let resJson = response.data;
+        this.handleResJson(resJson);
         this.pageData = resJson.data.list;
         this.totalRecords = resJson.data.total_records;
         this.loading = false;
@@ -91,7 +98,22 @@ const App = {
 
     // 新增
     async addAccount() {
-
+      try {
+        let response = await axios.post('/accountmanager/account/add',
+                                       {
+                                         name: this.addAppName,
+                                         url: this.addAppUrl,
+                                         username: this.addUsername,
+                                         password: this.addPassword,
+                                         remark: this.addRemark
+                                       });
+        let resJson = response.data;
+        this.handleResJson(resJson);
+        this.clearAddDialog();
+        this.loadItems();
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     // 修改
@@ -112,6 +134,21 @@ const App = {
     // 导出
     async exportAccount() {
 
+    },
+
+    // 处理响应
+    handleResJson(resJson) {
+      console.log(resJson);
+    },
+
+    // 清空新增对话框内容
+    clearAddDialog() {
+      this.addDialog = false;
+      this.addAppName = null;
+      this.addAppUrl = null;
+      this.addUsername = null;
+      this.addPassword = null;
+      this.addRemark = null;
     },
 
   },

@@ -64,13 +64,13 @@ public class MyAccountRepositoryImpl implements MyAccountRepository {
 
     @Override
     public List<MyAccountPO> list() {
-        String sql = "select * from my_account";
+        String sql = "select * from my_account order by id desc";
         return namedParameterJdbcTemplate.query(sql, new BeanPropertyRowMapper<>(MyAccountPO.class));
     }
 
     @Override
     public List<MyAccountPO> list(PageBO pageBO) {
-        String sql = "select * from my_account limit :limit offset :offset";
+        String sql = "select * from my_account order by id desc limit :limit offset :offset";
         Map<String, Integer> paramMap = new HashMap<>();
         paramMap.put("limit", pageBO.getPageSize());
         paramMap.put("offset", pageBO.getOffset());
@@ -79,7 +79,7 @@ public class MyAccountRepositoryImpl implements MyAccountRepository {
 
     @Override
     public List<MyAccountPO> listByAppName(String appName, PageBO pageBO) {
-        String sql = "select * from my_account where app_name like :appName limit :limit offset :offset";
+        String sql = "select * from my_account where app_name like :appName order by id desc limit :limit offset :offset";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("appName", "%" + appName + "%");
         paramMap.put("limit", pageBO.getPageSize());
