@@ -2,85 +2,73 @@
 <html lang="zh">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/accountmanager/webjars/vuetify/dist/vuetify.min.css">
-    <link rel="stylesheet" href="/accountmanager/webjars/fortawesome__fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="index.css">
-    <title>账号管理器</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-    <script src="/accountmanager/webjars/vue/dist/vue.global.prod.js"></script>
-    <script src="/accountmanager/webjars/axios/dist/axios.min.js"></script>
-    <script src="/accountmanager/webjars/vuetify/dist/vuetify.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/accountmanager/webjars/vuetify/dist/vuetify.min.css">
+  <link rel="stylesheet" href="/accountmanager/webjars/fortawesome__fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="index.css">
+  <title>账号管理器</title>
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <script src="/accountmanager/webjars/vue/dist/vue.global.prod.js"></script>
+  <script src="/accountmanager/webjars/axios/dist/axios.min.js"></script>
+  <script src="/accountmanager/webjars/vuetify/dist/vuetify.min.js"></script>
 </head>
 
 <body>
-<v-app id="app">
+  <v-app id="app">
     <v-container>
-        <v-row>
-            <v-col>
-                <v-btn density="comfortable" @click="dialog = true">新增账号</v-btn>
-                <v-btn density="comfortable" @click="">导入</v-btn>
-                <v-btn density="comfortable" @click="">导出</v-btn>
-            </v-col>
-            <v-col>
-                <v-text-field 
-                append-inner-icon="fa-solid fa-magnifying-glass"
-                density="comfortable"
-                label="搜索" 
-                variant="underlined" 
-                single-line 
-                @click:append-inner="loadItems">
-                </v-text-field>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <v-data-table-server
-                v-model:items-per-page="pageSize"
-                :items-per-page-options="pageSizeOptions"
-                :items-per-page-text="pageSizeOptionsText"
-                :page="pageNumber"
-                :headers="headers"
-                :items="pageData"
-                :items-length="totalRecords"
-                :loading="loading"
-                @update:options="loadItems"
-                @update:page="handlePageChange"
-                show-current-page="true"
-                first-icon="fa-solid fa-angles-left"
-                prev-icon="fa-solid fa-angle-left"
-                next-icon="fa-solid fa-angle-right"
-                last-icon="fa-solid fa-angles-right"
-                >
-                </v-data-table-server>
-            </v-col>
-        </v-row>
+      <v-row>
+        <v-col>
+          <v-btn density="comfortable" @click="addDialog = true">新增账号</v-btn>
+          <v-btn density="comfortable" @click="">导入</v-btn>
+          <v-btn density="comfortable" @click="">导出</v-btn>
+        </v-col>
+        <v-col>
+          <v-text-field append-inner-icon="fa-solid fa-magnifying-glass" 
+                        density="comfortable" 
+                        label="搜索"
+                        variant="underlined" 
+                        single-line @click:append-inner="loadItems">
+          </v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-data-table-server v-model:items-per-page="pageSize" 
+                                      :items-per-page-options="pageSizeOptions"
+                                      :items-per-page-text="pageSizeOptionsText" 
+                                      :page="pageNumber" 
+                                      :headers="headers" 
+                                      :items="pageData"
+                                      :items-length="totalRecords" 
+                                      :loading="loading" 
+                               @update:options="loadItems" 
+                               @update:page="handlePageChange"
+                               show-current-page="true" 
+                               first-icon="fa-solid fa-angles-left" 
+                               prev-icon="fa-solid fa-angle-left"
+                               next-icon="fa-solid fa-angle-right" 
+                               last-icon="fa-solid fa-angles-right">
+          </v-data-table-server>
+        </v-col>
+      </v-row>
 
-        <v-dialog
-        v-model="dialog"
-        width="auto"
-      >
-        <v-card
-          max-width="400"
-          prepend-icon="mdi-update"
-          text="Your application will relaunch automatically after the update is complete."
-          title="Update in progress"
-        >
-          <template v-slot:actions>
-            <v-btn
-              class="ms-auto"
-              text="Ok"
-              @click="dialog = false"
-            ></v-btn>
-          </template>
-        </v-card>
+      <v-dialog v-model="addDialog">
+        <v-form>
+          <v-text-field label="名称"></v-text-field>
+          <v-text-field label="网址"></v-text-field>
+          <v-text-field label="账号"></v-text-field>
+          <v-text-field label="密码"></v-text-field>
+          <v-text-field label="备注"></v-text-field>
+        </v-form>
+        <v-btn @click="addDialog = false">取消</v-btn>
+        <v-btn @click="addDialog = false">确定</v-btn>
       </v-dialog>
 
     </v-container>
-</v-app>
+  </v-app>
 
-<script src="index.js"></script>
+  <script src="index.js"></script>
 </body>
 
 </html>
