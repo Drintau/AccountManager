@@ -19,9 +19,17 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-btn density="comfortable" @click="addDialog = true">新增账号</v-btn>
-          <v-btn density="comfortable" @click="">导入</v-btn>
-          <v-btn density="comfortable" @click="exportAccount">导出</v-btn>
+          <v-row>
+            <v-col>
+              <v-btn density="comfortable" @click="addDialog = true">新增账号</v-btn>
+            </v-col>
+            <v-col>
+              <v-file-input label="导入" variant="outlined" prepend-icon=""></v-file-input>
+            </v-col>
+            <v-col>
+              <v-btn density="comfortable" @click="exportAccount">导出</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col>
           <v-text-field append-inner-icon="fa-solid fa-magnifying-glass" 
