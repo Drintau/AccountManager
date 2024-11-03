@@ -139,8 +139,8 @@ const App = {
     },
 
     // 导出
-    async exportAccount() {
-
+    exportAccount() {
+      window.location.href='/accountmanager/account/export';
     },
 
     // 处理响应
