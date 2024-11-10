@@ -26,7 +26,7 @@ spring:
         - classpath:db/init.sql
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:${am.file-path}
+    url: jdbc:h2:file:${am.file-path};DATABASE_TO_LOWER=TRUE
     username: root
     password: h2database
     hikari:
@@ -42,7 +42,7 @@ spring:
       on-profile:
         - dev_mem
   datasource:
-    url: jdbc:h2:mem:${am.file-path}
+    url: jdbc:h2:mem:${am.file-path};DATABASE_TO_LOWER=TRUE
 server:
   port: 12139
 am:
