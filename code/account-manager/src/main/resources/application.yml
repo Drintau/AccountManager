@@ -47,7 +47,7 @@ server:
   port: 12139
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
-  file-path: memTestDB
+  file-path: memDevDB
   password-digits: 10
   enable-backup: false
 logging:
@@ -64,10 +64,10 @@ server:
   port: 12140
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
-  file-path: E:/Study/Test/devDB
+  file-path: E:/Study/Test/fileDevDB
   password-digits: 10
   enable-backup: true
-  backup-paths: E:/Study/Test/devBackupDB,E:/Study/Test/devBackupDB2
+  backup-paths: E:/Study/Test/fileDevBackupDB
   auto-access-after-startup: false
 logging:
   config: classpath:log4j2-spring.xml
