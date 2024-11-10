@@ -78,9 +78,18 @@
         <v-card max-height="600" width="500" title="导入导出">
           <v-file-input label="导入" variant="outlined" prepend-icon=""></v-file-input>
           <v-btn density="comfortable" @click="exportAccount">导出</v-btn>
+          <v-card-actions>
+            <v-btn @click="imexDialog = false">关闭</v-btn>
+          </v-card-actions>
         </v-card>
       </v-dialog>
 
+      <v-snackbar v-model="snackbar" 
+                  :timeout="timeout" 
+                  location="top" 
+                  color="red-accent-2">
+        {{ errMsg }}
+      </v-snackbar>
     </v-container>
   </v-app>
 

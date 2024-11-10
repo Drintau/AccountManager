@@ -36,9 +36,6 @@ const App = {
       pageData: [],
       loading: false,
 
-      // 随机密码
-      randomPassword: null,
-
       // 新增对话框
       addDialog: false,
       addAppName: null,
@@ -49,6 +46,12 @@ const App = {
 
       // 导入导出对话框
       imexDialog: false,
+
+      // 报错信息
+      snackbar: false,
+      timeout: 5000,
+      errMsg: null,
+      
     }
   },
 
@@ -62,7 +65,6 @@ const App = {
         let response = await axios.get('/accountmanager/password/get');
         let resJson = response.data;
         this.handleResJson(resJson);
-        this.randomPassword = resJson.data;
         return resJson.data;
       } catch (error) {
         console.error(error);
@@ -112,9 +114,11 @@ const App = {
                                          remark: this.addRemark
                                        });
         let resJson = response.data;
-        this.handleResJson(resJson);
-        this.clearAddDialog();
-        this.loadItems();
+        let succesFlag = this.handleResJson(resJson);
+        if(succesFlag) {
+          this.clearAddDialog();
+          this.loadItems();
+        }
       } catch (error) {
         console.error(error);
       }
@@ -150,9 +154,11 @@ const App = {
     handleResJson(resJson) {
       let bizCode = resJson.code;
       if("000000" == bizCode) {
-
+        return true;
       } else {
-        console.log(resJson);
+        this.errMsg = resJson.message;
+        this.snackbar = true;
+        return false;
       }
     },
 
