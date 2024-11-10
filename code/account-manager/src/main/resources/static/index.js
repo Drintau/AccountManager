@@ -148,6 +148,11 @@ const App = {
 
     // 导入
     async importAccount() {
+      if(this.uploadFile === null) {
+        this.errMsg = "请选择文件";
+        this.snackbar = true;
+        return;
+      }
       let response = await axios({
                                   method: 'post',
                                   url: '/accountmanager/account/import',
@@ -159,7 +164,11 @@ const App = {
                                   }
                                 });
       let resJson = response.data;
-      this.handleResJson(resJson);
+      let succesFlag = this.handleResJson(resJson);
+      if(succesFlag) {
+        this.clearImexDialog();
+        this.loadItems();
+      }
     },
 
     // 导出
@@ -188,6 +197,12 @@ const App = {
       this.addPassword = null;
       this.addRemark = null;
     },
+
+    // 清空上传文件
+    clearImexDialog() {
+      this.uploadFile = null;
+      this.imexDialog = false;
+    }
 
   },
 

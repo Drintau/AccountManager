@@ -78,12 +78,12 @@
         <v-card max-height="600" width="500" title="导入导出">
           <v-file-input label="选择文件" 
                         prepend-icon="" 
-                        append-inner-icon="fa-solid fa-file-import"
+                        append-icon="fa-solid fa-file-import"
                         @change="handleFileChange"
-                        @click:append-inner="importAccount"></v-file-input>
+                        @click:append="importAccount"></v-file-input>
           <v-btn color="green-accent-3" @click="exportAccount">导出</v-btn>
           <v-card-actions>
-            <v-btn @click="imexDialog = false">关闭</v-btn>
+            <v-btn @click="clearImexDialog">关闭</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
