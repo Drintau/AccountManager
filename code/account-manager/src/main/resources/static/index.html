@@ -19,17 +19,8 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-row>
-            <v-col>
-              <v-btn density="comfortable" @click="addDialog = true">新增账号</v-btn>
-            </v-col>
-            <v-col>
-              <v-file-input label="导入" variant="outlined" prepend-icon=""></v-file-input>
-            </v-col>
-            <v-col>
-              <v-btn density="comfortable" @click="exportAccount">导出</v-btn>
-            </v-col>
-          </v-row>
+          <v-btn density="comfortable" @click="addDialog = true">新增账号</v-btn>
+          <v-btn density="comfortable" @click="imexDialog = true">导入导出</v-btn>
         </v-col>
         <v-col>
           <v-text-field append-inner-icon="fa-solid fa-magnifying-glass" 
@@ -80,6 +71,13 @@
             <v-btn @click="clearAddDialog">取消</v-btn>
             <v-btn color="green" @click="addAccount">提交</v-btn>
           </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="imexDialog" width="auto">
+        <v-card max-height="600" width="500" title="导入导出">
+          <v-file-input label="导入" variant="outlined" prepend-icon=""></v-file-input>
+          <v-btn density="comfortable" @click="exportAccount">导出</v-btn>
         </v-card>
       </v-dialog>
 

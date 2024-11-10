@@ -46,6 +46,9 @@ const App = {
       addUsername: null,
       addPassword: null,
       addRemark: null,
+
+      // 导入导出对话框
+      imexDialog: false,
     }
   },
 
