@@ -46,6 +46,7 @@ const App = {
 
       // 导入导出对话框
       imexDialog: false,
+      uploadFile: null,
 
       // 报错信息
       snackbar: false,
@@ -140,9 +141,25 @@ const App = {
 
     },
 
+    // 选择文件
+    handleFileChange(event) {
+      this.uploadFile = event.target.files[0];
+    },
+
     // 导入
     async importAccount() {
-
+      let response = await axios({
+                                  method: 'post',
+                                  url: '/accountmanager/account/import',
+                                  data: {
+                                    file: this.uploadFile
+                                  },
+                                  headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                  }
+                                });
+      let resJson = response.data;
+      this.handleResJson(resJson);
     },
 
     // 导出
