@@ -73,8 +73,20 @@ const App = {
     },
 
     // 根据id查询
-    async queryById() {
-
+    async queryById(recordId) {
+      try {
+        let response = await axios.get('/accountmanager/account/get', 
+                                      {
+                                        params: {
+                                          id: recordId
+                                        }
+                                      });
+        let resJson = response.data;
+        this.handleResJson(resJson);
+        return resJson.data;
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     // 分页页码变更
