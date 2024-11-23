@@ -50,6 +50,20 @@
                                prev-icon="fa-solid fa-angle-left"
                                next-icon="fa-solid fa-angle-right" 
                                last-icon="fa-solid fa-angles-right">
+            <template v-slot:item.actions="{ item }">
+              <v-row>
+                <v-col>
+                  <v-icon size="small" @click="test(item)">
+                    fa-solid fa-pen
+                  </v-icon>
+                </v-col>
+                <v-col>
+                  <v-icon size="small" color="red" @click="test(item)">
+                    fa-regular fa-trash-can
+                  </v-icon>
+                </v-col>
+              </v-row>             
+            </template>
           </v-data-table-server>
         </v-col>
       </v-row>

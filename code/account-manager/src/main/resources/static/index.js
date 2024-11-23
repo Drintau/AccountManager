@@ -25,6 +25,7 @@ const App = {
 
       // 数据列表
       headers: [
+        { key: 'id', title: 'ID', sortable: false },
         { key: 'name', title: '名称', sortable: false },
         { key: 'url', title: '网址', sortable: false },
         { key: 'username', title: '账号', sortable: false },
@@ -32,6 +33,7 @@ const App = {
         { key: 'remark', title: '备注', sortable: false },
         { key: 'create_time', title: '创建时间', sortable: false },
         { key: 'update_time', title: '更新时间', sortable: false },
+        { key: 'actions', title: '操作', sortable: false },
       ],
       pageData: [],
       loading: false,
@@ -59,6 +61,11 @@ const App = {
   // 方法
   methods: {
     // 规定：这里的方法属于前端使用，命令跟前端操作或者数据变更含义一致，里面调用后端的方法只是其操作的一部分
+
+    // 调试方法
+    test(data) {
+      console.log(data);
+    },
 
     // 随机密码
     async getRandomPassword() {
@@ -150,7 +157,16 @@ const App = {
 
     // 删除
     async deleteAccount() {
-
+      try {
+        let response = await axios.post('/accountmanager/account/delete',
+                                       {
+                                         id: null
+                                       });
+        let resJson = response.data;
+        this.handleResJson(resJson);
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     // 选择文件
