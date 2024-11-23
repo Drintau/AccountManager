@@ -42,6 +42,7 @@ const App = {
 
       // 一条记录的数据
       recordDataDialogFlag: false,
+      recordDataDialogTitle: null,
       recordDataId: null,
       recordDataName: null,
       recordDataUrl: null,
@@ -107,33 +108,64 @@ const App = {
       }
     },
     // 展示一条记录数据对话框内容
-    showRecordDataDialog() {
+    showRecordDataDialog(rowData) {
+      if (rowData != null) {
+        this.recordDataDialogTitle = '修改账号';
+        let recordData = Object.assign({}, rowData);
+        this.recordDataId = recordData.id;
+        this.recordDataName = recordData.name;
+        this.recordDataUrl = recordData.url;
+        this.recordDataUsername = recordData.username;
+        this.recordDataPassword = recordData.password;
+        this.recordDataRemark = recordData.remark;
+      } else {
+        this.clearRecordDataDialog();
+        this.recordDataDialogTitle = '新增账号';
+      }
       this.recordDataDialogFlag = true;
     },
-    // 新增记录
-    async addRecordData() {
-      try {
-        let response = await axios.post('/accountmanager/account/add',
-                                       {
-                                         name: this.recordDataName,
-                                         url: this.recordDataUrl,
-                                         username: this.recordDataUsername,
-                                         password: this.recordDataPassword,
-                                         remark: this.recordDataRemark
-                                       });
-        let resJson = response.data;
-        let succesFlag = this.handleResJson(resJson);
-        if (succesFlag) {
-          this.clearRecordDataDialog();
-          this.queryRecordDatas();
+    // 新增或编辑记录
+    async addOrEditRecordData() {
+      if (this.recordDataId != null) {
+        try {
+          let response = await axios.post('/accountmanager/account/update',
+                                         {
+                                           id: this.recordDataId,
+                                           name: this.recordDataName,
+                                           url: this.recordDataUrl,
+                                           username: this.recordDataUsername,
+                                           password: this.recordDataPassword,
+                                           remark: this.recordDataRemark
+                                         });
+          let resJson = response.data;
+          let succesFlag = this.handleResJson(resJson);
+          if (succesFlag) {
+            this.clearRecordDataDialog();
+            this.queryRecordDatas();
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
+      } else {
+        try {
+          let response = await axios.post('/accountmanager/account/add',
+                                         {
+                                           name: this.recordDataName,
+                                           url: this.recordDataUrl,
+                                           username: this.recordDataUsername,
+                                           password: this.recordDataPassword,
+                                           remark: this.recordDataRemark
+                                         });
+          let resJson = response.data;
+          let succesFlag = this.handleResJson(resJson);
+          if (succesFlag) {
+            this.clearRecordDataDialog();
+            this.queryRecordDatas();
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }
-    },
-    // 修改记录
-    async editRecordData() {
-
     },
     // 清空一条记录数据对话框内容
     clearRecordDataDialog() {
@@ -206,15 +238,15 @@ const App = {
     },
 
     // 删除对话框-展示
-    showDelDialog(rowItem) {
-      let itemData = Object.assign({}, rowItem);
-      this.delId = itemData.id;
+    showDelDialog(rowData) {
+      let recordData = Object.assign({}, rowData);
+      this.delId = recordData.id;
       this.delDialogFlag = true;
     },
     // 删除对话框-取消
     clearDelDialog() {
       this.delId = null;
-      this.delDialog = false;
+      this.delDialogFlag = false;
     },
     // 删除对话框-确定
     async delRecordData() {
