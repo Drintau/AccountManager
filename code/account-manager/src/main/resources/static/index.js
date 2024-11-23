@@ -124,7 +124,7 @@ const App = {
         let resJson = response.data;
         let succesFlag = this.handleResJson(resJson);
         if (succesFlag) {
-          this.clearDataDialog();
+          this.clearRecordDataDialog();
           this.queryRecordDatas();
         }
       } catch (error) {
@@ -165,7 +165,7 @@ const App = {
 
     // 展示导入导出对话框
     showImexDialog() {
-      this.imexDialog = true;
+      this.imexDialogFlag = true;
     },
     // 处理上传文件变更
     handleUploadFileChange(event) {
@@ -202,7 +202,7 @@ const App = {
     // 清空上传文件
     clearImexDialog() {
       this.uploadFile = null;
-      this.imexDialog = false;
+      this.imexDialogFlag = false;
     },
 
     // 删除对话框-展示

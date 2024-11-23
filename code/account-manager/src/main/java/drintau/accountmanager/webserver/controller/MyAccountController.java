@@ -115,7 +115,7 @@ public class MyAccountController {
     @GetMapping("/export")
     public void export(HttpServletResponse response) {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        response.setHeader("Content-Disposition","attachment;filename=account_data.xlsx");
+        response.setHeader("Content-Disposition","attachment;filename=exportdata.xlsx");
 
         try {
             EasyExcel.write(response.getOutputStream(), MyAccountImportAndExportBO.class)
