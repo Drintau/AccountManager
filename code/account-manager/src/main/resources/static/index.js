@@ -61,7 +61,7 @@ const App = {
       snackbar: false,
       timeout: 5000,
       errMsg: null,
-      
+
     }
   },
 
@@ -106,6 +106,10 @@ const App = {
         console.error(error);
       }
     },
+    // 展示一条记录数据对话框内容
+    showRecordDataDialog() {
+      this.recordDataDialogFlag = true;
+    },
     // 新增记录
     async addRecordData() {
       try {
@@ -119,7 +123,7 @@ const App = {
                                        });
         let resJson = response.data;
         let succesFlag = this.handleResJson(resJson);
-        if(succesFlag) {
+        if (succesFlag) {
           this.clearDataDialog();
           this.queryRecordDatas();
         }
@@ -145,7 +149,7 @@ const App = {
     // 查询一条记录数据
     async queryRecordData(recordId) {
       try {
-        let response = await axios.get('/accountmanager/account/get', 
+        let response = await axios.get('/accountmanager/account/get',
                                       {
                                         params: {
                                           id: recordId
@@ -159,14 +163,17 @@ const App = {
       }
     },
 
-
+    // 展示导入导出对话框
+    showImexDialog() {
+      this.imexDialog = true;
+    },
     // 处理上传文件变更
     handleUploadFileChange(event) {
       this.uploadFile = event.target.files[0];
     },
     // 导入记录
     async importRecordDatas() {
-      if(this.uploadFile === null) {
+      if (this.uploadFile === null) {
         this.errMsg = "请选择文件";
         this.snackbar = true;
         return;
@@ -183,14 +190,14 @@ const App = {
                                 });
       let resJson = response.data;
       let succesFlag = this.handleResJson(resJson);
-      if(succesFlag) {
+      if (succesFlag) {
         this.clearImexDialog();
         this.queryRecordDatas();
       }
     },
     // 导出
     exportRecordDatas() {
-      window.location.href='/accountmanager/account/export';
+      window.location.href = '/accountmanager/account/export';
     },
     // 清空上传文件
     clearImexDialog() {
@@ -218,7 +225,7 @@ const App = {
                                        });
         let resJson = response.data;
         let succesFlag = this.handleResJson(resJson);
-        if(succesFlag) {
+        if (succesFlag) {
           this.clearDelDialog();
           this.queryRecordDatas();
         }
@@ -230,7 +237,7 @@ const App = {
     // 处理响应
     handleResJson(resJson) {
       let bizCode = resJson.code;
-      if("000000" == bizCode) {
+      if ("000000" == bizCode) {
         return true;
       } else {
         this.errMsg = resJson.message;
