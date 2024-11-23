@@ -4,11 +4,13 @@ const { createVuetify } = Vuetify
 const vuetify = createVuetify()
 
 const App = {
+  // 规定：
+  // 前端表格一行数据称为 rowData （复数 rowDatas ），其中与后端交互的真实数据部分称为 recordData （复数 recordDatas ），单独的一条记录也称为 recordData
+  // 新增用 add ，编辑用 edit ，删除用 del ，查询用 query
 
   // 数据定义、配置
   data() {
     return {
-      // 规定：js 数据里面的属性命名倾向后端含义，方便传参识别，前端框架的属性命名是框架的规则
 
       // 是否解密
       decryptFlag: true,
@@ -35,20 +37,25 @@ const App = {
         { key: 'update_time', title: '更新时间', sortable: false },
         { key: 'actions', title: '操作', sortable: false },
       ],
-      pageData: [],
+      recordDatas: [],
       loading: false,
 
-      // 新增对话框
-      addDialog: false,
-      addAppName: null,
-      addAppUrl: null,
-      addUsername: null,
-      addPassword: null,
-      addRemark: null,
+      // 记录数据
+      recordDataDialogFlag: false,
+      recordDataId: null,
+      recordDataName: null,
+      recordDataUrl: null,
+      recordDataUsername: null,
+      recordDataPassword: null,
+      recordDataRemark: null,
 
-      // 导入导出对话框
-      imexDialog: false,
+      // 导入导出
+      imexDialogFlag: false,
       uploadFile: null,
+
+      // 删除
+      delDialogFlag: false,
+      delId: null,
 
       // 报错信息
       snackbar: false,
@@ -60,12 +67,7 @@ const App = {
 
   // 方法
   methods: {
-    // 规定：这里的方法属于前端使用，命令跟前端操作或者数据变更含义一致，里面调用后端的方法只是其操作的一部分
-
-    // 调试方法
-    test(data) {
-      console.log(data);
-    },
+    // 规定：这里的方法属于前端使用，命名跟前端操作或者数据变更含义一致，里面调用后端的方法只是其操作的一部分
 
     // 随机密码
     async getRandomPassword() {
@@ -79,8 +81,8 @@ const App = {
       }
     },
 
-    // 根据id查询
-    async queryById(recordId) {
+    // 查询一条记录数据
+    async queryRecordData(recordId) {
       try {
         let response = await axios.get('/accountmanager/account/get', 
                                       {
@@ -102,7 +104,7 @@ const App = {
     },
 
     // 列表查询
-    async loadItems() {
+    async queryRecordDatas() {
       this.loading = true;
       try {
         let response = await axios.post('/accountmanager/account/query',
@@ -114,7 +116,7 @@ const App = {
                                        });
         let resJson = response.data;
         this.handleResJson(resJson);
-        this.pageData = resJson.data.list;
+        this.items = resJson.data.list;
         this.totalRecords = resJson.data.total_records;
         this.loading = false;
       } catch (error) {
@@ -123,21 +125,21 @@ const App = {
     },
 
     // 新增
-    async addAccount() {
+    async addRecordData() {
       try {
         let response = await axios.post('/accountmanager/account/add',
                                        {
-                                         name: this.addAppName,
-                                         url: this.addAppUrl,
-                                         username: this.addUsername,
-                                         password: this.addPassword,
-                                         remark: this.addRemark
+                                         name: this.recordDataName,
+                                         url: this.recordDataUrl,
+                                         username: this.recordDataUsername,
+                                         password: this.recordDataPassword,
+                                         remark: this.recordDataRemark
                                        });
         let resJson = response.data;
         let succesFlag = this.handleResJson(resJson);
         if(succesFlag) {
-          this.clearAddDialog();
-          this.loadItems();
+          this.clearDataDialog();
+          this.queryItems();
         }
       } catch (error) {
         console.error(error);
@@ -153,20 +155,6 @@ const App = {
     // 修改
     async editAccount() {
 
-    },
-
-    // 删除
-    async deleteAccount() {
-      try {
-        let response = await axios.post('/accountmanager/account/delete',
-                                       {
-                                         id: null
-                                       });
-        let resJson = response.data;
-        this.handleResJson(resJson);
-      } catch (error) {
-        console.error(error);
-      }
     },
 
     // 选择文件
@@ -195,13 +183,42 @@ const App = {
       let succesFlag = this.handleResJson(resJson);
       if(succesFlag) {
         this.clearImexDialog();
-        this.loadItems();
+        this.queryItems();
       }
     },
 
     // 导出
     exportAccount() {
       window.location.href='/accountmanager/account/export';
+    },
+
+    // 删除对话框-弹出
+    delDialog(rowItem) {
+      let itemData = Object.assign({}, rowItem);
+      this.delId = itemData.id;
+      this.delDialogFlag = true;
+    },
+    // 删除对话框-取消
+    clearDelDialog() {
+      this.delId = null;
+      this.delDialog = false;
+    },
+    // 删除对话框-确定
+    async confirmDel() {
+      try {
+        let response = await axios.post('/accountmanager/account/delete',
+                                       {
+                                         id: this.delId
+                                       });
+        let resJson = response.data;
+        let succesFlag = this.handleResJson(resJson);
+        if(succesFlag) {
+          this.clearDelDialog();
+          this.queryItems();
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     // 处理响应
@@ -216,14 +233,15 @@ const App = {
       }
     },
 
-    // 清空新增对话框内容
-    clearAddDialog() {
-      this.addDialog = false;
-      this.addAppName = null;
-      this.addAppUrl = null;
-      this.addUsername = null;
-      this.addPassword = null;
-      this.addRemark = null;
+    // 清空数据对话框内容
+    clearDataDialog() {
+      this.dataDialogFlag = false;
+      this.dataId = null;
+      this.dataName = null;
+      this.dataUrl = null;
+      this.dataUsername = null;
+      this.dataPassword = null;
+      this.dataRemark = null;
     },
 
     // 清空上传文件

@@ -17,6 +17,7 @@
 <body>
   <v-app id="app">
     <v-container>
+
       <v-row>
         <v-col>
           <v-btn density="comfortable" @click="addDialog = true">新增账号</v-btn>
@@ -33,6 +34,7 @@
           </v-text-field>
         </v-col>
       </v-row>
+
       <v-row>
         <v-col>
           <v-data-table-server v-model:items-per-page="pageSize" 
@@ -58,7 +60,7 @@
                   </v-icon>
                 </v-col>
                 <v-col>
-                  <v-icon size="small" color="red" @click="test(item)">
+                  <v-icon size="small" color="red" @click="delDialog(item)">
                     fa-regular fa-trash-can
                   </v-icon>
                 </v-col>
@@ -98,6 +100,15 @@
           <v-btn color="green-accent-3" @click="exportAccount">导出</v-btn>
           <v-card-actions>
             <v-btn @click="clearImexDialog">关闭</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="delDialogFlag" width="auto">
+        <v-card max-height="600" width="500" title="删除账号">
+          <v-card-actions>
+            <v-btn @click="clearDelDialog">取消</v-btn>
+            <v-btn @click="addAccount">提交</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
