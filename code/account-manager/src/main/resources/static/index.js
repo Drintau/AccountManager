@@ -6,13 +6,13 @@ const vuetify = createVuetify()
 const App = {
   // 规定：
   // 前端表格一行数据称为 rowData （复数 rowDatas ），其中与后端交互的真实数据部分称为 recordData （复数 recordDatas ），单独的一条记录也称为 recordData
-  // 新增用 add ，编辑用 edit ，删除用 del ，查询用 query
+  // 新增用 add ，编辑用 edit ，删除用 del ，查询用 query，处理事件用 handle，导入用 import，导出用 export，清除用 clear，展示用 show；后面加变量名/业务名
 
   // 数据定义、配置
   data() {
     return {
 
-      // 是否解密
+      // 查询是否解密
       decryptFlag: true,
 
       // 搜索框
@@ -40,7 +40,7 @@ const App = {
       recordDatas: [],
       loading: false,
 
-      // 记录数据
+      // 一条记录的数据
       recordDataDialogFlag: false,
       recordDataId: null,
       recordDataName: null,
@@ -67,18 +67,79 @@ const App = {
 
   // 方法
   methods: {
-    // 规定：这里的方法属于前端使用，命名跟前端操作或者数据变更含义一致，里面调用后端的方法只是其操作的一部分
+    // 规定：
+    // 请求后端接口不用单独一个方法出来，目前没有能够重复用的，以后有再拆分
 
-    // 随机密码
-    async getRandomPassword() {
+    // 处理分页页码变更
+    handlePageNumberChange(newPageNumber) {
+      this.pageNumber = newPageNumber;
+    },
+    // 查询一批数据
+    async queryRecordDatas() {
+      this.loading = true;
+      try {
+        let response = await axios.post('/accountmanager/account/query',
+                                       {
+                                         page_number: this.pageNumber,
+                                         page_size: this.pageSize,
+                                         decrypt: this.decryptFlag,
+                                         fuzzy_name: this.fuzzyName
+                                       });
+        let resJson = response.data;
+        this.handleResJson(resJson);
+        this.recordDatas = resJson.data.list;
+        this.totalRecords = resJson.data.total_records;
+        this.loading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    // 查询随机密码
+    async queryRandomPassword() {
       try {
         let response = await axios.get('/accountmanager/password/get');
         let resJson = response.data;
         this.handleResJson(resJson);
-        return resJson.data;
+        this.recordDataPassword = resJson.data;
       } catch (error) {
         console.error(error);
       }
+    },
+    // 新增记录
+    async addRecordData() {
+      try {
+        let response = await axios.post('/accountmanager/account/add',
+                                       {
+                                         name: this.recordDataName,
+                                         url: this.recordDataUrl,
+                                         username: this.recordDataUsername,
+                                         password: this.recordDataPassword,
+                                         remark: this.recordDataRemark
+                                       });
+        let resJson = response.data;
+        let succesFlag = this.handleResJson(resJson);
+        if(succesFlag) {
+          this.clearDataDialog();
+          this.queryRecordDatas();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // 修改记录
+    async editRecordData() {
+
+    },
+    // 清空一条记录数据对话框内容
+    clearRecordDataDialog() {
+      this.recordDataDialogFlag = false;
+      this.recordDataId = null;
+      this.recordDataName = null;
+      this.recordDataUrl = null;
+      this.recordDataUsername = null;
+      this.recordDataPassword = null;
+      this.recordDataRemark = null;
     },
 
     // 查询一条记录数据
@@ -98,72 +159,13 @@ const App = {
       }
     },
 
-    // 分页页码变更
-    handlePageChange(newPageNumber) {
-      this.pageNumber = newPageNumber;
-    },
 
-    // 列表查询
-    async queryRecordDatas() {
-      this.loading = true;
-      try {
-        let response = await axios.post('/accountmanager/account/query',
-                                       {
-                                         page_number: this.pageNumber,
-                                         page_size: this.pageSize,
-                                         decrypt: this.decryptFlag,
-                                         fuzzy_name: this.fuzzyName
-                                       });
-        let resJson = response.data;
-        this.handleResJson(resJson);
-        this.items = resJson.data.list;
-        this.totalRecords = resJson.data.total_records;
-        this.loading = false;
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    // 新增
-    async addRecordData() {
-      try {
-        let response = await axios.post('/accountmanager/account/add',
-                                       {
-                                         name: this.recordDataName,
-                                         url: this.recordDataUrl,
-                                         username: this.recordDataUsername,
-                                         password: this.recordDataPassword,
-                                         remark: this.recordDataRemark
-                                       });
-        let resJson = response.data;
-        let succesFlag = this.handleResJson(resJson);
-        if(succesFlag) {
-          this.clearDataDialog();
-          this.queryItems();
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    // 新增 随机密码
-    async addRandomPassword() {
-      let randomPassword = await this.getRandomPassword();
-      this.addPassword = randomPassword;
-    },
-
-    // 修改
-    async editAccount() {
-
-    },
-
-    // 选择文件
-    handleFileChange(event) {
+    // 处理上传文件变更
+    handleUploadFileChange(event) {
       this.uploadFile = event.target.files[0];
     },
-
-    // 导入
-    async importAccount() {
+    // 导入记录
+    async importRecordDatas() {
       if(this.uploadFile === null) {
         this.errMsg = "请选择文件";
         this.snackbar = true;
@@ -183,17 +185,21 @@ const App = {
       let succesFlag = this.handleResJson(resJson);
       if(succesFlag) {
         this.clearImexDialog();
-        this.queryItems();
+        this.queryRecordDatas();
       }
     },
-
     // 导出
-    exportAccount() {
+    exportRecordDatas() {
       window.location.href='/accountmanager/account/export';
     },
+    // 清空上传文件
+    clearImexDialog() {
+      this.uploadFile = null;
+      this.imexDialog = false;
+    },
 
-    // 删除对话框-弹出
-    delDialog(rowItem) {
+    // 删除对话框-展示
+    showDelDialog(rowItem) {
       let itemData = Object.assign({}, rowItem);
       this.delId = itemData.id;
       this.delDialogFlag = true;
@@ -204,7 +210,7 @@ const App = {
       this.delDialog = false;
     },
     // 删除对话框-确定
-    async confirmDel() {
+    async delRecordData() {
       try {
         let response = await axios.post('/accountmanager/account/delete',
                                        {
@@ -214,7 +220,7 @@ const App = {
         let succesFlag = this.handleResJson(resJson);
         if(succesFlag) {
           this.clearDelDialog();
-          this.queryItems();
+          this.queryRecordDatas();
         }
       } catch (error) {
         console.error(error);
@@ -232,23 +238,6 @@ const App = {
         return false;
       }
     },
-
-    // 清空数据对话框内容
-    clearDataDialog() {
-      this.dataDialogFlag = false;
-      this.dataId = null;
-      this.dataName = null;
-      this.dataUrl = null;
-      this.dataUsername = null;
-      this.dataPassword = null;
-      this.dataRemark = null;
-    },
-
-    // 清空上传文件
-    clearImexDialog() {
-      this.uploadFile = null;
-      this.imexDialog = false;
-    }
 
   },
 
