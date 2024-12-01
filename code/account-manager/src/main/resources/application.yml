@@ -4,7 +4,7 @@ maven:
   package-time: @timestamp@
 server:
   shutdown: "graceful"
-  port: 12138
+  port: 12300
   servlet:
     context-path: /accountmanager
 spring:
@@ -44,7 +44,7 @@ spring:
   datasource:
     url: jdbc:h2:mem:${am.file-path};DATABASE_TO_LOWER=TRUE
 server:
-  port: 12139
+  port: 12301
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   file-path: memDevDB
@@ -61,7 +61,7 @@ spring:
       on-profile:
         - dev_file
 server:
-  port: 12140
+  port: 12302
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   file-path: E:/Study/Test/fileDevDB
