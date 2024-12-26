@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -52,6 +53,12 @@ public class GUIMainClass extends Application {
         topHBox.setPadding(new Insets(10,10,10,10));
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
+        // 中部内容
+        TextArea textArea = new TextArea();
+        HBox centerHBox = new HBox();
+        centerHBox.setPadding(new Insets(10,10,10,10));
+        centerHBox.getChildren().addAll(textArea);
+
         // 底部内容
         Label versionLabel = new Label("版本号：" +
                 guiContext.getConfigValue().getMaven().getVersion());
@@ -65,6 +72,7 @@ public class GUIMainClass extends Application {
         // 控件分布：上中下左右
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topHBox);
+        borderPane.setCenter(centerHBox);
         borderPane.setBottom(bottomHBox);
 
         // 场景
