@@ -9,7 +9,7 @@ import drintau.accountmanager.webserver.domain.bo.MyAccountBO;
 import drintau.accountmanager.webserver.domain.bo.MyAccountImportAndExportBO;
 import drintau.accountmanager.webserver.domain.bo.MyAccountListBO;
 import drintau.accountmanager.webserver.domain.bo.MyAccountQueryConditionBO;
-import drintau.accountmanager.webserver.domain.entity.MyAccountPO;
+import drintau.accountmanager.webserver.domain.po.MyAccountPO;
 import drintau.accountmanager.webserver.service.MyAccountService;
 import drintau.accountmanager.webserver.service.SecureService;
 import jakarta.annotation.Resource;

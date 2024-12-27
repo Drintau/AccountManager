@@ -1,4 +1,4 @@
-package drintau.accountmanager.webserver.domain.entity;
+package drintau.accountmanager.webserver.domain.po;
 
 import lombok.Data;
 

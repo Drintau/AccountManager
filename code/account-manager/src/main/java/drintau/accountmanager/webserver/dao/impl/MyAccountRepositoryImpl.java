@@ -2,7 +2,7 @@ package drintau.accountmanager.webserver.dao.impl;
 
 import drintau.accountmanager.webserver.dao.MyAccountRepository;
 import drintau.accountmanager.webserver.domain.bo.PageBO;
-import drintau.accountmanager.webserver.domain.entity.MyAccountPO;
+import drintau.accountmanager.webserver.domain.po.MyAccountPO;
 import jakarta.annotation.Resource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
