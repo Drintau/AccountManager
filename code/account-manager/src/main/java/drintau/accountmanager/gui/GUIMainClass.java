@@ -54,10 +54,12 @@ public class GUIMainClass extends Application {
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
         // 中部内容
-        TextArea textArea = new TextArea();
+        TextArea outputTextArea = new TextArea();
+        outputTextArea.setEditable(false);
+        guiContext.setOutputTextArea(outputTextArea);
         HBox centerHBox = new HBox();
         centerHBox.setPadding(new Insets(10,10,10,10));
-        centerHBox.getChildren().addAll(textArea);
+        centerHBox.getChildren().addAll(outputTextArea);
 
         // 底部内容
         Label versionLabel = new Label("版本号：" +

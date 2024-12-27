@@ -2,6 +2,7 @@ package drintau.accountmanager.gui;
 
 import drintau.accountmanager.gui.domain.ConfigValue;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import lombok.Data;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -44,5 +45,6 @@ public class GUIContext {
     private Button startButton;
     private Button stopButton;
     private Button openBrowserButton;
+    private TextArea outputTextArea;
 
 }
