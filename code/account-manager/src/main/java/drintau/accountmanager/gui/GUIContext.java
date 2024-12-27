@@ -7,6 +7,8 @@ import lombok.Data;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * 应用GUI容器：单例
@@ -46,5 +48,8 @@ public class GUIContext {
     private Button stopButton;
     private Button openBrowserButton;
     private TextArea outputTextArea;
+
+    // 日志
+    private final Queue<String> logQueue = new ConcurrentLinkedQueue<>();
 
 }

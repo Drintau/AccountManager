@@ -89,6 +89,7 @@ public class GUIMainClass extends Application {
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
         stage.show();
+
     }
 
 }
