@@ -33,9 +33,6 @@ public class MyAccountController {
     @Resource(name = "myAccountService")
     private MyAccountService myAccountService;
 
-    /**
-     * 根据 id 查询，且解密
-     */
     @GetMapping("/get")
     public CommonResult<MyAccountQueryResVO> get(@RequestParam(value = "id") Integer id) {
         if (!NumberUtil.isNotNullAndGreaterThanZero(id)) {
@@ -49,9 +46,6 @@ public class MyAccountController {
         return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResVO);
     }
 
-    /**
-     * 根据条件查询列表
-     */
     @PostMapping("/query")
     public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
         MyAccountQueryConditionBO condition = BeanUtil.copy(reqDTO, MyAccountQueryConditionBO.class);
@@ -65,30 +59,6 @@ public class MyAccountController {
         myAccountListResVO.setList(myAccountQueryResVOList);
         return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
     }
-
-    /**
-     * 不带条件的查询，返回带分页
-     */
-//    @GetMapping("/list")
-//    public CommonResult<MyAccountListResVO> list(@RequestParam(value = "decrypt", defaultValue = "false") Boolean decrypt,
-//                                                 @RequestParam(value = "page_number", defaultValue = "1") Integer pageNumber,
-//                                                 @RequestParam(value = "page_size", defaultValue = "10") Integer pageSize) {
-//        // 前端页面看到的第1页，分页参数是第0页
-//        if (pageNumber < 1) {
-//            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "请求页码不能小于1");
-//        }
-//        if (pageSize < 1) {
-//            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "每页数据不能小于1");
-//        }
-//        MyAccountListBO myAccountListBO = myAccountService.listMyAccount(decrypt, pageNumber, pageSize);
-//        List<MyAccountQueryResVO> myAccountQueryResVOList = BeanUtil.copyList(myAccountListBO.getList(), MyAccountQueryResVO.class);
-//        MyAccountListResVO myAccountListResVO = new MyAccountListResVO();
-//        myAccountListResVO.setPageNumber(pageNumber);
-//        myAccountListResVO.setPageSize(pageSize);
-//        myAccountListResVO.setTotalPages(myAccountListBO.getTotalPages());
-//        myAccountListResVO.setList(myAccountQueryResVOList);
-//        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
-//    }
 
     @PostMapping("/add")
     public CommonResult<MyAccountQueryResVO> add(@RequestBody @Validated MyAccountAddReqVO myAccountAddReqVO) {
