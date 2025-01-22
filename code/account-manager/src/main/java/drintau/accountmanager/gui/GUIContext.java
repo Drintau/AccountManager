@@ -47,9 +47,5 @@ public class GUIContext {
     private Button startButton;
     private Button stopButton;
     private Button openBrowserButton;
-    private TextArea outputTextArea;
-
-    // 日志
-    private final Queue<String> logQueue = new ConcurrentLinkedQueue<>();
 
 }

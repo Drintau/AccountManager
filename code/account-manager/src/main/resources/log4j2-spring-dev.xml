@@ -9,9 +9,6 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
-        <Appender name="QueueAppender">
-            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
-        </Appender>
     </Appenders>
 
     <Loggers>
@@ -23,7 +20,6 @@
         </Logger>
         <Root level="debug">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="QueueAppender"/>
         </Root>
     </Loggers>
 

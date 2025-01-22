@@ -3,13 +3,13 @@ maven:
   version: @version@
   package-time: @timestamp@
 server:
-  shutdown: "graceful"
+  shutdown: graceful
   port: 12300
   servlet:
     context-path: /accountmanager
 spring:
   lifecycle:
-    timeout-per-shutdown-phase: "10s"
+    timeout-per-shutdown-phase: 10s
   application:
     name: account-manager
   jackson:

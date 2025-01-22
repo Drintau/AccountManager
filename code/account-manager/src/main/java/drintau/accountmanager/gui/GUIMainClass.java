@@ -42,7 +42,7 @@ public class GUIMainClass extends Application {
         stopButton.setDisable(true);
         guiContext.setStopButton(stopButton);
 
-        Button openBrowserButton = new Button("打开浏览器访问");
+        Button openBrowserButton = new Button("访问网页");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
         guiContext.setOpenBrowserButton(openBrowserButton);
@@ -54,12 +54,11 @@ public class GUIMainClass extends Application {
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
         // 中部内容
-        TextArea outputTextArea = new TextArea();
-        outputTextArea.setEditable(false);
-        guiContext.setOutputTextArea(outputTextArea);
-        HBox centerHBox = new HBox();
-        centerHBox.setPadding(new Insets(10,10,10,10));
-        centerHBox.getChildren().addAll(outputTextArea);
+//        TextArea outputTextArea = new TextArea();
+//        outputTextArea.setEditable(false);
+//        HBox centerHBox = new HBox();
+//        centerHBox.setPadding(new Insets(10,10,10,10));
+//        centerHBox.getChildren().addAll(outputTextArea);
 
         // 底部内容
         Label versionLabel = new Label("版本号：" +
@@ -74,7 +73,7 @@ public class GUIMainClass extends Application {
         // 控件分布：上中下左右
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topHBox);
-        borderPane.setCenter(centerHBox);
+//        borderPane.setCenter(centerHBox);
         borderPane.setBottom(bottomHBox);
 
         // 场景
