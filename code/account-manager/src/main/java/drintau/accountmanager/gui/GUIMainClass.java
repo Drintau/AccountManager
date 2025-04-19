@@ -13,10 +13,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 /**
@@ -50,30 +50,26 @@ public class GUIMainClass extends Application {
         // 布局
         // 顶部内容
         HBox topHBox = new HBox(20);
-        topHBox.setPadding(new Insets(10,10,10,10));
+        topHBox.setPadding(new Insets(20));
+        HBox.setHgrow(startButton, Priority.ALWAYS);
+        HBox.setHgrow(openBrowserButton, Priority.ALWAYS);
+        HBox.setHgrow(stopButton, Priority.ALWAYS);
+        startButton.setMaxWidth(Double.MAX_VALUE);
+        openBrowserButton.setMaxWidth(Double.MAX_VALUE);
+        stopButton.setMaxWidth(Double.MAX_VALUE);
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
-        // 中部内容
-//        TextArea outputTextArea = new TextArea();
-//        outputTextArea.setEditable(false);
-//        HBox centerHBox = new HBox();
-//        centerHBox.setPadding(new Insets(10,10,10,10));
-//        centerHBox.getChildren().addAll(outputTextArea);
-
         // 底部内容
-        Label versionLabel = new Label("版本号：" +
-                guiContext.getConfigValue().getMaven().getVersion());
-        Label packageTimeLabel = new Label("构建时间：" +
-                DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(guiContext.getConfigValue().getMaven().getPackageTime()));
+        Label versionLabel = new Label("版本号：" + guiContext.getConfigValue().getMaven().getVersion());
+        Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(guiContext.getConfigValue().getMaven().getPackageTime()));
         HBox bottomHBox = new HBox(20);
-        bottomHBox.setPadding(new Insets(10,10,10,10));
+        bottomHBox.setPadding(new Insets(10));
         bottomHBox.getChildren().addAll(versionLabel, packageTimeLabel);
         bottomHBox.setAlignment(Pos.CENTER);
 
         // 控件分布：上中下左右
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topHBox);
-//        borderPane.setCenter(centerHBox);
         borderPane.setBottom(bottomHBox);
 
         // 场景
@@ -82,8 +78,8 @@ public class GUIMainClass extends Application {
         // 舞台
         stage.setScene(scene);
         stage.setTitle("账号管理器");
-        stage.setWidth(600);
-        stage.setHeight(400);
+        stage.setWidth(450);
+        stage.setHeight(150);
         stage.setResizable(false);
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
