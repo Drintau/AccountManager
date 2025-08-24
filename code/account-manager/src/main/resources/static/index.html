@@ -15,29 +15,37 @@
 </head>
 
 <body>
-  
-<div id="app">
+
+  <div id="app">
     <v-app>
-      <!-- 最简单的导航抽屉 -->
+
       <v-navigation-drawer class="navigation-drawer" permanent>
         <v-list>
-          <v-list-item class="nav-item" title="菜单项1"></v-list-item>
-          <v-list-item class="nav-item" title="菜单项2"></v-list-item>
-          <v-list-item class="nav-item" title="菜单项3"></v-list-item>
+          <v-list-item class="nav-item" title="菜单项1" @click="changeShow(1)"></v-list-item>
+          <v-list-item class="nav-item" title="菜单项2" @click="changeShow(2)"></v-list-item>
+          <v-list-item class="nav-item" title="菜单项3" @click="changeShow(3)"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
-      <!-- 主内容区 -->
       <v-main class="main-content">
         <v-container>
           <h1>主内容区</h1>
           <p>这是一个最简单的导航抽屉和主内容区布局</p>
+
+          <template v-if="show1">
+            <h1>显示的内容show1</h1>
+          </template>
+
+          <template v-if="show2">
+            <h1>显示的内容show2</h1>
+          </template>
         </v-container>
       </v-main>
+
     </v-app>
   </div>
 
-<script src="index.js"></script>
+  <script src="index.js"></script>
 </body>
 
 </html>
