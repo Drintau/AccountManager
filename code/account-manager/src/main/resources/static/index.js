@@ -234,7 +234,7 @@ const App = {
     handleUploadFileChange(event) {
       this.uploadFile = event.target.files[0];
     },
-    // 导入记录
+    // 导入数据
     async importRecordDatas() {
       if (this.uploadFile === null) {
         this.errMsg = "请选择文件";
