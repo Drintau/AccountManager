@@ -20,24 +20,30 @@
     <v-app>
 
       <v-navigation-drawer class="navigation-drawer" permanent>
+        <v-toolbar title="账号管理器" color="blue" density="comfortable"></v-toolbar>
         <v-list>
-          <v-list-item class="nav-item" title="菜单项1" @click="changeShow(1)"></v-list-item>
-          <v-list-item class="nav-item" title="菜单项2" @click="changeShow(2)"></v-list-item>
-          <v-list-item class="nav-item" title="菜单项3" @click="changeShow(3)"></v-list-item>
+          <v-list-item class="nav-item" title="管理账号" @click="changeShowPage('managePage')"></v-list-item>
+          <v-list-item class="nav-item" title="迁移数据" @click="changeShowPage('migratePage')"></v-list-item>
+          <v-list-item class="nav-item" title="配置系统" @click="changeShowPage('settingPage')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
       <v-main class="main-content">
         <v-container>
-          <h1>主内容区</h1>
-          <p>这是一个最简单的导航抽屉和主内容区布局</p>
-
-          <template v-if="show1">
-            <h1>显示的内容show1</h1>
+          <template v-if="helloPage">
+            <h1>欢迎使用账号管理器！</h1>
           </template>
 
-          <template v-if="show2">
-            <h1>显示的内容show2</h1>
+          <template v-if="managePage">
+            <h1>管理账号页面</h1>
+          </template>
+
+          <template v-if="migratePage">
+            <h1>迁移数据页面</h1>
+          </template>
+
+          <template v-if="settingPage">
+            <h1>配置系统页面</h1>
           </template>
         </v-container>
       </v-main>

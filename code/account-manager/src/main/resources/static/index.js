@@ -7,23 +7,36 @@ const App = {
 
     data() {
         return {
-            show1: false,
-            show2: false,
+            helloPage: true,
+            managePage: false,
+            migratePage: false,
+            settingPage: false,
         }
     },
 
     methods: {
 
-        changeShow(num) {
-            if (num == 1) {
-                this.show1 = true;
-                this.show2 = false;
-            } else if (num == 2) {
-                this.show1 = false;
-                this.show2 = true;
+        changeShowPage(param) {
+            if ('managePage' === param) {
+                this.helloPage = false;
+                this.managePage = true;
+                this.migratePage = false;
+                this.settingPage = false;
+            } else if ('migratePage' === param) {
+                this.helloPage = false;
+                this.managePage = false;
+                this.migratePage = true;
+                this.settingPage = false;
+            } else if ('settingPage' === param) {
+                this.helloPage = false;
+                this.managePage = false;
+                this.migratePage = false;
+                this.settingPage = true;
             } else {
-                this.show1 = true;
-                this.show2 = true;
+                this.helloPage = true;
+                this.managePage = false;
+                this.migratePage = false;
+                this.settingPage = false;
             }
         }
 
