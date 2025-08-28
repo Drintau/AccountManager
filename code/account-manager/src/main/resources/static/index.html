@@ -19,6 +19,7 @@
   <div id="app">
     <v-app>
 
+      <!-- 左侧导航栏 -->
       <v-navigation-drawer class="navigation-drawer" permanent>
         <v-toolbar title="账号管理器" color="blue" density="comfortable"></v-toolbar>
         <v-list>
@@ -28,12 +29,16 @@
         </v-list>
       </v-navigation-drawer>
 
+      <!-- 主体 -->
       <v-main class="main-content">
         <v-container>
+
+          <!-- 欢迎页面 -->
           <template v-if="helloPage">
             <h1>欢迎使用账号管理器！</h1>
           </template>
 
+          <!-- 管理账号页面 -->
           <template v-if="managePage">
             <v-row>
               <v-col>
@@ -100,21 +105,17 @@
             </v-dialog>
           </template>
 
+          <!-- 迁移数据页面 -->
           <template v-if="migratePage">
-            <v-btn density="comfortable" @click="showImexDialog()">导入导出</v-btn>
+           
+              <v-file-input label="选择文件" prepend-icon="" append-icon="fa-solid fa-file-import"
+                @change="handleUploadFileChange" @click:append="importRecordDatas"></v-file-input>
 
-            <v-dialog v-model="imexDialogFlag" width="auto">
-              <v-card max-height="600" width="500" title="导入导出">
-                <v-file-input label="选择文件" prepend-icon="" append-icon="fa-solid fa-file-import"
-                  @change="handleUploadFileChange" @click:append="importRecordDatas"></v-file-input>
-                <v-btn color="green-accent-3" @click="exportRecordDatas">导出</v-btn>
-                <v-card-actions>
-                  <v-btn @click="clearImexDialog()">关闭</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+              <v-btn color="green-accent-3" @click="exportRecordDatas">导出</v-btn>
+
           </template>
 
+          <!-- 配置系统页面 -->
           <template v-if="settingPage">
             <h1>配置系统页面</h1>
           </template>
