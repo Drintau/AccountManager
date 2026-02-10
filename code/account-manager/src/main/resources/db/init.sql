@@ -1,13 +1,26 @@
-CREATE TABLE IF NOT EXISTS my_account
-(
+CREATE TABLE IF NOT EXISTS config (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '逻辑主键',
-    app_name VARCHAR(20) NOT NULL COMMENT '应用名称',
-    app_url VARCHAR(100) COMMENT '应用网址',
-    my_username VARCHAR(200) NOT NULL COMMENT '加密用户名',
-    my_password VARCHAR(200) NOT NULL COMMENT '加密密码',
-    remark VARCHAR(200) COMMENT '备注',
-    create_time TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-    update_time TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间'
+    config_key VARCHAR(50) NOT NULL UNIQUE COMMENT '配置项的唯一键',
+    config_value VARCHAR(200) NOT NULL COMMENT '配置项的值',
+    remark VARCHAR(200) COMMENT '备注信息'
 );
 
-CREATE INDEX IF NOT EXISTS idx$app_name on my_account(app_name);
+CREATE TABLE IF NOT EXISTS category (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '逻辑主键',
+    category_name VARCHAR(50) NOT NULL UNIQUE COMMENT '分类的名称'
+);
+
+CREATE TABLE IF NOT EXISTS account (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '逻辑主键',
+    category_id INTEGER COMMENT '所属分类ID',
+    app_name VARCHAR(50) NOT NULL COMMENT '应用名称',
+    app_url VARCHAR(200) COMMENT '应用网址',
+    username VARCHAR(200) NOT NULL COMMENT '加密后的用户名',
+    password VARCHAR(200) NOT NULL COMMENT '加密后的密码',
+    remark VARCHAR(200) COMMENT '备注信息',
+    create_time BIGINT NOT NULL COMMENT '创建时间（UTC秒级时间戳）',
+    update_time BIGINT NOT NULL COMMENT '修改时间（UTC秒级时间戳）'
+);
+
+CREATE INDEX IF NOT EXISTS idx_account_app_name ON account(app_name);
+CREATE INDEX IF NOT EXISTS idx_account_category_id ON account(category_id);
