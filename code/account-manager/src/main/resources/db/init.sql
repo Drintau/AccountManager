@@ -23,4 +23,4 @@ CREATE TABLE IF NOT EXISTS account (
 );
 
 CREATE INDEX IF NOT EXISTS idx_account_app_name ON account(app_name);
-CREATE INDEX IF NOT EXISTS idx_account_category_id ON account(category_id);
+CREATE INDEX IF NOT EXISTS idx_account_category_id_app_name ON account(category_id, app_name);
