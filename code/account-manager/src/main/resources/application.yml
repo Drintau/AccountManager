@@ -70,4 +70,4 @@ am:
   backup-paths: E:/Study/Test/fileDevBackupDB
   auto-access-after-startup: false
 logging:
-  config: classpath:log4j2-spring.xml
+  config: classpath:log4j2-spring-dev.xml

@@ -5,6 +5,12 @@ CREATE TABLE IF NOT EXISTS config (
     remark VARCHAR(200) COMMENT '备注信息'
 );
 
+INSERT INTO config (config_key, config_value, remark)
+SELECT 'password-length', '10', '密码长度'
+    WHERE NOT EXISTS (
+    SELECT 1 FROM config WHERE config_key = 'password-length'
+);
+
 CREATE TABLE IF NOT EXISTS category (
     id INTEGER PRIMARY KEY AUTO_INCREMENT COMMENT '逻辑主键',
     category_name VARCHAR(50) NOT NULL UNIQUE COMMENT '分类的名称'

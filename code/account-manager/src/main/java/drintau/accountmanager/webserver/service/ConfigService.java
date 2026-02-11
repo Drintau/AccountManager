@@ -8,4 +8,6 @@ public interface ConfigService {
 
     List<ConfigBO> allConfig();
 
+    void updateConfig(List<ConfigBO> configBOList);
+
 }
