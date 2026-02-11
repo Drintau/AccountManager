@@ -6,9 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ConfigListResVO {
+public class ConfigAllResVO {
 
     @JsonProperty("list")
-    private List<ConfigQueryResVO> list;
+    private List<ConfigVO> list;
 
 }

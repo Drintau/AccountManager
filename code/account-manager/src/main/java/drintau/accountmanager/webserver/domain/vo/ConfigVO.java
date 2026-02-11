@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class ConfigQueryResVO {
+public class ConfigVO {
 
     @JsonProperty("id")
     private Integer id;

@@ -2,22 +2,30 @@ package drintau.accountmanager.webserver.controller;
 
 import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.webserver.domain.vo.ConfigListResVO;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.webserver.domain.bo.ConfigBO;
+import drintau.accountmanager.webserver.domain.vo.ConfigAllResVO;
+import drintau.accountmanager.webserver.domain.vo.ConfigVO;
+import drintau.accountmanager.webserver.service.ConfigService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/config")
-@CrossOrigin
-@Slf4j
 public class ConfigController {
 
-    @PostMapping("/query")
-    public CommonResult<ConfigListResVO> query() {
-        ConfigListResVO resVO = new ConfigListResVO();
+    private final ConfigService configService;
+
+    @PostMapping("/all")
+    public CommonResult<ConfigAllResVO> all() {
+        List<ConfigBO> allConfigBOList = configService.allConfig();
+        ConfigAllResVO resVO = new ConfigAllResVO();
+        resVO.setList(BeanUtil.copyList(allConfigBOList, ConfigVO.class));
         return new CommonResult<>(CommonCode.SUCCESS, resVO);
     }
 

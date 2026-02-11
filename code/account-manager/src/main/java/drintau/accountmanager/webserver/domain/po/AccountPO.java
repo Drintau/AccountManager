@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class AccountPO {
 
     @Id
+    @Column("id")
     private Integer id;
 
     @Column("category_id")
