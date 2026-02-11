@@ -2,11 +2,12 @@ package drintau.accountmanager.webserver.controller;
 
 import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.webserver.domain.vo.ConfigQueryReqVO;
-import drintau.accountmanager.webserver.domain.vo.ConfigQueryResVO;
+import drintau.accountmanager.webserver.domain.vo.ConfigListResVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/config")
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 public class ConfigController {
 
     @PostMapping("/query")
-    public CommonResult<ConfigQueryResVO> query(@RequestBody @Validated ConfigQueryReqVO reqVO) {
-        ConfigQueryResVO resVO = new ConfigQueryResVO();
+    public CommonResult<ConfigListResVO> query() {
+        ConfigListResVO resVO = new ConfigListResVO();
         return new CommonResult<>(CommonCode.SUCCESS, resVO);
     }
 
