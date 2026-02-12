@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MyAccountQueryReqVO {
+public class AccountFindReqVO {
 
     // 页码和条数是必须的
     @JsonProperty("page_number")

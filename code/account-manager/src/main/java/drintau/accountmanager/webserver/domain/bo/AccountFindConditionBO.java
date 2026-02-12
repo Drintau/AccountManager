@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AccountFindBO extends PageBO {
+public class AccountFindConditionBO extends PageBO {
 
     private String fuzzyName;
 

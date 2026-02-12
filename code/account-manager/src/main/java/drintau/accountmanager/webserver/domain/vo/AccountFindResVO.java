@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MyAccountListResVO {
+public class AccountFindResVO {
 
     @JsonProperty("page_number")
     Integer pageNumber;
@@ -21,5 +21,5 @@ public class MyAccountListResVO {
     private Integer totalRecords;
 
     @JsonProperty("list")
-    List<MyAccountQueryResVO> list;
+    List<AccountVO> list;
 }

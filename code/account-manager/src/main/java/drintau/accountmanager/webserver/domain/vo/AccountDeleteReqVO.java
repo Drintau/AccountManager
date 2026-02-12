@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MyAccountDeleteReqVO {
+public class AccountDeleteReqVO {
 
     @JsonProperty("id")
     @NotNull(message = "要删除的账号id不能为空")

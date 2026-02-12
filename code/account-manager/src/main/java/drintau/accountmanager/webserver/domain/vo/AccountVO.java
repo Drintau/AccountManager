@@ -8,22 +8,28 @@ import drintau.accountmanager.commons.util.DateTimeUtil;
 import java.time.LocalDateTime;
 
 @Data
-public class MyAccountQueryResVO {
+public class AccountVO {
 
     @JsonProperty("id")
     private Integer id;
 
-    @JsonProperty("name")
+    @JsonProperty("category_id")
+    private Integer categoryId;
+
+    @JsonProperty("category_name")
+    private String categoryName;
+
+    @JsonProperty("app_name")
     private String appName;
 
-    @JsonProperty("url")
+    @JsonProperty("app_url")
     private String appUrl;
 
     @JsonProperty("username")
-    private String myUsername;
+    private String username;
 
     @JsonProperty("password")
-    private String myPassword;
+    private String password;
 
     @JsonProperty("remark")
     private String remark;
