@@ -4,9 +4,7 @@ import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
 import drintau.accountmanager.commons.util.BeanUtil;
 import drintau.accountmanager.webserver.domain.bo.CategoryBO;
-import drintau.accountmanager.webserver.domain.vo.CategoryAddReqVO;
-import drintau.accountmanager.webserver.domain.vo.CategoryAllResVO;
-import drintau.accountmanager.webserver.domain.vo.CategoryVO;
+import drintau.accountmanager.webserver.domain.vo.*;
 import drintau.accountmanager.webserver.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -39,4 +37,18 @@ public class CategoryController {
         bo = categoryService.addCategory(bo);
         return new CommonResult<>(CommonCode.SUCCESS, BeanUtil.copy(bo, CategoryVO.class));
     }
+
+    @PostMapping("/update")
+    public CommonResult<CategoryVO> update(@RequestBody @Validated CategoryUpdateReqVO reqVO) {
+        CategoryBO bo = BeanUtil.copy(reqVO, CategoryBO.class);
+        categoryService.updateCategory(bo);
+        return new CommonResult<>(CommonCode.SUCCESS, BeanUtil.copy(bo, CategoryVO.class));
+    }
+
+    @PostMapping("/delete")
+    public CommonResult<Void> delete(@RequestBody @Validated CategoryDeleteReqVO reqVO) {
+        categoryService.deleteCategory(reqVO.getId());
+        return new CommonResult<>(CommonCode.SUCCESS);
+    }
+
 }
