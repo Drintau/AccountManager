@@ -11,25 +11,26 @@ import drintau.accountmanager.commons.domain.CommonCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
-public class CommonException extends RuntimeException{
+public class CommonException extends RuntimeException {
 
     /**
-     * 异常码
+     * 业务响应编码
      */
-    private CommonCode exceptionCode;
+    private CommonCode businessCode;
 
     /**
-     * 自定义的异常信息
+     * 业务响应信息
      */
-    private String exceptionMessage;
+    private String businessMessage;
 
-    public CommonException(String message) {
-        super(message);
+    public CommonException(String businessMessage) {
+        super();
+        this.businessMessage = businessMessage;
     }
 
-    public CommonException(CommonCode commonCode, String message) {
-        super(message);
-        this.exceptionCode = commonCode;
-        this.exceptionMessage = message;
+    public CommonException(CommonCode businessCode, String businessMessage) {
+        super();
+        this.businessCode = businessCode;
+        this.businessMessage = businessMessage;
     }
 }

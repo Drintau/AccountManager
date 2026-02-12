@@ -24,14 +24,20 @@ public class ControllerExceptionHandler {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult handleCommonException(CommonException ce) {
-        return new CommonResult(ce.getExceptionCode(), ce.getExceptionMessage());
+        if (ce.getBusinessCode() == null) {
+            ce.setBusinessCode(CommonCode.FAIL);
+        }
+        return new CommonResult(ce.getBusinessCode(), ce.getBusinessMessage());
     }
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult handleBusinessException(BusinessException be) {
-        return new CommonResult(be.getExceptionCode(), be.getExceptionMessage());
+        if (be.getBusinessCode() == null) {
+            be.setBusinessCode(CommonCode.FAIL);
+        }
+        return new CommonResult(be.getBusinessCode(), be.getBusinessMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
