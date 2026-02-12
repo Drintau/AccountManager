@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryBO> allCategory() {
-        List<CategoryPO> allCategoryPOList = categoryRepository.findAll();
+        List<CategoryPO> allCategoryPOList = categoryRepository.findAllByOrderById();
         return BeanUtil.copyList(allCategoryPOList, CategoryBO.class);
     }
 
@@ -38,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryBO updateCategory(CategoryBO categoryBO) {
+    public void updateCategory(CategoryBO categoryBO) {
         Optional<CategoryPO> existPO = categoryRepository.findByCategoryName(categoryBO.getCategoryName());
         if (existPO.isPresent() && !existPO.get().getId().equals(categoryBO.getId())) {
             throw new BusinessException("分类重名");
@@ -46,7 +46,6 @@ public class CategoryServiceImpl implements CategoryService {
 
         CategoryPO po = BeanUtil.copy(categoryBO, CategoryPO.class);
         categoryRepository.save(po);
-        return categoryBO;
     }
 
     @Override

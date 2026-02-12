@@ -4,12 +4,14 @@ import drintau.accountmanager.webserver.domain.po.CategoryPO;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends ListCrudRepository<CategoryPO, Integer> {
 
     // 查询全部：findAll()
+    List<CategoryPO> findAllByOrderById();
 
     // 保存一个：save()
 
