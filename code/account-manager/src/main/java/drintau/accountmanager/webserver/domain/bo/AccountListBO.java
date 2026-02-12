@@ -7,14 +7,14 @@ import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class MyAccountListBO extends PageBO {
+public class AccountListBO extends PageBO {
 
     /**
      * 当前页的记录
      */
-    List<MyAccountBO> list;
+    List<AccountBO> list;
 
-    public MyAccountListBO(Integer pageNumber, Integer pageSize) {
+    public AccountListBO(Integer pageNumber, Integer pageSize) {
         super(pageNumber, pageSize);
     }
 }

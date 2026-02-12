@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -17,10 +19,26 @@ public class ConfigServiceImpl implements ConfigService {
 
     private final ConfigRepository configRepository;
 
+    private List<ConfigBO> configList;
+
+    private Map<String, String> configMap;
+
+    @Override
+    public String getConfigValue(String configKey) {
+        setupCache(null);
+        String configValue = configMap.get(configKey);
+        if (configValue != null) {
+            return configValue;
+        }
+        return "";
+    }
+
     @Override
     public List<ConfigBO> allConfig() {
         List<ConfigPO> allConfigPOList = configRepository.findAll();
-        return BeanUtil.copyList(allConfigPOList, ConfigBO.class);
+        List<ConfigBO> configBOList = BeanUtil.copyList(allConfigPOList, ConfigBO.class);
+        setupCache(configBOList);
+        return configBOList;
     }
 
     @Transactional
@@ -29,5 +47,33 @@ public class ConfigServiceImpl implements ConfigService {
         for (ConfigBO configBO : configBOList) {
             configRepository.updateConfigValueByKey(configBO.getConfigKey(), configBO.getConfigValue());
         }
+        invalidateCache();
     }
+
+    /**
+     * 使缓存失效
+     */
+    private void invalidateCache() {
+        this.configList = null;
+        this.configMap = null;
+    }
+
+    /**
+     * 设置缓存
+     */
+    private void setupCache(List<ConfigBO> configList) {
+        if (this.configList == null) {
+            if (configList == null) {
+                configList = allConfig();
+            }
+            this.configList = configList;
+        }
+        if (this.configMap == null) {
+            this.configMap = new HashMap<>();
+            for (ConfigBO configBO : this.configList) {
+                this.configMap.put(configBO.getConfigKey(), configBO.getConfigValue());
+            }
+        }
+    }
+
 }

@@ -2,30 +2,22 @@ package drintau.accountmanager.webserver.controller;
 
 import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.webserver.config.WebServerConfig;
 import drintau.accountmanager.webserver.service.PasswordService;
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/password")
-@CrossOrigin
-@Slf4j
 public class PasswordController {
 
-    @Resource
-    private PasswordService passwordService;
+    private final PasswordService passwordService;
 
-    @Resource
-    private WebServerConfig webServerConfig;
-
-    @GetMapping("/get")
-    public CommonResult<String> getRandomPassword() {
-        String randomPassword = passwordService.getRandomPassword(webServerConfig.getPasswordDigits());
+    @PostMapping("/get")
+    public CommonResult<String> get() {
+        String randomPassword = passwordService.getRandomPassword();
         return new CommonResult<>(CommonCode.SUCCESS, CommonCode.SUCCESS.message, randomPassword);
     }
 

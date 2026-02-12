@@ -1,7 +1,6 @@
 package drintau.accountmanager.webserver.dao;
 
 import drintau.accountmanager.webserver.domain.bo.PageBO;
-import drintau.accountmanager.webserver.domain.po.MyAccountPO;
 
 import java.util.List;
 

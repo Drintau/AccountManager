@@ -5,12 +5,11 @@ import drintau.accountmanager.commons.exception.BusinessException;
 import drintau.accountmanager.commons.util.BeanUtil;
 import drintau.accountmanager.commons.util.PageUtil;
 import drintau.accountmanager.webserver.dao.MyAccountRepository;
-import drintau.accountmanager.webserver.domain.bo.MyAccountBO;
-import drintau.accountmanager.webserver.domain.bo.MyAccountImportAndExportBO;
-import drintau.accountmanager.webserver.domain.bo.MyAccountListBO;
-import drintau.accountmanager.webserver.domain.bo.MyAccountQueryConditionBO;
-import drintau.accountmanager.webserver.domain.po.MyAccountPO;
-import drintau.accountmanager.webserver.service.MyAccountService;
+import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.bo.AccountIEBO;
+import drintau.accountmanager.webserver.domain.bo.AccountListBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindBO;
+import drintau.accountmanager.webserver.service.AccountService;
 import drintau.accountmanager.webserver.service.SecureService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +21,7 @@ import java.util.List;
 
 @Service(value = "myAccountService")
 @Slf4j
-public class MyAccountServiceImpl implements MyAccountService {
+public class AccountServiceImpl implements AccountService {
 
     @Resource
     private SecureService secureService;
@@ -31,10 +30,10 @@ public class MyAccountServiceImpl implements MyAccountService {
     private MyAccountRepository myAccountRepository;
 
     @Override
-    public MyAccountBO getMyAccountById(Integer id) {
+    public AccountBO getMyAccountById(Integer id) {
         MyAccountPO myAccountPO = myAccountRepository.getById(id);
         if (myAccountPO != null) {
-            MyAccountBO myAccount = BeanUtil.copy(myAccountPO, MyAccountBO.class);
+            AccountBO myAccount = BeanUtil.copy(myAccountPO, AccountBO.class);
             myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
             myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
             return myAccount;
@@ -43,7 +42,7 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
-    public MyAccountListBO queryMyAccount(MyAccountQueryConditionBO condition) {
+    public AccountListBO queryMyAccount(AccountFindBO condition) {
         // 按照条件的优先级进行查询，只要进行了某条件查询就返回；如没有条件匹配则走无条件的查询
 
         // 按照应用名称模糊查询
@@ -55,67 +54,67 @@ public class MyAccountServiceImpl implements MyAccountService {
         return listMyAccount(condition.getDecrypt(), condition.getPageNumber(), condition.getPageSize());
     }
 
-    private MyAccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize) {
-        MyAccountListBO myAccountListBO = new MyAccountListBO(pageNumber, pageSize);
-        List<MyAccountPO> myAccountPOList = myAccountRepository.listByAppName(appName, myAccountListBO);
+    private AccountListBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize) {
+        AccountListBO accountListBO = new AccountListBO(pageNumber, pageSize);
+        List<MyAccountPO> myAccountPOList = myAccountRepository.listByAppName(appName, accountListBO);
         Integer count = myAccountRepository.countByAppName(appName);
 
-        List<MyAccountBO> myAccountBOList = new ArrayList<>();
+        List<AccountBO> accountBOList = new ArrayList<>();
         for (MyAccountPO po : myAccountPOList) {
-            MyAccountBO bo = BeanUtil.copy(po, MyAccountBO.class);
+            AccountBO bo = BeanUtil.copy(po, AccountBO.class);
             if (decrypt) {
                 bo.setMyUsername(secureService.decrypt(po.getMyUsername()));
                 bo.setMyPassword(secureService.decrypt(po.getMyPassword()));
             }
-            myAccountBOList.add(bo);
+            accountBOList.add(bo);
         }
 
-        myAccountListBO.setList(myAccountBOList);
-        myAccountListBO.setTotalRecords(count);
-        myAccountListBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
-        return myAccountListBO;
+        accountListBO.setList(accountBOList);
+        accountListBO.setTotalRecords(count);
+        accountListBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
+        return accountListBO;
     }
 
     @Override
-    public MyAccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize) {
-        MyAccountListBO myAccountListBO = new MyAccountListBO(pageNumber, pageSize);
-        List<MyAccountPO> myAccountPOList = myAccountRepository.list(myAccountListBO);
+    public AccountListBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize) {
+        AccountListBO accountListBO = new AccountListBO(pageNumber, pageSize);
+        List<MyAccountPO> myAccountPOList = myAccountRepository.list(accountListBO);
         Integer count = myAccountRepository.count();
 
-        List<MyAccountBO> myAccountBOList = new ArrayList<>();
+        List<AccountBO> accountBOList = new ArrayList<>();
         for (MyAccountPO po : myAccountPOList) {
-            MyAccountBO bo = BeanUtil.copy(po, MyAccountBO.class);
+            AccountBO bo = BeanUtil.copy(po, AccountBO.class);
             if (decrypt) {
                 bo.setMyUsername(secureService.decrypt(po.getMyUsername()));
                 bo.setMyPassword(secureService.decrypt(po.getMyPassword()));
             }
-            myAccountBOList.add(bo);
+            accountBOList.add(bo);
         }
 
-        myAccountListBO.setList(myAccountBOList);
-        myAccountListBO.setTotalRecords(count);
-        myAccountListBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
-        return myAccountListBO;
+        accountListBO.setList(accountBOList);
+        accountListBO.setTotalRecords(count);
+        accountListBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
+        return accountListBO;
     }
 
     @Override
-    public MyAccountBO addMyAccount(MyAccountBO myAccountAddBO) {
+    public AccountBO addMyAccount(AccountBO myAccountAddBO) {
         MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
         addAccount.setMyUsername(secureService.encrypt(addAccount.getMyUsername()));
         addAccount.setMyPassword(secureService.encrypt(addAccount.getMyPassword()));
         myAccountRepository.save(addAccount);
-        return BeanUtil.copy(addAccount, MyAccountBO.class);
+        return BeanUtil.copy(addAccount, AccountBO.class);
     }
 
     @Override
-    public MyAccountBO updateMyAccount(MyAccountBO myAccountUpdateBO) {
+    public AccountBO updateMyAccount(AccountBO myAccountUpdateBO) {
         MyAccountPO updateAccount = myAccountRepository.getById(myAccountUpdateBO.getId());
         if (updateAccount != null) {
             updateAccount = BeanUtil.copy(myAccountUpdateBO, MyAccountPO.class);
             updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
             updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
             myAccountRepository.update(updateAccount);
-            return BeanUtil.copy(updateAccount, MyAccountBO.class);
+            return BeanUtil.copy(updateAccount, AccountBO.class);
         }
         throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
     }
@@ -126,13 +125,13 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
-    public List<MyAccountImportAndExportBO> exportMyAccounts() {
+    public List<AccountIEBO> exportMyAccounts() {
         // 查询所有数据
         List<MyAccountPO> poList = myAccountRepository.list();
 
-        List<MyAccountImportAndExportBO> exportDataList = new ArrayList<>(poList.size() * 2);
+        List<AccountIEBO> exportDataList = new ArrayList<>(poList.size() * 2);
         for (MyAccountPO po : poList) {
-            MyAccountImportAndExportBO exportBO = BeanUtil.copy(po, MyAccountImportAndExportBO.class);
+            AccountIEBO exportBO = BeanUtil.copy(po, AccountIEBO.class);
             exportBO.setMyUsername(secureService.decrypt(po.getMyUsername()));
             exportBO.setMyPassword(secureService.decrypt(po.getMyPassword()));
             exportDataList.add(exportBO);
@@ -142,9 +141,9 @@ public class MyAccountServiceImpl implements MyAccountService {
     }
 
     @Override
-    public void importMyAccounts(List<MyAccountImportAndExportBO> importDataList) {
+    public void importMyAccounts(List<AccountIEBO> importDataList) {
         List<MyAccountPO> importPOS = new ArrayList<>(importDataList.size() * 2);
-        for (MyAccountImportAndExportBO importAccount : importDataList) {
+        for (AccountIEBO importAccount : importDataList) {
             MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
             insertPO.setMyUsername(secureService.encrypt(insertPO.getMyUsername()));
             insertPO.setMyPassword(secureService.encrypt(insertPO.getMyPassword()));
