@@ -1,6 +1,6 @@
 package drintau.accountmanager.webserver.service.impl;
 
-import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.dao.ConfigRepository;
 import drintau.accountmanager.webserver.domain.bo.ConfigBO;
 import drintau.accountmanager.webserver.domain.po.ConfigPO;

@@ -1,7 +1,7 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.webserver.CommonResult;
+import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
 import drintau.accountmanager.webserver.domain.vo.AccountGetReqVO;
 import drintau.accountmanager.webserver.domain.vo.AccountVO;

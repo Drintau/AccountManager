@@ -1,8 +1,8 @@
 package drintau.accountmanager.webserver.service.impl;
 
-import drintau.accountmanager.commons.domain.CommonCode;
-import drintau.accountmanager.commons.exception.CommonException;
-import drintau.accountmanager.commons.util.SecureUtil;
+import drintau.accountmanager.shared.BusinessCode;
+import drintau.accountmanager.shared.exception.BusinessException;
+import drintau.accountmanager.shared.util.SecureUtil;
 import drintau.accountmanager.webserver.config.WebServerConfig;
 import drintau.accountmanager.webserver.service.SecureService;
 import jakarta.annotation.Resource;
@@ -26,7 +26,7 @@ public class SecureServiceImpl implements SecureService {
             return SecureUtil.decrypt(webServerConfig.getSecurityKeyByteArray(), ciphertext);
         } catch (Exception e) {
             log.error("解密失败", e);
-            throw new CommonException(CommonCode.SYSTEM_ERROR, "解密失败，请检查秘钥");
+            throw new BusinessException(BusinessCode.FAIL, "解密失败，请检查秘钥");
         }
     }
 
@@ -36,7 +36,7 @@ public class SecureServiceImpl implements SecureService {
             return SecureUtil.encrypt(webServerConfig.getSecurityKeyByteArray(), plaintext);
         } catch (Exception e) {
             log.error("加密失败", e);
-            throw new CommonException(CommonCode.SYSTEM_ERROR, "加密失败，请检查秘钥");
+            throw new BusinessException(BusinessCode.FAIL, "加密失败，请检查秘钥");
         }
     }
 }

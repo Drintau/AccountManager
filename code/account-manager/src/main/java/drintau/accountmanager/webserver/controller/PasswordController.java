@@ -1,6 +1,6 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.domain.CommonResult;
+import drintau.accountmanager.webserver.CommonResult;
 import drintau.accountmanager.webserver.service.PasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

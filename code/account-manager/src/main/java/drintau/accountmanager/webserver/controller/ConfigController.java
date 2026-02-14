@@ -1,8 +1,8 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.domain.CommonCode;
-import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.shared.BusinessCode;
+import drintau.accountmanager.webserver.CommonResult;
+import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.domain.bo.ConfigBO;
 import drintau.accountmanager.webserver.domain.vo.ConfigAllResVO;
 import drintau.accountmanager.webserver.domain.vo.ConfigVO;
@@ -26,7 +26,7 @@ public class ConfigController {
         List<ConfigBO> allConfigBOList = configService.allConfig();
         ConfigAllResVO resVO = new ConfigAllResVO();
         resVO.setList(BeanUtil.copyList(allConfigBOList, ConfigVO.class));
-        return new CommonResult<>(CommonCode.SUCCESS, resVO);
+        return new CommonResult<>(BusinessCode.SUCCESS, resVO);
     }
 
 }

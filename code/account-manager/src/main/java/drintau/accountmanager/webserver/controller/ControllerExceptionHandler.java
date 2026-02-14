@@ -1,9 +1,8 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.domain.CommonCode;
-import drintau.accountmanager.commons.domain.CommonResult;
-import drintau.accountmanager.commons.exception.BusinessException;
-import drintau.accountmanager.commons.exception.CommonException;
+import drintau.accountmanager.shared.BusinessCode;
+import drintau.accountmanager.webserver.CommonResult;
+import drintau.accountmanager.shared.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -20,24 +19,14 @@ import java.util.List;
 @Slf4j
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(CommonException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    public CommonResult<Void> handleCommonException(CommonException ce) {
-        if (ce.getBusinessCode() == null) {
-            ce.setBusinessCode(CommonCode.FAIL);
-        }
-        return new CommonResult<>(ce.getBusinessCode().code, ce.getBusinessMessage());
-    }
-
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public CommonResult<Void> handleBusinessException(BusinessException be) {
-        if (be.getBusinessCode() == null) {
-            be.setBusinessCode(CommonCode.FAIL);
+        if (be.getErrorCode() == null) {
+            be.setErrorCode(BusinessCode.FAIL);
         }
-        return new CommonResult<>(be.getBusinessCode().code, be.getBusinessMessage());
+        return new CommonResult<>(be.getErrorCode().code, be.getErrorMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,7 +41,7 @@ public class ControllerExceptionHandler {
             errMsg.append("；");
         }
         String errMsgStr = errMsg.substring(0, errMsg.length()-1) + "。";
-        return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR.code, errMsgStr);
+        return new CommonResult<>(BusinessCode.FAIL.code, errMsgStr);
     }
 
     @ExceptionHandler(Exception.class)
@@ -60,7 +49,7 @@ public class ControllerExceptionHandler {
     @ResponseStatus(HttpStatus.OK)
     public CommonResult<Void> handleOtherException(Exception e) {
         log.error("其他错误", e);
-        return new CommonResult<>(CommonCode.FAIL.code, e.getMessage());
+        return new CommonResult<>(BusinessCode.FAIL.code, e.getMessage());
     }
 
 }

@@ -1,9 +1,9 @@
 package drintau.accountmanager;
 
-import drintau.accountmanager.launcharg.ArgsContext;
-import drintau.accountmanager.launcharg.ArgsHandler;
-import drintau.accountmanager.gui.GUIContext;
-import drintau.accountmanager.gui.GUIMainClass;
+import drintau.accountmanager.launcher.ArgsContext;
+import drintau.accountmanager.launcher.ArgsHandler;
+import drintau.accountmanager.desktop.GUIContext;
+import drintau.accountmanager.desktop.GUIMainClass;
 import drintau.accountmanager.webserver.WebServerMainClass;
 import org.springframework.boot.SpringApplication;
 

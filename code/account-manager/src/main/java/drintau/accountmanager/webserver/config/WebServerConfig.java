@@ -1,6 +1,6 @@
 package drintau.accountmanager.webserver.config;
 
-import drintau.accountmanager.commons.util.SecureUtil;
+import drintau.accountmanager.shared.util.SecureUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

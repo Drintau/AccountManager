@@ -1,7 +1,7 @@
 package drintau.accountmanager.webserver;
 
-import drintau.accountmanager.commons.util.DateTimeUtil;
-import drintau.accountmanager.gui.GUIContext;
+import drintau.accountmanager.shared.util.DateTimeUtil;
+import drintau.accountmanager.desktop.GUIContext;
 import drintau.accountmanager.webserver.config.WebServerConfig;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
