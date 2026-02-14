@@ -1,31 +1,39 @@
 package drintau.accountmanager.webserver.service.impl;
 
+import drintau.accountmanager.commons.exception.BusinessException;
+import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.webserver.dao.AccountRepository;
+import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.po.AccountPO;
 import drintau.accountmanager.webserver.service.AccountService;
-import lombok.extern.slf4j.Slf4j;
+import drintau.accountmanager.webserver.service.SecureService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service(value = "myAccountService")
-@Slf4j
+import java.util.Optional;
+
+@RequiredArgsConstructor
+@Service
 public class AccountServiceImpl implements AccountService {
-//
-//    @Resource
-//    private SecureService secureService;
-//
-//    @Resource
-//    private MyAccountRepository myAccountRepository;
-//
-//    @Override
-//    public AccountBO getMyAccountById(Integer id) {
-//        MyAccountPO myAccountPO = myAccountRepository.getById(id);
-//        if (myAccountPO != null) {
-//            AccountBO myAccount = BeanUtil.copy(myAccountPO, AccountBO.class);
-//            myAccount.setMyUsername(secureService.decrypt(myAccount.getMyUsername()));
-//            myAccount.setMyPassword(secureService.decrypt(myAccount.getMyPassword()));
-//            return myAccount;
-//        }
-//        return null;
-//    }
-//
+
+    private final AccountRepository accountRepository;
+
+    private final SecureService secureService;
+
+    @Override
+    public AccountBO getAccount(Integer id) {
+        Optional<AccountPO> poOptional = accountRepository.findById(id);
+        if (poOptional.isEmpty()) {
+            throw new BusinessException("id对应数据不存在");
+        }
+
+        AccountBO bo = BeanUtil.copy(poOptional.get(), AccountBO.class);
+        bo.setUsername(secureService.decrypt(bo.getUsername()));
+        bo.setPassword(secureService.decrypt(bo.getPassword()));
+
+        return bo;
+    }
+
 //    @Override
 //    public AccountFindResultBO queryMyAccount(AccountFindConditionBO condition) {
 //        // 按照条件的优先级进行查询，只要进行了某条件查询就返回；如没有条件匹配则走无条件的查询

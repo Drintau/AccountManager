@@ -11,16 +11,12 @@ public class CommonResult<T> implements Serializable {
     private String message;
     private T data;
 
-    public CommonResult(CommonCode commonCode, String message) {
-        this.code = commonCode.code;
-        this.message = message;
-        this.data = null;
+    public CommonResult() {
+        this(CommonCode.SUCCESS);
     }
 
-    public CommonResult(CommonCode commonCode, String message, T data) {
-        this.code = commonCode.code;
-        this.message = message;
-        this.data = data;
+    public CommonResult(T data) {
+        this(CommonCode.SUCCESS, data);
     }
 
     public CommonResult(CommonCode commonCode) {
@@ -33,6 +29,12 @@ public class CommonResult<T> implements Serializable {
         this.code = commonCode.code;
         this.message = commonCode.message;
         this.data = data;
+    }
+
+    public CommonResult(String code, String message) {
+        this.code = code;
+        this.message = message;
+        this.data = null;
     }
 
 }

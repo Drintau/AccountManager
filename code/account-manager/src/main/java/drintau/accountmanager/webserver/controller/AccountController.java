@@ -1,7 +1,15 @@
 package drintau.accountmanager.webserver.controller;
 
+import drintau.accountmanager.commons.domain.CommonResult;
+import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.vo.AccountGetReqVO;
+import drintau.accountmanager.webserver.domain.vo.AccountVO;
 import drintau.accountmanager.webserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,19 +20,12 @@ public class AccountController {
 
     private final AccountService accountService;
 
-//    @GetMapping("/get")
-//    public CommonResult<MyAccountQueryResVO> get(@RequestParam(value = "id") Integer id) {
-//        if (!NumberUtil.isNotNullAndGreaterThanZero(id)) {
-//            throw new BusinessException(CommonCode.REQUEST_PARAMETER_ERROR, "查询id非法！");
-//        }
-//        AccountBO myAccountById = accountService.getMyAccountById(id);
-//        if (myAccountById == null) {
-//            throw new BusinessException(CommonCode.FAIL, "查询数据不存在，请刷新页面！");
-//        }
-//        MyAccountQueryResVO myAccountQueryResVO = BeanUtil.copy(myAccountById, MyAccountQueryResVO.class);
-//        return new CommonResult<>(CommonCode.SUCCESS, myAccountQueryResVO);
-//    }
-//
+    @PostMapping("/get")
+    public CommonResult<AccountVO> get(@RequestBody @Validated AccountGetReqVO reqVO) {
+        AccountBO bo = accountService.getAccount(reqVO.getId());
+        return new CommonResult<>(BeanUtil.copy(bo, AccountVO.class));
+    }
+
 //    @PostMapping("/query")
 //    public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
 //        AccountFindConditionBO condition = BeanUtil.copy(reqDTO, AccountFindConditionBO.class);

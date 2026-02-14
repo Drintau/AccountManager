@@ -1,12 +1,11 @@
 package drintau.accountmanager.webserver.service;
 
+import drintau.accountmanager.webserver.domain.bo.AccountBO;
+
 public interface AccountService {
 
-//    /**
-//     * 根据 id 查询
-//     */
-//    AccountBO getMyAccountById(Integer id);
-//
+    AccountBO getAccount(Integer id);
+
 //    /**
 //     * 根据 条件 分页查询
 //     */

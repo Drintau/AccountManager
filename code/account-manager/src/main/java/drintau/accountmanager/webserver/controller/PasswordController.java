@@ -1,6 +1,5 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.commons.domain.CommonCode;
 import drintau.accountmanager.commons.domain.CommonResult;
 import drintau.accountmanager.webserver.service.PasswordService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ public class PasswordController {
     @PostMapping("/get")
     public CommonResult<String> get() {
         String randomPassword = passwordService.getRandomPassword();
-        return new CommonResult<>(CommonCode.SUCCESS, CommonCode.SUCCESS.message, randomPassword);
+        return new CommonResult<>(randomPassword);
     }
 
 }

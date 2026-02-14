@@ -23,27 +23,27 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CommonException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult handleCommonException(CommonException ce) {
+    public CommonResult<Void> handleCommonException(CommonException ce) {
         if (ce.getBusinessCode() == null) {
             ce.setBusinessCode(CommonCode.FAIL);
         }
-        return new CommonResult(ce.getBusinessCode(), ce.getBusinessMessage());
+        return new CommonResult<>(ce.getBusinessCode().code, ce.getBusinessMessage());
     }
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult handleBusinessException(BusinessException be) {
+    public CommonResult<Void> handleBusinessException(BusinessException be) {
         if (be.getBusinessCode() == null) {
             be.setBusinessCode(CommonCode.FAIL);
         }
-        return new CommonResult(be.getBusinessCode(), be.getBusinessMessage());
+        return new CommonResult<>(be.getBusinessCode().code, be.getBusinessMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public CommonResult<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         List<ObjectError> allErrors = bindingResult.getAllErrors();
         StringBuilder errMsg = new StringBuilder();
@@ -52,15 +52,15 @@ public class ControllerExceptionHandler {
             errMsg.append("；");
         }
         String errMsgStr = errMsg.substring(0, errMsg.length()-1) + "。";
-        return new CommonResult(CommonCode.REQUEST_PARAMETER_ERROR, errMsgStr);
+        return new CommonResult<>(CommonCode.REQUEST_PARAMETER_ERROR.code, errMsgStr);
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public CommonResult handleOtherException(Exception e) {
+    public CommonResult<Void> handleOtherException(Exception e) {
         log.error("其他错误", e);
-        return new CommonResult(CommonCode.FAIL, e.getMessage());
+        return new CommonResult<>(CommonCode.FAIL.code, e.getMessage());
     }
 
 }

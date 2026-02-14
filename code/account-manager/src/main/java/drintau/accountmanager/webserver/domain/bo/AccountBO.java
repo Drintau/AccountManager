@@ -9,6 +9,8 @@ public class AccountBO {
 
     private Integer categoryId;
 
+    private String categoryName;
+
     private String appName;
 
     private String appUrl;
