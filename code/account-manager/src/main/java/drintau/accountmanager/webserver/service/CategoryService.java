@@ -14,4 +14,6 @@ public interface CategoryService {
 
     void deleteCategory(Integer id);
 
+    CategoryBO getCategory(Integer id);
+
 }

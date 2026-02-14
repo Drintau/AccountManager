@@ -2,10 +2,13 @@ package drintau.accountmanager.webserver.service.impl;
 
 import drintau.accountmanager.commons.exception.BusinessException;
 import drintau.accountmanager.commons.util.BeanUtil;
+import drintau.accountmanager.commons.util.NumberUtil;
 import drintau.accountmanager.webserver.dao.AccountRepository;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.bo.CategoryBO;
 import drintau.accountmanager.webserver.domain.po.AccountPO;
 import drintau.accountmanager.webserver.service.AccountService;
+import drintau.accountmanager.webserver.service.CategoryService;
 import drintau.accountmanager.webserver.service.SecureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,16 +23,23 @@ public class AccountServiceImpl implements AccountService {
 
     private final SecureService secureService;
 
+    private final CategoryService categoryService;
+
     @Override
     public AccountBO getAccount(Integer id) {
         Optional<AccountPO> poOptional = accountRepository.findById(id);
         if (poOptional.isEmpty()) {
-            throw new BusinessException("id对应数据不存在");
+            throw new BusinessException("账号id对应数据不存在");
         }
 
         AccountBO bo = BeanUtil.copy(poOptional.get(), AccountBO.class);
         bo.setUsername(secureService.decrypt(bo.getUsername()));
         bo.setPassword(secureService.decrypt(bo.getPassword()));
+
+        if (NumberUtil.isNotNullAndGreaterThanZero(bo.getCategoryId())) {
+            CategoryBO categoryBO = categoryService.getCategory(bo.getCategoryId());
+            bo.setCategoryName(categoryBO.getCategoryName());
+        }
 
         return bo;
     }

@@ -52,5 +52,14 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Integer id) {
         categoryRepository.deleteById(id);
     }
-    
+
+    @Override
+    public CategoryBO getCategory(Integer id) {
+        Optional<CategoryPO> poOptional = categoryRepository.findById(id);
+        if (poOptional.isEmpty()) {
+            throw new BusinessException("分类id对应数据不存在");
+        }
+        return BeanUtil.copy(poOptional.get(), CategoryBO.class);
+    }
+
 }
