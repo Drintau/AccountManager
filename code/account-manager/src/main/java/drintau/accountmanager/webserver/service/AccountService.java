@@ -6,6 +6,8 @@ public interface AccountService {
 
     AccountBO getAccount(Integer id);
 
+    AccountBO addAccount(AccountBO bo);
+
 //    /**
 //     * 根据 条件 分页查询
 //     */
@@ -15,12 +17,7 @@ public interface AccountService {
 //     * 全量分页查询
 //     */
 //    AccountFindResultBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
-//
-//    /**
-//     * 新增
-//     */
-//    AccountBO addMyAccount(AccountBO myAccountAddBO);
-//
+
 //    /**
 //     * 修改
 //     */

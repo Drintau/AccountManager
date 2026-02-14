@@ -44,6 +44,15 @@ public class AccountServiceImpl implements AccountService {
         return bo;
     }
 
+    @Override
+    public AccountBO addAccount(AccountBO bo) {
+        AccountPO po = BeanUtil.copy(bo, AccountPO.class);
+        po.setUsername(secureService.encrypt(po.getUsername()));
+        po.setPassword(secureService.encrypt(po.getPassword()));
+        accountRepository.save(po);
+        return BeanUtil.copy(po, AccountBO.class);
+    }
+
 //    @Override
 //    public AccountFindResultBO queryMyAccount(AccountFindConditionBO condition) {
 //        // 按照条件的优先级进行查询，只要进行了某条件查询就返回；如没有条件匹配则走无条件的查询
@@ -100,14 +109,6 @@ public class AccountServiceImpl implements AccountService {
 //        return accountFindResultBO;
 //    }
 //
-//    @Override
-//    public AccountBO addMyAccount(AccountBO myAccountAddBO) {
-//        MyAccountPO addAccount = BeanUtil.copy(myAccountAddBO, MyAccountPO.class);
-//        addAccount.setMyUsername(secureService.encrypt(addAccount.getMyUsername()));
-//        addAccount.setMyPassword(secureService.encrypt(addAccount.getMyPassword()));
-//        myAccountRepository.save(addAccount);
-//        return BeanUtil.copy(addAccount, AccountBO.class);
-//    }
 //
 //    @Override
 //    public AccountBO updateMyAccount(AccountBO myAccountUpdateBO) {

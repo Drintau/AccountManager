@@ -3,6 +3,7 @@ package drintau.accountmanager.webserver.controller;
 import drintau.accountmanager.webserver.CommonResult;
 import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.vo.AccountAddReqVO;
 import drintau.accountmanager.webserver.domain.vo.AccountGetReqVO;
 import drintau.accountmanager.webserver.domain.vo.AccountVO;
 import drintau.accountmanager.webserver.service.AccountService;
@@ -26,6 +27,14 @@ public class AccountController {
         return new CommonResult<>(BeanUtil.copy(bo, AccountVO.class));
     }
 
+    @PostMapping("/add")
+    public CommonResult<AccountVO> add(@RequestBody @Validated AccountAddReqVO reqVO) {
+        AccountBO bo = BeanUtil.copy(reqVO, AccountBO.class);
+        bo = accountService.addAccount(bo);
+        return new CommonResult<>(BeanUtil.copy(bo, AccountVO.class));
+    }
+
+
 //    @PostMapping("/query")
 //    public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
 //        AccountFindConditionBO condition = BeanUtil.copy(reqDTO, AccountFindConditionBO.class);
@@ -39,15 +48,6 @@ public class AccountController {
 //        myAccountListResVO.setList(myAccountQueryResVOList);
 //        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
 //    }
-//
-//    @PostMapping("/add")
-//    public CommonResult<MyAccountQueryResVO> add(@RequestBody @Validated MyAccountAddReqVO myAccountAddReqVO) {
-//        AccountBO myAccountAddBeforeBO = BeanUtil.copy(myAccountAddReqVO, AccountBO.class);
-//        AccountBO myAccount = accountService.addMyAccount(myAccountAddBeforeBO);
-//        MyAccountQueryResVO myAccountAddResDTO = BeanUtil.copy(myAccount, MyAccountQueryResVO.class);
-//        return new CommonResult<>(CommonCode.SUCCESS, myAccountAddResDTO);
-//    }
-//
 //    @PostMapping("/update")
 //    public CommonResult<MyAccountQueryResVO> update(@RequestBody @Validated MyAccountUpdateReqVO myAccountUpdateReqVO) {
 //        AccountBO myAccountUpdateBO = BeanUtil.copy(myAccountUpdateReqVO, AccountBO.class);

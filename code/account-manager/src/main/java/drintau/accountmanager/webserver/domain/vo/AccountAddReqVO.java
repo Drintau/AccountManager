@@ -1,14 +1,15 @@
 package drintau.accountmanager.webserver.domain.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountAddReqVO {
+
+    @JsonProperty("category_id")
+    private Integer categoryId;
 
     @JsonProperty("name")
     @NotEmpty(message = "应用名称不能为空")
