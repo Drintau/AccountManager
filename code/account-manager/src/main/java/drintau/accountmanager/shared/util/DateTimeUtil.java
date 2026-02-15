@@ -2,6 +2,7 @@ package drintau.accountmanager.shared.util;
 
 import org.springframework.util.StringUtils;
 
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -37,6 +38,13 @@ public class DateTimeUtil {
             return offsetDateTime.atZoneSameInstant(CHINA_ZONE_ID);
         }
         return null;
+    }
+
+    /**
+     * 获取当前时间秒数
+     */
+    public static long getCurrentUtcSecond() {
+        return Instant.now().getEpochSecond();
     }
 
 }

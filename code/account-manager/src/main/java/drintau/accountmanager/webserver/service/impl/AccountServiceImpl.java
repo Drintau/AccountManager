@@ -2,6 +2,7 @@ package drintau.accountmanager.webserver.service.impl;
 
 import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.BeanUtil;
+import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.shared.util.NumberUtil;
 import drintau.accountmanager.webserver.dao.AccountRepository;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
@@ -54,6 +55,9 @@ public class AccountServiceImpl implements AccountService {
         AccountPO po = BeanUtil.copy(bo, AccountPO.class);
         po.setUsername(secureService.encrypt(po.getUsername()));
         po.setPassword(secureService.encrypt(po.getPassword()));
+        long currentUtcSecond = DateTimeUtil.getCurrentUtcSecond();
+        po.setCreateTime(currentUtcSecond);
+        po.setUpdateTime(currentUtcSecond);
         accountRepository.save(po);
 
         bo.setId(po.getId());
@@ -77,6 +81,7 @@ public class AccountServiceImpl implements AccountService {
         AccountPO po = BeanUtil.copy(bo, AccountPO.class);
         po.setUsername(secureService.encrypt(po.getUsername()));
         po.setPassword(secureService.encrypt(po.getPassword()));
+        po.setUpdateTime(DateTimeUtil.getCurrentUtcSecond());
         accountRepository.save(po);
 
         bo.setUsername(po.getUsername());
@@ -116,8 +121,8 @@ public class AccountServiceImpl implements AccountService {
 //        for (MyAccountPO po : myAccountPOList) {
 //            AccountBO bo = BeanUtil.copy(po, AccountBO.class);
 //            if (decrypt) {
-//                bo.setMyUsername(secureService.decrypt(po.getMyUsername()));
-//                bo.setMyPassword(secureService.decrypt(po.getMyPassword()));
+//                bo.setusername(secureService.decrypt(po.getusername()));
+//                bo.setpassword(secureService.decrypt(po.getpassword()));
 //            }
 //            accountBOList.add(bo);
 //        }
@@ -138,8 +143,8 @@ public class AccountServiceImpl implements AccountService {
 //        for (MyAccountPO po : myAccountPOList) {
 //            AccountBO bo = BeanUtil.copy(po, AccountBO.class);
 //            if (decrypt) {
-//                bo.setMyUsername(secureService.decrypt(po.getMyUsername()));
-//                bo.setMyPassword(secureService.decrypt(po.getMyPassword()));
+//                bo.setusername(secureService.decrypt(po.getusername()));
+//                bo.setpassword(secureService.decrypt(po.getpassword()));
 //            }
 //            accountBOList.add(bo);
 //        }
@@ -158,8 +163,8 @@ public class AccountServiceImpl implements AccountService {
 //        List<AccountIEBO> exportDataList = new ArrayList<>(poList.size() * 2);
 //        for (MyAccountPO po : poList) {
 //            AccountIEBO exportBO = BeanUtil.copy(po, AccountIEBO.class);
-//            exportBO.setMyUsername(secureService.decrypt(po.getMyUsername()));
-//            exportBO.setMyPassword(secureService.decrypt(po.getMyPassword()));
+//            exportBO.setusername(secureService.decrypt(po.getusername()));
+//            exportBO.setpassword(secureService.decrypt(po.getpassword()));
 //            exportDataList.add(exportBO);
 //        }
 //
@@ -171,8 +176,8 @@ public class AccountServiceImpl implements AccountService {
 //        List<MyAccountPO> importPOS = new ArrayList<>(importDataList.size() * 2);
 //        for (AccountIEBO importAccount : importDataList) {
 //            MyAccountPO insertPO = BeanUtil.copy(importAccount, MyAccountPO.class);
-//            insertPO.setMyUsername(secureService.encrypt(insertPO.getMyUsername()));
-//            insertPO.setMyPassword(secureService.encrypt(insertPO.getMyPassword()));
+//            insertPO.setusername(secureService.encrypt(insertPO.getusername()));
+//            insertPO.setpassword(secureService.encrypt(insertPO.getpassword()));
 //            importPOS.add(insertPO);
 //        }
 //        myAccountRepository.saveBatch(importPOS);

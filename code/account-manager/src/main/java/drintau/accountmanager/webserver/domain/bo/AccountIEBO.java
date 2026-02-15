@@ -16,10 +16,10 @@ public class AccountIEBO {
     private String appUrl;
 
     @ExcelProperty("登录名")
-    private String myUsername;
+    private String username;
 
     @ExcelProperty("密码")
-    private String myPassword;
+    private String password;
 
     @ExcelProperty("说明")
     private String remark;

@@ -14,13 +14,13 @@ public class MyAccountRepositoryImpl implements MyAccountRepository {
 //
 //    @Override
 //    public void save(MyAccountPO po) {
-//        String sql = "insert into my_account(app_name, app_url, my_username, my_password, remark) values (:appName, :appUrl, :myUsername, :myPassword, :remark)";
+//        String sql = "insert into my_account(app_name, app_url, my_username, my_password, remark) values (:appName, :appUrl, :username, :password, :remark)";
 //        namedParameterJdbcTemplate.update(sql, new BeanPropertySqlParameterSource(po));
 //    }
 //
 //    @Override
 //    public void saveBatch(List<MyAccountPO> pos) {
-//        String sql = "insert into my_account(app_name, app_url, my_username, my_password, remark) values (:appName, :appUrl, :myUsername, :myPassword, :remark)";
+//        String sql = "insert into my_account(app_name, app_url, my_username, my_password, remark) values (:appName, :appUrl, :username, :password, :remark)";
 //        SqlParameterSource[] batchArgs = new SqlParameterSource[pos.size()];
 //        for (int i = 0; i < pos.size(); i++) {
 //            batchArgs[i] = new BeanPropertySqlParameterSource(pos.get(i));
@@ -38,7 +38,7 @@ public class MyAccountRepositoryImpl implements MyAccountRepository {
 //
 //    @Override
 //    public void update(MyAccountPO po) {
-//        String sql = "update my_account set app_name = :appName, app_url = :appUrl, my_username = :myUsername, my_password = :myPassword, remark = :remark where id = :id";
+//        String sql = "update my_account set app_name = :appName, app_url = :appUrl, my_username = :username, my_password = :password, remark = :remark where id = :id";
 //        namedParameterJdbcTemplate.update(sql, new BeanPropertySqlParameterSource(po));
 //    }
 //
