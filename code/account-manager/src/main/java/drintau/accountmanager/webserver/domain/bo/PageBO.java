@@ -4,15 +4,15 @@ import lombok.Data;
 
 /**
  * 分页信息对象
- * 只能被继承，抽象类没有存储数据的属性
+ * 规定：只能被继承，抽象类不存储数据
  */
 @Data
 public abstract class PageBO {
 
     /**
-     * 页码：人看到的，前端页码
+     * 当前页码，即 前端页码，从 1 开始
      */
-    private Integer pageNumber;
+    private Integer pageNum;
 
     /**
      * 每页记录数
@@ -22,27 +22,26 @@ public abstract class PageBO {
     /**
      * 总页数
      */
-    private Integer totalPages;
+    private Integer pages;
 
     /**
-     * 总记录数
+     * 数据总条数
      */
-    private Integer totalRecords;
+    private Integer total;
 
-    /**
-     * 偏移量 = (pageNumber - 1) * pageSize
-     * 数据库分页用的
-     * @return
-     */
-    public Integer getOffset() {
-        return (pageNumber - 1) * pageSize;
-    }
-
-    public PageBO() {
-    }
-
-    public PageBO(Integer pageNumber, Integer pageSize) {
-        this.pageNumber = pageNumber;
+    protected PageBO(Integer pageNum, Integer pageSize) {
+        this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
+
+    /**
+     * 偏移量 = (pageNum - 1) * pageSize
+     * 数据库分页用的
+     */
+    public Integer getOffset() {
+        int pn = (pageNum == null ? 1 : pageNum);
+        int ps = (pageSize == null ? 10 : pageSize);
+        return (pn - 1) * ps;
+    }
+
 }

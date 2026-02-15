@@ -45,6 +45,8 @@ public class AccountController {
         return new CommonResult<>();
     }
 
+
+
 //    @PostMapping("/query")
 //    public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
 //        AccountFindConditionBO condition = BeanUtil.copy(reqDTO, AccountFindConditionBO.class);
@@ -57,13 +59,6 @@ public class AccountController {
 //        myAccountListResVO.setTotalRecords(accountFindResultBO.getTotalRecords());
 //        myAccountListResVO.setList(myAccountQueryResVOList);
 //        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
-//    }
-//    @PostMapping("/update")
-//    public CommonResult<MyAccountQueryResVO> update(@RequestBody @Validated MyAccountUpdateReqVO myAccountUpdateReqVO) {
-//        AccountBO myAccountUpdateBO = BeanUtil.copy(myAccountUpdateReqVO, AccountBO.class);
-//        AccountBO myAccount = accountService.updateMyAccount(myAccountUpdateBO);
-//        MyAccountQueryResVO myAccountUpdateResDTO = BeanUtil.copy(myAccount, MyAccountQueryResVO.class);
-//        return new CommonResult<>(CommonCode.SUCCESS, myAccountUpdateResDTO);
 //    }
 //
 //

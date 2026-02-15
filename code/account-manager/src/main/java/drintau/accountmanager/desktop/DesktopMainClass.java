@@ -1,12 +1,11 @@
 package drintau.accountmanager.desktop;
 
-import drintau.accountmanager.shared.util.DateTimeUtil;
-import drintau.accountmanager.shared.util.YamlUtil;
-import drintau.accountmanager.desktop.domain.ConfigValue;
 import drintau.accountmanager.desktop.event.CloseEvent;
 import drintau.accountmanager.desktop.event.OpenBrowserEvent;
 import drintau.accountmanager.desktop.event.WebServerStartEvent;
 import drintau.accountmanager.desktop.event.WebServerStopEvent;
+import drintau.accountmanager.shared.util.DateTimeUtil;
+import drintau.accountmanager.shared.util.YamlUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,30 +21,30 @@ import javafx.stage.Stage;
 /**
  * 主页面
  */
-public class GUIMainClass extends Application {
+public class DesktopMainClass extends Application {
 
     @Override
     public void start(Stage stage) {
-        GUIContext guiContext = GUIContext.getInstance();
+        DesktopContext desktopContext = DesktopContext.getInstance();
 
         // 读取配置文件的配置
-        ConfigValue configValue = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), ConfigValue.class);
-        guiContext.setConfigValue(configValue);
+        VersionInfo versionInfo = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), VersionInfo.class);
+        desktopContext.setVersionInfo(versionInfo);
 
         // 控件
         Button startButton = new Button("启动服务");
         startButton.setOnAction(new WebServerStartEvent());
-        guiContext.setStartButton(startButton);
+        desktopContext.setStartButton(startButton);
 
         Button stopButton = new Button("停止服务");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
-        guiContext.setStopButton(stopButton);
+        desktopContext.setStopButton(stopButton);
 
         Button openBrowserButton = new Button("访问网页");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
-        guiContext.setOpenBrowserButton(openBrowserButton);
+        desktopContext.setOpenBrowserButton(openBrowserButton);
 
         // 布局
         // 顶部内容
@@ -60,8 +59,8 @@ public class GUIMainClass extends Application {
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
         // 底部内容
-        Label versionLabel = new Label("版本号：" + guiContext.getConfigValue().getMaven().getVersion());
-        Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(guiContext.getConfigValue().getMaven().getPackageTime()));
+        Label versionLabel = new Label("版本号：" + desktopContext.getVersionInfo().getVersion());
+        Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(desktopContext.getVersionInfo().getBuildTime()));
         HBox bottomHBox = new HBox(20);
         bottomHBox.setPadding(new Insets(10));
         bottomHBox.getChildren().addAll(versionLabel, packageTimeLabel);

@@ -1,14 +1,15 @@
-package drintau.accountmanager.desktop.domain;
+package drintau.accountmanager.desktop;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Maven {
+public class VersionInfo {
 
+    @JsonProperty("version")
     private String version;
 
     @JsonProperty("package-time")
-    private String packageTime;
+    private String buildTime;
 
 }

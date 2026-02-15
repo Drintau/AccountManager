@@ -1,6 +1,5 @@
 package drintau.accountmanager.desktop;
 
-import drintau.accountmanager.desktop.domain.ConfigValue;
 import javafx.scene.control.Button;
 import lombok.Data;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,19 +10,19 @@ import java.util.List;
  * 应用GUI容器：单例
  */
 @Data
-public class GUIContext {
+public class DesktopContext {
 
-    private GUIContext(){}
-    private static final GUIContext instance = new GUIContext();
-    public static GUIContext getInstance(){
+    private DesktopContext(){}
+    private static final DesktopContext instance = new DesktopContext();
+    public static DesktopContext getInstance(){
         return instance;
     }
 
     // 启动参数
     private String[] args;
 
-    // 从配置文件读取的需要用到的参数
-    private ConfigValue configValue;
+    // 版本信息
+    private VersionInfo versionInfo;
 
     // 本地访问地址，由webServer进行赋值
     private String localUrl;

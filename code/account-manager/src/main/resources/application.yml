@@ -1,7 +1,6 @@
 debug: false
-maven:
-  version: @version@
-  package-time: @timestamp@
+version: @version@
+build-time: @timestamp@
 server:
   shutdown: graceful
   port: 12300
