@@ -11,4 +11,6 @@ public interface AccountRepository extends ListCrudRepository<AccountPO, Integer
 
     // 保存一个：save()
 
+    // 根据category_id查询是否有数据
+    boolean existsByCategoryId(Integer categoryId);
 }

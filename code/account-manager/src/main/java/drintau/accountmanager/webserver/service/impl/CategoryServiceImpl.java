@@ -2,6 +2,7 @@ package drintau.accountmanager.webserver.service.impl;
 
 import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.BeanUtil;
+import drintau.accountmanager.webserver.dao.AccountRepository;
 import drintau.accountmanager.webserver.dao.CategoryRepository;
 import drintau.accountmanager.webserver.domain.bo.CategoryBO;
 import drintau.accountmanager.webserver.domain.po.CategoryPO;
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
+    private final AccountRepository accountRepository;
 
     @Override
     public List<CategoryBO> allCategory() {
@@ -39,6 +42,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void updateCategory(CategoryBO categoryBO) {
+        Optional<CategoryPO> poOptional = categoryRepository.findById(categoryBO.getId());
+        if (poOptional.isEmpty()) {
+            throw new BusinessException("分类id对应数据不存在");
+        }
+
         Optional<CategoryPO> existPO = categoryRepository.findByCategoryName(categoryBO.getCategoryName());
         if (existPO.isPresent() && !existPO.get().getId().equals(categoryBO.getId())) {
             throw new BusinessException("分类重名");
@@ -50,6 +58,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Integer id) {
+        boolean existFlag = accountRepository.existsByCategoryId(id);
+        if (existFlag) {
+            throw new BusinessException("分类下有账号数据，不可删除");
+        }
+
         categoryRepository.deleteById(id);
     }
 

@@ -46,11 +46,52 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountBO addAccount(AccountBO bo) {
+        if (NumberUtil.isNotNullAndGreaterThanZero(bo.getCategoryId())) {
+            CategoryBO category = categoryService.getCategory(bo.getCategoryId());
+            bo.setCategoryName(category.getCategoryName());
+        }
+
         AccountPO po = BeanUtil.copy(bo, AccountPO.class);
         po.setUsername(secureService.encrypt(po.getUsername()));
         po.setPassword(secureService.encrypt(po.getPassword()));
         accountRepository.save(po);
-        return BeanUtil.copy(po, AccountBO.class);
+
+        bo.setId(po.getId());
+        bo.setUsername(po.getUsername());
+        bo.setPassword(po.getPassword());
+        return bo;
+    }
+
+    @Override
+    public AccountBO updateAccount(AccountBO bo) {
+        boolean existFlag = accountRepository.existsById(bo.getId());
+        if (!existFlag) {
+            throw new BusinessException("账号id对应数据不存在");
+        }
+
+        if (NumberUtil.isNotNullAndGreaterThanZero(bo.getCategoryId())) {
+            CategoryBO category = categoryService.getCategory(bo.getCategoryId());
+            bo.setCategoryName(category.getCategoryName());
+        }
+
+        AccountPO po = BeanUtil.copy(bo, AccountPO.class);
+        po.setUsername(secureService.encrypt(po.getUsername()));
+        po.setPassword(secureService.encrypt(po.getPassword()));
+        accountRepository.save(po);
+
+        bo.setUsername(po.getUsername());
+        bo.setPassword(po.getPassword());
+        return bo;
+    }
+
+    @Override
+    public void deleteAccount(Integer id) {
+        boolean existFlag = accountRepository.existsById(id);
+        if (!existFlag) {
+            throw new BusinessException("账号id对应数据不存在");
+        }
+
+        accountRepository.deleteById(id);
     }
 
 //    @Override
@@ -107,25 +148,6 @@ public class AccountServiceImpl implements AccountService {
 //        accountFindResultBO.setTotalRecords(count);
 //        accountFindResultBO.setTotalPages(PageUtil.calcTotalPages(count, pageSize));
 //        return accountFindResultBO;
-//    }
-//
-//
-//    @Override
-//    public AccountBO updateMyAccount(AccountBO myAccountUpdateBO) {
-//        MyAccountPO updateAccount = myAccountRepository.getById(myAccountUpdateBO.getId());
-//        if (updateAccount != null) {
-//            updateAccount = BeanUtil.copy(myAccountUpdateBO, MyAccountPO.class);
-//            updateAccount.setMyUsername(secureService.encrypt(updateAccount.getMyUsername()));
-//            updateAccount.setMyPassword(secureService.encrypt(updateAccount.getMyPassword()));
-//            myAccountRepository.update(updateAccount);
-//            return BeanUtil.copy(updateAccount, AccountBO.class);
-//        }
-//        throw new BusinessException(CommonCode.FAIL, "未找到旧的账号");
-//    }
-//
-//    @Override
-//    public void deleteMyAccount(Integer id) {
-//        myAccountRepository.deleteById(id);
 //    }
 //
 //    @Override

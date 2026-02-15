@@ -1,11 +1,9 @@
 package drintau.accountmanager.webserver.controller;
 
-import drintau.accountmanager.webserver.CommonResult;
 import drintau.accountmanager.shared.util.BeanUtil;
+import drintau.accountmanager.webserver.CommonResult;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
-import drintau.accountmanager.webserver.domain.vo.AccountAddReqVO;
-import drintau.accountmanager.webserver.domain.vo.AccountGetReqVO;
-import drintau.accountmanager.webserver.domain.vo.AccountVO;
+import drintau.accountmanager.webserver.domain.vo.*;
 import drintau.accountmanager.webserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +32,18 @@ public class AccountController {
         return new CommonResult<>(BeanUtil.copy(bo, AccountVO.class));
     }
 
+    @PostMapping("/update")
+    public CommonResult<AccountVO> update(@RequestBody @Validated AccountUpdateReqVO reqVO) {
+        AccountBO bo = BeanUtil.copy(reqVO, AccountBO.class);
+        bo = accountService.updateAccount(bo);
+        return new CommonResult<>(BeanUtil.copy(bo, AccountVO.class));
+    }
+
+    @PostMapping("/delete")
+    public CommonResult<Void> delete(@RequestBody @Validated AccountDeleteReqVO reqVO) {
+        accountService.deleteAccount(reqVO.getId());
+        return new CommonResult<>();
+    }
 
 //    @PostMapping("/query")
 //    public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
@@ -56,11 +66,6 @@ public class AccountController {
 //        return new CommonResult<>(CommonCode.SUCCESS, myAccountUpdateResDTO);
 //    }
 //
-//    @PostMapping("/delete")
-//    public CommonResult delete(@RequestBody @Validated MyAccountDeleteReqVO myAccountDeleteReqVO) {
-//        accountService.deleteMyAccount(myAccountDeleteReqVO.getId());
-//        return new CommonResult(CommonCode.SUCCESS);
-//    }
 //
 //    @GetMapping("/export")
 //    public void export(HttpServletResponse response) {

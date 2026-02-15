@@ -8,6 +8,10 @@ public interface AccountService {
 
     AccountBO addAccount(AccountBO bo);
 
+    AccountBO updateAccount(AccountBO bo);
+
+    void deleteAccount(Integer id);
+
 //    /**
 //     * 根据 条件 分页查询
 //     */
@@ -18,11 +22,8 @@ public interface AccountService {
 //     */
 //    AccountFindResultBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
 
-//    /**
-//     * 修改
-//     */
-//    AccountBO updateMyAccount(AccountBO myAccountUpdateBO);
-//
+
+
 //    /**
 //     * 删除
 //     */
