@@ -23,9 +23,10 @@
       <v-navigation-drawer class="navigation-drawer" permanent>
         <v-toolbar title="账号管理器" color="blue" density="comfortable"></v-toolbar>
         <v-list>
-          <v-list-item class="nav-item" title="管理账号" @click="changeShowPage('managePage')"></v-list-item>
+          <v-list-item class="nav-item" title="管理账号" @click="changeShowPage('accountPage')"></v-list-item>
+          <v-list-item class="nav-item" title="管理分类" @click="changeShowPage('categoryPage')"></v-list-item>
           <v-list-item class="nav-item" title="迁移数据" @click="changeShowPage('migratePage')"></v-list-item>
-          <v-list-item class="nav-item" title="配置系统" @click="changeShowPage('settingPage')"></v-list-item>
+          <v-list-item class="nav-item" title="配置系统" @click="changeShowPage('configPage')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -39,7 +40,7 @@
           </template>
 
           <!-- 管理账号页面 -->
-          <template v-if="managePage">
+          <template v-if="accountPage">
             <v-row>
               <v-col>
                 <v-btn density="comfortable" @click="showRecordDataDialog(null)">新增账号</v-btn>
@@ -103,6 +104,31 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+          </template>
+
+          <!-- 管理分类页面 -->
+          <template v-if="categoryPage">
+            <v-row>
+              <v-col>
+                <v-data-table-server v-model:headers="headers" :items="recordDatas"
+                  :items-length="totalRecords" :loading="loading" @update:options="queryRecordDatas">
+                  <template v-slot:item.actions="{ item }">
+                    <v-row>
+                      <v-col>
+                        <v-icon size="small" @click="showRecordDataDialog(item)">
+                          fa-solid fa-pen
+                        </v-icon>
+                      </v-col>
+                      <v-col>
+                        <v-icon size="small" color="red" @click="showDelDialog(item)">
+                          fa-regular fa-trash-can
+                        </v-icon>
+                      </v-col>
+                    </v-row>
+                  </template>
+                </v-data-table-server>
+              </v-col>
+            </v-row>
           </template>
 
           <!-- 迁移数据页面 -->

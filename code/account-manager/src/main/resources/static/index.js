@@ -14,15 +14,19 @@ const App = {
 
       // 页面显示控制
       helloPage: true,
-      managePage: false,
+      accountPage: false,
+      categoryPage: false,
       migratePage: false,
-      settingPage: false,
+      configPage: false,
 
       // 查询是否解密
       decryptFlag: true,
 
-      // 搜索框
-      fuzzyName: null,
+      // 分类
+      categoryId: null,
+
+      // 应用名称搜索框
+      keywordAppName: null,
 
       // 分页
       pageNumber: 1,
@@ -34,8 +38,8 @@ const App = {
       // 数据列表
       headers: [
         { key: 'id', title: 'ID', sortable: false },
-        { key: 'name', title: '名称', sortable: false },
-        { key: 'url', title: '网址', sortable: false },
+        { key: 'app_name', title: '名称', sortable: false },
+        { key: 'app_url', title: '网址', sortable: false },
         { key: 'username', title: '账号', sortable: false },
         { key: 'password', title: '密码', sortable: false },
         { key: 'remark', title: '备注', sortable: false },
@@ -79,26 +83,36 @@ const App = {
 
     // 页面显示控制
     changeShowPage(param) {
-      if ('managePage' === param) {
+      if ('accountPage' === param) {
         this.helloPage = false;
-        this.managePage = true;
+        this.accountPage = true;
+        this.categoryPage = false;
         this.migratePage = false;
-        this.settingPage = false;
+        this.configPage = false;
+      } else if ('categoryPage' === param) {
+        this.helloPage = false;
+        this.accountPage = false;
+        this.categoryPage = true;
+        this.migratePage = false;
+        this.configPage = false;
       } else if ('migratePage' === param) {
         this.helloPage = false;
-        this.managePage = false;
+        this.accountPage = false;
+        this.categoryPage = false;
         this.migratePage = true;
-        this.settingPage = false;
-      } else if ('settingPage' === param) {
+        this.configPage = false;
+      } else if ('configPage' === param) {
         this.helloPage = false;
-        this.managePage = false;
+        this.accountPage = false;
+        this.categoryPage = false;
         this.migratePage = false;
-        this.settingPage = true;
+        this.configPage = true;
       } else {
         this.helloPage = true;
-        this.managePage = false;
+        this.accountPage = false;
+        this.categoryPage = false;
         this.migratePage = false;
-        this.settingPage = false;
+        this.configPage = false;
       }
     },
 
@@ -110,17 +124,18 @@ const App = {
     async queryRecordDatas() {
       this.loading = true;
       try {
-        let response = await axios.post('/accountmanager/account/query',
+        let response = await axios.post('/accountmanager/account/find',
           {
-            page_number: this.pageNumber,
+            page_num: this.pageNumber,
             page_size: this.pageSize,
             decrypt: this.decryptFlag,
-            fuzzy_name: this.fuzzyName
+            category_id: this.categoryId,
+            keyword_app_name: this.keywordAppName
           });
         let resJson = response.data;
         this.handleResJson(resJson);
         this.recordDatas = resJson.data.list;
-        this.totalRecords = resJson.data.total_records;
+        this.totalRecords = resJson.data.total;
         this.loading = false;
       } catch (error) {
         console.error(error);
