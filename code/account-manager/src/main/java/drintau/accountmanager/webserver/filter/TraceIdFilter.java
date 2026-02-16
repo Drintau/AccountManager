@@ -27,7 +27,7 @@ public class TraceIdFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String oldTraceId = MDC.get(TRACE_ID_KEY);
         if (!StringUtils.hasText(oldTraceId)) {
-            MDC.put(TRACE_ID_KEY, UUID.randomUUID().toString().replaceAll("-", ""));
+            MDC.put(TRACE_ID_KEY, UUID.randomUUID().toString().replaceAll("-", "").toUpperCase());
         }
         chain.doFilter(request, response);
     }

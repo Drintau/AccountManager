@@ -38,9 +38,9 @@ public class ControllerExceptionHandler {
         StringBuilder errMsg = new StringBuilder();
         for (ObjectError allError : allErrors) {
             errMsg.append(allError.getDefaultMessage());
-            errMsg.append("；");
+            errMsg.append(";");
         }
-        String errMsgStr = errMsg.substring(0, errMsg.length()-1) + "。";
+        String errMsgStr = errMsg.toString();
         return new CommonResult<>(BusinessCode.FAIL.code, errMsgStr);
     }
 

@@ -11,13 +11,13 @@ public class AccountAddReqVO {
     @JsonProperty("category_id")
     private Integer categoryId;
 
-    @JsonProperty("app_name")
     @NotBlank(message = "应用名称不能为空")
     @Length(min = 1, max = 20, message = "应用名称长度为1-20")
+    @JsonProperty("app_name")
     private String appName;
 
-    @JsonProperty("app_url")
     @Length(max = 100, message = "应用网址最大长度为100")
+    @JsonProperty("app_url")
     private String appUrl;
 
     @JsonProperty("username")
@@ -27,12 +27,10 @@ public class AccountAddReqVO {
 
     @JsonProperty("password")
     @NotBlank(message = "密码不能为空")
-//    @Pattern(regexp = "^(?![a-z0-9]{6,12})(?![0-9A-Z]{6,12})(?![a-zA-Z]{6,12})[a-zA-Z0-9].{5,11}$",
-//             message = "密码长度6-12位，不能以特殊符号开头，且前6位不能仅有：小写字母+数字、大写字母+数字、大小写字母")
     @Length(min = 1, max = 20, message = "密码长度为1-20")
     private String password;
 
     @JsonProperty("remark")
-    @Length(max = 200, message = "备注最大长度为200")
+    @Length(max = 100, message = "备注最大长度为100")
     private String remark;
 }

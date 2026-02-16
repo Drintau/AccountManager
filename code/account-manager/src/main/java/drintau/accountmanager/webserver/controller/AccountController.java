@@ -55,20 +55,6 @@ public class AccountController {
         return new CommonResult<>(resVO);
     }
 
-//    @PostMapping("/query")
-//    public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
-//        AccountFindConditionBO condition = BeanUtil.copy(reqDTO, AccountFindConditionBO.class);
-//        AccountFindResultBO accountFindResultBO = accountService.queryMyAccount(condition);
-//        List<MyAccountQueryResVO> myAccountQueryResVOList = BeanUtil.copyList(accountFindResultBO.getList(), MyAccountQueryResVO.class);
-//        MyAccountListResVO myAccountListResVO = new MyAccountListResVO();
-//        myAccountListResVO.setpageNum(reqDTO.getpageNum());
-//        myAccountListResVO.setPageSize(reqDTO.getPageSize());
-//        myAccountListResVO.setTotalPages(accountFindResultBO.getTotalPages());
-//        myAccountListResVO.setTotalRecords(accountFindResultBO.getTotalRecords());
-//        myAccountListResVO.setList(myAccountQueryResVOList);
-//        return new CommonResult<>(CommonCode.SUCCESS, myAccountListResVO);
-//    }
-//
 //
 //    @GetMapping("/export")
 //    public void export(HttpServletResponse response) {

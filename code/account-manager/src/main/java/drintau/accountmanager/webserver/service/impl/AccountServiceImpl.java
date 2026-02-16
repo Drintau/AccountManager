@@ -16,8 +16,10 @@ import drintau.accountmanager.webserver.service.AccountService;
 import drintau.accountmanager.webserver.service.CategoryService;
 import drintau.accountmanager.webserver.service.SecureService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,7 +121,16 @@ public class AccountServiceImpl implements AccountService {
             resultBO.setPages(PageUtil.calcPages(total, conditionBO.getPageSize()));
 
             List<AccountPO> poList = accountDynamicRepository.findByCondition(conditionBO);
-            resultBO.setList(BeanUtil.copyList(poList, AccountBO.class));
+            List<AccountBO> boList = new ArrayList<>();
+            if (CollectionUtils.isNotEmpty(poList)) {
+                for (AccountPO po : poList) {
+                    AccountBO bo = BeanUtil.copy(po, AccountBO.class);
+                    bo.setUsername(secureService.decrypt(bo.getUsername()));
+                    bo.setPassword(secureService.decrypt(bo.getPassword()));
+                    boList.add(bo);
+                }
+            }
+            resultBO.setList(boList);
         } else {
             resultBO.setTotal(0);
             resultBO.setPages(0);
