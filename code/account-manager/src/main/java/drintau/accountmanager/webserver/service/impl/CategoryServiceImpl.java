@@ -2,7 +2,7 @@ package drintau.accountmanager.webserver.service.impl;
 
 import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.BeanUtil;
-import drintau.accountmanager.webserver.dao.AccountRepository;
+import drintau.accountmanager.webserver.dao.AccountStaticRepository;
 import drintau.accountmanager.webserver.dao.CategoryRepository;
 import drintau.accountmanager.webserver.domain.bo.CategoryBO;
 import drintau.accountmanager.webserver.domain.po.CategoryPO;
@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    private final AccountRepository accountRepository;
+    private final AccountStaticRepository accountStaticRepository;
 
     @Override
     public List<CategoryBO> allCategory() {
@@ -58,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(Integer id) {
-        boolean existFlag = accountRepository.existsByCategoryId(id);
+        boolean existFlag = accountStaticRepository.existsByCategoryId(id);
         if (existFlag) {
             throw new BusinessException("分类下有账号数据，不可删除");
         }

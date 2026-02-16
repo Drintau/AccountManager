@@ -3,6 +3,8 @@ package drintau.accountmanager.webserver.controller;
 import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.CommonResult;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindConditionBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindResultBO;
 import drintau.accountmanager.webserver.domain.vo.*;
 import drintau.accountmanager.webserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +47,13 @@ public class AccountController {
         return new CommonResult<>();
     }
 
-
+    @PostMapping("/find")
+    public CommonResult<AccountFindResVO> find(@RequestBody @Validated AccountFindReqVO reqVO) {
+        AccountFindResultBO resultBO = accountService.findAccount(BeanUtil.copy(reqVO, AccountFindConditionBO.class));
+        AccountFindResVO resVO = BeanUtil.copy(resultBO, AccountFindResVO.class);
+        resVO.setList(BeanUtil.copyList(resultBO.getList(), AccountVO.class));
+        return new CommonResult<>(resVO);
+    }
 
 //    @PostMapping("/query")
 //    public CommonResult<MyAccountListResVO> query(@RequestBody @Validated MyAccountQueryReqVO reqDTO) {
@@ -53,7 +61,7 @@ public class AccountController {
 //        AccountFindResultBO accountFindResultBO = accountService.queryMyAccount(condition);
 //        List<MyAccountQueryResVO> myAccountQueryResVOList = BeanUtil.copyList(accountFindResultBO.getList(), MyAccountQueryResVO.class);
 //        MyAccountListResVO myAccountListResVO = new MyAccountListResVO();
-//        myAccountListResVO.setPageNumber(reqDTO.getPageNumber());
+//        myAccountListResVO.setpageNum(reqDTO.getpageNum());
 //        myAccountListResVO.setPageSize(reqDTO.getPageSize());
 //        myAccountListResVO.setTotalPages(accountFindResultBO.getTotalPages());
 //        myAccountListResVO.setTotalRecords(accountFindResultBO.getTotalRecords());

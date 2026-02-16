@@ -8,18 +8,18 @@ import java.util.List;
 @Data
 public class AccountFindResVO {
 
-    @JsonProperty("page_number")
-    Integer pageNumber;
+    @JsonProperty("page_num")
+    private Integer pageNum;
 
     @JsonProperty("page_size")
-    Integer pageSize;
+    private Integer pageSize;
 
-    @JsonProperty("total_pages")
-    Integer totalPages;
+    @JsonProperty("pages")
+    private Integer pages;
 
-    @JsonProperty("total_records")
-    private Integer totalRecords;
+    @JsonProperty("total")
+    private Integer total;
 
     @JsonProperty("list")
-    List<AccountVO> list;
+    private List<AccountVO> list;
 }

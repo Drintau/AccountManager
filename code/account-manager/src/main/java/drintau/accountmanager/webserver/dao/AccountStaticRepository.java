@@ -4,8 +4,11 @@ import drintau.accountmanager.webserver.domain.po.AccountPO;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Account 静态 SQL
+ */
 @Repository
-public interface AccountRepository extends ListCrudRepository<AccountPO, Integer> {
+public interface AccountStaticRepository extends ListCrudRepository<AccountPO, Integer> {
 
     // 查询全部：findAll()
 
@@ -13,4 +16,5 @@ public interface AccountRepository extends ListCrudRepository<AccountPO, Integer
 
     // 根据category_id查询是否有数据
     boolean existsByCategoryId(Integer categoryId);
+
 }

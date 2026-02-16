@@ -3,19 +3,16 @@ package drintau.accountmanager.shared.util;
 /**
  * 分页工具类
  */
-public class PageUtil {
+public final class PageUtil {
 
     /**
      * 计算总页数
-     * @param totalRecords
-     * @param pageSize
-     * @return
      */
-    public static int calcTotalPages(int totalRecords, int pageSize) {
-        if (totalRecords % pageSize == 0) {
-            return totalRecords / pageSize;
+    public static int calcPages(int total, int pageSize) {
+        if (total % pageSize == 0) {
+            return total / pageSize;
         }
-        return totalRecords / pageSize + 1;
+        return total / pageSize + 1;
     }
 
 }

@@ -4,8 +4,12 @@ import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.shared.util.NumberUtil;
-import drintau.accountmanager.webserver.dao.AccountRepository;
+import drintau.accountmanager.shared.util.PageUtil;
+import drintau.accountmanager.webserver.dao.AccountDynamicRepository;
+import drintau.accountmanager.webserver.dao.AccountStaticRepository;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindConditionBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindResultBO;
 import drintau.accountmanager.webserver.domain.bo.CategoryBO;
 import drintau.accountmanager.webserver.domain.po.AccountPO;
 import drintau.accountmanager.webserver.service.AccountService;
@@ -14,13 +18,16 @@ import drintau.accountmanager.webserver.service.SecureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    private final AccountRepository accountRepository;
+    private final AccountStaticRepository accountStaticRepository;
+
+    private final AccountDynamicRepository accountDynamicRepository;
 
     private final SecureService secureService;
 
@@ -28,7 +35,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountBO getAccount(Integer id) {
-        Optional<AccountPO> poOptional = accountRepository.findById(id);
+        Optional<AccountPO> poOptional = accountStaticRepository.findById(id);
         if (poOptional.isEmpty()) {
             throw new BusinessException("账号id对应数据不存在");
         }
@@ -58,7 +65,7 @@ public class AccountServiceImpl implements AccountService {
         long currentUtcSecond = DateTimeUtil.getCurrentUtcSecond();
         po.setCreateTime(currentUtcSecond);
         po.setUpdateTime(currentUtcSecond);
-        accountRepository.save(po);
+        accountStaticRepository.save(po);
 
         bo.setId(po.getId());
         bo.setUsername(po.getUsername());
@@ -68,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountBO updateAccount(AccountBO bo) {
-        boolean existFlag = accountRepository.existsById(bo.getId());
+        boolean existFlag = accountStaticRepository.existsById(bo.getId());
         if (!existFlag) {
             throw new BusinessException("账号id对应数据不存在");
         }
@@ -82,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
         po.setUsername(secureService.encrypt(po.getUsername()));
         po.setPassword(secureService.encrypt(po.getPassword()));
         po.setUpdateTime(DateTimeUtil.getCurrentUtcSecond());
-        accountRepository.save(po);
+        accountStaticRepository.save(po);
 
         bo.setUsername(po.getUsername());
         bo.setPassword(po.getPassword());
@@ -91,12 +98,34 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteAccount(Integer id) {
-        boolean existFlag = accountRepository.existsById(id);
+        boolean existFlag = accountStaticRepository.existsById(id);
         if (!existFlag) {
             throw new BusinessException("账号id对应数据不存在");
         }
 
-        accountRepository.deleteById(id);
+        accountStaticRepository.deleteById(id);
+    }
+
+    @Override
+    public AccountFindResultBO findAccount(AccountFindConditionBO conditionBO) {
+        AccountFindResultBO resultBO = new AccountFindResultBO();
+        resultBO.setPageNum(conditionBO.getPageNum());
+        resultBO.setPageSize(conditionBO.getPageSize());
+
+        Integer total = accountDynamicRepository.countByCondition(conditionBO);
+
+        if (NumberUtil.isNotNullAndGreaterThanZero(total)) {
+            resultBO.setTotal(total);
+            resultBO.setPages(PageUtil.calcPages(total, conditionBO.getPageSize()));
+
+            List<AccountPO> poList = accountDynamicRepository.findByCondition(conditionBO);
+            resultBO.setList(BeanUtil.copyList(poList, AccountBO.class));
+        } else {
+            resultBO.setTotal(0);
+            resultBO.setPages(0);
+        }
+
+        return resultBO;
     }
 
 //    @Override
@@ -105,15 +134,15 @@ public class AccountServiceImpl implements AccountService {
 //
 //        // 按照应用名称模糊查询
 //        if (StringUtils.hasText(condition.getFuzzyName())) {
-//            return listMyAccountByAppName(condition.getDecrypt(), condition.getFuzzyName(), condition.getPageNumber(), condition.getPageSize());
+//            return listMyAccountByAppName(condition.getDecrypt(), condition.getFuzzyName(), condition.getpageNum(), condition.getPageSize());
 //        }
 //
 //        // 无条件分页查询
-//        return listMyAccount(condition.getDecrypt(), condition.getPageNumber(), condition.getPageSize());
+//        return listMyAccount(condition.getDecrypt(), condition.getpageNum(), condition.getPageSize());
 //    }
 //
-//    private AccountFindResultBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNumber, int pageSize) {
-//        AccountFindResultBO accountFindResultBO = new AccountFindResultBO(pageNumber, pageSize);
+//    private AccountFindResultBO listMyAccountByAppName(Boolean decrypt, String appName, int pageNum, int pageSize) {
+//        AccountFindResultBO accountFindResultBO = new AccountFindResultBO(pageNum, pageSize);
 //        List<MyAccountPO> myAccountPOList = myAccountRepository.listByAppName(appName, accountFindResultBO);
 //        Integer count = myAccountRepository.countByAppName(appName);
 //
@@ -134,8 +163,8 @@ public class AccountServiceImpl implements AccountService {
 //    }
 //
 //    @Override
-//    public AccountFindResultBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize) {
-//        AccountFindResultBO accountFindResultBO = new AccountFindResultBO(pageNumber, pageSize);
+//    public AccountFindResultBO listMyAccount(Boolean decrypt, int pageNum, int pageSize) {
+//        AccountFindResultBO accountFindResultBO = new AccountFindResultBO(pageNum, pageSize);
 //        List<MyAccountPO> myAccountPOList = myAccountRepository.list(accountFindResultBO);
 //        Integer count = myAccountRepository.count();
 //

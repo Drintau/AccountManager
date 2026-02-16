@@ -1,17 +1,23 @@
 package drintau.accountmanager.webserver.domain.bo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * 查询条件
- */
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 public class AccountFindConditionBO extends PageBO {
 
-    private String fuzzyName;
-
     private Boolean decrypt;
+
+    private Integer categoryId;
+
+    private String keywordAppName;
+
+    public AccountFindConditionBO() {
+    }
+
+    public AccountFindConditionBO(Integer pageNum, Integer pageSize) {
+        super(pageNum, pageSize);
+    }
 
 }

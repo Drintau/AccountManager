@@ -1,6 +1,8 @@
 package drintau.accountmanager.webserver.service;
 
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindConditionBO;
+import drintau.accountmanager.webserver.domain.bo.AccountFindResultBO;
 
 public interface AccountService {
 
@@ -12,6 +14,8 @@ public interface AccountService {
 
     void deleteAccount(Integer id);
 
+    AccountFindResultBO findAccount(AccountFindConditionBO conditionBO);
+
 //    /**
 //     * 根据 条件 分页查询
 //     */
@@ -20,7 +24,7 @@ public interface AccountService {
 //    /**
 //     * 全量分页查询
 //     */
-//    AccountFindResultBO listMyAccount(Boolean decrypt, int pageNumber, int pageSize);
+//    AccountFindResultBO listMyAccount(Boolean decrypt, int pageNum, int pageSize);
 
 
 

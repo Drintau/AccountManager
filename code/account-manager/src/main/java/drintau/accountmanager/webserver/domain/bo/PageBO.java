@@ -29,6 +29,8 @@ public abstract class PageBO {
      */
     private Integer total;
 
+    protected PageBO() {}
+
     protected PageBO(Integer pageNum, Integer pageSize) {
         this.pageNum = pageNum;
         this.pageSize = pageSize;

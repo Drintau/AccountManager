@@ -1,20 +1,23 @@
 package drintau.accountmanager.webserver.domain.bo;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 public class AccountFindResultBO extends PageBO {
 
     /**
      * 当前页的记录
      */
-    List<AccountBO> list;
+    private List<AccountBO> list;
 
-    public AccountFindResultBO(Integer pageNumber, Integer pageSize) {
-        super(pageNumber, pageSize);
+    public AccountFindResultBO() {
+    }
+    
+    public AccountFindResultBO(Integer pageNum, Integer pageSize) {
+        super(pageNum, pageSize);
     }
 }
