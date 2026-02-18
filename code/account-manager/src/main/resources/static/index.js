@@ -5,8 +5,11 @@ const vuetify = createVuetify()
 
 const App = {
   // 规定：
-  // 前端表格一行数据称为 rowData （复数 rowDatas ），其中与后端交互的真实数据部分称为 recordData （复数 recordDatas ），单独的一条记录也称为 recordData
-  // 新增用 add ，编辑用 edit ，删除用 del ，查询用 query，处理事件用 handle，导入用 import，导出用 export，清除用 clear，展示用 show；后面加变量名/业务名
+  // 命名尽量跟后端对齐
+  // 表格列表 Table，表格一行 row，请求后端数据 req，后端响应数据 res，业务数据集合 Datas，业务数据 Data
+  // 新增 add ，编辑 edit ，删除用 del ，查询用 query，上传 upload，导入用 import，导出用 export，清除用 clear，
+  // 处理事件用 handle，展示用 show，标记用 Flag
+  // 方法名：模块+前端组件+操作名+字段名，没有对应部分就不写，如 accountTableShow，accountRowAppName
 
   // 数据定义、配置
   data() {
@@ -16,27 +19,24 @@ const App = {
       helloPage: true,
       accountPage: false,
       categoryPage: false,
-      migratePage: false,
+      transferPage: false,
       configPage: false,
 
-      // 查询是否解密
-      decryptFlag: true,
-
-      // 分类
-      categoryId: null,
-
-      // 应用名称搜索框
-      keywordAppName: null,
-
+      // 账号管理模块 account
+      // 是否解密
+      accountDecryptFlag: true,
+      // 账号列表分类筛选
+      accountTableQueryCategoryId: null,
+      // 账号列表应用名称搜索框
+      accountTableQueryKeywordAppName: null,
       // 分页
-      pageNumber: 1,
-      pageSize: 8,
-      pageSizeOptions: [{ value: 5, title: '5' }, { value: 8, title: '8' }, { value: 10, title: '10' }],
-      pageSizeOptionsText: "每页记录数",
-      totalRecords: 0,
-
-      // 数据列表
-      headers: [
+      accountTablePageNum: 1,
+      accountTablePageSize: 8,
+      accountTablePageSizeOptions: [{ value: 5, title: '5' }, { value: 8, title: '8' }, { value: 10, title: '10' }],
+      accountTablePageSizeOptionsText: "每页记录数",
+      accountTableTotal: 0,
+      // 账号列表表头
+      accountTableHeaders: [
         { key: 'id', title: 'ID', sortable: false },
         { key: 'app_name', title: '名称', sortable: false },
         { key: 'app_url', title: '网址', sortable: false },
@@ -47,22 +47,25 @@ const App = {
         //        { key: 'update_time', title: '更新时间', sortable: false },
         { key: 'actions', title: '操作', sortable: false },
       ],
-      recordDatas: [],
-      loading: false,
+      accountTableDatas: [],
+      accountTableLoading: false,
+      // 一条账号记录的数据
+      accountDialogShowFlag: false,
+      accountDialogTitle: null,
+      accountDialogDataId: null,
+      accountDialogDataAppName: null,
+      accountDialogDataAppUrl: null,
+      accountDialogDataUsername: null,
+      accountDialogDataPassword: null,
+      accountDialogDataRemark: null,
 
-      // 一条记录的数据
-      recordDataDialogFlag: false,
-      recordDataDialogTitle: null,
-      recordDataId: null,
-      recordDataName: null,
-      recordDataUrl: null,
-      recordDataUsername: null,
-      recordDataPassword: null,
-      recordDataRemark: null,
+      // 分类管理模块 category
 
-      // 导入导出
-      imexDialogFlag: false,
+      // 导入导出模块 transfer
+      transferDialogShowFlag: false,
       uploadFile: null,
+
+      // 系统设置模块 config
 
       // 删除
       delDialogFlag: false,
