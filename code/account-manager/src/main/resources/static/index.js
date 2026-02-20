@@ -66,6 +66,15 @@ const App = {
       uploadFile: null,
 
       // 系统设置模块 config
+      configTableHeaders: [
+        { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' }},
+        { key: 'config_key', title: '配置项', sortable: false },
+        { key: 'config_value', title: '配置值', sortable: false },
+        { key: 'remark', title: '说明', sortable: false },
+        { key: 'actions', title: '操作', sortable: false },
+      ],
+      configTableDatas: [],
+      configTableLoading: false,
 
       // 删除
       delDialogFlag: false,
@@ -136,7 +145,7 @@ const App = {
             keyword_app_name: this.keywordAppName
           });
         let resJson = response.data;
-        this.handleResJson(resJson);
+        this.handleRes(resJson);
         this.recordDatas = resJson.data.list;
         this.totalRecords = resJson.data.total;
         this.loading = false;
@@ -150,7 +159,7 @@ const App = {
       try {
         let response = await axios.get('/accountmanager/password/get');
         let resJson = response.data;
-        this.handleResJson(resJson);
+        this.handleRes(resJson);
         this.recordDataPassword = resJson.data;
       } catch (error) {
         console.error(error);
@@ -187,7 +196,7 @@ const App = {
               remark: this.recordDataRemark
             });
           let resJson = response.data;
-          let succesFlag = this.handleResJson(resJson);
+          let succesFlag = this.handleRes(resJson);
           if (succesFlag) {
             this.clearRecordDataDialog();
             this.queryRecordDatas();
@@ -206,7 +215,7 @@ const App = {
               remark: this.recordDataRemark
             });
           let resJson = response.data;
-          let succesFlag = this.handleResJson(resJson);
+          let succesFlag = this.handleRes(resJson);
           if (succesFlag) {
             this.clearRecordDataDialog();
             this.queryRecordDatas();
@@ -237,7 +246,7 @@ const App = {
             }
           });
         let resJson = response.data;
-        this.handleResJson(resJson);
+        this.handleRes(resJson);
         return resJson.data;
       } catch (error) {
         console.error(error);
@@ -270,7 +279,7 @@ const App = {
         }
       });
       let resJson = response.data;
-      let succesFlag = this.handleResJson(resJson);
+      let succesFlag = this.handleRes(resJson);
       if (succesFlag) {
         this.clearImexDialog();
         this.queryRecordDatas();
@@ -305,7 +314,7 @@ const App = {
             id: this.delId
           });
         let resJson = response.data;
-        let succesFlag = this.handleResJson(resJson);
+        let succesFlag = this.handleRes(resJson);
         if (succesFlag) {
           this.clearDelDialog();
           this.queryRecordDatas();
@@ -315,13 +324,27 @@ const App = {
       }
     },
 
+    // 系统设置-查询全部
+    async configTableQueryAll() {
+      this.configTableLoading = true;
+      try {
+        let response = await axios.post('/accountmanager/config/all',{});
+        let res = response.data;
+        this.handleRes(res);
+        this.configTableDatas = res.data.list;
+        this.configTableLoading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     // 处理响应
-    handleResJson(resJson) {
-      let bizCode = resJson.code;
+    handleRes(res) {
+      let bizCode = res.code;
       if ("000000" == bizCode) {
         return true;
       } else {
-        this.errMsg = resJson.message;
+        this.errMsg = res.message;
         this.snackbar = true;
         return false;
       }

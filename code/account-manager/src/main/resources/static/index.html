@@ -122,10 +122,30 @@
           </template>
 
           <!-- 配置系统页面 -->
-          <template v-if="settingPage">
-            <h1>配置系统页面</h1>
+          <template v-if="configPage">
+            <v-row>
+              <v-col>
+                <v-data-table-server
+                  :headers="configTableHeaders" 
+                  :items="configTableDatas"
+                  :loading="configTableLoading" 
+                  @update:options="configTableQueryAll"
+                  hide-default-footer>
+                  <template v-slot:item.actions="{ item }">
+                    <v-row>
+                      <v-col>
+                        <v-icon size="small" @click="showRecordDataDialog(item)">
+                          fa-solid fa-pen
+                        </v-icon>
+                      </v-col>
+                    </v-row>
+                  </template>
+                </v-data-table-server>
+              </v-col>
+            </v-row>
           </template>
 
+          <!-- 报错弹框 -->
           <v-snackbar v-model="snackbar" :timeout="timeout" location="top" color="red-accent-2">
             {{ errMsg }}
           </v-snackbar>
