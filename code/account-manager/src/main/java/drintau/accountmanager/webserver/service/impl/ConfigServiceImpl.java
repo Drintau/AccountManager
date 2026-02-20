@@ -50,6 +50,11 @@ public class ConfigServiceImpl implements ConfigService {
         invalidateCache();
     }
 
+    @Override
+    public void updateConfig(ConfigBO bo) {
+        configRepository.updateConfigValueByKey(bo.getConfigKey(), bo.getConfigValue());
+    }
+
     /**
      * 使缓存失效
      */

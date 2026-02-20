@@ -75,6 +75,12 @@ const App = {
       ],
       configTableDatas: [],
       configTableLoading: false,
+      // 一条配置记录的数据
+      configDialogShowFlag: false,
+      configDialogDataId: null,
+      configDialogDataConfigKey: null,
+      configDialogDataConfigValue: null,
+      configDialogDataRemark: null,
 
       // 删除
       delDialogFlag: false,
@@ -333,6 +339,41 @@ const App = {
         this.handleRes(res);
         this.configTableDatas = res.data.list;
         this.configTableLoading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // 系统设置-清理对话框
+    configDialogClear() {
+      this.configDialogShowFlag = false;
+      this.configDialogDataId = null;
+      this.configDialogDataConfigKey = null;
+      this.configDialogDataConfigValue = null;
+      this.configDialogDataRemark = null;
+    },
+    // 系统设置-展示修改对话框
+    configDialogshow(configRow) {
+      let configDialogData = Object.assign({}, configRow);
+      this.configDialogDataId = configDialogData.id;
+      this.configDialogDataConfigKey = configDialogData.config_key;
+      this.configDialogDataConfigValue = configDialogData.config_value;
+      this.configDialogDataRemark = configDialogData.remark;
+      this.configDialogShowFlag = true;
+    },
+    // 系统设置-修改配置
+    async configEdit() {
+      try {
+        let response = await axios.post('/accountmanager/config/update',
+          {
+            config_key: this.configDialogDataConfigKey,
+            config_value: this.configDialogDataConfigValue
+          });
+        let res = response.data;
+        let succesFlag = this.handleRes(res);
+        if (succesFlag) {
+          this.configDialogClear();
+          this.configTableQueryAll();
+        }
       } catch (error) {
         console.error(error);
       }

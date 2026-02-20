@@ -134,7 +134,7 @@
                   <template v-slot:item.actions="{ item }">
                     <v-row>
                       <v-col>
-                        <v-icon size="small" @click="showRecordDataDialog(item)">
+                        <v-icon size="small" @click="configDialogshow(item)">
                           fa-solid fa-pen
                         </v-icon>
                       </v-col>
@@ -143,6 +143,22 @@
                 </v-data-table-server>
               </v-col>
             </v-row>
+
+            <v-dialog v-model="configDialogShowFlag" width="auto">
+              <v-card max-height="600" width="500" :title="修改配置">
+                <v-form>
+                  <v-text-field label="配置项" v-model="configDialogDataConfigKey" readonly></v-text-field>
+                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="solo"></v-text-field>
+                  <v-text-field label="说明" v-model="configDialogDataRemark" readonly></v-text-field>
+                </v-form>
+                <v-card-actions>
+                  <v-btn @click="configDialogClear()">取消</v-btn>
+                  <!-- 弹性空间 -->
+                  <v-spacer></v-spacer>
+                  <v-btn color="green" @click="configEdit()">提交</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </template>
 
           <!-- 报错弹框 -->

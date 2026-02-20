@@ -12,4 +12,6 @@ public interface ConfigService {
 
     void updateConfig(List<ConfigBO> configBOList);
 
+    void updateConfig(ConfigBO bo);
+
 }
