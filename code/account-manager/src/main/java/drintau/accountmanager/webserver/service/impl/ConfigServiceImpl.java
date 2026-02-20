@@ -1,11 +1,14 @@
 package drintau.accountmanager.webserver.service.impl;
 
+import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.dao.ConfigRepository;
 import drintau.accountmanager.webserver.domain.bo.ConfigBO;
 import drintau.accountmanager.webserver.domain.po.ConfigPO;
 import drintau.accountmanager.webserver.service.ConfigService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +28,10 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public String getConfigValue(String configKey) {
-        setupCache(null);
+        if (MapUtils.isEmpty(configMap)) {
+            allConfig();
+        }
+
         String configValue = configMap.get(configKey);
         if (configValue != null) {
             return configValue;
@@ -35,10 +41,12 @@ public class ConfigServiceImpl implements ConfigService {
 
     @Override
     public List<ConfigBO> allConfig() {
-        List<ConfigPO> allConfigPOList = configRepository.findAll();
-        List<ConfigBO> configBOList = BeanUtil.copyList(allConfigPOList, ConfigBO.class);
-        setupCache(configBOList);
-        return configBOList;
+        if (CollectionUtils.isEmpty(this.configList)) {
+            List<ConfigPO> allConfigPOList = configRepository.findAll();
+            List<ConfigBO> configBOList = BeanUtil.copyList(allConfigPOList, ConfigBO.class);
+            setupCache(configBOList);
+        }
+        return this.configList;
     }
 
     @Transactional
@@ -53,6 +61,7 @@ public class ConfigServiceImpl implements ConfigService {
     @Override
     public void updateConfig(ConfigBO bo) {
         configRepository.updateConfigValueByKey(bo.getConfigKey(), bo.getConfigValue());
+        invalidateCache();
     }
 
     /**
@@ -67,17 +76,14 @@ public class ConfigServiceImpl implements ConfigService {
      * 设置缓存
      */
     private void setupCache(List<ConfigBO> configList) {
-        if (this.configList == null) {
-            if (configList == null) {
-                configList = allConfig();
-            }
-            this.configList = configList;
+        if (CollectionUtils.isEmpty(configList)) {
+            throw new BusinessException("配置数据设置缓存错误！");
         }
-        if (this.configMap == null) {
-            this.configMap = new HashMap<>();
-            for (ConfigBO configBO : this.configList) {
-                this.configMap.put(configBO.getConfigKey(), configBO.getConfigValue());
-            }
+
+        this.configList = configList;
+        this.configMap = new HashMap<>();
+        for (ConfigBO configBO : this.configList) {
+            this.configMap.put(configBO.getConfigKey(), configBO.getConfigValue());
         }
     }
 

@@ -145,13 +145,13 @@
             </v-row>
 
             <v-dialog v-model="configDialogShowFlag" width="auto">
-              <v-card max-height="600" width="500" :title="修改配置">
-                <v-form>
-                  <v-text-field label="配置项" v-model="configDialogDataConfigKey" readonly></v-text-field>
-                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="solo"></v-text-field>
-                  <v-text-field label="说明" v-model="configDialogDataRemark" readonly></v-text-field>
+              <v-card max-height="500" width="400" title="修改配置">
+                <v-form class="mx-8">
+                  <v-text-field label="配置项" v-model="configDialogDataConfigKey" disabled variant="solo-inverted" focused></v-text-field>
+                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="solo" autofocus></v-text-field>
+                  <v-text-field label="说明" v-model="configDialogDataRemark" disabled variant="solo-inverted" focused></v-text-field>
                 </v-form>
-                <v-card-actions>
+                <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="configDialogClear()">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
