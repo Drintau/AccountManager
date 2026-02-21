@@ -60,6 +60,19 @@ const App = {
       accountDialogDataRemark: null,
 
       // 分类管理模块 category
+      // 分类表格表头
+      categoryTableHeaders: [
+        { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' }},
+        { key: 'category_name', title: '分类名称', sortable: false },
+        { key: 'actions', title: '操作', sortable: false },
+      ],
+      categoryTableDatas: [],
+      categoryTableLoading: false,
+      // 一条配置记录的数据
+      categoryDialogShowFlag: false,
+      categoryDialogTitle: null,
+      categoryDialogDataId: null,
+      categoryDialogDataCategoryName: null,
 
       // 导入导出模块 transfer
       transferDialogShowFlag: false,
@@ -330,7 +343,77 @@ const App = {
       }
     },
 
-    // 系统设置-查询全部
+    // 分类-查询全部
+    async categoryTableQueryAll() {
+      this.categoryTableLoading = true;
+      try {
+        let response = await axios.post('/accountmanager/category/all',{});
+        let res = response.data;
+        this.handleRes(res);
+        this.categoryTableDatas = res.data.list;
+        this.categoryTableLoading = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    // 分类-清理对话框
+    categoryDialogClear() {
+      this.categoryDialogShowFlag = false;
+      this.categoryDialogTitle = null;
+      this.categoryDialogDataId = null;
+      this.categoryDialogDataCategoryName = null;
+    },
+    // 分类-展示编辑对话框
+    categoryDialogshow(categoryRow) {
+      this.categoryDialogClear();
+      if (categoryRow != null) {
+        this.categoryDialogTitle = '修改分类';
+        let categoryDialogData = Object.assign({}, categoryRow);
+        this.categoryDialogDataId = categoryDialogData.id;
+        this.categoryDialogDataCategoryName = categoryDialogData.category_name;
+      } else {
+        this.categoryDialogTitle = '新增分类';
+      }
+      this.categoryDialogShowFlag = true;
+    },
+    // 分类-编辑
+    async categoryEdit() {
+      if (this.categoryDialogDataId != null) {
+        try {
+          let response = await axios.post('/accountmanager/category/update',
+            {
+              id: this.categoryDialogDataId,
+              category_name: this.categoryDialogDataCategoryName
+            });
+          let res = response.data;
+          let succesFlag = this.handleRes(res);
+          if (succesFlag) {
+            this.categoryDialogClear();
+            this.categoryTableQueryAll();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        try {
+          let response = await axios.post('/accountmanager/category/add',
+            {
+              category_name: this.categoryDialogDataCategoryName
+            });
+          let res = response.data;
+          let succesFlag = this.handleRes(res);
+          if (succesFlag) {
+            this.categoryDialogClear();
+            this.categoryTableQueryAll();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      
+    },
+
+    // 设置-查询全部
     async configTableQueryAll() {
       this.configTableLoading = true;
       try {
@@ -343,7 +426,7 @@ const App = {
         console.error(error);
       }
     },
-    // 系统设置-清理对话框
+    // 设置-清理对话框
     configDialogClear() {
       this.configDialogShowFlag = false;
       this.configDialogDataId = null;
@@ -351,7 +434,7 @@ const App = {
       this.configDialogDataConfigValue = null;
       this.configDialogDataRemark = null;
     },
-    // 系统设置-展示修改对话框
+    // 设置-展示修改对话框
     configDialogshow(configRow) {
       let configDialogData = Object.assign({}, configRow);
       this.configDialogDataId = configDialogData.id;
@@ -360,7 +443,7 @@ const App = {
       this.configDialogDataRemark = configDialogData.remark;
       this.configDialogShowFlag = true;
     },
-    // 系统设置-修改配置
+    // 设置-修改
     async configEdit() {
       try {
         let response = await axios.post('/accountmanager/config/update',
