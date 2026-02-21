@@ -116,33 +116,33 @@
 
             <v-row>
               <v-col>
-                <v-data-table-server
+                <v-data-table-server 
                   :headers="categoryTableHeaders" 
                   :items="categoryTableDatas"
                   :loading="categoryTableLoading" 
-                  @update:options="categoryTableQueryAll"
+                  @update:options="categoryTableQueryAll" 
                   hide-default-footer>
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
-                        <v-icon size="small" @click="categoryDialogshow(item)">
-                          fa-solid fa-pen
-                        </v-icon>
-                        <v-icon size="small" color="red" @click="categoryDialogDelShow(item)">
-                          fa-regular fa-trash-can
-                        </v-icon>
-                      </div>
+                      <v-icon size="small" @click="categoryEditDialogShow(item)">
+                        fa-solid fa-pen
+                      </v-icon>
+                      <v-icon size="small" color="red" @click="categoryDelDialogShow(item)">
+                        fa-regular fa-trash-can
+                      </v-icon>
+                    </div>
                   </template>
                 </v-data-table-server>
               </v-col>
             </v-row>
 
-            <v-dialog v-model="categoryDialogShowFlag" width="auto">
-              <v-card max-height="500" width="400" :title="categoryDialogTitle">
+            <v-dialog v-model="categoryEditDialogShowFlag" width="auto">
+              <v-card max-height="500" width="400" :title="categoryEditDialogTitle">
                 <v-form class="mx-8">
-                  <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="solo" autofocus></v-text-field>
+                  <v-text-field label="分类名称" v-model="categoryEditDialogDataCategoryName" variant="solo" autofocus></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="categoryDialogClear()">取消</v-btn>
+                  <v-btn @click="categoryEditDialogClear()">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
                   <v-btn color="green" @click="categoryEdit()">提交</v-btn>
@@ -150,11 +150,16 @@
               </v-card>
             </v-dialog>
 
-            <v-dialog v-model="delDialogFlag" width="auto">
-              <v-card max-height="600" width="500" title="删除账号">
+            <v-dialog v-model="categoryDelDialogShowFlag" width="auto">
+              <v-card max-height="500" width="400" title="删除分类">
+                <v-card-text>
+                  确定删除 {{ categoryEditDialogDataCategoryName }} 分类吗？
+                </v-card-text>
                 <v-card-actions>
-                  <v-btn @click="clearDelDialog()">取消</v-btn>
-                  <v-btn color="red" @click="delRecordData()">确定</v-btn>
+                  <v-btn @click="categoryDelDialogClear()">取消</v-btn>
+                  <!-- 弹性空间 -->
+                  <v-spacer></v-spacer>
+                  <v-btn color="red" @click="categoryDel()">确定</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -162,11 +167,11 @@
 
           <!-- 迁移数据页面 -->
           <template v-if="transferShowFlag">
-           
-              <v-file-input label="选择文件" prepend-icon="" append-icon="fa-solid fa-file-import"
-                @change="handleUploadFileChange" @click:append="importRecordDatas"></v-file-input>
 
-              <v-btn color="green-accent-3" @click="exportRecordDatas">导出</v-btn>
+            <v-file-input label="选择文件" prepend-icon="" append-icon="fa-solid fa-file-import"
+              @change="handleUploadFileChange" @click:append="importRecordDatas"></v-file-input>
+
+            <v-btn color="green-accent-3" @click="exportRecordDatas">导出</v-btn>
 
           </template>
 
@@ -174,17 +179,17 @@
           <template v-if="configShowFlag">
             <v-row>
               <v-col>
-                <v-data-table-server
+                <v-data-table-server 
                   :headers="configTableHeaders" 
                   :items="configTableDatas"
                   :loading="configTableLoading" 
-                  @update:options="configTableQueryAll"
+                  @update:options="configTableQueryAll" 
                   hide-default-footer>
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
-                        <v-icon size="small" @click="configDialogshow(item)">
-                          fa-solid fa-pen
-                        </v-icon>
+                      <v-icon size="small" @click="configDialogshow(item)">
+                        fa-solid fa-pen
+                      </v-icon>
                     </div>
                   </template>
                 </v-data-table-server>

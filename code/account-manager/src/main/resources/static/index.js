@@ -7,7 +7,7 @@ const App = {
   // 规定：
   // 命名尽量跟后端对齐
   // 模块：账号 account ，分类 category ，迁移 transfer ，设置 config ，欢迎 hello ，报错 err
-  // 与后端交互业务：新增 add ，编辑 edit （可包含add和update），删除 del ，查询 query ，上传 upload ，导入 import，导出 export
+  // 与后端交互业务：新增 add ，编辑 edit （包含增删改操作），删除 del ，查询 query ，上传 upload ，导入 import，导出 export
   // 与后端交互数据：请求 req ，响应 res
   // 前端组件：表格列表 table，表格一行 row
   // 前端组件数据：一条 Data ，多条 Datas
@@ -66,7 +66,7 @@ const App = {
       accountDialogDataRemark: null,
 
       // 分类管理模块 category
-      // 分类表格表头
+      // 分类表格属性
       categoryTableHeaders: [
         { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' }},
         { key: 'category_name', title: '分类名称', sortable: false },
@@ -74,11 +74,14 @@ const App = {
       ],
       categoryTableDatas: [],
       categoryTableLoading: false,
-      // 一条配置记录的数据
-      categoryDialogShowFlag: false,
-      categoryDialogTitle: null,
-      categoryDialogDataId: null,
-      categoryDialogDataCategoryName: null,
+      // 一条分类记录的数据
+      categoryEditDialogDataId: null,
+      categoryEditDialogDataCategoryName: null,
+      // 分类编辑对话框属性
+      categoryEditDialogShowFlag: false,
+      categoryEditDialogTitle: null,
+      // 分类删除对话框属性
+      categoryDelDialogShowFlag: false,
 
       // 导入导出模块 transfer
       transferDialogShowFlag: false,
@@ -221,8 +224,8 @@ const App = {
               remark: this.recordDataRemark
             });
           let resJson = response.data;
-          let succesFlag = this.handleRes(resJson);
-          if (succesFlag) {
+          let successFlag = this.handleRes(resJson);
+          if (successFlag) {
             this.clearRecordDataDialog();
             this.queryRecordDatas();
           }
@@ -240,8 +243,8 @@ const App = {
               remark: this.recordDataRemark
             });
           let resJson = response.data;
-          let succesFlag = this.handleRes(resJson);
-          if (succesFlag) {
+          let successFlag = this.handleRes(resJson);
+          if (successFlag) {
             this.clearRecordDataDialog();
             this.queryRecordDatas();
           }
@@ -304,8 +307,8 @@ const App = {
         }
       });
       let resJson = response.data;
-      let succesFlag = this.handleRes(resJson);
-      if (succesFlag) {
+      let successFlag = this.handleRes(resJson);
+      if (successFlag) {
         this.clearImexDialog();
         this.queryRecordDatas();
       }
@@ -339,8 +342,8 @@ const App = {
             id: this.delId
           });
         let resJson = response.data;
-        let succesFlag = this.handleRes(resJson);
-        if (succesFlag) {
+        let successFlag = this.handleRes(resJson);
+        if (successFlag) {
           this.clearDelDialog();
           this.queryRecordDatas();
         }
@@ -362,39 +365,39 @@ const App = {
         console.error(error);
       }
     },
-    // 分类-清理对话框
-    categoryDialogClear() {
-      this.categoryDialogShowFlag = false;
-      this.categoryDialogTitle = null;
-      this.categoryDialogDataId = null;
-      this.categoryDialogDataCategoryName = null;
+    // 分类-清理编辑对话框
+    categoryEditDialogClear() {
+      this.categoryEditDialogShowFlag = false;
+      this.categoryEditDialogDataId = null;
+      this.categoryEditDialogDataCategoryName = null;
+      // this.categoryEditDialogTitle = null; 这一句会让Dialog关闭时高度变化，不好看
     },
     // 分类-展示编辑对话框
-    categoryDialogshow(categoryRow) {
-      this.categoryDialogClear();
+    categoryEditDialogShow(categoryRow) {
+      this.categoryEditDialogClear();
       if (categoryRow != null) {
-        this.categoryDialogTitle = '修改分类';
-        let categoryDialogData = Object.assign({}, categoryRow);
-        this.categoryDialogDataId = categoryDialogData.id;
-        this.categoryDialogDataCategoryName = categoryDialogData.category_name;
+        this.categoryEditDialogTitle = '修改分类';
+        let categoryEditDialogData = Object.assign({}, categoryRow);
+        this.categoryEditDialogDataId = categoryEditDialogData.id;
+        this.categoryEditDialogDataCategoryName = categoryEditDialogData.category_name;
       } else {
-        this.categoryDialogTitle = '新增分类';
+        this.categoryEditDialogTitle = '新增分类';
       }
-      this.categoryDialogShowFlag = true;
+      this.categoryEditDialogShowFlag = true;
     },
     // 分类-编辑
     async categoryEdit() {
-      if (this.categoryDialogDataId != null) {
+      if (this.categoryEditDialogDataId != null) {
         try {
           let response = await axios.post('/accountmanager/category/update',
             {
-              id: this.categoryDialogDataId,
-              category_name: this.categoryDialogDataCategoryName
+              id: this.categoryEditDialogDataId,
+              category_name: this.categoryEditDialogDataCategoryName
             });
           let res = response.data;
-          let succesFlag = this.handleRes(res);
-          if (succesFlag) {
-            this.categoryDialogClear();
+          let successFlag = this.handleRes(res);
+          if (successFlag) {
+            this.categoryEditDialogClear();
             this.categoryTableQueryAll();
           }
         } catch (error) {
@@ -404,19 +407,48 @@ const App = {
         try {
           let response = await axios.post('/accountmanager/category/add',
             {
-              category_name: this.categoryDialogDataCategoryName
+              category_name: this.categoryEditDialogDataCategoryName
             });
           let res = response.data;
-          let succesFlag = this.handleRes(res);
-          if (succesFlag) {
-            this.categoryDialogClear();
+          let successFlag = this.handleRes(res);
+          if (successFlag) {
+            this.categoryEditDialogClear();
             this.categoryTableQueryAll();
           }
         } catch (error) {
           console.error(error);
         }
       }
-      
+    },
+    // 分类-展示删除确认框
+    categoryDelDialogShow(categoryRow) {
+      let categoryDelDialogData = Object.assign({}, categoryRow);
+      this.categoryEditDialogDataId = categoryDelDialogData.id;
+      this.categoryEditDialogDataCategoryName = categoryDelDialogData.category_name;
+      this.categoryDelDialogShowFlag = true;
+    },
+    // 分类-清理删除对话框
+    categoryDelDialogClear() {
+      this.categoryDelDialogShowFlag = false;
+      this.categoryEditDialogDataId = null;
+      this.categoryEditDialogDataCategoryName = null;
+    },
+    // 分类-删除
+    async categoryDel() {
+      try {
+        let response = await axios.post('/accountmanager/category/delete',
+          {
+            id: this.categoryEditDialogDataId
+          });
+        let res = response.data;
+        let successFlag = this.handleRes(res);
+        if (successFlag) {
+          this.categoryDelDialogClear();
+          this.categoryTableQueryAll();
+        }
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     // 设置-查询全部
@@ -458,8 +490,8 @@ const App = {
             config_value: this.configDialogDataConfigValue
           });
         let res = response.data;
-        let succesFlag = this.handleRes(res);
-        if (succesFlag) {
+        let successFlag = this.handleRes(res);
+        if (successFlag) {
           this.configDialogClear();
           this.configTableQueryAll();
         }
