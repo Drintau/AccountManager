@@ -23,10 +23,10 @@
       <v-navigation-drawer class="navigation-drawer" permanent>
         <v-toolbar title="账号管理器" color="blue" density="comfortable"></v-toolbar>
         <v-list>
-          <v-list-item class="nav-item" title="管理账号" @click="changeShowPage('accountPage')"></v-list-item>
-          <v-list-item class="nav-item" title="管理分类" @click="changeShowPage('categoryPage')"></v-list-item>
-          <v-list-item class="nav-item" title="迁移数据" @click="changeShowPage('migratePage')"></v-list-item>
-          <v-list-item class="nav-item" title="配置系统" @click="changeShowPage('configPage')"></v-list-item>
+          <v-list-item class="nav-item" title="管理账号" @click="moduleShow('accountShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="管理分类" @click="moduleShow('categoryShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="迁移数据" @click="moduleShow('transferShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="配置系统" @click="moduleShow('configShowFlag')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -35,12 +35,12 @@
         <v-container>
 
           <!-- 欢迎页面 -->
-          <template v-if="helloPage">
+          <template v-if="helloShowFlag">
             <h1>欢迎使用账号管理器！</h1>
           </template>
 
           <!-- 管理账号页面 -->
-          <template v-if="accountPage">
+          <template v-if="accountShowFlag">
             <v-row>
               <v-col>
                 <v-btn density="comfortable" @click="showRecordDataDialog(null)">新增账号</v-btn>
@@ -107,10 +107,10 @@
           </template>
 
           <!-- 管理分类页面 -->
-          <template v-if="categoryPage">
+          <template v-if="categoryShowFlag">
             <v-row>
               <v-col>
-                <v-btn variant="outlined" @click="categoryDialogshow(null)">新增分类</v-btn>
+                <v-btn variant="outlined" @click="categoryEditDialogShow(null)">新增分类</v-btn>
               </v-col>
             </v-row>
 
@@ -123,18 +123,14 @@
                   @update:options="categoryTableQueryAll"
                   hide-default-footer>
                   <template v-slot:item.actions="{ item }">
-                    <v-row>
-                      <v-col>
+                    <div class="d-flex ga-2 justify-end">
                         <v-icon size="small" @click="categoryDialogshow(item)">
                           fa-solid fa-pen
                         </v-icon>
-                      </v-col>
-                      <v-col>
                         <v-icon size="small" color="red" @click="categoryDialogDelShow(item)">
                           fa-regular fa-trash-can
                         </v-icon>
-                      </v-col>
-                    </v-row>
+                      </div>
                   </template>
                 </v-data-table-server>
               </v-col>
@@ -165,7 +161,7 @@
           </template>
 
           <!-- 迁移数据页面 -->
-          <template v-if="migratePage">
+          <template v-if="transferShowFlag">
            
               <v-file-input label="选择文件" prepend-icon="" append-icon="fa-solid fa-file-import"
                 @change="handleUploadFileChange" @click:append="importRecordDatas"></v-file-input>
@@ -175,7 +171,7 @@
           </template>
 
           <!-- 配置系统页面 -->
-          <template v-if="configPage">
+          <template v-if="configShowFlag">
             <v-row>
               <v-col>
                 <v-data-table-server
@@ -185,13 +181,11 @@
                   @update:options="configTableQueryAll"
                   hide-default-footer>
                   <template v-slot:item.actions="{ item }">
-                    <v-row>
-                      <v-col>
+                    <div class="d-flex ga-2 justify-end">
                         <v-icon size="small" @click="configDialogshow(item)">
                           fa-solid fa-pen
                         </v-icon>
-                      </v-col>
-                    </v-row>
+                    </div>
                   </template>
                 </v-data-table-server>
               </v-col>
@@ -215,8 +209,8 @@
           </template>
 
           <!-- 报错弹框 -->
-          <v-snackbar v-model="snackbar" :timeout="timeout" location="top" color="red-accent-2">
-            {{ errMsg }}
+          <v-snackbar v-model="errSnackbarShowFlag" :timeout="errSnackbarTimeout" location="top" color="red-accent-2">
+            {{ errSnackbarMsg }}
           </v-snackbar>
 
         </v-container>

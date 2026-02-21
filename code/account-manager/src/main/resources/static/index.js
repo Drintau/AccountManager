@@ -6,13 +6,13 @@ const vuetify = createVuetify()
 const App = {
   // 规定：
   // 命名尽量跟后端对齐
-  // 模块：账号 account ，分类 category ，迁移 transfer ，设置 config ，欢迎 hello
+  // 模块：账号 account ，分类 category ，迁移 transfer ，设置 config ，欢迎 hello ，报错 err
   // 与后端交互业务：新增 add ，编辑 edit （可包含add和update），删除 del ，查询 query ，上传 upload ，导入 import，导出 export
   // 与后端交互数据：请求 req ，响应 res
   // 前端组件：表格列表 table，表格一行 row
   // 前端组件数据：一条 Data ，多条 Datas
   // 前端组件业务：展示 show ，清除 clear ，处理事件 handle
-  // 其他名称：标记 Flag
+  // 其他名称：标记 Flag ，字段名 ，组件属性名 ，信息 Msg ，全部 All
   // 属性名：模块+交互业务+前端组件名+（前端数据+字段名）/（前端组件业务+标记），如 categoryEditDialogShowFalg
   // 方法名：模块+交互业务+前端组件名+前端组件业务，如 accountTableShow ，categoryEditDialogShow ， categoryDelDialogShow
   // 注意：无对应，或者对应多个，则不写
@@ -22,11 +22,11 @@ const App = {
     return {
 
       // 页面显示控制
-      helloPage: true,
-      accountPage: false,
-      categoryPage: false,
-      transferPage: false,
-      configPage: false,
+      helloShowFlag: true,
+      accountShowFlag: false,
+      categoryShowFlag: false,
+      transferShowFlag: false,
+      configShowFlag: false,
 
       // 账号管理模块 account
       // 是否解密
@@ -70,7 +70,7 @@ const App = {
       categoryTableHeaders: [
         { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' }},
         { key: 'category_name', title: '分类名称', sortable: false },
-        { key: 'actions', title: '操作', sortable: false },
+        { key: 'actions', title: '操作', sortable: false, align: 'end' },
       ],
       categoryTableDatas: [],
       categoryTableLoading: false,
@@ -90,7 +90,7 @@ const App = {
         { key: 'config_key', title: '配置项', sortable: false },
         { key: 'config_value', title: '配置值', sortable: false },
         { key: 'remark', title: '说明', sortable: false },
-        { key: 'actions', title: '操作', sortable: false },
+        { key: 'actions', title: '操作', sortable: false, align: 'end' },
       ],
       configTableDatas: [],
       configTableLoading: false,
@@ -106,9 +106,9 @@ const App = {
       delId: null,
 
       // 报错信息
-      snackbar: false,
-      timeout: 5000,
-      errMsg: null,
+      errSnackbarShowFlag: false,
+      errSnackbarTimeout: 5000,
+      errSnackbarMsg: null,
 
     }
   },
@@ -119,37 +119,37 @@ const App = {
     // 请求后端接口不用单独一个方法出来，目前没有能够重复用的，以后有再拆分
 
     // 页面显示控制
-    changeShowPage(param) {
-      if ('accountPage' === param) {
-        this.helloPage = false;
-        this.accountPage = true;
-        this.categoryPage = false;
-        this.migratePage = false;
-        this.configPage = false;
-      } else if ('categoryPage' === param) {
-        this.helloPage = false;
-        this.accountPage = false;
-        this.categoryPage = true;
-        this.migratePage = false;
-        this.configPage = false;
-      } else if ('migratePage' === param) {
-        this.helloPage = false;
-        this.accountPage = false;
-        this.categoryPage = false;
-        this.migratePage = true;
-        this.configPage = false;
-      } else if ('configPage' === param) {
-        this.helloPage = false;
-        this.accountPage = false;
-        this.categoryPage = false;
-        this.migratePage = false;
-        this.configPage = true;
+    moduleShow(param) {
+      if ('accountShowFlag' === param) {
+        this.helloShowFlag = false;
+        this.accountShowFlag = true;
+        this.categoryShowFlag = false;
+        this.transferShowFlag = false;
+        this.configShowFlag = false;
+      } else if ('categoryShowFlag' === param) {
+        this.helloShowFlag = false;
+        this.accountShowFlag = false;
+        this.categoryShowFlag = true;
+        this.transferShowFlag = false;
+        this.configShowFlag = false;
+      } else if ('transferShowFlag' === param) {
+        this.helloShowFlag = false;
+        this.accountShowFlag = false;
+        this.categoryShowFlag = false;
+        this.transferShowFlag = true;
+        this.configShowFlag = false;
+      } else if ('configShowFlag' === param) {
+        this.helloShowFlag = false;
+        this.accountShowFlag = false;
+        this.categoryShowFlag = false;
+        this.transferShowFlag = false;
+        this.configShowFlag = true;
       } else {
-        this.helloPage = true;
-        this.accountPage = false;
-        this.categoryPage = false;
-        this.migratePage = false;
-        this.configPage = false;
+        this.helloShowFlag = true;
+        this.accountShowFlag = false;
+        this.categoryShowFlag = false;
+        this.transferShowFlag = false;
+        this.configShowFlag = false;
       }
     },
 
@@ -474,8 +474,8 @@ const App = {
       if ("000000" == bizCode) {
         return true;
       } else {
-        this.errMsg = res.message;
-        this.snackbar = true;
+        this.errSnackbarMsg = res.message;
+        this.errSnackbarShowFlag = true;
         return false;
       }
     },
