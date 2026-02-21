@@ -23,10 +23,10 @@
       <v-navigation-drawer class="navigation-drawer" permanent>
         <v-toolbar title="账号管理器" color="blue" density="comfortable"></v-toolbar>
         <v-list>
-          <v-list-item class="nav-item" title="管理账号" @click="moduleShow('accountShowFlag')"></v-list-item>
-          <v-list-item class="nav-item" title="管理分类" @click="moduleShow('categoryShowFlag')"></v-list-item>
-          <v-list-item class="nav-item" title="迁移数据" @click="moduleShow('transferShowFlag')"></v-list-item>
-          <v-list-item class="nav-item" title="配置系统" @click="moduleShow('configShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="账号" @click="moduleShow('accountShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="分类" @click="moduleShow('categoryShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="迁移" @click="moduleShow('transferShowFlag')"></v-list-item>
+          <v-list-item class="nav-item" title="设置" @click="moduleShow('configShowFlag')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -139,7 +139,7 @@
             <v-dialog v-model="categoryEditDialogShowFlag" width="auto">
               <v-card max-height="500" width="400" :title="categoryEditDialogTitle">
                 <v-form class="mx-8">
-                  <v-text-field label="分类名称" v-model="categoryEditDialogDataCategoryName" variant="solo" autofocus></v-text-field>
+                  <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="solo" autofocus></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="categoryEditDialogClear()">取消</v-btn>
@@ -153,9 +153,9 @@
             <v-dialog v-model="categoryDelDialogShowFlag" width="auto">
               <v-card max-height="500" width="400" title="删除分类">
                 <v-card-text>
-                  确定删除 {{ categoryEditDialogDataCategoryName }} 分类吗？
+                  确定删除 {{ categoryDialogDataCategoryName }} 分类吗？
                 </v-card-text>
-                <v-card-actions>
+                <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="categoryDelDialogClear()">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
@@ -187,7 +187,7 @@
                   hide-default-footer>
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
-                      <v-icon size="small" @click="configDialogshow(item)">
+                      <v-icon size="small" @click="configEditDialogShow(item)">
                         fa-solid fa-pen
                       </v-icon>
                     </div>
@@ -196,7 +196,7 @@
               </v-col>
             </v-row>
 
-            <v-dialog v-model="configDialogShowFlag" width="auto">
+            <v-dialog v-model="configEditDialogShowFlag" width="auto">
               <v-card max-height="500" width="400" title="修改配置">
                 <v-form class="mx-8">
                   <v-text-field label="配置项" v-model="configDialogDataConfigKey" disabled variant="solo-inverted" focused></v-text-field>
@@ -204,7 +204,7 @@
                   <v-text-field label="说明" v-model="configDialogDataRemark" disabled variant="solo-inverted" focused></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="configDialogClear()">取消</v-btn>
+                  <v-btn @click="configEditDialogClear()">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
                   <v-btn color="green" @click="configEdit()">提交</v-btn>

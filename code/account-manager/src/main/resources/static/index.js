@@ -64,6 +64,9 @@ const App = {
       accountDialogDataUsername: null,
       accountDialogDataPassword: null,
       accountDialogDataRemark: null,
+      // 删除
+      delDialogFlag: false,
+      delId: null,
 
       // 分类管理模块 category
       // 分类表格属性
@@ -75,15 +78,15 @@ const App = {
       categoryTableDatas: [],
       categoryTableLoading: false,
       // 一条分类记录的数据
-      categoryEditDialogDataId: null,
-      categoryEditDialogDataCategoryName: null,
+      categoryDialogDataId: null,
+      categoryDialogDataCategoryName: null,
       // 分类编辑对话框属性
       categoryEditDialogShowFlag: false,
       categoryEditDialogTitle: null,
       // 分类删除对话框属性
       categoryDelDialogShowFlag: false,
 
-      // 导入导出模块 transfer
+      // 迁移模块 transfer
       transferDialogShowFlag: false,
       uploadFile: null,
 
@@ -98,15 +101,11 @@ const App = {
       configTableDatas: [],
       configTableLoading: false,
       // 一条配置记录的数据
-      configDialogShowFlag: false,
+      configEditDialogShowFlag: false,
       configDialogDataId: null,
       configDialogDataConfigKey: null,
       configDialogDataConfigValue: null,
       configDialogDataRemark: null,
-
-      // 删除
-      delDialogFlag: false,
-      delId: null,
 
       // 报错信息
       errSnackbarShowFlag: false,
@@ -368,8 +367,8 @@ const App = {
     // 分类-清理编辑对话框
     categoryEditDialogClear() {
       this.categoryEditDialogShowFlag = false;
-      this.categoryEditDialogDataId = null;
-      this.categoryEditDialogDataCategoryName = null;
+      this.categoryDialogDataId = null;
+      this.categoryDialogDataCategoryName = null;
       // this.categoryEditDialogTitle = null; 这一句会让Dialog关闭时高度变化，不好看
     },
     // 分类-展示编辑对话框
@@ -377,9 +376,9 @@ const App = {
       this.categoryEditDialogClear();
       if (categoryRow != null) {
         this.categoryEditDialogTitle = '修改分类';
-        let categoryEditDialogData = Object.assign({}, categoryRow);
-        this.categoryEditDialogDataId = categoryEditDialogData.id;
-        this.categoryEditDialogDataCategoryName = categoryEditDialogData.category_name;
+        let categoryDialogData = Object.assign({}, categoryRow);
+        this.categoryDialogDataId = categoryDialogData.id;
+        this.categoryDialogDataCategoryName = categoryDialogData.category_name;
       } else {
         this.categoryEditDialogTitle = '新增分类';
       }
@@ -387,12 +386,12 @@ const App = {
     },
     // 分类-编辑
     async categoryEdit() {
-      if (this.categoryEditDialogDataId != null) {
+      if (this.categoryDialogDataId != null) {
         try {
           let response = await axios.post('/accountmanager/category/update',
             {
-              id: this.categoryEditDialogDataId,
-              category_name: this.categoryEditDialogDataCategoryName
+              id: this.categoryDialogDataId,
+              category_name: this.categoryDialogDataCategoryName
             });
           let res = response.data;
           let successFlag = this.handleRes(res);
@@ -407,7 +406,7 @@ const App = {
         try {
           let response = await axios.post('/accountmanager/category/add',
             {
-              category_name: this.categoryEditDialogDataCategoryName
+              category_name: this.categoryDialogDataCategoryName
             });
           let res = response.data;
           let successFlag = this.handleRes(res);
@@ -423,22 +422,22 @@ const App = {
     // 分类-展示删除确认框
     categoryDelDialogShow(categoryRow) {
       let categoryDelDialogData = Object.assign({}, categoryRow);
-      this.categoryEditDialogDataId = categoryDelDialogData.id;
-      this.categoryEditDialogDataCategoryName = categoryDelDialogData.category_name;
+      this.categoryDialogDataId = categoryDelDialogData.id;
+      this.categoryDialogDataCategoryName = categoryDelDialogData.category_name;
       this.categoryDelDialogShowFlag = true;
     },
     // 分类-清理删除对话框
     categoryDelDialogClear() {
       this.categoryDelDialogShowFlag = false;
-      this.categoryEditDialogDataId = null;
-      this.categoryEditDialogDataCategoryName = null;
+      this.categoryDialogDataId = null;
+      this.categoryDialogDataCategoryName = null;
     },
     // 分类-删除
     async categoryDel() {
       try {
         let response = await axios.post('/accountmanager/category/delete',
           {
-            id: this.categoryEditDialogDataId
+            id: this.categoryDialogDataId
           });
         let res = response.data;
         let successFlag = this.handleRes(res);
@@ -464,24 +463,24 @@ const App = {
         console.error(error);
       }
     },
-    // 设置-清理对话框
-    configDialogClear() {
-      this.configDialogShowFlag = false;
+    // 设置-清理编辑对话框
+    configEditDialogClear() {
+      this.configEditDialogShowFlag = false;
       this.configDialogDataId = null;
       this.configDialogDataConfigKey = null;
       this.configDialogDataConfigValue = null;
       this.configDialogDataRemark = null;
     },
-    // 设置-展示修改对话框
-    configDialogshow(configRow) {
+    // 设置-展示编辑对话框
+    configEditDialogShow(configRow) {
       let configDialogData = Object.assign({}, configRow);
       this.configDialogDataId = configDialogData.id;
       this.configDialogDataConfigKey = configDialogData.config_key;
       this.configDialogDataConfigValue = configDialogData.config_value;
       this.configDialogDataRemark = configDialogData.remark;
-      this.configDialogShowFlag = true;
+      this.configEditDialogShowFlag = true;
     },
-    // 设置-修改
+    // 设置-编辑
     async configEdit() {
       try {
         let response = await axios.post('/accountmanager/config/update',
@@ -492,7 +491,7 @@ const App = {
         let res = response.data;
         let successFlag = this.handleRes(res);
         if (successFlag) {
-          this.configDialogClear();
+          this.configEditDialogClear();
           this.configTableQueryAll();
         }
       } catch (error) {
