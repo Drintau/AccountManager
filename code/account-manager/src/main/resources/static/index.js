@@ -6,10 +6,16 @@ const vuetify = createVuetify()
 const App = {
   // 规定：
   // 命名尽量跟后端对齐
-  // 表格列表 Table，表格一行 row，请求后端数据 req，后端响应数据 res，业务数据集合 Datas，业务数据 Data
-  // 新增 add ，编辑 edit ，删除用 del ，查询用 query，上传 upload，导入用 import，导出用 export，清除用 clear，
-  // 处理事件用 handle，展示用 show，标记用 Flag
-  // 方法名：模块+前端组件+操作名+字段名，没有对应部分就不写，如 accountTableShow，accountRowAppName
+  // 模块：账号 account ，分类 category ，迁移 transfer ，设置 config ，欢迎 hello
+  // 与后端交互业务：新增 add ，编辑 edit （可包含add和update），删除 del ，查询 query ，上传 upload ，导入 import，导出 export
+  // 与后端交互数据：请求 req ，响应 res
+  // 前端组件：表格列表 table，表格一行 row
+  // 前端组件数据：一条 Data ，多条 Datas
+  // 前端组件业务：展示 show ，清除 clear ，处理事件 handle
+  // 其他名称：标记 Flag
+  // 属性名：模块+交互业务+前端组件名+（前端数据+字段名）/（前端组件业务+标记），如 categoryEditDialogShowFalg
+  // 方法名：模块+交互业务+前端组件名+前端组件业务，如 accountTableShow ，categoryEditDialogShow ， categoryDelDialogShow
+  // 注意：无对应，或者对应多个，则不写
 
   // 数据定义、配置
   data() {

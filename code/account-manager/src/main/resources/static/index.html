@@ -129,6 +129,11 @@
                           fa-solid fa-pen
                         </v-icon>
                       </v-col>
+                      <v-col>
+                        <v-icon size="small" color="red" @click="categoryDialogDelShow(item)">
+                          fa-regular fa-trash-can
+                        </v-icon>
+                      </v-col>
                     </v-row>
                   </template>
                 </v-data-table-server>
@@ -145,6 +150,15 @@
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
                   <v-btn color="green" @click="categoryEdit()">提交</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-dialog v-model="delDialogFlag" width="auto">
+              <v-card max-height="600" width="500" title="删除账号">
+                <v-card-actions>
+                  <v-btn @click="clearDelDialog()">取消</v-btn>
+                  <v-btn color="red" @click="delRecordData()">确定</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
