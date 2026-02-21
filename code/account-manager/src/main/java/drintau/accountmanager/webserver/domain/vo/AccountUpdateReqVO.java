@@ -13,6 +13,9 @@ public class AccountUpdateReqVO {
     @JsonProperty("id")
     private Integer id;
 
+    @JsonProperty("category_id")
+    private Integer categoryId;
+
     @NotBlank(message = "应用名称不能为空")
     @Length(min = 1, max = 20, message = "应用名称长度为1-20")
     @JsonProperty("app_name")

@@ -28,7 +28,7 @@ const App = {
       transferShowFlag: false,
       configShowFlag: false,
 
-      // 账号管理模块 account
+      // 账号模块 account
       // 是否解密
       accountDecryptFlag: true,
       // 账号列表分类筛选
@@ -43,7 +43,9 @@ const App = {
       accountTableTotal: 0,
       // 账号列表表头
       accountTableHeaders: [
-        { key: 'id', title: 'ID', sortable: false },
+        { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' } },
+        { key: 'category_id', title: '分类ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' } },
+        { key: 'category_name', title: '分类', sortable: false },
         { key: 'app_name', title: '名称', sortable: false },
         { key: 'app_url', title: '网址', sortable: false },
         { key: 'username', title: '账号', sortable: false },
@@ -51,24 +53,26 @@ const App = {
         { key: 'remark', title: '备注', sortable: false },
         //        { key: 'create_time', title: '创建时间', sortable: false },
         //        { key: 'update_time', title: '更新时间', sortable: false },
-        { key: 'actions', title: '操作', sortable: false },
+        { key: 'actions', title: '操作', sortable: false, align: 'end' },
       ],
       accountTableDatas: [],
       accountTableLoading: false,
       // 一条账号记录的数据
-      accountDialogShowFlag: false,
-      accountDialogTitle: null,
       accountDialogDataId: null,
+      accountDialogDataCategoryId: null,
+      accountDialogDataCategoryName: null,
       accountDialogDataAppName: null,
       accountDialogDataAppUrl: null,
       accountDialogDataUsername: null,
       accountDialogDataPassword: null,
       accountDialogDataRemark: null,
-      // 删除
-      delDialogFlag: false,
-      delId: null,
+      // 账号编辑对话框属性
+      accountEditDialogShowFlag: false,
+      accountEditDialogTitle: null,
+      // 账号删除对话框属性
+      accountDelDialogShowFlag: false,
 
-      // 分类管理模块 category
+      // 分类模块 category
       // 分类表格属性
       categoryTableHeaders: [
         { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' }},
@@ -90,7 +94,7 @@ const App = {
       transferDialogShowFlag: false,
       uploadFile: null,
 
-      // 系统设置模块 config
+      // 设置模块 config
       configTableHeaders: [
         { key: 'id', title: 'ID', sortable: false, headerProps: { class: 'd-none' }, cellProps: { class: 'd-none' }},
         { key: 'config_key', title: '配置项', sortable: false },
@@ -155,78 +159,93 @@ const App = {
       }
     },
 
-    // 处理分页页码变更
-    handlePageNumberChange(newPageNumber) {
-      this.pageNumber = newPageNumber;
-    },
-    // 查询一批数据
-    async queryRecordDatas() {
-      this.loading = true;
+    // 获得随机密码
+    async passwordGet() {
       try {
-        let response = await axios.post('/accountmanager/account/find',
-          {
-            page_num: this.pageNumber,
-            page_size: this.pageSize,
-            decrypt: this.decryptFlag,
-            category_id: this.categoryId,
-            keyword_app_name: this.keywordAppName
-          });
-        let resJson = response.data;
-        this.handleRes(resJson);
-        this.recordDatas = resJson.data.list;
-        this.totalRecords = resJson.data.total;
-        this.loading = false;
+        let response = await axios.post('/accountmanager/password/get', {});
+        let res = response.data;
+        this.handleRes(res);
+        this.accountDialogDataPassword = res.data;
       } catch (error) {
         console.error(error);
       }
     },
 
-    // 查询随机密码
-    async queryRandomPassword() {
+    // 账号-分页页码变更处理
+    accountTablePageNumHandle(newPageNum) {
+      this.accountTablePageNum = newPageNum;
+    },
+    // 账号-查询分页数据
+    async accountTableQuery() {
+      this.accountTableLoading = true;
       try {
-        let response = await axios.get('/accountmanager/password/get');
-        let resJson = response.data;
-        this.handleRes(resJson);
-        this.recordDataPassword = resJson.data;
+        let response = await axios.post('/accountmanager/account/find',
+          {
+            page_num: this.accountTablePageNum,
+            page_size: this.accountTablePageSize,
+            decrypt: this.accountDecryptFlag,
+            category_id: this.accountTableQueryCategoryId,
+            keyword_app_name: this.accountTableQueryKeywordAppName
+          });
+        let res = response.data;
+        this.handleRes(res);
+        this.accountTableDatas = res.data.list;
+        this.accountTableTotal = res.data.total;
+        this.accountTableLoading = false;
       } catch (error) {
         console.error(error);
       }
     },
-    // 展示一条记录数据对话框内容
-    showRecordDataDialog(rowData) {
-      if (rowData != null) {
-        this.recordDataDialogTitle = '修改账号';
-        let recordData = Object.assign({}, rowData);
-        this.recordDataId = recordData.id;
-        this.recordDataName = recordData.name;
-        this.recordDataUrl = recordData.url;
-        this.recordDataUsername = recordData.username;
-        this.recordDataPassword = recordData.password;
-        this.recordDataRemark = recordData.remark;
-      } else {
-        this.clearRecordDataDialog();
-        this.recordDataDialogTitle = '新增账号';
-      }
-      this.recordDataDialogFlag = true;
+    // 账号-清理编辑对话框
+    accountEditDialogClear() {
+      this.accountEditDialogShowFlag = false;
+      this.accountDialogDataId = null;
+      this.accountDialogDataCategoryId = null;
+      this.accountDialogDataCategoryName = null;
+      this.accountDialogDataAppName = null;
+      this.accountDialogDataAppUrl = null;
+      this.accountDialogDataUsername = null;
+      this.accountDialogDataPassword = null;
+      this.accountDialogDataRemark = null;
     },
-    // 新增或编辑记录
-    async addOrEditRecordData() {
-      if (this.recordDataId != null) {
+    // 账号-展示编辑对话框
+    accountEditDialogShow(accountRow) {
+      if (accountRow != null) {
+        this.accountEditDialogTitle = '修改账号';
+        let accountDialogData = Object.assign({}, accountRow);
+        this.accountDialogDataId = accountDialogData.id;
+        this.accountDialogDataCategoryId = accountDialogData.category_id;
+        this.accountDialogDataCategoryName = accountDialogData.category_name;
+        this.accountDialogDataAppName = accountDialogData.app_name;
+        this.accountDialogDataAppUrl = accountDialogData.app_url;
+        this.accountDialogDataUsername = accountDialogData.username;
+        this.accountDialogDataPassword = accountDialogData.password;
+        this.accountDialogDataRemark = accountDialogData.remark;
+      } else {
+        this.accountEditDialogClear();
+        this.accountEditDialogTitle = '新增账号';
+      }
+      this.accountEditDialogShowFlag = true;
+    },
+    // 账号-编辑
+    async accountEdit() {
+      if (this.accountDialogDataId != null) {
         try {
           let response = await axios.post('/accountmanager/account/update',
             {
-              id: this.recordDataId,
-              name: this.recordDataName,
-              url: this.recordDataUrl,
-              username: this.recordDataUsername,
-              password: this.recordDataPassword,
-              remark: this.recordDataRemark
+              id: this.accountDialogDataId,
+              category_id: this.accountDialogDataCategoryId,
+              app_name: this.accountDialogDataAppName,
+              app_url: this.accountDialogDataAppUrl,
+              username: this.accountDialogDataUsername,
+              password: this.accountDialogDataPassword,
+              remark: this.accountDialogDataRemark
             });
-          let resJson = response.data;
-          let successFlag = this.handleRes(resJson);
+          let res = response.data;
+          let successFlag = this.handleRes(res);
           if (successFlag) {
-            this.clearRecordDataDialog();
-            this.queryRecordDatas();
+            this.accountEditDialogClear();
+            this.accountTableQuery();
           }
         } catch (error) {
           console.error(error);
@@ -235,116 +254,50 @@ const App = {
         try {
           let response = await axios.post('/accountmanager/account/add',
             {
-              name: this.recordDataName,
-              url: this.recordDataUrl,
-              username: this.recordDataUsername,
-              password: this.recordDataPassword,
-              remark: this.recordDataRemark
+              category_id: this.accountDialogDataCategoryId,
+              app_name: this.accountDialogDataAppName,
+              app_url: this.accountDialogDataAppUrl,
+              username: this.accountDialogDataUsername,
+              password: this.accountDialogDataPassword,
+              remark: this.accountDialogDataRemark
             });
-          let resJson = response.data;
-          let successFlag = this.handleRes(resJson);
+          let res = response.data;
+          let successFlag = this.handleRes(res);
           if (successFlag) {
-            this.clearRecordDataDialog();
-            this.queryRecordDatas();
+            this.accountEditDialogClear();
+            this.accountTablePageNum = 1;
+            this.accountTableQuery();
           }
         } catch (error) {
           console.error(error);
         }
       }
     },
-    // 清空一条记录数据对话框内容
-    clearRecordDataDialog() {
-      this.recordDataDialogFlag = false;
-      this.recordDataId = null;
-      this.recordDataName = null;
-      this.recordDataUrl = null;
-      this.recordDataUsername = null;
-      this.recordDataPassword = null;
-      this.recordDataRemark = null;
+    // 账号-展示删除对话框
+    accountDelDialogShow(accountRow) {
+      let accoutDialogData = Object.assign({}, accountRow);
+      this.accountDialogDataId = accoutDialogData.id;
+      this.accountDialogDataAppName = accoutDialogData.app_name;
+      this.accountDelDialogShowFlag = true;
     },
-
-    // 查询一条记录数据
-    async queryRecordData(recordId) {
-      try {
-        let response = await axios.get('/accountmanager/account/get',
-          {
-            params: {
-              id: recordId
-            }
-          });
-        let resJson = response.data;
-        this.handleRes(resJson);
-        return resJson.data;
-      } catch (error) {
-        console.error(error);
-      }
+    // 账号-清理删除对话框
+    accountDelDialogClear() {
+      this.accountDialogDataId = null;
+      this.accountDialogDataAppName = null;
+      this.accountDelDialogShowFlag = false;
     },
-
-    // 展示导入导出对话框
-    showImexDialog() {
-      this.imexDialogFlag = true;
-    },
-    // 处理上传文件变更
-    handleUploadFileChange(event) {
-      this.uploadFile = event.target.files[0];
-    },
-    // 导入数据
-    async importRecordDatas() {
-      if (this.uploadFile === null) {
-        this.errMsg = "请选择文件";
-        this.snackbar = true;
-        return;
-      }
-      let response = await axios({
-        method: 'post',
-        url: '/accountmanager/account/import',
-        data: {
-          file: this.uploadFile
-        },
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      let resJson = response.data;
-      let successFlag = this.handleRes(resJson);
-      if (successFlag) {
-        this.clearImexDialog();
-        this.queryRecordDatas();
-      }
-    },
-    // 导出
-    exportRecordDatas() {
-      window.location.href = '/accountmanager/account/export';
-    },
-    // 清空上传文件
-    clearImexDialog() {
-      this.uploadFile = null;
-      this.imexDialogFlag = false;
-    },
-
-    // 删除对话框-展示
-    showDelDialog(rowData) {
-      let recordData = Object.assign({}, rowData);
-      this.delId = recordData.id;
-      this.delDialogFlag = true;
-    },
-    // 删除对话框-取消
-    clearDelDialog() {
-      this.delId = null;
-      this.delDialogFlag = false;
-    },
-    // 删除对话框-确定
-    async delRecordData() {
+    // 账号-删除
+    async accountDel() {
       try {
         let response = await axios.post('/accountmanager/account/delete',
           {
-            id: this.delId
+            id: this.accountDialogDataId
           });
-        let resJson = response.data;
-        let successFlag = this.handleRes(resJson);
+        let res = response.data;
+        let successFlag = this.handleRes(res);
         if (successFlag) {
-          this.clearDelDialog();
-          this.queryRecordDatas();
+          this.accountDelDialogClear();
+          this.accountTableQuery();
         }
       } catch (error) {
         console.error(error);
@@ -497,6 +450,48 @@ const App = {
       } catch (error) {
         console.error(error);
       }
+    },
+
+    // 展示导入导出对话框
+    showImexDialog() {
+      this.imexDialogFlag = true;
+    },
+    // 处理上传文件变更
+    handleUploadFileChange(event) {
+      this.uploadFile = event.target.files[0];
+    },
+    // 导入数据
+    async importRecordDatas() {
+      if (this.uploadFile === null) {
+        this.errMsg = "请选择文件";
+        this.snackbar = true;
+        return;
+      }
+      let response = await axios({
+        method: 'post',
+        url: '/accountmanager/account/import',
+        data: {
+          file: this.uploadFile
+        },
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      let resJson = response.data;
+      let successFlag = this.handleRes(resJson);
+      if (successFlag) {
+        this.clearImexDialog();
+        this.queryRecordDatas();
+      }
+    },
+    // 导出
+    exportRecordDatas() {
+      window.location.href = '/accountmanager/account/export';
+    },
+    // 清空上传文件
+    clearImexDialog() {
+      this.uploadFile = null;
+      this.imexDialogFlag = false;
     },
 
     // 处理响应

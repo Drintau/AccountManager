@@ -34,79 +34,88 @@
       <v-main class="main-content">
         <v-container>
 
-          <!-- 欢迎页面 -->
+          <!-- 欢迎 -->
           <template v-if="helloShowFlag">
             <h1>欢迎使用账号管理器！</h1>
           </template>
 
-          <!-- 管理账号页面 -->
+          <!-- 账号 -->
           <template v-if="accountShowFlag">
             <v-row>
               <v-col>
-                <v-btn density="comfortable" @click="showRecordDataDialog(null)">新增账号</v-btn>
+                <v-btn variant="outlined" @click="accountEditDialogShow(null)">新增账号</v-btn>
               </v-col>
               <v-col>
-                <v-text-field append-inner-icon="fa-solid fa-magnifying-glass" density="comfortable" label="搜索"
-                  variant="underlined" v-model="fuzzyName" single-line @click:append-inner="queryRecordDatas()">
+                <v-text-field append-inner-icon="fa-solid fa-magnifying-glass" density="comfortable" label="搜索" variant="underlined" v-model="accountTableQueryKeywordAppName" single-line @click:append-inner="accountTableQuery()">
                 </v-text-field>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col>
-                <v-data-table-server v-model:items-per-page="pageSize" :items-per-page-options="pageSizeOptions"
-                  :items-per-page-text="pageSizeOptionsText" :page="pageNumber" :headers="headers" :items="recordDatas"
-                  :items-length="totalRecords" :loading="loading" @update:options="queryRecordDatas"
-                  @update:page="handlePageNumberChange" show-current-page="true" first-icon="fa-solid fa-angles-left"
-                  prev-icon="fa-solid fa-angle-left" next-icon="fa-solid fa-angle-right"
-                  last-icon="fa-solid fa-angles-right">
+                <v-data-table-server v-model:page="accountTablePageNum"
+                  :items-per-page="accountTablePageSize" 
+                  :items-per-page-options="accountTablePageSizeOptions"
+                  :items-per-page-text="accountTablePageSizeOptionsText"  
+                  :headers="accountTableHeaders" 
+                  :items="accountTableDatas"
+                  :items-length="accountTableTotal" 
+                  :loading="accountTableLoading" 
+                  @update:options="accountTableQuery"
+                  @update:page="accountTablePageNumHandle" 
+                  show-current-page="true" 
+                  first-icon="fa-solid fa-angles-left" prev-icon="fa-solid fa-angle-left" 
+                  next-icon="fa-solid fa-angle-right" last-icon="fa-solid fa-angles-right">
                   <template v-slot:item.actions="{ item }">
-                    <v-row>
-                      <v-col>
-                        <v-icon size="small" @click="showRecordDataDialog(item)">
-                          fa-solid fa-pen
-                        </v-icon>
-                      </v-col>
-                      <v-col>
-                        <v-icon size="small" color="red" @click="showDelDialog(item)">
-                          fa-regular fa-trash-can
-                        </v-icon>
-                      </v-col>
-                    </v-row>
+                    <div class="d-flex ga-2 justify-end">
+                      <v-icon size="small" @click="accountEditDialogShow(item)">
+                        fa-solid fa-pen
+                      </v-icon>
+                      <v-icon size="small" color="red" @click="accountDelDialogShow(item)">
+                        fa-regular fa-trash-can
+                      </v-icon>
+                    </div>
                   </template>
                 </v-data-table-server>
               </v-col>
             </v-row>
 
-            <v-dialog v-model="recordDataDialogFlag" width="auto">
-              <v-card max-height="600" width="500" :title="recordDataDialogTitle">
-                <v-form>
-                  <v-text-field label="名称" v-model="recordDataName"></v-text-field>
-                  <v-text-field label="网址" v-model="recordDataUrl"></v-text-field>
-                  <v-text-field label="账号" v-model="recordDataUsername"></v-text-field>
-                  <v-text-field label="密码" v-model="recordDataPassword" append-inner-icon="fa-solid fa-shuffle"
-                    @click:append-inner="queryRandomPassword">
+            <v-dialog v-model="accountEditDialogShowFlag" width="auto">
+              <v-card max-height="600" width="500" :title="accountEditDialogTitle">
+                <v-form class="mx-8">
+                  <v-text-field label="分类" v-model="accountDialogDataCategoryName"></v-text-field>
+                  <v-text-field label="名称" v-model="accountDialogDataAppName"></v-text-field>
+                  <v-text-field label="网址" v-model="accountDialogDataAppUrl"></v-text-field>
+                  <v-text-field label="账号" v-model="accountDialogDataUsername"></v-text-field>
+                  <v-text-field label="密码" v-model="accountDialogDataPassword" append-inner-icon="fa-solid fa-shuffle" @click:append-inner="passwordGet">
                   </v-text-field>
-                  <v-text-field label="备注" v-model="recordDataRemark"></v-text-field>
+                  <v-text-field label="备注" v-model="accountDialogDataRemark"></v-text-field>
                 </v-form>
-                <v-card-actions>
-                  <v-btn @click="clearRecordDataDialog()">取消</v-btn>
-                  <v-btn color="green" @click="addOrEditRecordData()">提交</v-btn>
+                <v-card-actions class="mx-6 mb-4">
+                  <v-btn @click="accountEditDialogClear()">取消</v-btn>
+                  <!-- 弹性空间 -->
+                  <v-spacer></v-spacer>
+                  <v-btn color="green" @click="accountEdit()">提交</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
 
-            <v-dialog v-model="delDialogFlag" width="auto">
-              <v-card max-height="600" width="500" title="删除账号">
-                <v-card-actions>
-                  <v-btn @click="clearDelDialog()">取消</v-btn>
-                  <v-btn color="red" @click="delRecordData()">确定</v-btn>
+            <v-dialog v-model="accountDelDialogShowFlag" width="auto">
+              <v-card max-height="500" width="400" title="删除账号">
+                <v-card-text>
+                  确定删除 {{ accountDialogDataAppName }} 账号吗？
+                </v-card-text>
+                <v-card-actions class="mx-6 mb-4">
+                  <v-btn @click="accountDelDialogClear()">取消</v-btn>
+                  <!-- 弹性空间 -->
+                  <v-spacer></v-spacer>
+                  <v-btn color="red" @click="accountDel()">确定</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
           </template>
 
-          <!-- 管理分类页面 -->
+          <!-- 分类 -->
           <template v-if="categoryShowFlag">
             <v-row>
               <v-col>
@@ -165,7 +174,7 @@
             </v-dialog>
           </template>
 
-          <!-- 迁移数据页面 -->
+          <!-- 迁移-->
           <template v-if="transferShowFlag">
 
             <v-file-input label="选择文件" prepend-icon="" append-icon="fa-solid fa-file-import"
@@ -175,7 +184,7 @@
 
           </template>
 
-          <!-- 配置系统页面 -->
+          <!-- 设置 -->
           <template v-if="configShowFlag">
             <v-row>
               <v-col>
