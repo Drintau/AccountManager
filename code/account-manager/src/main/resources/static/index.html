@@ -83,7 +83,13 @@
             <v-dialog v-model="accountEditDialogShowFlag" width="auto">
               <v-card max-height="600" width="500" :title="accountEditDialogTitle">
                 <v-form class="mx-8">
-                  <v-text-field label="分类" v-model="accountDialogDataCategoryName"></v-text-field>
+                  <v-select label="分类" 
+                            v-model="accountDialogDataCategoryId"
+                            :items="accountEditDialogCategoryDatas"
+                            item-title="category_name"
+                            item-value="id"
+                            clearable clear-icon="fa-regular fa-circle-xmark">
+                  </v-select>
                   <v-text-field label="名称" v-model="accountDialogDataAppName"></v-text-field>
                   <v-text-field label="网址" v-model="accountDialogDataAppUrl"></v-text-field>
                   <v-text-field label="账号" v-model="accountDialogDataUsername"></v-text-field>

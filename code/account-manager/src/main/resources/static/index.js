@@ -69,6 +69,7 @@ const App = {
       // 账号编辑对话框属性
       accountEditDialogShowFlag: false,
       accountEditDialogTitle: null,
+      accountEditDialogCategoryDatas: [],
       // 账号删除对话框属性
       accountDelDialogShowFlag: false,
 
@@ -207,9 +208,18 @@ const App = {
       this.accountDialogDataUsername = null;
       this.accountDialogDataPassword = null;
       this.accountDialogDataRemark = null;
+      this.accountEditDialogCategoryDatas = [];
     },
     // 账号-展示编辑对话框
-    accountEditDialogShow(accountRow) {
+    async accountEditDialogShow(accountRow) {
+      try {
+        let response = await axios.post('/accountmanager/category/all',{});
+        let res = response.data;
+        this.handleRes(res);
+        this.accountEditDialogCategoryDatas = res.data.list;
+      } catch (error) {
+        console.error(error);
+      }
       if (accountRow != null) {
         this.accountEditDialogTitle = '修改账号';
         let accountDialogData = Object.assign({}, accountRow);

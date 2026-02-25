@@ -21,7 +21,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -77,8 +79,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountBO updateAccount(AccountBO bo) {
-        boolean existFlag = accountStaticRepository.existsById(bo.getId());
-        if (!existFlag) {
+        Optional<AccountPO> poOptional = accountStaticRepository.findById(bo.getId());
+        if (poOptional.isEmpty()) {
             throw new BusinessException("账号id对应数据不存在");
         }
 
@@ -87,9 +89,12 @@ public class AccountServiceImpl implements AccountService {
             bo.setCategoryName(category.getCategoryName());
         }
 
+        AccountPO oldPO = poOptional.get();
+
         AccountPO po = BeanUtil.copy(bo, AccountPO.class);
         po.setUsername(secureService.encrypt(po.getUsername()));
         po.setPassword(secureService.encrypt(po.getPassword()));
+        po.setCreateTime(oldPO.getCreateTime());
         po.setUpdateTime(DateTimeUtil.getCurrentUtcSecond());
         accountStaticRepository.save(po);
 
@@ -123,10 +128,17 @@ public class AccountServiceImpl implements AccountService {
             List<AccountPO> poList = accountDynamicRepository.findByCondition(conditionBO);
             List<AccountBO> boList = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(poList)) {
+                // 查分类，补充分类名称
+                List<CategoryBO> allCategory = categoryService.allCategory();
+                Map<Integer, String> categoryId2NameMap = allCategory.stream().collect(Collectors.toMap(CategoryBO::getId, CategoryBO::getCategoryName));
+
                 for (AccountPO po : poList) {
                     AccountBO bo = BeanUtil.copy(po, AccountBO.class);
                     bo.setUsername(secureService.decrypt(bo.getUsername()));
                     bo.setPassword(secureService.decrypt(bo.getPassword()));
+                    if (bo.getCategoryId() != null) {
+                        bo.setCategoryName(categoryId2NameMap.get(bo.getCategoryId()));
+                    }
                     boList.add(bo);
                 }
             }
