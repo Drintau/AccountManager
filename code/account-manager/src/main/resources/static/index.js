@@ -33,6 +33,7 @@ const App = {
       accountDecryptFlag: true,
       // 账号列表分类筛选
       accountTableQueryCategoryId: null,
+      accountTableQueryCategoryDatas: [],
       // 账号列表应用名称搜索框
       accountTableQueryKeywordAppName: null,
       // 分页
@@ -60,7 +61,7 @@ const App = {
       // 一条账号记录的数据
       accountDialogDataId: null,
       accountDialogDataCategoryId: null,
-      accountDialogDataCategoryName: null,
+      // accountDialogDataCategoryName: null,
       accountDialogDataAppName: null,
       accountDialogDataAppUrl: null,
       accountDialogDataUsername: null,
@@ -126,8 +127,16 @@ const App = {
     // 请求后端接口不用单独一个方法出来，目前没有能够重复用的，以后有再拆分
 
     // 页面显示控制
-    moduleShow(param) {
+    async moduleShow(param) {
       if ('accountShowFlag' === param) {
+        try {
+          let response = await axios.post('/accountmanager/category/all',{});
+          let res = response.data;
+          this.handleRes(res);
+          this.accountTableQueryCategoryDatas = res.data.list;
+        } catch (error) {
+          console.error(error);
+        }
         this.helloShowFlag = false;
         this.accountShowFlag = true;
         this.categoryShowFlag = false;
@@ -202,7 +211,7 @@ const App = {
       this.accountEditDialogShowFlag = false;
       this.accountDialogDataId = null;
       this.accountDialogDataCategoryId = null;
-      this.accountDialogDataCategoryName = null;
+      // this.accountDialogDataCategoryName = null;
       this.accountDialogDataAppName = null;
       this.accountDialogDataAppUrl = null;
       this.accountDialogDataUsername = null;
@@ -226,7 +235,7 @@ const App = {
         let accountDialogData = Object.assign({}, accountRow);
         this.accountDialogDataId = accountDialogData.id;
         this.accountDialogDataCategoryId = accountDialogData.category_id;
-        this.accountDialogDataCategoryName = accountDialogData.category_name;
+        // this.accountDialogDataCategoryName = accountDialogData.category_name;
         this.accountDialogDataAppName = accountDialogData.app_name;
         this.accountDialogDataAppUrl = accountDialogData.app_url;
         this.accountDialogDataUsername = accountDialogData.username;

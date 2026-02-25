@@ -41,20 +41,36 @@
 
           <!-- 账号 -->
           <template v-if="accountShowFlag">
-            <v-row>
-              <v-col>
-                <v-btn variant="outlined" @click="accountEditDialogShow(null)">新增账号</v-btn>
+            <v-row align="center">
+              <v-col cols="2">
+                <v-select label="分类筛选" 
+                          v-model="accountTableQueryCategoryId"
+                          :items="accountTableQueryCategoryDatas"
+                          item-title="category_name"
+                          item-value="id"
+                          variant="underlined"
+                          clearable 
+                          clear-icon="fa-regular fa-circle-xmark">
+                </v-select>                
               </v-col>
-              <v-col>
-                <v-text-field append-inner-icon="fa-solid fa-magnifying-glass" density="comfortable" label="搜索" variant="underlined" v-model="accountTableQueryKeywordAppName" single-line @click:append-inner="accountTableQuery()">
+              <v-col cols="4">
+                <v-text-field label="名称搜索" 
+                              v-model="accountTableQueryKeywordAppName" 
+                              variant="underlined"
+                              append-icon="fa-solid fa-magnifying-glass" 
+                              @click:append="accountTableQuery()">
                 </v-text-field>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="auto">
+                <v-btn variant="outlined" @click="accountEditDialogShow(null)">新增账号</v-btn>
               </v-col>
             </v-row>
 
             <v-row>
               <v-col>
-                <v-data-table-server v-model:page="accountTablePageNum"
-                  :items-per-page="accountTablePageSize" 
+                <v-data-table-server v-model:items-per-page="accountTablePageSize"
+                  :page="accountTablePageNum"
                   :items-per-page-options="accountTablePageSizeOptions"
                   :items-per-page-text="accountTablePageSizeOptionsText"  
                   :headers="accountTableHeaders" 
@@ -88,7 +104,8 @@
                             :items="accountEditDialogCategoryDatas"
                             item-title="category_name"
                             item-value="id"
-                            clearable clear-icon="fa-regular fa-circle-xmark">
+                            clearable 
+                            clear-icon="fa-regular fa-circle-xmark">
                   </v-select>
                   <v-text-field label="名称" v-model="accountDialogDataAppName"></v-text-field>
                   <v-text-field label="网址" v-model="accountDialogDataAppUrl"></v-text-field>
@@ -124,7 +141,8 @@
           <!-- 分类 -->
           <template v-if="categoryShowFlag">
             <v-row>
-              <v-col>
+              <v-spacer></v-spacer>
+              <v-col cols="auto">
                 <v-btn variant="outlined" @click="categoryEditDialogShow(null)">新增分类</v-btn>
               </v-col>
             </v-row>
