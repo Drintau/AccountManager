@@ -212,6 +212,7 @@ const App = {
     },
     // 账号-展示编辑对话框
     async accountEditDialogShow(accountRow) {
+      this.accountEditDialogClear();
       try {
         let response = await axios.post('/accountmanager/category/all',{});
         let res = response.data;
@@ -232,7 +233,6 @@ const App = {
         this.accountDialogDataPassword = accountDialogData.password;
         this.accountDialogDataRemark = accountDialogData.remark;
       } else {
-        this.accountEditDialogClear();
         this.accountEditDialogTitle = '新增账号';
       }
       this.accountEditDialogShowFlag = true;
