@@ -57,6 +57,8 @@
                 <v-text-field label="名称搜索" 
                               v-model="accountTableQueryKeywordAppName" 
                               variant="underlined"
+                              clearable 
+                              clear-icon="fa-regular fa-circle-xmark"
                               append-icon="fa-solid fa-magnifying-glass" 
                               @click:append="accountTableQuery()">
                 </v-text-field>
@@ -104,15 +106,16 @@
                             :items="accountEditDialogCategoryDatas"
                             item-title="category_name"
                             item-value="id"
+                            variant="outlined"
                             clearable 
                             clear-icon="fa-regular fa-circle-xmark">
                   </v-select>
-                  <v-text-field label="名称" v-model="accountDialogDataAppName"></v-text-field>
-                  <v-text-field label="网址" v-model="accountDialogDataAppUrl"></v-text-field>
-                  <v-text-field label="账号" v-model="accountDialogDataUsername"></v-text-field>
-                  <v-text-field label="密码" v-model="accountDialogDataPassword" append-inner-icon="fa-solid fa-shuffle" @click:append-inner="passwordGet">
+                  <v-text-field label="名称" v-model="accountDialogDataAppName" variant="outlined"></v-text-field>
+                  <v-text-field label="网址" v-model="accountDialogDataAppUrl" variant="outlined"></v-text-field>
+                  <v-text-field label="账号" v-model="accountDialogDataUsername" variant="outlined"></v-text-field>
+                  <v-text-field label="密码" v-model="accountDialogDataPassword" variant="outlined" append-inner-icon="fa-solid fa-shuffle" @click:append-inner="passwordGet">
                   </v-text-field>
-                  <v-text-field label="备注" v-model="accountDialogDataRemark"></v-text-field>
+                  <v-text-field label="备注" v-model="accountDialogDataRemark" variant="outlined"></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="accountEditDialogClear()">取消</v-btn>
@@ -172,7 +175,7 @@
             <v-dialog v-model="categoryEditDialogShowFlag" width="auto">
               <v-card max-height="500" width="400" :title="categoryEditDialogTitle">
                 <v-form class="mx-8">
-                  <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="solo" autofocus></v-text-field>
+                  <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="outlined" autofocus></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="categoryEditDialogClear()">取消</v-btn>
@@ -233,7 +236,7 @@
               <v-card max-height="500" width="400" title="修改配置">
                 <v-form class="mx-8">
                   <v-text-field label="配置项" v-model="configDialogDataConfigKey" disabled variant="solo-inverted" focused></v-text-field>
-                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="solo" autofocus></v-text-field>
+                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="outlined" autofocus></v-text-field>
                   <v-text-field label="说明" v-model="configDialogDataRemark" disabled variant="solo-inverted" focused></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
