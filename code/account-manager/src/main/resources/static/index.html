@@ -20,18 +20,18 @@
     <v-app>
 
       <!-- 左侧导航栏 -->
-      <v-navigation-drawer class="navigation-drawer" permanent>
-        <v-toolbar title="账号管理器" color="blue" density="comfortable"></v-toolbar>
+      <v-navigation-drawer permanent width="200">
+        <v-toolbar title="账号管理器" color="blue" density="compact"></v-toolbar>
         <v-list>
-          <v-list-item class="nav-item" title="账号" @click="moduleShow('accountShowFlag')"></v-list-item>
-          <v-list-item class="nav-item" title="分类" @click="moduleShow('categoryShowFlag')"></v-list-item>
-          <v-list-item class="nav-item" title="迁移" @click="moduleShow('transferShowFlag')"></v-list-item>
-          <v-list-item class="nav-item" title="设置" @click="moduleShow('configShowFlag')"></v-list-item>
+          <v-list-item :active="accountShowFlag" title="账号" @click="moduleShow('accountShowFlag')"></v-list-item>
+          <v-list-item :active="categoryShowFlag" title="分类" @click="moduleShow('categoryShowFlag')"></v-list-item>
+          <v-list-item :active="transferShowFlag" title="迁移" @click="moduleShow('transferShowFlag')"></v-list-item>
+          <v-list-item :active="configShowFlag" title="设置" @click="moduleShow('configShowFlag')"></v-list-item>
         </v-list>
       </v-navigation-drawer>
 
       <!-- 主体 -->
-      <v-main class="main-content">
+      <v-main>
         <v-container>
 
           <!-- 欢迎 -->
