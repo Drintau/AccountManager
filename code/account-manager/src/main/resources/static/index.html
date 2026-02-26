@@ -203,28 +203,35 @@
 
           <!-- 迁移-->
           <template v-if="transferShowFlag">
-            <v-card title="导入：先选择要导入的xlsx文件，然后点击按钮" variant="outlined">
-              <div class="mx-8 mb-4">
-                <v-file-input v-model="transferImportFile"
-                  label="选择文件" 
-                  accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                  variant="outlined"
-                  prepend-icon="" 
-                  append-icon="fa-solid fa-file-import"
-                  clearable
-                  clear-icon="fa-regular fa-circle-xmark"
-                  show-size
-                  @click:append="transferImport">
-                </v-file-input>
-              </div>
-            </v-card>
-            <!-- 分割线 -->
-            <v-divider thickness="20" color="white"></v-divider>
-            <v-card title="导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板" variant="outlined">
-              <div class="mx-8 mb-4">
-                <v-btn variant="outlined" @click="transferExport">导出数据/下载模板</v-btn>
-              </div>
-            </v-card>
+            <v-row>
+              <v-col>
+                <v-card title="导入：先选择要导入的xlsx文件，然后点击按钮" variant="outlined">
+                  <div class="mx-8 mb-4">
+                    <v-file-input v-model="transferImportFile"
+                      label="选择文件" 
+                      accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      variant="outlined"
+                      prepend-icon="" 
+                      append-icon="fa-solid fa-file-import"
+                      clearable
+                      clear-icon="fa-regular fa-circle-xmark"
+                      show-size
+                      @click:append="transferImport">
+                    </v-file-input>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-row>
+            
+            <v-row>
+              <v-col>
+                <v-card title="导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板" variant="outlined">
+                  <div class="mx-8 mb-4">
+                    <v-btn variant="outlined" @click="transferExport">导出数据/下载模板</v-btn>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-row>
           </template>
 
           <!-- 设置 -->
