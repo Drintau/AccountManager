@@ -52,7 +52,6 @@ const App = {
         { key: 'username', title: '账号', sortable: false },
         { key: 'password', title: '密码', sortable: false },
         { key: 'remark', title: '备注', sortable: false },
-        //        { key: 'create_time', title: '创建时间', sortable: false },
         //        { key: 'update_time', title: '更新时间', sortable: false },
         { key: 'actions', title: '操作', sortable: false, align: 'end' },
       ],
@@ -93,8 +92,7 @@ const App = {
       categoryDelDialogShowFlag: false,
 
       // 迁移模块 transfer
-      transferDialogShowFlag: false,
-      uploadFile: null,
+      transferImportFile: null,
 
       // 设置模块 config
       configTableHeaders: [
@@ -471,46 +469,33 @@ const App = {
       }
     },
 
-    // 展示导入导出对话框
-    showImexDialog() {
-      this.imexDialogFlag = true;
-    },
-    // 处理上传文件变更
-    handleUploadFileChange(event) {
-      this.uploadFile = event.target.files[0];
-    },
-    // 导入数据
-    async importRecordDatas() {
-      if (this.uploadFile === null) {
-        this.errMsg = "请选择文件";
-        this.snackbar = true;
+    // 迁移-导入
+    async transferImport() {
+      if (this.transferImportFile == null) {
+        this.errSnackbarMsg = "请选择文件";
+        this.errSnackbarShowFlag = true;
         return;
       }
+
       let response = await axios({
         method: 'post',
         url: '/accountmanager/account/import',
         data: {
-          file: this.uploadFile
+          file: this.transferImportFile
         },
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
-      let resJson = response.data;
-      let successFlag = this.handleRes(resJson);
+      let res = response.data;
+      let successFlag = this.handleRes(res);
       if (successFlag) {
-        this.clearImexDialog();
-        this.queryRecordDatas();
+        this.moduleShow('accountShowFlag');
       }
     },
     // 导出
-    exportRecordDatas() {
+    transferExport() {
       window.location.href = '/accountmanager/account/export';
-    },
-    // 清空上传文件
-    clearImexDialog() {
-      this.uploadFile = null;
-      this.imexDialogFlag = false;
     },
 
     // 处理响应
