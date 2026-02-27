@@ -9,7 +9,7 @@ public class VersionInfo {
     @JsonProperty("version")
     private String version;
 
-    @JsonProperty("package-time")
+    @JsonProperty("build-time")
     private String buildTime;
 
 }

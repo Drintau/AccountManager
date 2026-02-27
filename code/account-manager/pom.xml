@@ -19,19 +19,19 @@
         <!--指定时间格式：年-月-日 时:分:秒 时区-->
         <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss Z</maven.build.timestamp.format>
         <!--maven.build.timestamp保存了maven编译时间戳-->
-        <timestamp>${maven.build.timestamp}</timestamp>
+        <build-time>${maven.build.timestamp}</build-time>
 
-        <h2database.version>2.3.232</h2database.version>
+        <h2database.version>2.4.240</h2database.version>
 
         <fesod.version>2.0.1-incubating</fesod.version>
 
-        <vue.version>3.5.12</vue.version>
-        <axios.version>1.7.9</axios.version>
-        <vuetify.version>3.7.19</vuetify.version>
-        <fontawesome-free.version>6.6.0</fontawesome-free.version>
+        <vue.version>3.5.26</vue.version>
+        <axios.version>1.12.2</axios.version>
+        <vuetify.version>3.11.4</vuetify.version>
+        <fontawesome-free.version>6.7.2</fontawesome-free.version>
 
         <!-- 使用LTS版本 -->
-        <javafx.version>21.0.8</javafx.version>
+        <javafx.version>21.0.10</javafx.version>
     </properties>
 
     <dependencies>

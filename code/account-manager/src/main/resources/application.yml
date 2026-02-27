@@ -1,6 +1,6 @@
 debug: false
 version: @version@
-build-time: @timestamp@
+build-time: @build-time@
 server:
   shutdown: graceful
   port: 12300
