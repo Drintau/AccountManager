@@ -21,4 +21,5 @@ public interface AccountService {
 
     void transferImport(List<AccountTransferBO> importDataList);
 
+    List<AccountTransferBO> transferExport();
 }

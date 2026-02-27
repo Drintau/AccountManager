@@ -177,4 +177,10 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public List<AccountTransferBO> transferExport() {
+        AccountFindResultBO resultBO = findAccount(new AccountFindConditionBO());
+        return BeanUtil.copyList(resultBO.getList(), AccountTransferBO.class);
+    }
+
 }

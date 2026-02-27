@@ -10,14 +10,19 @@ import drintau.accountmanager.webserver.domain.bo.AccountTransferBO;
 import drintau.accountmanager.webserver.domain.vo.*;
 import drintau.accountmanager.webserver.service.AccountService;
 import drintau.accountmanager.webserver.service.AccountTransferImportListener;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.fesod.sheet.FesodSheet;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -76,11 +81,26 @@ public class AccountController {
         return new CommonResult<>();
     }
 
+    @GetMapping("/export")
+    public void transferExport(HttpServletResponse response) {
+        try {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
 
-    @PostMapping("/export")
-    public CommonResult<Void> transferExport() {
-        return new CommonResult<>();
+            List<AccountTransferBO> accountTransferExportBOList = accountService.transferExport();
+
+            String rawFileName = CollectionUtils.isEmpty(accountTransferExportBOList) ? "导入模板" : "导出数据";
+            String fileName = URLEncoder.encode(rawFileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+
+            FesodSheet.write(response.getOutputStream(), AccountTransferBO.class)
+                    .sheet("账号")
+                    .doWrite(accountTransferExportBOList);
+
+        } catch (Exception e) {
+            log.error("文件生成失败", e);
+            throw new BusinessException("文件生成失败");
+        }
     }
-
 
 }
