@@ -19,7 +19,7 @@ public class OpenBrowserEvent implements EventHandler<ActionEvent> {
         try {
             desktop.browse(uri);
         } catch (IOException e) {
-            log.error("", e);
+            log.error("打开浏览器访问失败", e);
         }
     }
 }

@@ -24,7 +24,7 @@ public class YamlUtil {
         try {
             return objectMapper.readValue(yamlFile, targetClass);
         } catch (IOException e) {
-            log.error("", e);
+            log.error("解析yaml文件失败", e);
             throw new BusinessException(BusinessCode.FAIL, "解析yaml文件失败");
         }
     }

@@ -19,7 +19,7 @@ public interface AccountService {
 
     AccountFindResultBO findAccount(AccountFindConditionBO conditionBO);
 
-    void transferImport(List<AccountTransferBO> importDataList);
+    void importAccount(List<AccountTransferBO> importDataList);
 
-    List<AccountTransferBO> transferExport();
+    List<AccountTransferBO> exportAccount();
 }

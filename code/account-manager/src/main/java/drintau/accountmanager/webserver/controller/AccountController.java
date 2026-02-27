@@ -87,7 +87,7 @@ public class AccountController {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             response.setCharacterEncoding("utf-8");
 
-            List<AccountTransferBO> accountTransferExportBOList = accountService.transferExport();
+            List<AccountTransferBO> accountTransferExportBOList = accountService.exportAccount();
 
             String rawFileName = CollectionUtils.isEmpty(accountTransferExportBOList) ? "导入模板" : "导出数据";
             String fileName = URLEncoder.encode(rawFileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");

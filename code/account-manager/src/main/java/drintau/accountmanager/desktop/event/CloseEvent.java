@@ -9,6 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.StringUtils;
 
 public class CloseEvent implements EventHandler<WindowEvent> {
+
     @Override
     public void handle(WindowEvent windowEvent) {
         DesktopContext desktopContext = DesktopContext.getInstance();

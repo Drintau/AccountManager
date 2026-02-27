@@ -7,6 +7,7 @@ import org.apache.fesod.sheet.enums.poi.FillPatternTypeEnum;
 
 /**
  * 迁移：导入+导出
+ * class上面的注解是导出excel时使用的样式
  */
 @HeadStyle(fillPatternType = FillPatternTypeEnum.SOLID_FOREGROUND, fillForegroundColor = 31)
 @HeadFontStyle(fontHeightInPoints = 15)

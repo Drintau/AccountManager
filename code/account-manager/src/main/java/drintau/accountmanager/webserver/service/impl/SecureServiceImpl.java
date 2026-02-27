@@ -5,20 +5,20 @@ import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.SecureUtil;
 import drintau.accountmanager.webserver.config.WebServerConfig;
 import drintau.accountmanager.webserver.service.SecureService;
-import jakarta.annotation.Resource;
 import jakarta.validation.constraints.NotBlank;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
  * 加解密服务
  */
+@RequiredArgsConstructor
 @Service
 @Slf4j
 public class SecureServiceImpl implements SecureService {
 
-    @Resource
-    private WebServerConfig webServerConfig;
+    private final WebServerConfig webServerConfig;
 
     @Override
     public String decrypt(@NotBlank String ciphertext) {

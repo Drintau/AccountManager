@@ -26,6 +26,6 @@ public class AccountTransferImportListener extends AnalysisEventListener<Account
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        accountService.transferImport(accountTransferBOList);
+        accountService.importAccount(accountTransferBOList);
     }
 }

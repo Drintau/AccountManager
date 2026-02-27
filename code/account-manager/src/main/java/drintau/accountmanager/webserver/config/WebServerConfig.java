@@ -32,11 +32,6 @@ public class WebServerConfig {
     private String filePath;
 
     /**
-     * 随机密码位数，默认10
-     */
-    private int passwordDigits = 10;
-
-    /**
      * 是否启用备份功能
      */
     private Boolean enableBackup = false;
@@ -71,11 +66,6 @@ public class WebServerConfig {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
-
-    public void setPasswordDigits(int passwordDigits) {
-        this.passwordDigits = passwordDigits;
-    }
-
 
     public void setEnableBackup(Boolean enableBackup) {
         this.enableBackup = enableBackup;

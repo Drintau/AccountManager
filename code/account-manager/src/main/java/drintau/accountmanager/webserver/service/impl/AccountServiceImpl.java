@@ -146,7 +146,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void transferImport(List<AccountTransferBO> importDataList) {
+    public void importAccount(List<AccountTransferBO> importDataList) {
         List<CategoryBO> allCategory = categoryService.allCategory();
         Map<String, Integer> categoryName2IdMap = allCategory.stream().collect(Collectors.toMap(CategoryBO::getCategoryName, CategoryBO::getId));
 
@@ -178,7 +178,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<AccountTransferBO> transferExport() {
+    public List<AccountTransferBO> exportAccount() {
         AccountFindResultBO resultBO = findAccount(new AccountFindConditionBO());
         return BeanUtil.copyList(resultBO.getList(), AccountTransferBO.class);
     }

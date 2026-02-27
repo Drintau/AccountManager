@@ -1,9 +1,9 @@
 package drintau.accountmanager.webserver;
 
-import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.desktop.DesktopContext;
+import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.webserver.config.WebServerConfig;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -15,16 +15,17 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 
+@RequiredArgsConstructor
 @Component
 @Order(1)
 @Slf4j
 public class SayHello implements ApplicationRunner {
 
-    @Value("${maven.version:}")
+    @Value("${version:}")
     private String version;
 
-    @Value("${maven.package-time:}")
-    private String packageTime;
+    @Value("${build-time:}")
+    private String buildTime;
 
     @Value("${server.port}")
     private String port;
@@ -35,18 +36,17 @@ public class SayHello implements ApplicationRunner {
     @Value("${spring.h2.console.path}")
     private String h2ConsolePath;
 
-    @Resource
-    private WebServerConfig webServerConfig;
+    private final WebServerConfig webServerConfig;
 
     @Override
     public void run(ApplicationArguments args) {
         log.info("版本号：{}", version);
-        log.info("构建时间：{}", DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(packageTime));
-        log.info("服务启动成功。");
+        log.info("构建时间：{}", DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(buildTime));
+        log.info("欢迎使用！服务启动成功。");
 
         String localUrl = "http://localhost:" + port + contextPath;
-        log.info("欢迎访问：{}", localUrl);
-        log.debug("h2控制台地址：{}", localUrl + h2ConsolePath);
+        log.info("访问地址：{}", localUrl);
+        log.debug("h2控制台：{}", localUrl + h2ConsolePath);
 
         // 有GUI的环境
         if (Desktop.isDesktopSupported()) {

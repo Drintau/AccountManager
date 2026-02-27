@@ -47,7 +47,6 @@ server:
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   file-path: memDevDB
-  password-digits: 10
   enable-backup: false
 logging:
   config: classpath:log4j2-spring-dev.xml
@@ -64,7 +63,6 @@ server:
 am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   file-path: E:/Study/Test/fileDevDB
-  password-digits: 10
   enable-backup: true
   backup-paths: E:/Study/Test/fileDevBackupDB
   auto-access-after-startup: false
