@@ -1,7 +1,7 @@
 package drintau.accountmanager.webserver.domain.bo;
 
-import cn.idev.excel.annotation.ExcelProperty;
 import lombok.Data;
+import org.apache.fesod.sheet.annotation.ExcelProperty;
 
 /**
  * 迁移：导入+导出

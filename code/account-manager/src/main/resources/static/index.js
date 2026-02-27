@@ -490,6 +490,7 @@ const App = {
       let res = response.data;
       let successFlag = this.handleRes(res);
       if (successFlag) {
+        this.transferImportFile = null;
         this.moduleShow('accountShowFlag');
       }
     },

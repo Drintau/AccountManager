@@ -163,10 +163,13 @@ public class AccountServiceImpl implements AccountService {
                     categoryId = newCategoryBO.getId();
                 }
                 importPO.setCategoryId(categoryId);
-                importPO.setUsername(secureService.encrypt(importPO.getUsername()));
-                importPO.setPassword(secureService.encrypt(importPO.getPassword()));
-                importPOList.add(importPO);
             }
+            importPO.setUsername(secureService.encrypt(importPO.getUsername()));
+            importPO.setPassword(secureService.encrypt(importPO.getPassword()));
+            long currentUtcSecond = DateTimeUtil.getCurrentUtcSecond();
+            importPO.setCreateTime(currentUtcSecond);
+            importPO.setUpdateTime(currentUtcSecond);
+            importPOList.add(importPO);
         }
 
         if (CollectionUtils.isNotEmpty(importPOList)) {

@@ -23,7 +23,7 @@
 
         <h2database.version>2.3.232</h2database.version>
 
-        <fastexcel.version>1.3.0</fastexcel.version>
+        <fesod.version>2.0.1-incubating</fesod.version>
 
         <vue.version>3.5.12</vue.version>
         <axios.version>1.7.9</axios.version>
@@ -77,9 +77,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>cn.idev.excel</groupId>
-            <artifactId>fastexcel</artifactId>
-            <version>${fastexcel.version}</version>
+            <groupId>org.apache.fesod</groupId>
+            <artifactId>fesod-sheet</artifactId>
+            <version>${fesod.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>

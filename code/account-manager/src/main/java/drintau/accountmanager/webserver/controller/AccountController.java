@@ -1,17 +1,25 @@
 package drintau.accountmanager.webserver.controller;
 
+import drintau.accountmanager.shared.exception.BusinessException;
 import drintau.accountmanager.shared.util.BeanUtil;
 import drintau.accountmanager.webserver.CommonResult;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
 import drintau.accountmanager.webserver.domain.bo.AccountFindConditionBO;
 import drintau.accountmanager.webserver.domain.bo.AccountFindResultBO;
+import drintau.accountmanager.webserver.domain.bo.AccountTransferBO;
 import drintau.accountmanager.webserver.domain.vo.*;
 import drintau.accountmanager.webserver.service.AccountService;
+import drintau.accountmanager.webserver.service.AccountTransferImportListener;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.fesod.sheet.FesodSheet;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/account")
@@ -55,6 +63,16 @@ public class AccountController {
 
     @PostMapping("/import")
     public CommonResult<Void> transferImport(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new BusinessException("请上传文件");
+        }
+
+        try {
+            FesodSheet.read(file.getInputStream(), AccountTransferBO.class, new AccountTransferImportListener(accountService)).sheet().doRead();
+        } catch (IOException e) {
+            log.error("文件处理失败", e);
+            throw new BusinessException("文件处理失败");
+        }
         return new CommonResult<>();
     }
 
