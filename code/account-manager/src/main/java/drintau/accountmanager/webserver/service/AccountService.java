@@ -3,6 +3,9 @@ package drintau.accountmanager.webserver.service;
 import drintau.accountmanager.webserver.domain.bo.AccountBO;
 import drintau.accountmanager.webserver.domain.bo.AccountFindConditionBO;
 import drintau.accountmanager.webserver.domain.bo.AccountFindResultBO;
+import drintau.accountmanager.webserver.domain.bo.AccountTransferBO;
+
+import java.util.List;
 
 public interface AccountService {
 
@@ -16,31 +19,6 @@ public interface AccountService {
 
     AccountFindResultBO findAccount(AccountFindConditionBO conditionBO);
 
-//    /**
-//     * 根据 条件 分页查询
-//     */
-//    AccountFindResultBO queryMyAccount(AccountFindConditionBO condition);
-//
-//    /**
-//     * 全量分页查询
-//     */
-//    AccountFindResultBO listMyAccount(Boolean decrypt, int pageNum, int pageSize);
-
-
-
-//    /**
-//     * 删除
-//     */
-//    void deleteMyAccount(Integer id);
-//
-//    /**
-//     * 导出
-//     */
-//    List<AccountIEBO> exportMyAccounts();
-//
-//    /**
-//     * 导入
-//     */
-//    void importMyAccounts(List<AccountIEBO> importDataList);
+    void transferImport(List<AccountTransferBO> importDataList);
 
 }

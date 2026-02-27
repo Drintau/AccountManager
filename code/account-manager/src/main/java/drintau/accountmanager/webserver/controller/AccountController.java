@@ -9,10 +9,8 @@ import drintau.accountmanager.webserver.domain.vo.*;
 import drintau.accountmanager.webserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -55,32 +53,16 @@ public class AccountController {
         return new CommonResult<>(resVO);
     }
 
-//
-//    @GetMapping("/export")
-//    public void export(HttpServletResponse response) {
-//        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-//        response.setHeader("Content-Disposition","attachment;filename=exportdata.xlsx");
-//
-//        try {
-//            EasyExcel.write(response.getOutputStream(), AccountIEBO.class)
-//                    .sheet("数据")
-//                    .doWrite(() -> accountService.exportMyAccounts());
-//        } catch (IOException e) {
-//            throw new CommonException(CommonCode.FAIL, "响应文件数据失败!");
-//        }
-//    }
-//
-//    @PostMapping("/import")
-//    public CommonResult importAccounts(@RequestParam("file") MultipartFile file) {
-//        try {
-//            EasyExcel.read(file.getInputStream(), AccountIEBO.class,
-//                    new PageReadListener<AccountIEBO>(dataList -> accountService.importMyAccounts(dataList))
-//            ).sheet().doRead();
-//        } catch (Exception e) {
-//            log.error("导入数据失败！", e);
-//            return new CommonResult(CommonCode.FAIL, "导入数据失败！建议删除数据库文件重试。");
-//        }
-//        return new CommonResult(CommonCode.SUCCESS);
-//    }
+    @PostMapping("/import")
+    public CommonResult<Void> transferImport(@RequestParam("file") MultipartFile file) {
+        return new CommonResult<>();
+    }
+
+
+    @PostMapping("/export")
+    public CommonResult<Void> transferExport() {
+        return new CommonResult<>();
+    }
+
 
 }

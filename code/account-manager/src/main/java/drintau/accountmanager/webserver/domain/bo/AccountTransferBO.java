@@ -4,18 +4,21 @@ import cn.idev.excel.annotation.ExcelProperty;
 import lombok.Data;
 
 /**
- * 导入导出功能用到的信息
+ * 迁移：导入+导出
  */
 @Data
-public class AccountIEBO {
+public class AccountTransferBO {
 
-    @ExcelProperty("应用名称")
+    @ExcelProperty("分类")
+    private String categoryName;
+
+    @ExcelProperty("名称")
     private String appName;
 
-    @ExcelProperty("应用网址")
+    @ExcelProperty("网址")
     private String appUrl;
 
-    @ExcelProperty("登录名")
+    @ExcelProperty("账号")
     private String username;
 
     @ExcelProperty("密码")
