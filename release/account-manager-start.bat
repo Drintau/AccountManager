@@ -12,7 +12,7 @@ rem start java -jar account-manager.jar
 rem 无命令行窗口，有图形化界面的启动命令
 rem start javaw -jar account-manager.jar --useGUI
 
-rem 无命令行窗口，有图形化界面的启动命令，限制一下使用内存量
+rem 无命令行窗口，有图形化界面的启动命令，限制内存使用量
 start javaw -Xms128m -Xmx128m -jar account-manager.jar --useGUI
 
 rem pause

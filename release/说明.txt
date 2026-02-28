@@ -1,8 +1,8 @@
-windows脚本
+Windows脚本
 1. 生成秘钥：account-manager-key.bat
 2. 启动程序：account-manager-start.bat
 
-linux脚本
+Linux脚本
 1. 生成秘钥：account-manager-key.sh
 2. 启动程序：account-manager-start.sh
 
