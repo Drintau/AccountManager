@@ -12,10 +12,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
@@ -58,6 +61,19 @@ public class DesktopMainClass extends Application {
         stopButton.setMaxWidth(Double.MAX_VALUE);
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
+        // 中间内容
+        HBox centerHBox = new HBox();
+        centerHBox.setPadding(new Insets(10));
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        Font customFont = Font.font("Arial", FontWeight.NORMAL, 20);
+        textArea.setFont(customFont);
+        textArea.setText("测试文本");
+        textArea.appendText("\n");
+        textArea.appendText("测试追加文本");
+        centerHBox.getChildren().addAll(textArea);
+
         // 底部内容
         Label versionLabel = new Label("版本号：" + desktopContext.getVersionInfo().getVersion());
         Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(desktopContext.getVersionInfo().getBuildTime()));
@@ -69,6 +85,7 @@ public class DesktopMainClass extends Application {
         // 控件分布：上中下左右
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(topHBox);
+        borderPane.setCenter(centerHBox);
         borderPane.setBottom(bottomHBox);
 
         // 场景
@@ -78,7 +95,7 @@ public class DesktopMainClass extends Application {
         stage.setScene(scene);
         stage.setTitle("账号管理器");
         stage.setWidth(450);
-        stage.setHeight(150);
+        stage.setHeight(450);
         stage.setResizable(false);
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
