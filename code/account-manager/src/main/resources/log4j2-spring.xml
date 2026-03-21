@@ -14,6 +14,9 @@
             <PatternLayout pattern="${FILE_PATTERN}"/>
             <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
         </File>
+        <CustomLogAppender name="CustomLogAppender">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </CustomLogAppender>
     </Appenders>
 
     <Loggers>
@@ -26,6 +29,7 @@
         <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="WarnFile"/>
+            <AppenderRef ref="CustomLogAppender"/>
         </Root>
     </Loggers>
 

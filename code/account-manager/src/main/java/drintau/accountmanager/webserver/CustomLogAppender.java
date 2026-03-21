@@ -1,6 +1,6 @@
 package drintau.accountmanager.webserver;
 
-import drintau.accountmanager.desktop.DesktopContext;
+import drintau.accountmanager.shared.SharedContext;
 import org.apache.logging.log4j.core.*;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;
@@ -44,7 +44,11 @@ public class CustomLogAppender extends AbstractAppender {
 
     @Override
     public void append(LogEvent event) {
+//        Instant instant = Instant.ofEpochMilli(event.getTimeMillis());
+//        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+//        String dateStr = localDateTime.format(DateTimeFormatter.ofPattern(DateTimeUtil.DATETIME_PATTERN_Y_M_D_H_M_S));
+
         String formattedMessage = event.getMessage().getFormattedMessage();
-        DesktopContext.getInstance().test(formattedMessage);
+        SharedContext.getInstance().sendLog(formattedMessage);
     }
 }

@@ -46,7 +46,7 @@ public class DesktopContext {
     private Button openBrowserButton;
     private TextArea textArea;
 
-    public void test(String logStr) {
+    public void showLog(String logStr) {
         textArea.appendText(logStr);
     }
 }

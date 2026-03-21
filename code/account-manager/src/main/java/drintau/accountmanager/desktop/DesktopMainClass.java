@@ -18,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 /**
@@ -67,11 +66,8 @@ public class DesktopMainClass extends Application {
 
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        Font customFont = Font.font("Arial", FontWeight.NORMAL, 20);
-        textArea.setFont(customFont);
-        textArea.setText("测试文本");
-        textArea.appendText("\n");
-        textArea.appendText("测试追加文本");
+        Font textAreaFont = Font.font(14);
+        textArea.setFont(textAreaFont);
 
         HBox centerHBox = new HBox();
         centerHBox.setPadding(new Insets(10));
