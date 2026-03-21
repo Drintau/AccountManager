@@ -62,9 +62,9 @@ public class DesktopMainClass extends Application {
         topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
 
         // 中间内容
-        HBox centerHBox = new HBox();
-        centerHBox.setPadding(new Insets(10));
         TextArea textArea = new TextArea();
+        desktopContext.setTextArea(textArea);
+
         textArea.setEditable(false);
         textArea.setWrapText(true);
         Font customFont = Font.font("Arial", FontWeight.NORMAL, 20);
@@ -72,6 +72,9 @@ public class DesktopMainClass extends Application {
         textArea.setText("测试文本");
         textArea.appendText("\n");
         textArea.appendText("测试追加文本");
+
+        HBox centerHBox = new HBox();
+        centerHBox.setPadding(new Insets(10));
         centerHBox.getChildren().addAll(textArea);
 
         // 底部内容

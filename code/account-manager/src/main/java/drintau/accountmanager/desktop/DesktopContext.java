@@ -1,6 +1,7 @@
 package drintau.accountmanager.desktop;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import lombok.Data;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -43,5 +44,9 @@ public class DesktopContext {
     private Button startButton;
     private Button stopButton;
     private Button openBrowserButton;
+    private TextArea textArea;
 
+    public void test(String logStr) {
+        textArea.appendText(logStr);
+    }
 }

@@ -9,6 +9,9 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
+        <CustomLogAppender name="CustomLogAppender">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </CustomLogAppender>
     </Appenders>
 
     <Loggers>
@@ -20,6 +23,7 @@
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="CustomLogAppender"/>
         </Root>
     </Loggers>
 
