@@ -3,6 +3,7 @@ package drintau.accountmanager.desktop;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import lombok.Data;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
@@ -38,6 +39,7 @@ public class DesktopContext {
     private List<String> backupPaths;
 
     // webserver实例
+    private SpringApplication springApplication;
     private ConfigurableApplicationContext webServerContext;
 
     // 控件引用

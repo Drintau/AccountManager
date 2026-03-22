@@ -21,9 +21,11 @@
         <Logger name="com" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
+        <Logger name="drintau.accountmanager.webserver" level="info" additivity="true">
+            <AppenderRef ref="CustomLogAppender"/>
+        </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="CustomLogAppender"/>
         </Root>
     </Loggers>
 
