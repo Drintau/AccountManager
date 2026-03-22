@@ -2,6 +2,7 @@ package drintau.accountmanager.desktop.event;
 
 import drintau.accountmanager.shared.util.FileUtil;
 import drintau.accountmanager.desktop.DesktopContext;
+import drintau.accountmanager.shared.util.ThreadPoolUtil;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 import org.apache.commons.collections4.CollectionUtils;
@@ -12,6 +13,8 @@ public class CloseEvent implements EventHandler<WindowEvent> {
 
     @Override
     public void handle(WindowEvent windowEvent) {
+        ThreadPoolUtil.shutdown();
+
         DesktopContext desktopContext = DesktopContext.getInstance();
         ConfigurableApplicationContext webServerContext = desktopContext.getWebServerContext();
         if (webServerContext != null && webServerContext.isRunning()) {
