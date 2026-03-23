@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * AES加解密工具类
  */
-public class AesUtil {
+public final class AesUtil {
 
     /**
      * 生成随机AES秘钥

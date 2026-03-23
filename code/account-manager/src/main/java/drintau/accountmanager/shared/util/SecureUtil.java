@@ -9,7 +9,7 @@ import java.util.Base64;
  * 加密：明文字节数组->aes加密->Base64编码
  * 解密：密文字符串->Base64解密->aes解密
  */
-public class SecureUtil {
+public final class SecureUtil {
 
     /**
      * 生成秘钥

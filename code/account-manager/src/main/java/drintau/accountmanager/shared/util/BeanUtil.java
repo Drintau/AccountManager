@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BeanUtil {
+public final class BeanUtil {
 
     /*=== Bean拷贝 ===*/
 

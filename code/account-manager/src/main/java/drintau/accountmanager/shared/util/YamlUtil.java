@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public class YamlUtil {
+public final class YamlUtil {
 
     private static final ObjectMapper objectMapper;
 

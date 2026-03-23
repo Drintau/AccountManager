@@ -1,7 +1,7 @@
 package drintau.accountmanager.desktop.event;
 
 import drintau.accountmanager.desktop.DesktopContext;
-import drintau.accountmanager.shared.util.ThreadPoolUtil;
+import drintau.accountmanager.shared.ThreadPool;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +16,7 @@ public class WebServerStopEvent implements EventHandler<ActionEvent> {
         if (webServerContext != null && webServerContext.isRunning()) {
             desktopContext.getStopButton().setDisable(true);
             desktopContext.getOpenBrowserButton().setDisable(true);
-            ThreadPoolUtil.execute(() -> {
+            ThreadPool.getInstance().execute(() -> {
                 SpringApplication.exit(webServerContext);
                 desktopContext.setWebServerContext(null);
                 desktopContext.getStartButton().setDisable(false);

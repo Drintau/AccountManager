@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * 日期时间工具类
  */
-public class DateTimeUtil {
+public final class DateTimeUtil {
 
     public static final ZoneId CHINA_ZONE_ID = ZoneId.of("Asia/Shanghai");
 

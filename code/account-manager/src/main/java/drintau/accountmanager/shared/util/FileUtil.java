@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 @Slf4j
-public class FileUtil {
+public final class FileUtil {
 
     public static void copyFile(String sourcePath, String targetPath) {
         try {
