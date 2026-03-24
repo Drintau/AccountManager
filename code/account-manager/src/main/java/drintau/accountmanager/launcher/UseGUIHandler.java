@@ -4,11 +4,11 @@ public class UseGUIHandler implements ArgHandlerInterface {
 
     @Override
     public void execute() {
-        ArgsContext.getInstance().setUseGUI(true);
+        LauncherContext.getInstance().setUseGUI(true);
     }
 
     @Override
     public String argName() {
-        return ArgsContext.ARG_NAME_USE_GUI;
+        return ArgsConstant.ARG_NAME_USE_GUI;
     }
 }

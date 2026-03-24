@@ -1,6 +1,6 @@
 package drintau.accountmanager;
 
-import drintau.accountmanager.launcher.ArgsContext;
+import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.launcher.ArgsHandler;
 import drintau.accountmanager.desktop.DesktopContext;
 import drintau.accountmanager.desktop.DesktopMainClass;
@@ -18,9 +18,9 @@ public class Application {
             new ArgsHandler().execute(args);
         }
 
-        ArgsContext argsContext = ArgsContext.getInstance();
+        LauncherContext launcherContext = LauncherContext.getInstance();
         // 用户选择使用图形化，并且操作系统支持有图形化桌面，使用图形化；否则不使用图形化
-        if (argsContext.isUseGUI() && Desktop.isDesktopSupported()) {
+        if (launcherContext.isUseGUI() && Desktop.isDesktopSupported()) {
             DesktopContext desktopContext = DesktopContext.getInstance();
             desktopContext.setArgs(args);
             // .headless(false) 能使用图形化界面的情况下，springboot也要用图形化模式

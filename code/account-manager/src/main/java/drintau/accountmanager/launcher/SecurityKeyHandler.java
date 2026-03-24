@@ -30,6 +30,6 @@ public class SecurityKeyHandler implements ArgHandlerInterface {
 
     @Override
     public String argName() {
-        return ArgsContext.ARG_NAME_SECURITY_KEY;
+        return ArgsConstant.ARG_NAME_SECURITY_KEY;
     }
 }
