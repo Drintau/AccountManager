@@ -15,13 +15,12 @@ import java.util.List;
 public class DesktopContext {
 
     private DesktopContext(){}
-    private static final DesktopContext instance = new DesktopContext();
-    public static DesktopContext getInstance(){
-        return instance;
+    private static class InitDesktopContext {
+        private static final DesktopContext INSTANCE = new DesktopContext();
     }
-
-    // 启动参数
-    private String[] args;
+    public static DesktopContext getInstance(){
+        return InitDesktopContext.INSTANCE;
+    }
 
     // 版本信息
     private VersionInfo versionInfo;
