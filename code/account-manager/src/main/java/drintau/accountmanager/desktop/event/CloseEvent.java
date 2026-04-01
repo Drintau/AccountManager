@@ -13,7 +13,7 @@ public class CloseEvent implements EventHandler<WindowEvent> {
 
     @Override
     public void handle(WindowEvent windowEvent) {
-        ThreadPool.getInstance().shutdown();
+        ThreadPool.getInstance().shutdownNow();
 
         DesktopContext desktopContext = DesktopContext.getInstance();
         ConfigurableApplicationContext webServerContext = desktopContext.getWebServerContext();

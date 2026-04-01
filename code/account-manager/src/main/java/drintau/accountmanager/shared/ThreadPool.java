@@ -10,7 +10,7 @@ public class ThreadPool {
     private static class InitThreadPool {
         private static final ThreadPool INSTANCE = new ThreadPool();
         static {
-            INSTANCE.executor = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
+            INSTANCE.executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
         }
     }
     public static ThreadPool getInstance(){
@@ -28,6 +28,13 @@ public class ThreadPool {
      */
     public void shutdown() {
         executor.shutdown();
+    }
+
+    /**
+     * 强制关闭
+     */
+    public void shutdownNow() {
+        executor.shutdownNow();
     }
 
 }

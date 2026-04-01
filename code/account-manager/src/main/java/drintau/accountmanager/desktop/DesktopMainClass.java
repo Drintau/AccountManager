@@ -4,9 +4,13 @@ import drintau.accountmanager.desktop.event.CloseEvent;
 import drintau.accountmanager.desktop.event.OpenBrowserEvent;
 import drintau.accountmanager.desktop.event.WebServerStartEvent;
 import drintau.accountmanager.desktop.event.WebServerStopEvent;
+import drintau.accountmanager.shared.LogQueue;
+import drintau.accountmanager.shared.ThreadPool;
 import drintau.accountmanager.shared.util.DateTimeUtil;
+import drintau.accountmanager.shared.util.StrUtil;
 import drintau.accountmanager.shared.util.YamlUtil;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -99,6 +103,22 @@ public class DesktopMainClass extends Application {
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
         stage.show();
+
+        // 监听日志
+        ThreadPool.getInstance().execute(() -> {
+            while (true) {
+                try {
+                    String logStr = LogQueue.getInstance().poll(200);
+                    if (StrUtil.isNotBlank(logStr)) {
+                        Platform.runLater(() -> {
+                            DesktopContext.getInstance().getTextArea().appendText(logStr + "\n");
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        });
 
     }
 
