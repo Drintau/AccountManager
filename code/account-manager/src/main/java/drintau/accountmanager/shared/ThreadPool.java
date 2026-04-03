@@ -1,9 +1,12 @@
 package drintau.accountmanager.shared;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class ThreadPool {
 
     private ThreadPool(){}
@@ -27,6 +30,7 @@ public class ThreadPool {
      * 关闭线程池
      */
     public void shutdown() {
+//        log.debug("线程池关闭");
         executor.shutdown();
     }
 
@@ -34,6 +38,7 @@ public class ThreadPool {
      * 强制关闭
      */
     public void shutdownNow() {
+//        log.debug("线程池关闭");
         executor.shutdownNow();
     }
 

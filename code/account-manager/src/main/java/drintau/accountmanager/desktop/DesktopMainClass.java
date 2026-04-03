@@ -4,13 +4,12 @@ import drintau.accountmanager.desktop.event.CloseEvent;
 import drintau.accountmanager.desktop.event.OpenBrowserEvent;
 import drintau.accountmanager.desktop.event.WebServerStartEvent;
 import drintau.accountmanager.desktop.event.WebServerStopEvent;
+import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
-import drintau.accountmanager.shared.ThreadPool;
 import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.shared.util.StrUtil;
 import drintau.accountmanager.shared.util.YamlUtil;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,6 +22,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * 主页面
@@ -105,20 +106,18 @@ public class DesktopMainClass extends Application {
         stage.show();
 
         // 监听日志
-        ThreadPool.getInstance().execute(() -> {
-            while (true) {
-                try {
-                    String logStr = LogQueue.getInstance().poll(200);
-                    if (StrUtil.isNotBlank(logStr)) {
-                        Platform.runLater(() -> {
+        DaemonScheduler.getInstance().submitDelayTask(
+                () -> {
+                    try {
+                        String logStr = LogQueue.getInstance().poll(5000);
+                        if (StrUtil.isNotBlank(logStr)) {
                             DesktopContext.getInstance().getTextArea().appendText(logStr + "\n");
-                        });
+                        }
+                    } catch (InterruptedException ignored) {
+
                     }
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-        });
+                }, 0, 100, TimeUnit.MILLISECONDS
+        );
 
     }
 

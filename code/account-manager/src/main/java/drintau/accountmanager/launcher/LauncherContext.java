@@ -1,6 +1,7 @@
 package drintau.accountmanager.launcher;
 
 import drintau.accountmanager.desktop.DesktopContext;
+import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.ThreadPool;
 import lombok.Getter;
@@ -35,6 +36,7 @@ public class LauncherContext {
     public void init() {
         if (desktopEnvironment) {
             DesktopContext.getInstance();
+            DaemonScheduler.getInstance();
             ThreadPool.getInstance();
             LogQueue.getInstance();
         }
