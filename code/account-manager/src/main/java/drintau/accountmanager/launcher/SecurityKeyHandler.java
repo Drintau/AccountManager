@@ -1,35 +1,37 @@
 package drintau.accountmanager.launcher;
 
 import drintau.accountmanager.shared.util.SecureUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 生成密钥处理程序
  */
+@Slf4j
 public class SecurityKeyHandler implements ArgHandlerInterface {
 
     @Override
     public void execute() {
-        System.out.println("===生成加解密秘钥===");
+        log.info("~~~ 生成加解密秘钥 ~~~");
         try {
-            System.out.println(SecureUtil.genSecureKey());
+            log.info("密钥：{}", SecureUtil.genSecureKey());
         } catch (Exception e) {
-            System.out.println("程序异常退出！");
+            log.error("密钥生成出错，程序异常退出！");
             System.exit(0);
         }
         // 一分钟倒计时给用户保存秘钥
-        System.out.println("请保存秘钥，程序将在60秒后退出！");
+        log.info("请保存秘钥，程序将在60秒后退出！");
         try {
             Thread.sleep(60000);
         } catch (InterruptedException e) {
-            System.out.println("程序异常退出！");
+            log.error("保存倒计时出错，程序异常退出！");
             System.exit(0);
         }
-        System.out.println("程序退出！");
+        log.info("程序退出！");
         System.exit(0);
     }
 
     @Override
     public String argName() {
-        return ArgsConstant.ARG_NAME_SECURITY_KEY;
+        return ArgConstant.ARG_SECURITY_KEY;
     }
 }
