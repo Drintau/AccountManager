@@ -1,6 +1,5 @@
-package drintau.accountmanager.webserver;
+package drintau.accountmanager.shared;
 
-import drintau.accountmanager.shared.LogQueue;
 import org.apache.logging.log4j.core.*;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.config.Property;

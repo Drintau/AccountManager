@@ -132,7 +132,7 @@
                     <excludes>
                         <!-- 打成jar包时排除开发使用的日志配置文件 -->
                         <exclude>
-                            log4j2-spring-dev.xml
+                            log4j2-dev.xml
                         </exclude>
                     </excludes>
                 </configuration>

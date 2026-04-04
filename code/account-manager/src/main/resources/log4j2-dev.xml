@@ -3,6 +3,7 @@
 
     <Properties>
         <Property name="CONSOLE_PATTERN">%date{DEFAULT} [%-5level] %X{TRACE_ID} %logger(%file:%line) - %msg%n</Property>
+        <Property name="MSG_PATTERN">%msg%n</Property>
     </Properties>
 
     <Appenders>
@@ -10,7 +11,7 @@
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
         <CustomLogAppender name="CustomLogAppender">
-            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+            <PatternLayout pattern="${MSG_PATTERN}"/>
         </CustomLogAppender>
     </Appenders>
 
@@ -21,10 +22,13 @@
         <Logger name="com" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
+        <Logger name="drintau.accountmanager.desktop" level="info" additivity="true">
+            <AppenderRef ref="CustomLogAppender"/>
+        </Logger>
         <Logger name="drintau.accountmanager.webserver" level="info" additivity="true">
             <AppenderRef ref="CustomLogAppender"/>
         </Logger>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

@@ -49,7 +49,7 @@ am:
   file-path: memDevDB
   enable-backup: false
 logging:
-  config: classpath:log4j2-spring-dev.xml
+  config: classpath:log4j2-dev.xml
 ---
 #开发环境2，使用文件数据库
 #debug: true
@@ -67,4 +67,4 @@ am:
   backup-paths: E:/Study/Test/fileDevBackupDB
   auto-access-after-startup: false
 logging:
-  config: classpath:log4j2-spring-dev.xml
+  config: classpath:log4j2-dev.xml
