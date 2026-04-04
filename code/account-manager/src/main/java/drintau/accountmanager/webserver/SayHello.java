@@ -12,10 +12,6 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-
 @RequiredArgsConstructor
 @Component
 @Order(1)
@@ -36,8 +32,8 @@ public class SayHello implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         LauncherContext launcherContext = LauncherContext.getInstance();
-        // 未使用桌面环境，才输出这两个日志；使用桌面环境时，界面上已经有显示了
-        if (!launcherContext.isDesktopEnvironment()) {
+        // 非桌面运行时，才输出这两个日志；桌面运行时，界面上已经有显示了
+        if (!launcherContext.isDesktopRuntime()) {
             log.info("版本号：{}", launcherContext.getVersionInfo().getVersion());
             log.info("构建时间：{}", DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(launcherContext.getVersionInfo().getBuildTime()));
         }
@@ -47,25 +43,15 @@ public class SayHello implements ApplicationRunner {
         log.info("访问地址：{}", localUrl);
         log.debug("h2控制台：{}", localUrl + h2ConsolePath);
 
-        // 使用桌面环境，传递一些配置
-        if (launcherContext.isDesktopEnvironment()) {
-            launcherContext.setLocalUrl(localUrl);
-            launcherContext.setFilePath(webServerConfig.getFilePath());
-            launcherContext.setEnableBackup(webServerConfig.getEnableBackup());
-            launcherContext.setBackupPaths(webServerConfig.getBackupPaths());
+        // 桌面运行时，传递参数配置
+        if (launcherContext.isDesktopRuntime()) {
+            launcherContext.fillConfig(localUrl, webServerConfig.getFilePath(), webServerConfig.getEnableBackup(), webServerConfig.getBackupPaths());
         }
 
-        // 系统桌面环境支持 且 配置了服务启动后自动访问，打开浏览器访问
-        if (Desktop.isDesktopSupported() && BooleanUtils.isTrue(webServerConfig.getAutoAccessAfterStartup())) {
-            URI uri = URI.create(localUrl);
-            Desktop desktop = Desktop.getDesktop();
-            if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                try {
-                    desktop.browse(uri);
-                } catch (IOException e) {
-                    log.warn("无法调用系统浏览器访问，请手动复制网址到浏览器访问。");
-                }
-            }
+        // 配置了服务启动后自动访问，提交一个打开浏览器的任务
+        if (BooleanUtils.isTrue(webServerConfig.getAutoAccessAfterStartup())) {
+            log.info("因配置了启动后自动访问，即将打开浏览器访问");
+            launcherContext.submitOpenBrowserTask();
         }
     }
 }

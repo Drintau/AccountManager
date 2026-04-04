@@ -9,8 +9,6 @@ import drintau.accountmanager.webserver.WebServerMainClass;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import java.awt.*;
-
 public class Application {
 
     public static void main(String[] args) {
@@ -31,8 +29,8 @@ public class Application {
         LauncherContext launcherContext = LauncherContext.getInstance();
         launcherContext.setArgs(args);
         launcherContext.init();
-        // 用户选择使用图形化，并且操作系统支持有图形化桌面，使用图形化；否则不使用图形化
-        if (launcherContext.isDesktopEnvironment()) {
+        // 系统支持桌面环境，且启动参数使用了useGUI，使用桌面运行时
+        if (launcherContext.isDesktopRuntime()) {
             DesktopContext desktopContext = DesktopContext.getInstance();
             // .headless(false) 能使用图形化界面的情况下，springBoot也要用图形化模式
             SpringApplication springApplication = new SpringApplicationBuilder(WebServerMainClass.class).headless(false).build(args);
