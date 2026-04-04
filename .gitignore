@@ -1,6 +1,7 @@
 /.idea/
-**/target/
-*.iml
-/logs/
-
 /.vscode/
+
+*.iml
+
+/code/**/target/
+/logs/
