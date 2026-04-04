@@ -48,8 +48,6 @@ am:
   security-key: pq+Sjkd1We1wW44Yz4mN6Q==
   file-path: memDevDB
   enable-backup: false
-logging:
-  config: classpath:log4j2-dev.xml
 ---
 #开发环境2，使用文件数据库
 #debug: true
@@ -66,5 +64,3 @@ am:
   enable-backup: true
   backup-paths: E:/Study/Test/fileDevBackupDB
   auto-access-after-startup: false
-logging:
-  config: classpath:log4j2-dev.xml

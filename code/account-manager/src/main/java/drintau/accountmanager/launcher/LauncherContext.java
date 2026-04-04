@@ -51,9 +51,9 @@ public class LauncherContext {
         // 使用桌面环境必要的组件进行初始化
         if (desktopEnvironment) {
             DesktopContext.getInstance();
-            DaemonScheduler.getInstance();
-            ThreadPool.getInstance();
-            LogQueue.getInstance();
+            LogQueue.getInstance().init();
+            DaemonScheduler.getInstance().init();
+            ThreadPool.getInstance().init();
         }
     }
 

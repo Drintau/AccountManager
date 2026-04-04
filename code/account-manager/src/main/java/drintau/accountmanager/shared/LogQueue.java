@@ -6,17 +6,18 @@ import java.util.concurrent.TimeUnit;
 public class LogQueue {
 
     private LogQueue(){}
-    private static class InitLogQueue {
-        private static final LogQueue INSTANCE = new LogQueue();
-        static {
-            INSTANCE.logQueue = new LinkedBlockingQueue<>(100);
-        }
-    }
+    private static final LogQueue instance = new LogQueue();
     public static LogQueue getInstance(){
-        return InitLogQueue.INSTANCE;
+        return instance;
     }
 
     private LinkedBlockingQueue<String> logQueue;
+
+    public void init() {
+        if (logQueue == null) {
+            logQueue = new LinkedBlockingQueue<>(100);
+        }
+    }
 
     public void offer(String logStr) {
         if (logQueue != null) {

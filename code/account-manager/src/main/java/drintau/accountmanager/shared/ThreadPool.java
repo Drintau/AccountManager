@@ -12,15 +12,19 @@ public class ThreadPool {
     private ThreadPool(){}
     private static class InitThreadPool {
         private static final ThreadPool INSTANCE = new ThreadPool();
-        static {
-            INSTANCE.executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
-        }
     }
     public static ThreadPool getInstance(){
         return InitThreadPool.INSTANCE;
     }
 
     private ThreadPoolExecutor executor;
+
+    public void init() {
+        if (executor == null) {
+            executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
+            log.debug("线程池初始化");
+        }
+    }
 
     public void execute(Runnable task) {
         executor.execute(task);
@@ -30,7 +34,7 @@ public class ThreadPool {
      * 关闭线程池
      */
     public void shutdown() {
-//        log.debug("线程池关闭");
+        log.debug("线程池关闭");
         executor.shutdown();
     }
 
@@ -38,7 +42,7 @@ public class ThreadPool {
      * 强制关闭
      */
     public void shutdownNow() {
-//        log.debug("线程池关闭");
+        log.debug("线程池关闭");
         executor.shutdownNow();
     }
 
