@@ -4,11 +4,11 @@ import drintau.accountmanager.desktop.event.CloseEvent;
 import drintau.accountmanager.desktop.event.OpenBrowserEvent;
 import drintau.accountmanager.desktop.event.WebServerStartEvent;
 import drintau.accountmanager.desktop.event.WebServerStopEvent;
+import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.shared.util.StrUtil;
-import drintau.accountmanager.shared.util.YamlUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,11 +32,8 @@ public class DesktopMainClass extends Application {
 
     @Override
     public void start(Stage stage) {
+        LauncherContext launcherContext = LauncherContext.getInstance();
         DesktopContext desktopContext = DesktopContext.getInstance();
-
-        // 读取配置文件的配置
-        VersionInfo versionInfo = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), VersionInfo.class);
-        desktopContext.setVersionInfo(versionInfo);
 
         // 控件
         Button startButton = new Button("启动服务");
@@ -79,8 +76,8 @@ public class DesktopMainClass extends Application {
         centerHBox.getChildren().addAll(textArea);
 
         // 底部内容
-        Label versionLabel = new Label("版本号：" + desktopContext.getVersionInfo().getVersion());
-        Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(desktopContext.getVersionInfo().getBuildTime()));
+        Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
+        Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(launcherContext.getVersionInfo().getBuildTime()));
         HBox bottomHBox = new HBox(20);
         bottomHBox.setPadding(new Insets(10));
         bottomHBox.getChildren().addAll(versionLabel, packageTimeLabel);

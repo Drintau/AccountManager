@@ -1,5 +1,6 @@
 package drintau.accountmanager.desktop.event;
 
+import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.util.FileUtil;
 import drintau.accountmanager.desktop.DesktopContext;
@@ -26,10 +27,12 @@ public class CloseEvent implements EventHandler<WindowEvent> {
             webServerContext.close();
             desktopContext.setWebServerContext(null);
         }
-        if (desktopContext.getEnableBackup() != null && desktopContext.getEnableBackup()) {
-            if (StringUtils.hasText(desktopContext.getFilePath()) && CollectionUtils.isNotEmpty(desktopContext.getBackupPaths())) {
-                for (String backupPath : desktopContext.getBackupPaths()) {
-                    FileUtil.copyFile(desktopContext.getFilePath() + ".mv.db", backupPath + ".mv.db");
+
+        LauncherContext launcherContext = LauncherContext.getInstance();
+        if (launcherContext.getEnableBackup() != null && launcherContext.getEnableBackup()) {
+            if (StringUtils.hasText(launcherContext.getFilePath()) && CollectionUtils.isNotEmpty(launcherContext.getBackupPaths())) {
+                for (String backupPath : launcherContext.getBackupPaths()) {
+                    FileUtil.copyFile(launcherContext.getFilePath() + ".mv.db", backupPath + ".mv.db");
                 }
             }
         }

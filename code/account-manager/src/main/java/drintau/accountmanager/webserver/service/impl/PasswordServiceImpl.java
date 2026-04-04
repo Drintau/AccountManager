@@ -1,6 +1,6 @@
 package drintau.accountmanager.webserver.service.impl;
 
-import drintau.accountmanager.webserver.config.ConfigKeyConstants;
+import drintau.accountmanager.webserver.config.ConfigKeyConstant;
 import drintau.accountmanager.webserver.service.ConfigService;
 import drintau.accountmanager.webserver.service.PasswordService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class PasswordServiceImpl implements PasswordService {
 
     @Override
     public String getRandomPassword() {
-        String configValue = configService.getConfigValue(ConfigKeyConstants.PASSWORD_LENGTH);
+        String configValue = configService.getConfigValue(ConfigKeyConstant.PASSWORD_LENGTH);
         return getRandomPassword(Integer.parseInt(configValue));
     }
 

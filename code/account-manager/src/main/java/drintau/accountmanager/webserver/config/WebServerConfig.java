@@ -4,6 +4,7 @@ import drintau.accountmanager.shared.util.SecureUtil;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.annotation.Validated;
@@ -23,27 +24,32 @@ public class WebServerConfig {
      * 加解密秘钥
      */
     @NotBlank(message = "请配置密钥")
+    @Setter
     private String securityKey;
 
     /**
      * 数据库文件路径
      */
     @NotBlank(message = "请配置文件存储路径")
+    @Setter
     private String filePath;
 
     /**
      * 是否启用备份功能
      */
+    @Setter
     private Boolean enableBackup = false;
 
     /**
      * 数据库备份文件路径
      */
+    @Setter
     private List<String> backupPaths;
 
     /**
      * 启动后自动访问
      */
+    @Setter
     private Boolean autoAccessAfterStartup = false;
 
     /**
@@ -59,23 +65,4 @@ public class WebServerConfig {
         securityKeyByteArray = SecureUtil.stringKeyToByteKey(securityKey);
     }
 
-    public void setSecurityKey(String securityKey) {
-        this.securityKey = securityKey;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public void setEnableBackup(Boolean enableBackup) {
-        this.enableBackup = enableBackup;
-    }
-
-    public void setBackupPaths(List<String> backupPaths) {
-        this.backupPaths = backupPaths;
-    }
-
-    public void setAutoAccessAfterStartup(Boolean autoAccessAfterStartup) {
-        this.autoAccessAfterStartup = autoAccessAfterStartup;
-    }
 }

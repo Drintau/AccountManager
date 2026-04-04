@@ -1,4 +1,4 @@
-package drintau.accountmanager.desktop;
+package drintau.accountmanager.launcher;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
