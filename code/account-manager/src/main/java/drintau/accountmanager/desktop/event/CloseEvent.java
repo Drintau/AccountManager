@@ -54,7 +54,7 @@ public class CloseEvent implements EventHandler<WindowEvent> {
             if (BooleanUtils.isTrue(launcherContext.getEnableBackup())) {
                 log.info("备份功能：开始");
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1000L);
                 } catch (InterruptedException ignored) {}
                 if (StringUtils.hasText(launcherContext.getFilePath()) && CollectionUtils.isNotEmpty(launcherContext.getBackupPaths())) {
                     for (String backupPath : launcherContext.getBackupPaths()) {
@@ -65,12 +65,14 @@ public class CloseEvent implements EventHandler<WindowEvent> {
             }
 
             ThreadPool.getInstance().shutdownNow();
-//            DaemonScheduler.getInstance().shutdownNow();
 
             log.info("感谢使用！再见！");
             try {
-                Thread.sleep(2000);
+                Thread.sleep(2000L);
             } catch (InterruptedException ignored) {}
+
+            // 在调度器任务中关闭调度器就是这样操作，如果这个放在离最后一句日志很近的地方就会导致日志显示不了，应该是：1守护线程，2调度器关闭太快了
+            DaemonScheduler.getInstance().shutdown();
 
             Platform.runLater(() -> {
                 Stage stage = (Stage) windowEvent.getSource();

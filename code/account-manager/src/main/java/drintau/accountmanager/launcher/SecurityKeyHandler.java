@@ -21,7 +21,7 @@ public class SecurityKeyHandler implements ArgHandlerInterface {
         // 一分钟倒计时给用户保存秘钥
         log.info("请保存秘钥，程序将在60秒后退出！");
         try {
-            Thread.sleep(60000);
+            Thread.sleep(60000L);
         } catch (InterruptedException e) {
             log.error("保存倒计时出错，程序异常退出！");
             System.exit(0);
