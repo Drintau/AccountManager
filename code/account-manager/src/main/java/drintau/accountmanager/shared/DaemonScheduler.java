@@ -17,18 +17,12 @@ public class DaemonScheduler {
         return InitDaemonScheduler.INSTANCE;
     }
 
-    private ScheduledExecutorService scheduler;
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2, r -> {
+        Thread t = new Thread(r, "am-daemon-scheduler");
+        t.setDaemon(true);  // 设置为守护线程
+        return t;
+    });
 
-    public void init() {
-        if (scheduler == null) {
-            scheduler = Executors.newScheduledThreadPool(1, r -> {
-                Thread t = new Thread(r, "am-daemon-scheduler");
-                t.setDaemon(true);  // 设置为守护线程
-                return t;
-            });
-            log.debug("调度器初始化");
-        }
-    }
 
     /**
      * scheduleWithFixedDelay 是 上一个任务执行完后，再等待一个时间，执行下一个任务
@@ -44,6 +38,17 @@ public class DaemonScheduler {
     }
 
     /**
+     * 一次性的延时任务
+     *
+     * @param task         任务
+     * @param initialDelay 延迟多久执行
+     * @param unit         时间单位
+     */
+    public void submitOnceDelayTask(Runnable task, long initialDelay, TimeUnit unit) {
+        scheduler.schedule(wrapTask(task), initialDelay, unit);
+    }
+
+    /**
      * 包装任务，添加异常处理
      */
     private Runnable wrapTask(Runnable task) {
@@ -56,13 +61,17 @@ public class DaemonScheduler {
         };
     }
 
+    /**
+     * 等待剩余任务完成再关闭
+     */
     public void shutdown() {
-        log.debug("调度器关闭");
         scheduler.shutdown();
     }
 
+    /**
+     * 打断任务强制关闭
+     */
     public void shutdownNow() {
-        log.debug("调度器关闭");
         scheduler.shutdownNow();
     }
 

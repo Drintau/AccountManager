@@ -50,7 +50,7 @@ public class SayHello implements ApplicationRunner {
 
         // 配置了服务启动后自动访问，提交一个打开浏览器的任务
         if (BooleanUtils.isTrue(webServerConfig.getAutoAccessAfterStartup())) {
-            log.info("因配置了启动后自动访问，即将打开浏览器访问");
+            log.info("配置了启动后自动访问，即将打开浏览器访问");
             launcherContext.submitOpenBrowserTask();
         }
     }

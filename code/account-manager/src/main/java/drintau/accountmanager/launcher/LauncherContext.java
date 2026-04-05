@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import java.awt.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 启动器上下文，其实也是应用上下文
@@ -36,7 +37,7 @@ public class LauncherContext {
     private boolean desktopRuntime;
 
     // 版本信息
-    private VersionInfo versionInfo;
+    private VersionInfo versionInfo = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), VersionInfo.class);
 
     // 本地访问地址，由webServer进行赋值
     private String localUrl;
@@ -51,15 +52,12 @@ public class LauncherContext {
      * 初始化
      */
     public void init() {
-        // 版本信息，读取配置文件
-        versionInfo = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), VersionInfo.class);
-
-        // 使用桌面环境必要的组件进行初始化
+        // 桌面运行时初始化
         if (desktopRuntime) {
             DesktopContext.getInstance();
+            DaemonScheduler.getInstance();
+            ThreadPool.getInstance();
             LogQueue.getInstance().init();
-            DaemonScheduler.getInstance().init();
-            ThreadPool.getInstance().init();
         }
     }
 
@@ -75,7 +73,9 @@ public class LauncherContext {
 
     public void submitOpenBrowserTask() {
         if (desktopSupport) {
-            DesktopUtil.openBrowser(localUrl);
+            DaemonScheduler.getInstance().submitOnceDelayTask(() -> {
+                DesktopUtil.openBrowser(localUrl);
+            }, 1L, TimeUnit.SECONDS);
         }
     }
 

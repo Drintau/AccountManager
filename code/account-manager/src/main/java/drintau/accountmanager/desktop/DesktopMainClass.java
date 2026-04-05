@@ -113,7 +113,7 @@ public class DesktopMainClass extends Application {
                     } catch (InterruptedException ignored) {
 
                     }
-                }, 0, 100, TimeUnit.MILLISECONDS
+                }, 0, 100L, TimeUnit.MILLISECONDS
         );
 
     }

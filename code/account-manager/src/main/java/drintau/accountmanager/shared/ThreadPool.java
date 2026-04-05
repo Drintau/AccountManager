@@ -1,12 +1,9 @@
 package drintau.accountmanager.shared;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 public class ThreadPool {
 
     private ThreadPool(){}
@@ -17,32 +14,24 @@ public class ThreadPool {
         return InitThreadPool.INSTANCE;
     }
 
-    private ThreadPoolExecutor executor;
-
-    public void init() {
-        if (executor == null) {
-            executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
-            log.debug("线程池初始化");
-        }
-    }
+    // 内部类实现单例已经做到懒加载，所以属性可以在实例化时就初始化了
+    private final ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(10));
 
     public void execute(Runnable task) {
         executor.execute(task);
     }
 
     /**
-     * 关闭线程池
+     * 等待剩余任务完成再关闭
      */
     public void shutdown() {
-        log.debug("线程池关闭");
         executor.shutdown();
     }
 
     /**
-     * 强制关闭
+     * 打断任务强制关闭
      */
     public void shutdownNow() {
-        log.debug("线程池关闭");
         executor.shutdownNow();
     }
 

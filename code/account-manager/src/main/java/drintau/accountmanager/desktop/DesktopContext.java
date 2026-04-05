@@ -2,14 +2,13 @@ package drintau.accountmanager.desktop;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-/**
- * 应用GUI容器：单例
- */
-@Data
+@Setter
+@Getter
 public class DesktopContext {
 
     private DesktopContext(){}
@@ -20,7 +19,7 @@ public class DesktopContext {
         return InitDesktopContext.INSTANCE;
     }
 
-    // webserver实例
+    // webserver
     private SpringApplication springApplication;
     private ConfigurableApplicationContext webServerContext;
 

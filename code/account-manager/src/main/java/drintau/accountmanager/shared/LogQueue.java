@@ -1,19 +1,24 @@
 package drintau.accountmanager.shared;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class LogQueue {
 
     private LogQueue(){}
-    private static final LogQueue instance = new LogQueue();
+    private static class InitLogQueue {
+        private static final LogQueue INSTANCE = new LogQueue();
+    }
     public static LogQueue getInstance(){
-        return instance;
+        return InitLogQueue.INSTANCE;
     }
 
     private LinkedBlockingQueue<String> logQueue;
 
-    public void init() {
+    public synchronized void init() {
         if (logQueue == null) {
             logQueue = new LinkedBlockingQueue<>(100);
         }
