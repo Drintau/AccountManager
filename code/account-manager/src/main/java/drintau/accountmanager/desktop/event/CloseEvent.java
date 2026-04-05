@@ -17,14 +17,24 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.StringUtils;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 public class CloseEvent implements EventHandler<WindowEvent> {
 
-    private static final String dbFileSuffix = ".mv.db";
+    private final AtomicBoolean isClosing = new AtomicBoolean(false);
+
+    private final String dbFileSuffix = ".mv.db";
 
     @Override
     public void handle(WindowEvent windowEvent) {
+
+        // 防止重复点击 X
+        if (isClosing.getAndSet(true)) {
+            windowEvent.consume();
+            return;
+        }
+
         windowEvent.consume();
         DesktopContext desktopContext = DesktopContext.getInstance();
         desktopContext.getStopButton().setDisable(true);

@@ -22,12 +22,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * 主界面
  */
+@Slf4j
 public class DesktopMainClass extends Application {
 
     @Override
@@ -101,6 +103,8 @@ public class DesktopMainClass extends Application {
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
         stage.show();
+
+        log.info("欢迎使用账号管理器！");
 
         // 监听日志
         DaemonScheduler.getInstance().submitDelayTask(
