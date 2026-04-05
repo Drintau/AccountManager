@@ -13,14 +13,16 @@ public class WebServerStopEvent implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         DesktopContext desktopContext = DesktopContext.getInstance();
         ConfigurableApplicationContext webServerContext = desktopContext.getWebServerContext();
-        if (webServerContext != null && webServerContext.isRunning()) {
-            desktopContext.getStopButton().setDisable(true);
-            desktopContext.getOpenBrowserButton().setDisable(true);
-            ThreadPool.getInstance().execute(() -> {
-                SpringApplication.exit(webServerContext);
-                desktopContext.setWebServerContext(null);
-                desktopContext.getStartButton().setDisable(false);
-            });
+        synchronized (this) {
+            if (!desktopContext.getStopButton().isDisabled() && webServerContext != null && webServerContext.isRunning()) {
+                desktopContext.getStopButton().setDisable(true);
+                desktopContext.getOpenBrowserButton().setDisable(true);
+                ThreadPool.getInstance().execute(() -> {
+                    SpringApplication.exit(webServerContext);
+                    desktopContext.setWebServerContext(null);
+                    desktopContext.getStartButton().setDisable(false);
+                });
+            }
         }
     }
 }

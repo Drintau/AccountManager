@@ -13,14 +13,16 @@ public class WebServerStartEvent implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         DesktopContext desktopContext = DesktopContext.getInstance();
         ConfigurableApplicationContext webServerContext = desktopContext.getWebServerContext();
-        if (webServerContext == null || !webServerContext.isRunning()) {
-            // 点击后就不能再点击
-            desktopContext.getStartButton().setDisable(true);
-            ThreadPool.getInstance().execute(() -> {
-                desktopContext.setWebServerContext(desktopContext.getSpringApplication().run(LauncherContext.getInstance().getArgs()));
-                desktopContext.getStopButton().setDisable(false);
-                desktopContext.getOpenBrowserButton().setDisable(false);
-            });
+        synchronized (this) {
+            if (!desktopContext.getStartButton().isDisabled() && (webServerContext == null || !webServerContext.isRunning())) {
+                // 点击后就不能再点击
+                desktopContext.getStartButton().setDisable(true);
+                ThreadPool.getInstance().execute(() -> {
+                    desktopContext.setWebServerContext(desktopContext.getSpringApplication().run(LauncherContext.getInstance().getArgs()));
+                    desktopContext.getStopButton().setDisable(false);
+                    desktopContext.getOpenBrowserButton().setDisable(false);
+                });
+            }
         }
     }
 }

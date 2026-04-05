@@ -14,7 +14,7 @@ public final class DesktopUtil {
         try {
             desktop.browse(uri);
         } catch (Exception e) {
-            log.error("调用系统浏览器访问失败,请手动复制网址到浏览器访问", e);
+            log.error("打开系统浏览器失败,请手动复制网址到浏览器访问", e);
         }
     }
 

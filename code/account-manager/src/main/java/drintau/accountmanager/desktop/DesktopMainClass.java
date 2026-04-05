@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 主页面
+ * 主界面
  */
 public class DesktopMainClass extends Application {
 
