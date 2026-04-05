@@ -15,6 +15,8 @@ import org.springframework.util.StringUtils;
 
 public class CloseEvent implements EventHandler<WindowEvent> {
 
+    private static final String dbFileSuffix = ".mv.db";
+
     @Override
     public void handle(WindowEvent windowEvent) {
         DesktopContext desktopContext = DesktopContext.getInstance();
@@ -30,7 +32,7 @@ public class CloseEvent implements EventHandler<WindowEvent> {
         if (BooleanUtils.isTrue(launcherContext.getEnableBackup())) {
             if (StringUtils.hasText(launcherContext.getFilePath()) && CollectionUtils.isNotEmpty(launcherContext.getBackupPaths())) {
                 for (String backupPath : launcherContext.getBackupPaths()) {
-                    FileUtil.copyFile(launcherContext.getFilePath() + ".mv.db", backupPath + ".mv.db");
+                    FileUtil.copyFile(launcherContext.getFilePath() + dbFileSuffix, backupPath + dbFileSuffix);
                 }
             }
         }
