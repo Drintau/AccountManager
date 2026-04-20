@@ -47,12 +47,6 @@ public class WebServerConfig {
     private List<String> backupPaths;
 
     /**
-     * 启动后自动访问
-     */
-    @Setter
-    private Boolean autoAccessAfterStartup = false;
-
-    /**
      * 秘钥二进制字节数组
      */
     private byte[] securityKeyByteArray;

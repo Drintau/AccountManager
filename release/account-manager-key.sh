@@ -1,3 +1,3 @@
 #! /bin/bash
 echo 正在生成秘钥...
-java -jar account-manager.jar --securityKey
+java -jar account-manager.jar --am.mode=key

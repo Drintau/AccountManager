@@ -1,7 +1,6 @@
 package drintau.accountmanager.launcher;
 
 import drintau.accountmanager.desktop.DesktopContext;
-import drintau.accountmanager.desktop.DesktopUtil;
 import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.ThreadPool;
@@ -11,7 +10,6 @@ import lombok.Setter;
 
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 启动器上下文，其实也是应用上下文
@@ -69,14 +67,6 @@ public class LauncherContext {
         this.filePath = filePath;
         this.enableBackup = enableBackup;
         this.backupPaths = backupPaths;
-    }
-
-    public void submitOpenBrowserTask() {
-        if (desktopSupport) {
-            DaemonScheduler.getInstance().submitOnceDelayTask(() -> {
-                DesktopUtil.openBrowser(localUrl);
-            }, 1L, TimeUnit.SECONDS);
-        }
     }
 
 }

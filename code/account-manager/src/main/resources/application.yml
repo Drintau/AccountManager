@@ -63,4 +63,3 @@ am:
   file-path: E:/Study/Test/fileDevDB
   enable-backup: true
   backup-paths: E:/Study/Test/fileDevBackupDB
-  auto-access-after-startup: false

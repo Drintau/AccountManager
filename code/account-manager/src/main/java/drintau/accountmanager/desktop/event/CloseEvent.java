@@ -42,7 +42,7 @@ public class CloseEvent implements EventHandler<WindowEvent> {
         desktopContext.getStartButton().setDisable(true);
 
         DaemonScheduler.getInstance().submitOnceDelayTask(() -> {
-            log.info("应用开始退出，请稍候。");
+            log.info("程序退出，请稍候。");
             // 关闭服务
             ConfigurableApplicationContext webServerContext = desktopContext.getWebServerContext();
             if (webServerContext != null && webServerContext.isRunning()) {

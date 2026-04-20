@@ -5,7 +5,6 @@ import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.webserver.config.WebServerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -37,7 +36,7 @@ public class SayHello implements ApplicationRunner {
             log.info("版本号：{}", launcherContext.getVersionInfo().getVersion());
             log.info("构建时间：{}", DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(launcherContext.getVersionInfo().getBuildTime()));
         }
-        log.info("欢迎使用！服务启动成功。");
+        log.info("服务启动。");
 
         String localUrl = "http://localhost:" + port + contextPath;
         log.info("访问地址：{}", localUrl);
@@ -46,12 +45,6 @@ public class SayHello implements ApplicationRunner {
         // 桌面运行时，传递参数配置
         if (launcherContext.isDesktopRuntime()) {
             launcherContext.fillConfig(localUrl, webServerConfig.getFilePath(), webServerConfig.getEnableBackup(), webServerConfig.getBackupPaths());
-        }
-
-        // 配置了服务启动后自动访问，提交一个打开浏览器的任务
-        if (BooleanUtils.isTrue(webServerConfig.getAutoAccessAfterStartup())) {
-            log.info("配置了服务启动后自动访问，即将打开浏览器访问。");
-            launcherContext.submitOpenBrowserTask();
         }
     }
 }
