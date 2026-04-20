@@ -29,11 +29,11 @@ public class LauncherContext {
     // 启动参数
     private String[] args;
 
-    // 是否使用useGUI参数
-    private boolean useGUI;
+    private boolean webMode;
+    private boolean guiMode;
     // 系统是否具有桌面环境支持
     private final boolean desktopSupport = Desktop.isDesktopSupported();
-    // 是否桌面运行时：系统具有桌面环境支持 且 使用useGUI参数
+    // 是否桌面运行时：系统具有桌面环境支持 且 guiMode
     private boolean desktopRuntime;
 
     // 版本信息

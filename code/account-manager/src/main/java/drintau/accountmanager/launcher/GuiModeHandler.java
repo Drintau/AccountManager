@@ -1,12 +1,12 @@
 package drintau.accountmanager.launcher;
 
-public class UseGUIHandler implements ArgHandlerInterface {
+public class GuiModeHandler implements ModeHandlerInterface {
 
     @Override
     public void execute() {
-        // 能执行这个方法，说明启动参数使用了 useGUI
         LauncherContext launcherContext = LauncherContext.getInstance();
-        launcherContext.setUseGUI(true);
+        launcherContext.setGuiMode(true);
+        launcherContext.setWebMode(false);
         // 标记是否为 桌面运行时
         if (launcherContext.isDesktopSupport()) {
             launcherContext.setDesktopRuntime(true);
@@ -16,7 +16,7 @@ public class UseGUIHandler implements ArgHandlerInterface {
     }
 
     @Override
-    public String argName() {
-        return ArgConstant.ARG_USE_GUI;
+    public String modeName() {
+        return ArgConstant.AM_MODE_GUI;
     }
 }

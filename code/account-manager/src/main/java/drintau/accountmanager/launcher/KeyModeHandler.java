@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * 生成密钥处理程序
  */
 @Slf4j
-public class SecurityKeyHandler implements ArgHandlerInterface {
+public class KeyModeHandler implements ModeHandlerInterface {
 
     @Override
     public void execute() {
@@ -31,7 +31,7 @@ public class SecurityKeyHandler implements ArgHandlerInterface {
     }
 
     @Override
-    public String argName() {
-        return ArgConstant.ARG_SECURITY_KEY;
+    public String modeName() {
+        return ArgConstant.AM_MODE_KEY;
     }
 }

@@ -1,9 +1,9 @@
 package drintau.accountmanager.launcher;
 
-public interface ArgHandlerInterface {
+public interface ModeHandlerInterface {
 
     void execute();
 
-    String argName();
+    String modeName();
 
 }

@@ -5,7 +5,8 @@ package drintau.accountmanager.launcher;
  */
 public final class ArgConstant {
 
-    public static final String ARG_SECURITY_KEY = "securityKey";
-    public static final String ARG_USE_GUI = "useGUI";
+    public static final String AM_MODE_KEY = "key";
+    public static final String AM_MODE_WEB = "web";
+    public static final String AM_MODE_GUI = "gui";
 
 }
