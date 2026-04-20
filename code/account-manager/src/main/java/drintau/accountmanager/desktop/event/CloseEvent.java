@@ -66,7 +66,7 @@ public class CloseEvent implements EventHandler<WindowEvent> {
 
             ThreadPool.getInstance().shutdownNow();
 
-            log.info("感谢使用！再见！");
+            log.info("感谢使用。再见！");
             try {
                 Thread.sleep(2000L);
             } catch (InterruptedException ignored) {}

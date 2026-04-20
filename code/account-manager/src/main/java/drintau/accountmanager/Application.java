@@ -18,7 +18,7 @@ public class Application {
         // 启动参数处理
         String mode = ArgumentParser.parseMode(args);
         if (StrUtil.isBlank(mode)) {
-            log.error("未指定启动模式");
+            log.error("无效的启动模式");
             System.exit(0);
         }
         new ModeHandlerFactory().create(mode).execute();
@@ -36,7 +36,6 @@ public class Application {
         } else {
             SpringApplication.run(WebServerMainClass.class, args);
         }
-
     }
 
 }

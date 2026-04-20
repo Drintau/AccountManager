@@ -1,9 +1,11 @@
 package drintau.accountmanager.launcher;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class VersionInfo {
 
     @JsonProperty("version")

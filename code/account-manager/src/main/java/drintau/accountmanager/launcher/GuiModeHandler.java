@@ -19,4 +19,5 @@ public class GuiModeHandler implements ModeHandlerInterface {
     public String modeName() {
         return ArgConstant.AM_MODE_GUI;
     }
+
 }

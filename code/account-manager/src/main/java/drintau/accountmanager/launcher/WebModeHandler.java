@@ -1,6 +1,7 @@
 package drintau.accountmanager.launcher;
 
 public class WebModeHandler implements ModeHandlerInterface {
+
     @Override
     public void execute() {
         LauncherContext launcherContext = LauncherContext.getInstance();
@@ -13,4 +14,5 @@ public class WebModeHandler implements ModeHandlerInterface {
     public String modeName() {
         return ArgConstant.AM_MODE_WEB;
     }
+
 }
