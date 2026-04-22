@@ -37,25 +37,30 @@ public class DesktopMainClass extends Application {
         LauncherContext launcherContext = LauncherContext.getInstance();
         DesktopContext desktopContext = DesktopContext.getInstance();
 
+        Font buttonFont = new Font("System Bold", 20);
+
         // 控件
         Button startButton = new Button("启动服务");
         startButton.setOnAction(new WebServerStartEvent());
+        startButton.setFont(buttonFont);
         desktopContext.setStartButton(startButton);
 
         Button stopButton = new Button("停止服务");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
+        stopButton.setFont(buttonFont);
         desktopContext.setStopButton(stopButton);
 
         Button openBrowserButton = new Button("访问网页");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
+        openBrowserButton.setFont(buttonFont);
         desktopContext.setOpenBrowserButton(openBrowserButton);
 
         // 布局
         // 顶部内容
         HBox topHBox = new HBox(20);
-        topHBox.setPadding(new Insets(20));
+        topHBox.setPadding(new Insets(10));
         HBox.setHgrow(startButton, Priority.ALWAYS);
         HBox.setHgrow(openBrowserButton, Priority.ALWAYS);
         HBox.setHgrow(stopButton, Priority.ALWAYS);
@@ -70,7 +75,7 @@ public class DesktopMainClass extends Application {
 
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        Font textAreaFont = Font.font(14);
+        Font textAreaFont = Font.font(16);
         textArea.setFont(textAreaFont);
 
         HBox centerHBox = new HBox();
@@ -78,11 +83,14 @@ public class DesktopMainClass extends Application {
         centerHBox.getChildren().addAll(textArea);
 
         // 底部内容
+        Font labelFont = Font.font(12);
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
-        Label packageTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(launcherContext.getVersionInfo().getBuildTime()));
-        HBox bottomHBox = new HBox(20);
+        versionLabel.setFont(labelFont);
+        Label buildTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(launcherContext.getVersionInfo().getBuildTime()));
+        buildTimeLabel.setFont(labelFont);
+        HBox bottomHBox = new HBox(10);
         bottomHBox.setPadding(new Insets(10));
-        bottomHBox.getChildren().addAll(versionLabel, packageTimeLabel);
+        bottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
         bottomHBox.setAlignment(Pos.CENTER);
 
         // 控件分布：上中下左右
