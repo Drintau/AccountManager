@@ -1,7 +1,5 @@
 package drintau.accountmanager.shared.util;
 
-import org.springframework.util.StringUtils;
-
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -17,27 +15,50 @@ public final class DateTimeUtil {
 
     public static final String DATETIME_PATTERN_Y_M_D_H_M_S = "yyyy-MM-dd HH:mm:ss";
 
+    public static final String DATETIME_PATTERN_Y_M_D_H_M_S_O = "yyyy-MM-dd HH:mm:ss O";
+
     public static final String DATETIME_PATTERN_Y_M_D_H_M_S_Z = "yyyy-MM-dd HH:mm:ss Z";
 
-    public static OffsetDateTime nowChinaOffsetDateTime() {
-        return OffsetDateTime.now(CHINA_ZONE_ID);
-    }
-
-    public static ZonedDateTime nowChinaZonedDateTime() {
-        return ZonedDateTime.now(CHINA_ZONE_ID);
+    /**
+     * yyyy-MM-dd HH:mm:ss Z 格式日期 转换为 ZonedDateTime
+     */
+    public static OffsetDateTime offsetDateTimeStringToOffsetDateTime(String timeValue) {
+        if (StrUtil.isNotBlank(timeValue)) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN_Y_M_D_H_M_S_Z);
+            return OffsetDateTime.parse(timeValue, dateTimeFormatter);
+        }
+        return null;
     }
 
     /**
-     * yyyy-MM-dd HH:mm:ss Z 格式日期 转换为 ZonedDateTime，使用中国时区
-     * @param timeValue
+     * 带时区的时间，转换为目标地时区时间，并进行格式化输出字符串
      */
-    public static ZonedDateTime offsetDateTimeStringToChinaZonedDateTime(String timeValue) {
-        if (StringUtils.hasText(timeValue)) {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN_Y_M_D_H_M_S_Z);
-            OffsetDateTime offsetDateTime = OffsetDateTime.parse(timeValue, dateTimeFormatter);
-            return offsetDateTime.atZoneSameInstant(CHINA_ZONE_ID);
+    public static String toZoneIdDateTimeStr(OffsetDateTime offsetDateTime, ZoneId zoneId, String format) {
+        if (offsetDateTime != null) {
+
+            ZonedDateTime zonedDateTime;
+            if (zoneId != null) {
+                zonedDateTime = offsetDateTime.atZoneSameInstant(zoneId);
+            } else {
+                zonedDateTime = offsetDateTime.toZonedDateTime();
+            }
+
+            DateTimeFormatter dateTimeFormatter;
+            if (StrUtil.isNotBlank(format)) {
+                dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+            } else {
+                dateTimeFormatter = DateTimeFormatter.ofPattern(DATETIME_PATTERN_Y_M_D_H_M_S_Z);
+            }
+            return dateTimeFormatter.format(zonedDateTime);
         }
         return null;
+    }
+
+    /**
+     * 带时区的时间，转换为本地时区时间，并进行格式化输出字符串
+     */
+    public static String toLocalDateTimeStr(OffsetDateTime offsetDateTime, String format) {
+        return toZoneIdDateTimeStr(offsetDateTime, ZoneId.systemDefault(), format);
     }
 
     /**

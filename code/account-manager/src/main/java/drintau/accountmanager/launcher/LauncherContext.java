@@ -4,11 +4,13 @@ import drintau.accountmanager.desktop.DesktopContext;
 import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.ThreadPool;
+import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.shared.util.YamlUtil;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.awt.*;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 /**
@@ -35,7 +37,13 @@ public class LauncherContext {
     private boolean desktopRuntime;
 
     // 版本信息
-    private VersionInfo versionInfo = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), VersionInfo.class);
+    private VersionInfo versionInfo;
+    {
+        versionInfo = YamlUtil.readYamlToObj(getClass().getClassLoader().getResourceAsStream("application.yml"), VersionInfo.class);
+        OffsetDateTime offsetDateTime = DateTimeUtil.offsetDateTimeStringToOffsetDateTime(versionInfo.getBuildTime());
+        String localDateTimeStr = DateTimeUtil.toLocalDateTimeStr(offsetDateTime, DateTimeUtil.DATETIME_PATTERN_Y_M_D_H_M_S_O);
+        versionInfo.setLocalBuildTime(localDateTimeStr);
+    }
 
     // 本地访问地址，由webServer进行赋值
     private String localUrl;

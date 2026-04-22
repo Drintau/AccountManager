@@ -14,4 +14,6 @@ public class VersionInfo {
     @JsonProperty("build-time")
     private String buildTime;
 
+    private String localBuildTime;
+
 }

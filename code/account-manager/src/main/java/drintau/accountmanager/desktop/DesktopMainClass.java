@@ -7,7 +7,6 @@ import drintau.accountmanager.desktop.event.WebServerStopEvent;
 import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
-import drintau.accountmanager.shared.util.DateTimeUtil;
 import drintau.accountmanager.shared.util.StrUtil;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -83,12 +82,12 @@ public class DesktopMainClass extends Application {
         centerHBox.getChildren().addAll(textArea);
 
         // 底部内容
-        Font labelFont = Font.font(12);
+        Font labelFont = Font.font(14);
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
         versionLabel.setFont(labelFont);
-        Label buildTimeLabel = new Label("构建时间：" + DateTimeUtil.offsetDateTimeStringToChinaZonedDateTime(launcherContext.getVersionInfo().getBuildTime()));
+        Label buildTimeLabel = new Label("构建时间：" + launcherContext.getVersionInfo().getLocalBuildTime());
         buildTimeLabel.setFont(labelFont);
-        HBox bottomHBox = new HBox(10);
+        HBox bottomHBox = new HBox(20);
         bottomHBox.setPadding(new Insets(10));
         bottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
         bottomHBox.setAlignment(Pos.CENTER);
