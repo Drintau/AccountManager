@@ -104,8 +104,8 @@ public class DesktopMainClass extends Application {
         // 舞台
         stage.setScene(scene);
         stage.setTitle("账号管理器");
-        stage.setWidth(450);
-        stage.setHeight(450);
+        stage.setWidth(460);
+        stage.setHeight(460);
         stage.setResizable(false);
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
