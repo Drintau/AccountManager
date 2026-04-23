@@ -12,8 +12,6 @@ public final class AesUtil {
 
     /**
      * 生成随机AES秘钥
-     * @return
-     * @throws Exception
      */
     public static byte[] genAesKey() throws Exception {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -24,9 +22,6 @@ public final class AesUtil {
 
     /**
      * AES加密
-     * @param key
-     * @param input
-     * @return
      */
     public static byte[] aesEncrypt(byte[] key, byte[] input) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -37,9 +32,6 @@ public final class AesUtil {
 
     /**
      * AES解密
-     * @param key
-     * @param input
-     * @return
      */
     public static byte[] aesDecrypt(byte[] key, byte[] input) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");

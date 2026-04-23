@@ -19,8 +19,8 @@ public class ModeHandlerFactory {
         handlerMap.put(GuiModeHandler.modeName(), GuiModeHandler);
     }
 
-    public ModeHandlerInterface create(String arg) {
-        return handlerMap.get(arg);
+    public ModeHandlerInterface create(String modeName) {
+        return handlerMap.get(modeName);
     }
 
 }

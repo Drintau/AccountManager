@@ -13,7 +13,6 @@ public final class SecureUtil {
 
     /**
      * 生成秘钥
-     * @return
      */
     public static String genSecureKey() throws Exception {
         byte[] key = AesUtil.genAesKey();
@@ -22,17 +21,13 @@ public final class SecureUtil {
 
     /**
      * 密钥字节数组转换为字符串
-     * @param key
-     * @return
      */
     public static String byteKeyToStringKey(byte[] key) {
         return Base64.getEncoder().encodeToString(key);
     }
 
     /**
-     * 密钥符串转换为字字节数组
-     * @param key
-     * @return
+     * 密钥字符串转换为字节数组
      */
     public static byte[] stringKeyToByteKey(String key) {
         return Base64.getDecoder().decode(key);
@@ -40,9 +35,9 @@ public final class SecureUtil {
 
     /**
      * 加密
-     * @param key
+     * @param key 密钥字节数组
      * @param input 明文
-     * @return
+     * @return 密文
      */
     public static String encrypt(byte[] key, String input) throws Exception {
         // 明文转换为字节数组，加密得到密文字节数组
@@ -53,9 +48,9 @@ public final class SecureUtil {
 
     /**
      * 解密
-     * @param key
-     * @param input
-     * @return
+     * @param key 密钥字节数组
+     * @param input 密文
+     * @return 明文
      */
     public static String decrypt(byte[] key, String input) throws Exception {
         // 密文Base64解码得到二进制字节数组,解密得到明文字节数组
