@@ -9,6 +9,7 @@ import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.util.StrUtil;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -119,7 +120,7 @@ public class DesktopMainClass extends Application {
                     try {
                         String logStr = LogQueue.getInstance().poll(5000);
                         if (StrUtil.isNotBlank(logStr)) {
-                            DesktopContext.getInstance().getTextArea().appendText(logStr + "\n");
+                            Platform.runLater(() -> DesktopContext.getInstance().getTextArea().appendText(logStr + "\n"));
                         }
                     } catch (InterruptedException ignored) {
 
