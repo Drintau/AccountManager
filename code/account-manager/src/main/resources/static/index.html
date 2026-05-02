@@ -20,13 +20,13 @@
     <v-app>
 
       <!-- 左侧导航栏 -->
-      <v-navigation-drawer permanent width="200">
-        <v-toolbar title="账号管理器" color="blue" density="compact"></v-toolbar>
-        <v-list>
-          <v-list-item :active="accountShowFlag" title="账号" @click="moduleShow('accountShowFlag')"></v-list-item>
-          <v-list-item :active="categoryShowFlag" title="分类" @click="moduleShow('categoryShowFlag')"></v-list-item>
-          <v-list-item :active="transferShowFlag" title="迁移" @click="moduleShow('transferShowFlag')"></v-list-item>
-          <v-list-item :active="configShowFlag" title="设置" @click="moduleShow('configShowFlag')"></v-list-item>
+      <v-navigation-drawer permanent floating width="160">
+        <v-sheet color="blue" border-0 rounded="be-lg" class="d-flex align-center justify-center text-h5" height="50">账号管理器</v-sheet>
+        <v-list nav>
+          <v-list-item :active="accountShowFlag" @click="moduleShow('accountShowFlag')">账号</v-list-item>
+          <v-list-item :active="categoryShowFlag" @click="moduleShow('categoryShowFlag')">分类</v-list-item>
+          <v-list-item :active="transferShowFlag" @click="moduleShow('transferShowFlag')">迁移</v-list-item>
+          <v-list-item :active="configShowFlag" @click="moduleShow('configShowFlag')">设置</v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -280,7 +280,7 @@
         </v-container>
       </v-main>
 
-      <v-footer app="true" class="d-flex justify-center">
+      <v-footer app="true" order="-1" class="d-flex justify-center">
         Copyright &copy; 2021 - {{ new Date().getFullYear() }} Drintau. All Rights Reserved.
       </v-footer>
 
