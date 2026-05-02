@@ -83,7 +83,8 @@
                   @update:page="accountTablePageNumHandle" 
                   show-current-page="true" 
                   first-icon="fa-solid fa-angles-left" prev-icon="fa-solid fa-angle-left" 
-                  next-icon="fa-solid fa-angle-right" last-icon="fa-solid fa-angles-right">
+                  next-icon="fa-solid fa-angle-right" last-icon="fa-solid fa-angles-right"
+                  density="comfortable">
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
                       <v-icon size="small" @click="accountEditDialogShow(item)">
@@ -157,7 +158,8 @@
                   :items="categoryTableDatas"
                   :loading="categoryTableLoading" 
                   @update:options="categoryTableQueryAll" 
-                  hide-default-footer>
+                  hide-default-footer
+                  density="comfortable">
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
                       <v-icon size="small" @click="categoryEditDialogShow(item)">
@@ -243,7 +245,8 @@
                   :items="configTableDatas"
                   :loading="configTableLoading" 
                   @update:options="configTableQueryAll" 
-                  hide-default-footer>
+                  hide-default-footer
+                  density="comfortable">
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
                       <v-icon size="small" @click="configEditDialogShow(item)">
