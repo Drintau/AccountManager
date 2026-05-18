@@ -34,7 +34,7 @@
         <Logger name="drintau.accountmanager.webserver" level="debug" additivity="true">
             <AppenderRef ref="CustomLogAppender"/>
         </Logger>
-        <Root level="debug">
+        <Root level="info">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="WarnFile"/>
         </Root>
