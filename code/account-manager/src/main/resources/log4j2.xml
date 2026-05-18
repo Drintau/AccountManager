@@ -17,6 +17,7 @@
         </File>
         <CustomLogAppender name="CustomLogAppender">
             <PatternLayout pattern="${MSG_PATTERN}"/>
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
         </CustomLogAppender>
     </Appenders>
 
@@ -27,13 +28,13 @@
         <Logger name="com" level="warn" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="drintau.accountmanager.desktop" level="info" additivity="true">
+        <Logger name="drintau.accountmanager.desktop" level="debug" additivity="true">
             <AppenderRef ref="CustomLogAppender"/>
         </Logger>
-        <Logger name="drintau.accountmanager.webserver" level="info" additivity="true">
+        <Logger name="drintau.accountmanager.webserver" level="debug" additivity="true">
             <AppenderRef ref="CustomLogAppender"/>
         </Logger>
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="WarnFile"/>
         </Root>
