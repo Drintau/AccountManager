@@ -11,13 +11,17 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${CONSOLE_PATTERN}"/>
         </Console>
+        <Console name="DebugConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+        </Console>
         <File name="WarnFile" fileName="logs/app-warn.log">
             <PatternLayout pattern="${FILE_PATTERN}"/>
             <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
         </File>
         <CustomLogAppender name="CustomLogAppender">
             <PatternLayout pattern="${MSG_PATTERN}"/>
-            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <LevelMatchFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
         </CustomLogAppender>
     </Appenders>
 
@@ -28,11 +32,15 @@
         <Logger name="com" level="warn" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="drintau.accountmanager.desktop" level="debug" additivity="true">
+        <Logger name="drintau.accountmanager.desktop" level="debug" additivity="false">
+            <AppenderRef ref="DebugConsole"/>
             <AppenderRef ref="CustomLogAppender"/>
+            <AppenderRef ref="WarnFile"/>
         </Logger>
-        <Logger name="drintau.accountmanager.webserver" level="debug" additivity="true">
+        <Logger name="drintau.accountmanager.webserver" level="debug" additivity="false">
+            <AppenderRef ref="DebugConsole"/>
             <AppenderRef ref="CustomLogAppender"/>
+            <AppenderRef ref="WarnFile"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
