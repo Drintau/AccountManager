@@ -32,12 +32,12 @@
         <Logger name="com" level="warn" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="drintau.accountmanager.desktop" level="debug" additivity="false">
+        <Logger name="drintau.accountmanager.desktop" level="info" additivity="false">
             <AppenderRef ref="DebugConsole"/>
             <AppenderRef ref="CustomLogAppender"/>
             <AppenderRef ref="WarnFile"/>
         </Logger>
-        <Logger name="drintau.accountmanager.webserver" level="debug" additivity="false">
+        <Logger name="drintau.accountmanager.webserver" level="info" additivity="false">
             <AppenderRef ref="DebugConsole"/>
             <AppenderRef ref="CustomLogAppender"/>
             <AppenderRef ref="WarnFile"/>
