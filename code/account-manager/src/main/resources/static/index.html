@@ -22,7 +22,7 @@
       <!-- 左侧导航栏 -->
       <v-navigation-drawer permanent floating width="160">
         <v-sheet color="blue" border-0 rounded="be-lg" class="d-flex align-center justify-center text-h5" height="50">账号管理器</v-sheet>
-        <v-list nav class="text-center text-h6">
+        <v-list nav class="text-center text-h6" color="blue">
           <v-list-item :active="accountShowFlag" @click="moduleShow('accountShowFlag')">账号</v-list-item>
           <v-list-item :active="categoryShowFlag" @click="moduleShow('categoryShowFlag')">分类</v-list-item>
           <v-list-item :active="transferShowFlag" @click="moduleShow('transferShowFlag')">迁移</v-list-item>
