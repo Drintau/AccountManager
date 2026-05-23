@@ -130,7 +130,7 @@
             <v-dialog v-model="accountDelDialogShowFlag" width="auto">
               <v-card max-height="500" width="400" title="删除账号">
                 <v-card-text>
-                  确定删除 {{ accountDialogDataAppName }} 账号吗？
+                  确定删除 <strong class="text-red">{{ accountDialogDataAppName }}</strong> 账号吗？
                 </v-card-text>
                 <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="accountDelDialogClear()" class="text-subtitle-1">取消</v-btn>
@@ -191,7 +191,7 @@
             <v-dialog v-model="categoryDelDialogShowFlag" width="auto">
               <v-card max-height="500" width="400" title="删除分类">
                 <v-card-text>
-                  确定删除 {{ categoryDialogDataCategoryName }} 分类吗？
+                  确定删除 <strong class="text-red">{{ categoryDialogDataCategoryName }}</strong> 分类吗？
                 </v-card-text>
                 <v-card-actions class="mx-6 mb-4">
                   <v-btn @click="categoryDelDialogClear()" class="text-subtitle-1">取消</v-btn>
