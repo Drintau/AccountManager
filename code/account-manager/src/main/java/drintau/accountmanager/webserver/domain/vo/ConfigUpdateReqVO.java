@@ -11,6 +11,7 @@ public class ConfigUpdateReqVO {
     @JsonProperty("config_key")
     private String configKey;
 
+    @NotBlank(message = "配置值不能为空")
     @JsonProperty("config_value")
     private String configValue;
 
