@@ -112,9 +112,8 @@ const App = {
       configDialogDataRemark: null,
 
       // 报错信息
-      errSnackbarShowFlag: false,
-      errSnackbarTimeout: 5000,
-      errSnackbarMsg: null,
+      errDialogShowFlag: false,
+      errDialogMsg: null,
 
     }
   },
@@ -472,8 +471,8 @@ const App = {
     // 迁移-导入
     async transferImport() {
       if (this.transferImportFile == null) {
-        this.errSnackbarMsg = "请选择文件";
-        this.errSnackbarShowFlag = true;
+        this.errDialogMsg = "请选择文件";
+        this.errDialogShowFlag = true;
         return;
       }
 
@@ -505,8 +504,8 @@ const App = {
       if ("000000" == bizCode) {
         return true;
       } else {
-        this.errSnackbarMsg = res.message;
-        this.errSnackbarShowFlag = true;
+        this.errDialogMsg = res.message;
+        this.errDialogShowFlag = true;
         return false;
       }
     },

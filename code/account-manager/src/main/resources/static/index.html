@@ -276,9 +276,18 @@
           </template>
 
           <!-- 报错弹框 -->
-          <v-snackbar v-model="errSnackbarShowFlag" :timeout="errSnackbarTimeout" location="top" color="red-accent-2">
-            {{ errSnackbarMsg }}
-          </v-snackbar>
+          <template v-if="errDialogShowFlag">
+            <v-dialog v-model="errDialogShowFlag" width="auto" :scrim="false">
+              <v-card max-height="300" max-width="600" color="red-accent-2">
+                <v-card-text>
+                  {{ errDialogMsg }}
+                </v-card-text>
+                <v-card-actions class="justify-center">
+                  <v-btn @click="errDialogShowFlag = false" class="text-subtitle-1">关闭</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
 
         </v-container>
       </v-main>
