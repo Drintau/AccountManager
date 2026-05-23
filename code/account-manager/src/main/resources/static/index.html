@@ -99,7 +99,7 @@
               </v-col>
             </v-row>
 
-            <v-dialog v-model="accountEditDialogShowFlag" width="auto">
+            <v-dialog v-model="accountEditDialogShowFlag" width="auto" persistent>
               <v-card max-height="600" width="500" :title="accountEditDialogTitle">
                 <v-form class="mx-8">
                   <v-select label="分类" 
@@ -127,7 +127,7 @@
               </v-card>
             </v-dialog>
 
-            <v-dialog v-model="accountDelDialogShowFlag" width="auto">
+            <v-dialog v-model="accountDelDialogShowFlag" width="auto" persistent>
               <v-card max-height="500" width="400" title="删除账号">
                 <v-card-text>
                   确定删除 <strong class="text-red">{{ accountDialogDataAppName }}</strong> 账号吗？
@@ -174,7 +174,7 @@
               </v-col>
             </v-row>
 
-            <v-dialog v-model="categoryEditDialogShowFlag" width="auto">
+            <v-dialog v-model="categoryEditDialogShowFlag" width="auto" persistent>
               <v-card max-height="500" width="400" :title="categoryEditDialogTitle">
                 <v-form class="mx-8">
                   <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="outlined" autofocus></v-text-field>
@@ -188,7 +188,7 @@
               </v-card>
             </v-dialog>
 
-            <v-dialog v-model="categoryDelDialogShowFlag" width="auto">
+            <v-dialog v-model="categoryDelDialogShowFlag" width="auto" persistent>
               <v-card max-height="500" width="400" title="删除分类">
                 <v-card-text>
                   确定删除 <strong class="text-red">{{ categoryDialogDataCategoryName }}</strong> 分类吗？
@@ -258,7 +258,7 @@
               </v-col>
             </v-row>
 
-            <v-dialog v-model="configEditDialogShowFlag" width="auto">
+            <v-dialog v-model="configEditDialogShowFlag" width="auto" persistent>
               <v-card max-height="500" width="400" title="修改配置">
                 <v-form class="mx-8">
                   <v-text-field label="配置项" v-model="configDialogDataConfigKey" readonly variant="solo" bg-color="grey-darken-2"></v-text-field>
@@ -277,9 +277,9 @@
 
           <!-- 报错弹框 -->
           <template v-if="errDialogShowFlag">
-            <v-dialog v-model="errDialogShowFlag" width="auto" :scrim="false">
+            <v-dialog v-model="errDialogShowFlag" width="auto" :scrim="false" persistent>
               <v-card max-height="300" max-width="600" color="red-accent-2">
-                <v-card-text>
+                <v-card-text class="text-h6">
                   {{ errDialogMsg }}
                 </v-card-text>
                 <v-card-actions class="justify-center">
