@@ -1,9 +1,3 @@
----
-layout: default
-title: 账号管理器
-description: 支持 单机离线运行 / 局域网部署运行 的账号密码管理工具
----
-
 ## 整体架构
 ![系统总体架构图](images/系统总体架构图.png)
 
