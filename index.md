@@ -1,3 +1,8 @@
+---
+layout: default
+title: 账号管理器
+---
+
 ## 整体架构
 ![系统总体架构图](images/系统总体架构图.png)
 
