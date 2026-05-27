@@ -277,7 +277,7 @@
 
           <!-- 报错弹框 -->
           <template v-if="errDialogShowFlag">
-            <v-dialog v-model="errDialogShowFlag" width="auto" :scrim="false" persistent>
+            <v-dialog v-model="errDialogShowFlag" width="auto" opacity="0" persistent>
               <v-card max-height="300" max-width="600" color="red">
                 <v-card-text class="text-h6">
                   {{ errDialogMsg }}
