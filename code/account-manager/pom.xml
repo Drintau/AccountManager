@@ -244,16 +244,20 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <excludes>-->
+<!--                        <exclude>-->
+<!--                        </exclude>-->
+<!--                    </excludes>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+<!--        spring-boot-maven-plugin 插件   -->
+<!--        第三方依赖配置<optional>true</optional>、<scope>provided</scope>无效，还是会打包进入jar包，必须在插件中手动排除依赖，不知道是BUG还是Spring设计如此   -->
+<!--        而 spring-boot-configuration-processor 这个依赖，配置不配置都不会打入jar包，这个明显是插件干了事情    -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
