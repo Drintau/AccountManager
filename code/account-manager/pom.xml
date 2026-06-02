@@ -199,7 +199,7 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
-                                    <includes>**/css/all.min.css</includes>
+                                    <includes>**/css/all.min.css,**/webfonts/*</includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -233,7 +233,11 @@
                                 </resource>
                                 <resource>
                                     <directory>${project.build.directory}/webjar-tmp/META-INF/resources/webjars/fortawesome__fontawesome-free/${fontawesome-free.version}/css</directory>
-                                    <targetPath>fontawesome</targetPath>
+                                    <targetPath>fontawesome/css</targetPath>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}/webjar-tmp/META-INF/resources/webjars/fortawesome__fontawesome-free/${fontawesome-free.version}/webfonts</directory>
+                                    <targetPath>fontawesome/webfonts</targetPath>
                                 </resource>
                             </resources>
                         </configuration>
