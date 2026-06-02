@@ -144,7 +144,34 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
-                                    <includes>**/vue.global.prod.js</includes>
+                                    <includes>**/dist/vue.global.prod.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars.npm</groupId>
+                                    <artifactId>axios</artifactId>
+                                    <version>${axios.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
+                                    <includes>**/dist/axios.min.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars.npm</groupId>
+                                    <artifactId>vuetify</artifactId>
+                                    <version>${vuetify.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
+                                    <includes>**/dist/vuetify.min.css,**/dist/vuetify.min.js</includes>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars.npm</groupId>
+                                    <artifactId>fortawesome__fontawesome-free</artifactId>
+                                    <version>${fontawesome-free.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
+                                    <includes>**/css/all.min.css</includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -166,6 +193,19 @@
                             <resources>
                                 <resource>
                                     <directory>${project.build.directory}/webjar-tmp/META-INF/resources/webjars/vue/${vue.version}/dist</directory>
+                                    <targetPath>vue</targetPath>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}/webjar-tmp/META-INF/resources/webjars/axios/${axios.version}/dist</directory>
+                                    <targetPath>axios</targetPath>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}/webjar-tmp/META-INF/resources/webjars/vuetify/${vuetify.version}/dist</directory>
+                                    <targetPath>vuetify</targetPath>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.directory}/webjar-tmp/META-INF/resources/webjars/fortawesome__fontawesome-free/${fontawesome-free.version}/css</directory>
+                                    <targetPath>fontawesome</targetPath>
                                 </resource>
                             </resources>
                         </configuration>
