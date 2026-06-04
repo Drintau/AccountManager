@@ -50,7 +50,7 @@
                           item-value="id"
                           variant="underlined"
                           clearable 
-                          clear-icon="fa-regular fa-circle-xmark">
+                          clear-icon="fa-solid fa-xmark">
                 </v-select>                
               </v-col>
               <v-col cols="4">
@@ -58,7 +58,7 @@
                               v-model="accountTableQueryKeywordAppName" 
                               variant="underlined"
                               clearable 
-                              clear-icon="fa-regular fa-circle-xmark"
+                              clear-icon="fa-solid fa-xmark"
                               append-icon="fa-solid fa-magnifying-glass" 
                               @click:append="accountTableQuery()">
                 </v-text-field>
@@ -91,7 +91,7 @@
                         fa-solid fa-pen
                       </v-icon>
                       <v-icon size="small" color="red" @click="accountDelDialogShow(item)">
-                        fa-regular fa-trash-can
+                        fa-solid fa-trash-can
                       </v-icon>
                     </div>
                   </template>
@@ -109,7 +109,7 @@
                             item-value="id"
                             variant="outlined"
                             clearable 
-                            clear-icon="fa-regular fa-circle-xmark">
+                            clear-icon="fa-solid fa-xmark">
                   </v-select>
                   <v-text-field label="名称" v-model="accountDialogDataAppName" variant="outlined"></v-text-field>
                   <v-text-field label="网址" v-model="accountDialogDataAppUrl" variant="outlined"></v-text-field>
@@ -166,7 +166,7 @@
                         fa-solid fa-pen
                       </v-icon>
                       <v-icon size="small" color="red" @click="categoryDelDialogShow(item)">
-                        fa-regular fa-trash-can
+                        fa-solid fa-trash-can
                       </v-icon>
                     </div>
                   </template>
@@ -216,7 +216,7 @@
                       prepend-icon="" 
                       append-icon="fa-solid fa-file-import"
                       clearable
-                      clear-icon="fa-regular fa-circle-xmark"
+                      clear-icon="fa-solid fa-xmark"
                       show-size
                       @click:append="transferImport">
                     </v-file-input>

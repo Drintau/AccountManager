@@ -85,7 +85,13 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
         </dependency>
-        <!-- 前端 -->
+        <!-- GUI -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- WEB页面 -->
         <!-- webjars-locator-core：Webjars版本定位工具，解决访问WebJars静态资源时必须携带版本号的问题 -->
 <!--        <dependency>-->
 <!--            <groupId>org.webjars</groupId>-->
@@ -144,12 +150,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- GUI -->
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -199,7 +199,7 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
-                                    <includes>**/css/all.min.css,**/webfonts/*</includes>
+                                    <includes>**/css/all.min.css,**/webfonts/fa-solid*</includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
