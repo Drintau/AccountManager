@@ -23,10 +23,10 @@
       <v-navigation-drawer permanent floating width="160">
         <v-sheet color="blue" border-0 rounded="be-lg" class="d-flex align-center justify-center text-h5 font-italic" height="50">账号管理器</v-sheet>
         <v-list nav class="text-center text-h5" color="blue">
-          <v-list-item :active="accountShowFlag" @click="moduleShow('accountShowFlag')">账号</v-list-item>
-          <v-list-item :active="categoryShowFlag" @click="moduleShow('categoryShowFlag')">分类</v-list-item>
-          <v-list-item :active="transferShowFlag" @click="moduleShow('transferShowFlag')">迁移</v-list-item>
-          <v-list-item :active="configShowFlag" @click="moduleShow('configShowFlag')">设置</v-list-item>
+          <v-list-item :active="showFlagObj.accountShowFlag" @click="moduleShow('accountShowFlag')">账号</v-list-item>
+          <v-list-item :active="showFlagObj.categoryShowFlag" @click="moduleShow('categoryShowFlag')">分类</v-list-item>
+          <v-list-item :active="showFlagObj.transferShowFlag" @click="moduleShow('transferShowFlag')">迁移</v-list-item>
+          <v-list-item :active="showFlagObj.configShowFlag" @click="moduleShow('configShowFlag')">设置</v-list-item>
         </v-list>
       </v-navigation-drawer>
 
@@ -35,12 +35,12 @@
         <v-container>
 
           <!-- 欢迎 -->
-          <template v-if="helloShowFlag">
+          <template v-if="showFlagObj.helloShowFlag">
             <h1>欢迎使用账号管理器！</h1>
           </template>
 
           <!-- 账号 -->
-          <template v-if="accountShowFlag">
+          <template v-if="showFlagObj.accountShowFlag">
             <v-row align="center">
               <v-col cols="2">
                 <v-select label="分类筛选" 
@@ -143,7 +143,7 @@
           </template>
 
           <!-- 分类 -->
-          <template v-if="categoryShowFlag">
+          <template v-if="showFlagObj.categoryShowFlag">
             <v-row>
               <v-spacer></v-spacer>
               <v-col cols="auto">
@@ -204,7 +204,7 @@
           </template>
 
           <!-- 迁移-->
-          <template v-if="transferShowFlag">
+          <template v-if="showFlagObj.transferShowFlag">
             <v-row>
               <v-col>
                 <v-card title="导入：先选择要导入的xlsx文件，然后点击按钮" variant="outlined">
@@ -237,7 +237,7 @@
           </template>
 
           <!-- 设置 -->
-          <template v-if="configShowFlag">
+          <template v-if="showFlagObj.configShowFlag">
             <v-row>
               <v-col>
                 <v-data-table-server 

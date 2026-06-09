@@ -22,11 +22,13 @@ const App = {
     return {
 
       // 页面显示控制
-      helloShowFlag: true,
-      accountShowFlag: false,
-      categoryShowFlag: false,
-      transferShowFlag: false,
-      configShowFlag: false,
+      showFlagObj: {
+        helloShowFlag: true,
+        accountShowFlag: false,
+        categoryShowFlag: false,
+        transferShowFlag: false,
+        configShowFlag: false
+      },
 
       // 账号模块 account
       // 是否解密
@@ -134,35 +136,15 @@ const App = {
         } catch (error) {
           console.error(error);
         }
-        this.helloShowFlag = false;
-        this.accountShowFlag = true;
-        this.categoryShowFlag = false;
-        this.transferShowFlag = false;
-        this.configShowFlag = false;
-      } else if ('categoryShowFlag' === param) {
-        this.helloShowFlag = false;
-        this.accountShowFlag = false;
-        this.categoryShowFlag = true;
-        this.transferShowFlag = false;
-        this.configShowFlag = false;
-      } else if ('transferShowFlag' === param) {
-        this.helloShowFlag = false;
-        this.accountShowFlag = false;
-        this.categoryShowFlag = false;
-        this.transferShowFlag = true;
-        this.configShowFlag = false;
-      } else if ('configShowFlag' === param) {
-        this.helloShowFlag = false;
-        this.accountShowFlag = false;
-        this.categoryShowFlag = false;
-        this.transferShowFlag = false;
-        this.configShowFlag = true;
-      } else {
-        this.helloShowFlag = true;
-        this.accountShowFlag = false;
-        this.categoryShowFlag = false;
-        this.transferShowFlag = false;
-        this.configShowFlag = false;
+      }
+      for (let k in this.showFlagObj) {
+        // console.log(k);
+        // console.log(this.showFlagObj[k]);
+        if (k === param) {
+          this.showFlagObj[k] = true;
+        } else {
+          this.showFlagObj[k] = false;
+        }
       }
     },
 
