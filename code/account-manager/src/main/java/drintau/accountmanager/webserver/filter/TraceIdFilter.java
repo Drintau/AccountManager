@@ -12,6 +12,7 @@ import java.util.UUID;
 /**
  * 日志唯一ID过滤器
  */
+// @Order 对 @WebFilter 无效，默认用类名字符串升序排序
 @WebFilter(filterName = "traceIdFilter",urlPatterns = "/*")
 @Slf4j
 public class TraceIdFilter implements Filter {
@@ -25,6 +26,7 @@ public class TraceIdFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+//        log.debug("日志唯一ID过滤器添加TRACE_ID。");
         String oldTraceId = MDC.get(TRACE_ID_KEY);
         if (!StringUtils.hasText(oldTraceId)) {
             MDC.put(TRACE_ID_KEY, UUID.randomUUID().toString().replaceAll("-", "").toUpperCase());
