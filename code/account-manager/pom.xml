@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.14</version>
+        <version>3.5.15</version>
     </parent>
     <groupId>drintau</groupId>
     <artifactId>account-manager</artifactId>
@@ -25,8 +25,8 @@
 
         <fesod.version>2.0.1-incubating</fesod.version>
 
-        <vue.version>3.5.32</vue.version>
-        <axios.version>1.16.1</axios.version>
+        <vue.version>3.5.35</vue.version>
+        <axios.version>1.17.0</axios.version>
         <vuetify.version>3.12.5</vuetify.version>
         <fontawesome-free.version>6.7.2</fontawesome-free.version>
 
