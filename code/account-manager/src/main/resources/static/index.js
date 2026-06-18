@@ -483,7 +483,7 @@ const App = {
     // 处理响应
     handleRes(res) {
       let bizCode = res.code;
-      if ("000000" == bizCode) {
+      if ("000000" === bizCode) {
         return true;
       } else {
         this.errDialogMsg = res.message;

@@ -28,7 +28,7 @@
         <vue.version>3.5.35</vue.version>
         <axios.version>1.17.0</axios.version>
         <vuetify.version>3.12.5</vuetify.version>
-        <fontawesome-free.version>6.7.2</fontawesome-free.version>
+        <fontawesome-free.version>7.2.0</fontawesome-free.version>
 
         <!-- 使用LTS版本 -->
         <javafx.version>21.0.10</javafx.version>
