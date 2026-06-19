@@ -31,7 +31,8 @@ spring:
     hikari:
       connection-timeout: 2000
       maximum-pool-size: 2
-      max-lifetime: 60000
+      max-lifetime: 120000
+      keepalive-time: 60000
 ---
 #开发环境1，使用内存数据库
 #debug: true
