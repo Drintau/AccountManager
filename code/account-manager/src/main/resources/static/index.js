@@ -243,7 +243,7 @@ const App = {
           let successFlag = this.handleRes(res);
           if (successFlag) {
             this.accountEditDialogClear();
-            this.accountTableQuery();
+            await this.accountTableQuery();
           }
         } catch (error) {
           console.error(error);
@@ -264,7 +264,7 @@ const App = {
           if (successFlag) {
             this.accountEditDialogClear();
             this.accountTablePageNum = 1;
-            this.accountTableQuery();
+            await this.accountTableQuery();
           }
         } catch (error) {
           console.error(error);
@@ -273,9 +273,9 @@ const App = {
     },
     // 账号-展示删除对话框
     accountDelDialogShow(accountRow) {
-      let accoutDialogData = Object.assign({}, accountRow);
-      this.accountDialogDataId = accoutDialogData.id;
-      this.accountDialogDataAppName = accoutDialogData.app_name;
+      let accountDialogData = Object.assign({}, accountRow);
+      this.accountDialogDataId = accountDialogData.id;
+      this.accountDialogDataAppName = accountDialogData.app_name;
       this.accountDelDialogShowFlag = true;
     },
     // 账号-清理删除对话框
@@ -295,7 +295,7 @@ const App = {
         let successFlag = this.handleRes(res);
         if (successFlag) {
           this.accountDelDialogClear();
-          this.accountTableQuery();
+          await this.accountTableQuery();
         }
       } catch (error) {
         console.error(error);
@@ -348,7 +348,7 @@ const App = {
           let successFlag = this.handleRes(res);
           if (successFlag) {
             this.categoryEditDialogClear();
-            this.categoryTableQueryAll();
+            await this.categoryTableQueryAll();
           }
         } catch (error) {
           console.error(error);
@@ -363,7 +363,7 @@ const App = {
           let successFlag = this.handleRes(res);
           if (successFlag) {
             this.categoryEditDialogClear();
-            this.categoryTableQueryAll();
+            await this.categoryTableQueryAll();
           }
         } catch (error) {
           console.error(error);
@@ -394,7 +394,7 @@ const App = {
         let successFlag = this.handleRes(res);
         if (successFlag) {
           this.categoryDelDialogClear();
-          this.categoryTableQueryAll();
+          await this.categoryTableQueryAll();
         }
       } catch (error) {
         console.error(error);
@@ -443,7 +443,7 @@ const App = {
         let successFlag = this.handleRes(res);
         if (successFlag) {
           this.configEditDialogClear();
-          this.configTableQueryAll();
+          await this.configTableQueryAll();
         }
       } catch (error) {
         console.error(error);
@@ -458,21 +458,25 @@ const App = {
         return;
       }
 
-      let response = await axios({
-        method: 'post',
-        url: '/accountmanager/account/import',
-        data: {
-          file: this.transferImportFile
-        },
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      try {
+        let response = await axios({
+          method: 'post',
+          url: '/accountmanager/account/import',
+          data: {
+            file: this.transferImportFile
+          },
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        let res = response.data;
+        let successFlag = this.handleRes(res);
+        if (successFlag) {
+          this.transferImportFile = null;
+          await this.moduleShow('accountShowFlag');
         }
-      });
-      let res = response.data;
-      let successFlag = this.handleRes(res);
-      if (successFlag) {
-        this.transferImportFile = null;
-        this.moduleShow('accountShowFlag');
+      } catch (error) {
+        console.error(error);
       }
     },
     // 导出
