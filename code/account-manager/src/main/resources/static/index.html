@@ -50,7 +50,7 @@
                           item-value="id"
                           variant="underlined"
                           clearable 
-                          clear-icon="fa-solid fa-xmark">
+                          clear-icon="fa-solid fa-circle-xmark">
                 </v-select>                
               </v-col>
               <v-col cols="4">
@@ -58,7 +58,7 @@
                               v-model="accountTableQueryKeywordAppName"
                               variant="underlined"
                               clearable 
-                              clear-icon="fa-solid fa-xmark"
+                              clear-icon="fa-solid fa-circle-xmark"
                               append-icon="fa-solid fa-magnifying-glass" 
                               @click:append="accountTableQuery()">
                 </v-text-field>
@@ -91,7 +91,7 @@
                         fa-solid fa-file-pen
                       </v-icon>
                       <v-icon size="small" color="red" @click="accountDelDialogShow(item)">
-                        fa-solid fa-trash-can
+                        fa-solid fa-file-circle-xmark
                       </v-icon>
                     </div>
                   </template>
@@ -112,7 +112,7 @@
                             item-value="id"
                             variant="outlined"
                             clearable 
-                            clear-icon="fa-solid fa-xmark">
+                            clear-icon="fa-solid fa-circle-xmark">
                   </v-select>
                   <v-text-field label="名称" v-model="accountDialogDataAppName" variant="outlined"></v-text-field>
                   <v-text-field label="网址" v-model="accountDialogDataAppUrl" variant="outlined"></v-text-field>
@@ -172,7 +172,7 @@
                         fa-solid fa-file-pen
                       </v-icon>
                       <v-icon size="small" color="red" @click="categoryDelDialogShow(item)">
-                        fa-solid fa-trash-can
+                        fa-solid fa-file-circle-xmark
                       </v-icon>
                     </div>
                   </template>
@@ -229,9 +229,9 @@
                       accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                       variant="outlined"
                       prepend-icon="" 
-                      append-icon="fa-solid fa-file-import"
+                      append-icon="fa-solid fa-file-arrow-up"
                       clearable
-                      clear-icon="fa-solid fa-xmark"
+                      clear-icon="fa-solid fa-circle-xmark"
                       show-size
                       @click:append="transferImport">
                     </v-file-input>
@@ -247,7 +247,7 @@
                     <v-card-title class="text-headline-small font-weight-medium">导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板</v-card-title>
                   </v-card-item>
                   <div class="mx-8 mb-8">
-                    <v-btn variant="outlined" @click="transferExport" class="text-headline-small" color="blue">导出数据/下载模板</v-btn>
+                    <v-btn variant="outlined" @click="transferExport" class="text-headline-small" append-icon="fa-solid fa-file-arrow-down">导出数据/下载模板</v-btn>
                   </div>
                 </v-card>
               </v-col>
