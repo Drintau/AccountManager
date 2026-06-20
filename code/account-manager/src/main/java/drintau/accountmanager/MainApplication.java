@@ -7,12 +7,13 @@ import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.launcher.ModeHandlerFactory;
 import drintau.accountmanager.shared.util.StrUtil;
 import drintau.accountmanager.webserver.WebServerMainClass;
+import javafx.application.Application;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @Slf4j
-public class Application {
+public class MainApplication {
 
     public static void main(String[] args) {
         // 启动参数处理
@@ -32,7 +33,7 @@ public class Application {
             // .headless(false) 能使用图形化界面的情况下，springBoot也要用图形化模式
             SpringApplication springApplication = new SpringApplicationBuilder(WebServerMainClass.class).headless(false).build(args);
             desktopContext.setSpringApplication(springApplication);
-            javafx.application.Application.launch(DesktopMainClass.class, args);
+            Application.launch(DesktopMainClass.class, args);
         } else {
             SpringApplication.run(WebServerMainClass.class, args);
         }

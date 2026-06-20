@@ -22,7 +22,7 @@
       <!-- 左侧导航栏 -->
       <v-navigation-drawer permanent floating width="160">
         <v-sheet color="blue" border-0 rounded="be-lg" class="d-flex align-center justify-center text-headline-medium font-italic" height="50">账号管理器</v-sheet>
-        <v-list nav class="text-center text-headline-medium" color="blue">
+        <v-list nav class="text-center text-headline-medium font-weight-medium" color="blue">
           <v-list-item :active="showFlagObj.accountShowFlag" @click="moduleShow('accountShowFlag')">账号</v-list-item>
           <v-list-item :active="showFlagObj.categoryShowFlag" @click="moduleShow('categoryShowFlag')">分类</v-list-item>
           <v-list-item :active="showFlagObj.transferShowFlag" @click="moduleShow('transferShowFlag')">迁移</v-list-item>
@@ -55,7 +55,7 @@
               </v-col>
               <v-col cols="4">
                 <v-text-field label="名称搜索" 
-                              v-model="accountTableQueryKeywordAppName" 
+                              v-model="accountTableQueryKeywordAppName"
                               variant="underlined"
                               clearable 
                               clear-icon="fa-solid fa-xmark"
@@ -65,7 +65,7 @@
               </v-col>
               <v-spacer></v-spacer>
               <v-col cols="auto">
-                <v-btn variant="outlined" @click="accountEditDialogShow(null)" class="text-headline-small">新增账号</v-btn>
+                <v-btn variant="outlined" @click="accountEditDialogShow(null)" class="text-title-large font-weight-medium">新增账号</v-btn>
               </v-col>
             </v-row>
 
@@ -100,7 +100,10 @@
             </v-row>
 
             <v-dialog v-model="accountEditDialogShowFlag" width="auto" persistent>
-              <v-card max-height="600" width="500" :title="accountEditDialogTitle">
+              <v-card max-height="600" width="500">
+                <v-card-item>
+                  <v-card-title class="text-headline-small font-weight-medium">{{ accountEditDialogTitle }}</v-card-title>
+                </v-card-item>
                 <v-form class="mx-8">
                   <v-select label="分类" 
                             v-model="accountDialogDataCategoryId"
@@ -119,24 +122,27 @@
                   <v-text-field label="备注" v-model="accountDialogDataRemark" variant="outlined"></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="accountEditDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="accountEditDialogClear()" class="text-title-large font-weight-medium">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="green" @click="accountEdit()" class="text-headline-small">提交</v-btn>
+                  <v-btn color="green" @click="accountEdit()" class="text-title-large font-weight-medium">提交</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
 
             <v-dialog v-model="accountDelDialogShowFlag" width="auto" persistent>
-              <v-card max-height="600" width="500" title="删除账号">
-                <v-card-text class="text-headline-small">
-                  确定删除 <strong class="text-red">{{ accountDialogDataAppName }}</strong> 账号吗？
+              <v-card max-height="600" width="500">
+                <v-card-item>
+                  <v-card-title class="text-headline-small font-weight-medium">删除账号</v-card-title>
+                </v-card-item>
+                <v-card-text class="text-body-large">
+                  确定删除账号 <strong class="text-red">{{ accountDialogDataAppName }}</strong> 吗？
                 </v-card-text>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="accountDelDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="accountDelDialogClear()" class="text-title-large font-weight-medium">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="red" @click="accountDel()" class="text-headline-small">确定</v-btn>
+                  <v-btn color="red" @click="accountDel()" class="text-title-large font-weight-medium">确定</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -147,7 +153,7 @@
             <v-row>
               <v-spacer></v-spacer>
               <v-col cols="auto">
-                <v-btn variant="outlined" @click="categoryEditDialogShow(null)" class="text-headline-small">新增分类</v-btn>
+                <v-btn variant="outlined" @click="categoryEditDialogShow(null)" class="text-title-large font-weight-medium">新增分类</v-btn>
               </v-col>
             </v-row>
 
@@ -175,29 +181,35 @@
             </v-row>
 
             <v-dialog v-model="categoryEditDialogShowFlag" width="auto" persistent>
-              <v-card max-height="600" width="500" :title="categoryEditDialogTitle">
+              <v-card max-height="600" width="500">
+                <v-card-item>
+                  <v-card-title class="text-headline-small font-weight-medium">{{ categoryEditDialogTitle }}</v-card-title>
+                </v-card-item>
                 <v-form class="mx-8">
                   <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="outlined" autofocus></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="categoryEditDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="categoryEditDialogClear()" class="text-title-large font-weight-medium">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="green" @click="categoryEdit()" class="text-headline-small">提交</v-btn>
+                  <v-btn color="green" @click="categoryEdit()" class="text-title-large font-weight-medium">提交</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
 
             <v-dialog v-model="categoryDelDialogShowFlag" width="auto" persistent>
-              <v-card max-height="600" width="500" title="删除分类">
-                <v-card-text class="text-headline-small">
-                  确定删除 <strong class="text-red">{{ categoryDialogDataCategoryName }}</strong> 分类吗？
+              <v-card max-height="600" width="500">
+                <v-card-item>
+                  <v-card-title class="text-headline-small font-weight-medium">删除分类</v-card-title>
+                </v-card-item>
+                <v-card-text class="text-body-large">
+                  确定删除分类 <strong class="text-red">{{ categoryDialogDataCategoryName }}</strong> 吗？
                 </v-card-text>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="categoryDelDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="categoryDelDialogClear()" class="text-title-large font-weight-medium">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="red" @click="categoryDel()" class="text-headline-small">确定</v-btn>
+                  <v-btn color="red" @click="categoryDel()" class="text-title-large font-weight-medium">确定</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -207,7 +219,10 @@
           <template v-if="showFlagObj.transferShowFlag">
             <v-row>
               <v-col>
-                <v-card title="导入：先选择要导入的xlsx文件，然后点击按钮" variant="outlined">
+                <v-card variant="outlined">
+                  <v-card-item>
+                    <v-card-title class="text-headline-small font-weight-medium">导入：先选择要导入的xlsx文件，然后点击按钮</v-card-title>
+                  </v-card-item>
                   <div class="mx-8 mb-4">
                     <v-file-input v-model="transferImportFile"
                       label="选择文件" 
@@ -227,9 +242,12 @@
             
             <v-row>
               <v-col>
-                <v-card title="导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板" variant="outlined">
+                <v-card variant="outlined">
+                  <v-card-item>
+                    <v-card-title class="text-headline-small font-weight-medium">导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板</v-card-title>
+                  </v-card-item>
                   <div class="mx-8 mb-8">
-                    <v-btn variant="outlined" @click="transferExport" class="text-headline-small">导出数据/下载模板</v-btn>
+                    <v-btn variant="outlined" @click="transferExport" class="text-title-large font-weight-medium">导出数据/下载模板</v-btn>
                   </div>
                 </v-card>
               </v-col>
@@ -259,17 +277,20 @@
             </v-row>
 
             <v-dialog v-model="configEditDialogShowFlag" width="auto" persistent>
-              <v-card max-height="600" width="500" title="修改配置">
+              <v-card max-height="600" width="500">
+                <v-card-item>
+                  <v-card-title class="text-headline-small font-weight-medium">修改配置</v-card-title>
+                </v-card-item>
                 <v-form class="mx-8">
                   <v-text-field label="配置项" v-model="configDialogDataConfigKey" readonly variant="solo" bg-color="grey-darken-2"></v-text-field>
                   <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="outlined" autofocus></v-text-field>
                   <v-text-field label="说明" v-model="configDialogDataRemark" readonly variant="solo" bg-color="grey-darken-2"></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="configEditDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="configEditDialogClear()" class="text-title-large font-weight-medium">取消</v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="green" @click="configEdit()" class="text-headline-small">提交</v-btn>
+                  <v-btn color="green" @click="configEdit()" class="text-title-large font-weight-medium">提交</v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -279,7 +300,7 @@
           <template v-if="errDialogShowFlag">
             <v-dialog v-model="errDialogShowFlag" width="auto" opacity="0" persistent>
               <v-card max-height="500" max-width="400" color="red">
-                <v-card-text class="text-headline-small">
+                <v-card-text class="text-body-large">
                   {{ errDialogMsg }}
                 </v-card-text>
                 <v-card-actions class="justify-center">
