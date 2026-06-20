@@ -1,7 +1,27 @@
-const { createApp } = Vue
+const { createApp, h } = Vue
 const { createVuetify } = Vuetify
 
-const vuetify = createVuetify()
+// vuetify 官方图标库是mdi，但是我一开始不知道，用了fontawesome，结果有些地方它没有简单改显示图标的方法，导致空白，然后我也不希望再引入一个mdi图标库
+// 所以参考 vuetify 官方文档自定义图标库的方法，做一些修复显示
+const aliases = {}
+const custom = {
+  component: (props) => {
+    if (props.icon === 'mdi-menu-down') {
+      return h('i', { class: 'fa-solid fa-caret-down' });
+    }
+    // 其他图标：返回空 <i>，不隐藏
+    return h('i');
+  },
+}
+const vuetify = createVuetify({
+  icons: {
+    defaultSet: 'custom',
+    aliases,
+    sets: {
+      custom
+    }
+  }
+})
 
 const App = {
   // 规定：
