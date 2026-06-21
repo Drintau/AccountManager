@@ -42,7 +42,7 @@
           <!-- 账号 -->
           <template v-if="showFlagObj.accountShowFlag">
             <v-row class="align-center">
-              <v-col cols="2">
+              <v-col cols="3">
                 <v-select label="分类筛选" 
                           v-model="accountTableQueryCategoryId"
                           :items="accountTableQueryCategoryDatas"
@@ -216,21 +216,19 @@
               <v-col>
                 <v-card variant="outlined">
                   <v-card-item>
-                    <v-card-title class="text-headline-small font-weight-medium">导入：先选择要导入的xlsx文件，然后点击按钮</v-card-title>
+                    <v-card-title class="text-headline-small font-weight-medium">导入：先选择要导入的xlsx文件，然后点击“导入数据”</v-card-title>
                   </v-card-item>
                   <div class="mx-8 mb-4">
                     <v-file-input v-model="transferImportFile"
                       label="选择文件" 
                       accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                       variant="outlined"
-                      prepend-icon="" 
-                      append-icon="mdi mdi-file-upload-outline"
+                      prepend-icon=""
                       clearable
                       show-size
-                      @click:append="transferImport"
-                      density="compact"
-                      icon-color="blue">
+                      density="comfortable">
                     </v-file-input>
+                    <v-btn variant="outlined" block @click="transferImport" size="large" class="text-title-large" append-icon="mdi mdi-file-upload-outline" color="blue">导入数据</v-btn>
                   </div>
                 </v-card>
               </v-col>
@@ -242,8 +240,8 @@
                   <v-card-item>
                     <v-card-title class="text-headline-small font-weight-medium">导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板</v-card-title>
                   </v-card-item>
-                  <div class="mx-8 mb-8">
-                    <v-btn variant="outlined" block @click="transferExport" size="large" class="text-title-medium" append-icon="mdi mdi-file-download-outline" color="blue">导出数据/下载模板</v-btn>
+                  <div class="mx-8 mb-4">
+                    <v-btn variant="outlined" block @click="transferExport" size="large" class="text-title-large" append-icon="mdi mdi-file-download-outline" color="blue">导出数据/下载模板</v-btn>
                   </div>
                 </v-card>
               </v-col>
