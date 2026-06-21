@@ -203,7 +203,7 @@
                                     <type>jar</type>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.directory}/webjar-tmp</outputDirectory>
-                                    <includes>**/css/materialdesignicons.min.css,**/fonts/*</includes>
+                                    <includes>**/css/materialdesignicons.min.css,**/fonts/*.woff2</includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
