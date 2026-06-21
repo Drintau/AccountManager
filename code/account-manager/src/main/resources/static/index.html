@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="vuetify/vuetify.min.css">
-  <link rel="stylesheet" href="fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="index.css">
   <title>账号管理器</title>
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -57,7 +57,7 @@
                               v-model="accountTableQueryKeywordAppName"
                               variant="underlined"
                               clearable
-                              append-icon="fa-solid fa-magnifying-glass" 
+                              append-icon="mdi mdi-magnify"
                               @click:append="accountTableQuery()">
                 </v-text-field>
               </v-col>
@@ -84,10 +84,10 @@
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
                       <v-icon size="small" @click="accountEditDialogShow(item)">
-                        fa-solid fa-file-pen
+                        mdi mdi-file-edit-outline
                       </v-icon>
                       <v-icon size="small" color="red" @click="accountDelDialogShow(item)">
-                        fa-solid fa-file-circle-xmark
+                        mdi mdi-file-remove-outline
                       </v-icon>
                     </div>
                   </template>
@@ -112,7 +112,7 @@
                   <v-text-field label="名称" v-model="accountDialogDataAppName" variant="outlined"></v-text-field>
                   <v-text-field label="网址" v-model="accountDialogDataAppUrl" variant="outlined"></v-text-field>
                   <v-text-field label="账号" v-model="accountDialogDataUsername" variant="outlined"></v-text-field>
-                  <v-text-field label="密码" v-model="accountDialogDataPassword" variant="outlined" append-inner-icon="fa-solid fa-shuffle" @click:append-inner="passwordGet">
+                  <v-text-field label="密码" v-model="accountDialogDataPassword" variant="outlined" append-inner-icon="mdi mdi-autorenew" @click:append-inner="passwordGet">
                   </v-text-field>
                   <v-text-field label="备注" v-model="accountDialogDataRemark" variant="outlined"></v-text-field>
                 </v-form>
@@ -164,10 +164,10 @@
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
                       <v-icon size="small" @click="categoryEditDialogShow(item)">
-                        fa-solid fa-file-pen
+                        mdi mdi-file-edit-outline
                       </v-icon>
                       <v-icon size="small" color="red" @click="categoryDelDialogShow(item)">
-                        fa-solid fa-file-circle-xmark
+                        mdi mdi-file-remove-outline
                       </v-icon>
                     </div>
                   </template>
@@ -224,7 +224,7 @@
                       accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                       variant="outlined"
                       prepend-icon="" 
-                      append-icon="fa-solid fa-file-arrow-up"
+                      append-icon="mdi mdi-file-upload-outline"
                       clearable
                       show-size
                       @click:append="transferImport"
@@ -243,7 +243,7 @@
                     <v-card-title class="text-headline-small font-weight-medium">导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板</v-card-title>
                   </v-card-item>
                   <div class="mx-8 mb-8">
-                    <v-btn variant="outlined" block @click="transferExport" size="large" class="text-title-medium" append-icon="fa-solid fa-file-arrow-down" color="blue">导出数据/下载模板</v-btn>
+                    <v-btn variant="outlined" block @click="transferExport" size="large" class="text-title-medium" append-icon="mdi mdi-file-download-outline" color="blue">导出数据/下载模板</v-btn>
                   </div>
                 </v-card>
               </v-col>
@@ -264,7 +264,7 @@
                   <template v-slot:item.actions="{ item }">
                     <div class="d-flex ga-2 justify-end">
                       <v-icon size="small" @click="configEditDialogShow(item)">
-                        fa-solid fa-file-pen
+                        mdi mdi-file-edit-outline
                       </v-icon>
                     </div>
                   </template>
@@ -300,7 +300,7 @@
                   {{ errDialogMsg }}
                 </v-card-text>
                 <v-card-actions class="justify-center">
-                  <v-btn @click="errDialogShowFlag = false" icon="fa-solid fa-xmark"></v-btn>
+                  <v-btn @click="errDialogShowFlag = false" icon="mdi mdi-close"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
