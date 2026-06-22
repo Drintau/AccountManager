@@ -63,7 +63,7 @@
               </v-col>
               <v-spacer></v-spacer>
               <v-col cols="auto">
-                <v-btn variant="outlined" @click="accountEditDialogShow(null)" class="text-headline-small" color="blue">新增账号</v-btn>
+                <v-btn @click="accountEditDialogShow(null)" icon="mdi mdi-file-plus-outline" variant="outlined" density="comfortable" color="blue"></v-btn>
               </v-col>
             </v-row>
 
@@ -98,7 +98,7 @@
             <v-dialog v-model="accountEditDialogShowFlag" width="auto" persistent>
               <v-card max-height="600" width="500">
                 <v-card-item>
-                  <v-card-title class="text-headline-small font-weight-medium">{{ accountEditDialogTitle }}</v-card-title>
+                  <v-card-title class="my-fs-1_5 my-fw-500">{{ accountEditDialogTitle }}</v-card-title>
                 </v-card-item>
                 <v-form class="mx-8">
                   <v-select label="分类" 
@@ -107,20 +107,21 @@
                             item-title="category_name"
                             item-value="id"
                             variant="outlined"
+                            density="comfortable"
                             clearable>
                   </v-select>
-                  <v-text-field label="名称" v-model="accountDialogDataAppName" variant="outlined"></v-text-field>
-                  <v-text-field label="网址" v-model="accountDialogDataAppUrl" variant="outlined"></v-text-field>
-                  <v-text-field label="账号" v-model="accountDialogDataUsername" variant="outlined"></v-text-field>
-                  <v-text-field label="密码" v-model="accountDialogDataPassword" variant="outlined" append-inner-icon="mdi mdi-autorenew" @click:append-inner="passwordGet">
+                  <v-text-field label="名称" v-model="accountDialogDataAppName" variant="outlined" density="comfortable"></v-text-field>
+                  <v-text-field label="网址" v-model="accountDialogDataAppUrl" variant="outlined" density="comfortable"></v-text-field>
+                  <v-text-field label="账号" v-model="accountDialogDataUsername" variant="outlined" density="comfortable"></v-text-field>
+                  <v-text-field label="密码" v-model="accountDialogDataPassword" variant="outlined" density="comfortable" append-inner-icon="mdi mdi-autorenew" @click:append-inner="passwordGet">
                   </v-text-field>
-                  <v-text-field label="备注" v-model="accountDialogDataRemark" variant="outlined"></v-text-field>
+                  <v-text-field label="备注" v-model="accountDialogDataRemark" variant="outlined" density="comfortable"></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="accountEditDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="accountEditDialogClear()" icon="mdi mdi-close-circle-outline" density="comfortable"></v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="blue" @click="accountEdit()" class="text-headline-small">提交</v-btn>
+                  <v-btn @click="accountEdit()" icon="mdi mdi-check-circle-outline" density="comfortable" color="blue"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -128,16 +129,16 @@
             <v-dialog v-model="accountDelDialogShowFlag" width="auto" persistent>
               <v-card max-height="600" width="500">
                 <v-card-item>
-                  <v-card-title class="text-headline-small font-weight-medium">删除账号</v-card-title>
+                  <v-card-title class="my-fs-1_5 my-fw-500">删除账号</v-card-title>
                 </v-card-item>
-                <v-card-text class="text-title-large">
+                <v-card-text class="my-fs-1_25">
                   确定删除账号 <strong class="text-red">{{ accountDialogDataAppName }}</strong> 吗？
                 </v-card-text>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="accountDelDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="accountDelDialogClear()" icon="mdi mdi-close-circle-outline" density="comfortable"></v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="red" @click="accountDel()" class="text-headline-small">确定</v-btn>
+                  <v-btn @click="accountDel()" icon="mdi mdi-check-circle-outline" density="comfortable" color="red"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -148,7 +149,7 @@
             <v-row>
               <v-spacer></v-spacer>
               <v-col cols="auto">
-                <v-btn variant="outlined" @click="categoryEditDialogShow(null)" class="text-headline-small" color="blue">新增分类</v-btn>
+                <v-btn @click="categoryEditDialogShow(null)" icon="mdi mdi-file-plus-outline" variant="outlined" density="comfortable" color="blue"></v-btn>
               </v-col>
             </v-row>
 
@@ -178,16 +179,16 @@
             <v-dialog v-model="categoryEditDialogShowFlag" width="auto" persistent>
               <v-card max-height="600" width="500">
                 <v-card-item>
-                  <v-card-title class="text-headline-small font-weight-medium">{{ categoryEditDialogTitle }}</v-card-title>
+                  <v-card-title class="my-fs-1_5 my-fw-500">{{ categoryEditDialogTitle }}</v-card-title>
                 </v-card-item>
                 <v-form class="mx-8">
-                  <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="outlined" autofocus></v-text-field>
+                  <v-text-field label="分类名称" v-model="categoryDialogDataCategoryName" variant="outlined" density="comfortable" autofocus></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="categoryEditDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="categoryEditDialogClear()" icon="mdi mdi-close-circle-outline" density="comfortable"></v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="blue" @click="categoryEdit()" class="text-headline-small">提交</v-btn>
+                  <v-btn @click="categoryEdit()" icon="mdi mdi-check-circle-outline" density="comfortable" color="blue"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -195,16 +196,16 @@
             <v-dialog v-model="categoryDelDialogShowFlag" width="auto" persistent>
               <v-card max-height="600" width="500">
                 <v-card-item>
-                  <v-card-title class="text-headline-small font-weight-medium">删除分类</v-card-title>
+                  <v-card-title class="my-fs-1_5 my-fw-500">删除分类</v-card-title>
                 </v-card-item>
-                <v-card-text class="text-title-large">
+                <v-card-text class="my-fs-1_25">
                   确定删除分类 <strong class="text-red">{{ categoryDialogDataCategoryName }}</strong> 吗？
                 </v-card-text>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="categoryDelDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="categoryDelDialogClear()" icon="mdi mdi-close-circle-outline" density="comfortable"></v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="red" @click="categoryDel()" class="text-headline-small">确定</v-btn>
+                  <v-btn @click="categoryDel()" icon="mdi mdi-check-circle-outline" density="comfortable" color="red"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -216,7 +217,7 @@
               <v-col>
                 <v-card variant="outlined">
                   <v-card-item>
-                    <v-card-title class="text-headline-small font-weight-medium">导入：先选择要导入的xlsx文件，然后点击“导入数据”</v-card-title>
+                    <v-card-title class="my-fs-1_75 my-fw-500">导入：先选择要导入的xlsx文件，然后点击“导入数据”</v-card-title>
                   </v-card-item>
                   <div class="mx-8 mb-4">
                     <v-file-input v-model="transferImportFile"
@@ -228,7 +229,7 @@
                       show-size
                       density="comfortable">
                     </v-file-input>
-                    <v-btn variant="outlined" block @click="transferImport" size="large" class="text-title-large" append-icon="mdi mdi-file-upload-outline" color="blue">导入数据</v-btn>
+                    <v-btn variant="outlined" block @click="transferImport" size="large" class="my-fs-1_25" append-icon="mdi mdi-file-upload-outline" color="blue">导入数据</v-btn>
                   </div>
                 </v-card>
               </v-col>
@@ -238,10 +239,10 @@
               <v-col>
                 <v-card variant="outlined">
                   <v-card-item>
-                    <v-card-title class="text-headline-small font-weight-medium">导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板</v-card-title>
+                    <v-card-title class="my-fs-1_75 my-fw-500">导出：下载包含全部数据的xlsx文件；当没有数据时，下载的文件即为导入数据的xlsx模板</v-card-title>
                   </v-card-item>
                   <div class="mx-8 mb-4">
-                    <v-btn variant="outlined" block @click="transferExport" size="large" class="text-title-large" append-icon="mdi mdi-file-download-outline" color="blue">导出数据/下载模板</v-btn>
+                    <v-btn variant="outlined" block @click="transferExport" size="large" class="my-fs-1_25" append-icon="mdi mdi-file-download-outline" color="blue">导出数据/下载模板</v-btn>
                   </div>
                 </v-card>
               </v-col>
@@ -273,18 +274,18 @@
             <v-dialog v-model="configEditDialogShowFlag" width="auto" persistent>
               <v-card max-height="600" width="500">
                 <v-card-item>
-                  <v-card-title class="text-headline-small font-weight-medium">修改配置</v-card-title>
+                  <v-card-title class="my-fs-1_5 my-fw-500">修改配置</v-card-title>
                 </v-card-item>
                 <v-form class="mx-8">
-                  <v-text-field label="配置项" v-model="configDialogDataConfigKey" readonly variant="solo" bg-color="grey-darken-2"></v-text-field>
-                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="outlined" autofocus></v-text-field>
-                  <v-text-field label="说明" v-model="configDialogDataRemark" readonly variant="solo" bg-color="grey-darken-2"></v-text-field>
+                  <v-text-field label="配置项" v-model="configDialogDataConfigKey" readonly variant="solo" bg-color="grey-darken-2" density="comfortable"></v-text-field>
+                  <v-text-field label="配置值" v-model="configDialogDataConfigValue" variant="outlined" autofocus density="comfortable"></v-text-field>
+                  <v-text-field label="说明" v-model="configDialogDataRemark" readonly variant="solo" bg-color="grey-darken-2" density="comfortable"></v-text-field>
                 </v-form>
                 <v-card-actions class="mx-6 mb-4">
-                  <v-btn @click="configEditDialogClear()" class="text-headline-small">取消</v-btn>
+                  <v-btn @click="configEditDialogClear()" icon="mdi mdi-close-circle-outline" density="comfortable"></v-btn>
                   <!-- 弹性空间 -->
                   <v-spacer></v-spacer>
-                  <v-btn color="blue" @click="configEdit()" class="text-headline-small">提交</v-btn>
+                  <v-btn @click="configEdit()" icon="mdi mdi-check-circle-outline" density="comfortable" color="blue"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -294,11 +295,11 @@
           <template v-if="errDialogShowFlag">
             <v-dialog v-model="errDialogShowFlag" width="auto" opacity="0" persistent>
               <v-card max-height="500" max-width="400" color="red">
-                <v-card-text class="text-title-large">
+                <v-card-text class="my-fs-1_25">
                   {{ errDialogMsg }}
                 </v-card-text>
                 <v-card-actions class="justify-center">
-                  <v-btn @click="errDialogShowFlag = false" icon="mdi mdi-close"></v-btn>
+                  <v-btn @click="errDialogShowFlag = false" icon="mdi mdi-close" density="comfortable"></v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
