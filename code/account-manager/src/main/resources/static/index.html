@@ -20,9 +20,9 @@
     <v-app>
 
       <!-- 左侧导航栏 -->
-      <v-navigation-drawer permanent floating width="160">
-        <v-sheet color="blue" border-0 rounded="be-lg" class="d-flex align-center justify-center text-headline-medium font-italic" height="50">账号管理器</v-sheet>
-        <v-list nav class="text-center text-headline-medium font-weight-medium" color="blue">
+      <v-navigation-drawer permanent floating width="200">
+        <v-sheet color="blue" border-0 rounded="be-lg" class="d-flex align-center justify-center font-italic my-fs-2" height="50">账号管理器</v-sheet>
+        <v-list nav class="text-center my-fs-1_75 my-fw-500" color="blue">
           <v-list-item :active="showFlagObj.accountShowFlag" @click="moduleShow('accountShowFlag')">账号</v-list-item>
           <v-list-item :active="showFlagObj.categoryShowFlag" @click="moduleShow('categoryShowFlag')">分类</v-list-item>
           <v-list-item :active="showFlagObj.transferShowFlag" @click="moduleShow('transferShowFlag')">迁移</v-list-item>
@@ -307,7 +307,7 @@
         </v-container>
       </v-main>
 
-      <v-footer app="true" order="-1" class="d-flex justify-center text-body-small">
+      <v-footer app="true" order="-1" class="d-flex justify-center my-fs-0_75">
         Copyright &copy; 2021 - {{ new Date().getFullYear() }} Drintau. All Rights Reserved.
       </v-footer>
 

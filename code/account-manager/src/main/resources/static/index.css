@@ -1,0 +1,14 @@
+/* 字体大小 */
+.my-fs-0_5 { font-size: 0.5rem; } /* 8px */
+.my-fs-0_75 { font-size: 0.75rem; } /* 12px */
+.my-fs-1 { font-size: 1rem; } /* 16px */
+.my-fs-1_25 { font-size: 1.25rem; } /* 20px */
+.my-fs-1_5 { font-size: 1.5rem; } /* 24px */
+.my-fs-1_75 { font-size: 1.75rem; } /* 28px */
+.my-fs-2 { font-size: 2rem; } /* 32px */
+.my-fs-2_5 { font-size: 2.5rem; } /* 48px */
+
+/* 字体粗细 */
+.my-fw-500 { font-weight: 500 }
+.my-fw-600 { font-weight: 600 }
+.my-fw-700 { font-weight: 700 }
