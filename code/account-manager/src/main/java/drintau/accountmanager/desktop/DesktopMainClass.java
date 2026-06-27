@@ -10,12 +10,13 @@ import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.util.StrUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +25,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -63,6 +66,7 @@ public class DesktopMainClass extends Application {
 
         Button saveButton = new Button("保存");
         saveButton.setFont(buttonFont);
+        saveButton.setDisable(true);
 
         Button closeButton = new Button("关闭");
         closeButton.setFont(buttonFont);
@@ -112,6 +116,37 @@ public class DesktopMainClass extends Application {
         indexPane.setBottom(indexBottomHBox);
 
         // 配置页布局
+        List<PropertiesItem> testDataList = new ArrayList<>();
+        testDataList.add(new PropertiesItem("k1", "v1"));
+        testDataList.add(new PropertiesItem("k2", "v2"));
+
+        ObservableList<PropertiesItem> observableList = FXCollections.observableList(testDataList);
+
+        TableView<PropertiesItem> tableView = new TableView<>(observableList);
+        TableColumn<PropertiesItem, String> keyColumn = new TableColumn<>("key");
+        keyColumn.setCellValueFactory(cellDate -> cellDate.getValue().getKey());
+        keyColumn.setSortable(false);
+        keyColumn.setEditable(false);
+
+        TableColumn<PropertiesItem, String> valueColumn = new TableColumn<>("value");
+        valueColumn.setCellValueFactory(cellDate -> cellDate.getValue().getValue());
+        valueColumn.setSortable(false);
+        valueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        valueColumn.setOnEditCommit(event -> {
+            event.getRowValue().setValue(event.getNewValue());
+        });
+
+        tableView.getColumns().setAll(keyColumn, valueColumn);
+
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        tableView.setEditable(true);
+
+        HBox configCenterHBox = new HBox();
+        HBox.setHgrow(tableView, Priority.ALWAYS);
+        tableView.setMaxWidth(Double.MAX_VALUE);
+        configCenterHBox.setPadding(new Insets(10));
+        configCenterHBox.getChildren().addAll(tableView);
+
         HBox configBottomHBox = new HBox(20);
         configBottomHBox.setPadding(new Insets(10));
         HBox.setHgrow(closeButton, Priority.ALWAYS);
@@ -121,6 +156,7 @@ public class DesktopMainClass extends Application {
         configBottomHBox.getChildren().addAll(closeButton, saveButton);
 
         BorderPane configPane = new BorderPane();
+        configPane.setCenter(configCenterHBox);
         configPane.setBottom(configBottomHBox);
 
         // 场景
