@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.List;
+
 @Setter
 @Getter
 public class DesktopContext {
@@ -29,5 +31,7 @@ public class DesktopContext {
     private Button openBrowserButton;
     private Button configButton;
     private TextArea textArea;
+
+    private List<PropertiesItem> propertiesItemList;
 
 }

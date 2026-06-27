@@ -31,6 +31,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -71,7 +73,6 @@ public class DesktopMainClass extends Application {
 
         Button saveButton = new Button("保存");
         saveButton.setFont(buttonFont);
-        saveButton.setDisable(true);
 
         Button closeButton = new Button("关闭");
         closeButton.setFont(buttonFont);
@@ -164,29 +165,39 @@ public class DesktopMainClass extends Application {
 
         // 配置页场景
         Scene configScene = new Scene(configPane);
+        saveButton.setOnAction(event -> {
+            if (desktopContext.getPropertiesItemList() != null) {
+                for (PropertiesItem propertiesItem : desktopContext.getPropertiesItemList()) {
+                    log.warn("key:{},oldValue:{},value:{}",propertiesItem.getKey().getValue(),propertiesItem.getOldValue(),propertiesItem.getValue().getValue());
+                }
+
+                desktopContext.setPropertiesItemList(null);
+            }
+            stage.setScene(indexScene);
+        });
 
         // 场景跳转
         closeButton.setOnAction(event -> {
+            desktopContext.setPropertiesItemList(null);
             stage.setScene(indexScene);
         });
         configButton.setOnAction(event -> {
             Path propertiesPath = Paths.get(System.getProperty("user.dir"), "application.properties");
-            log.warn(propertiesPath.toString());
-            log.warn(propertiesPath.toAbsolutePath().toString());
             Properties properties = new Properties();
             if (Files.exists(propertiesPath)) {
                 try (BufferedReader reader = Files.newBufferedReader(propertiesPath, StandardCharsets.UTF_8)) {
                     properties.load(reader);
                 } catch (IOException e) {
-                    // 读取失败时 props 为空
-                    System.err.println("读取配置文件失败: " + e.getMessage());
+                    log.error("读取配置文件失败，路径：{}，错误：{}", propertiesPath.toAbsolutePath(), e.getMessage());
                 }
             }
 
-            ObservableList<PropertiesItem> observableList = FXCollections.observableArrayList();
+            List<PropertiesItem> propertiesItemList = new ArrayList<>();
+            desktopContext.setPropertiesItemList(propertiesItemList);
             properties.forEach((key, value) -> {
-                observableList.add(new PropertiesItem(key.toString(), value.toString()));
+                propertiesItemList.add(new PropertiesItem(key.toString(), value.toString()));
             });
+            ObservableList<PropertiesItem> observableList = FXCollections.observableArrayList(propertiesItemList);
             tableView.setItems(observableList);
             stage.setScene(configScene);
         });
