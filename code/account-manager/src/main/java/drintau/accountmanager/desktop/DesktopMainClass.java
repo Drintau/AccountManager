@@ -25,8 +25,13 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -116,13 +121,7 @@ public class DesktopMainClass extends Application {
         indexPane.setBottom(indexBottomHBox);
 
         // 配置页布局
-        List<PropertiesItem> testDataList = new ArrayList<>();
-        testDataList.add(new PropertiesItem("k1", "v1"));
-        testDataList.add(new PropertiesItem("k2", "v2"));
-
-        ObservableList<PropertiesItem> observableList = FXCollections.observableList(testDataList);
-
-        TableView<PropertiesItem> tableView = new TableView<>(observableList);
+        TableView<PropertiesItem> tableView = new TableView<>();
         TableColumn<PropertiesItem, String> keyColumn = new TableColumn<>("key");
         keyColumn.setCellValueFactory(cellDate -> cellDate.getValue().getKey());
         keyColumn.setSortable(false);
@@ -171,6 +170,24 @@ public class DesktopMainClass extends Application {
             stage.setScene(indexScene);
         });
         configButton.setOnAction(event -> {
+            Path propertiesPath = Paths.get(System.getProperty("user.dir"), "application.properties");
+            log.warn(propertiesPath.toString());
+            log.warn(propertiesPath.toAbsolutePath().toString());
+            Properties properties = new Properties();
+            if (Files.exists(propertiesPath)) {
+                try (BufferedReader reader = Files.newBufferedReader(propertiesPath, StandardCharsets.UTF_8)) {
+                    properties.load(reader);
+                } catch (IOException e) {
+                    // 读取失败时 props 为空
+                    System.err.println("读取配置文件失败: " + e.getMessage());
+                }
+            }
+
+            ObservableList<PropertiesItem> observableList = FXCollections.observableArrayList();
+            properties.forEach((key, value) -> {
+                observableList.add(new PropertiesItem(key.toString(), value.toString()));
+            });
+            tableView.setItems(observableList);
             stage.setScene(configScene);
         });
 
