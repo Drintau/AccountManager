@@ -40,22 +40,28 @@ public class DesktopMainClass extends Application {
         Font buttonFont = new Font("System Bold", 20);
 
         // 控件
-        Button startButton = new Button("启动服务");
+        Button startButton = new Button("启动");
         startButton.setOnAction(new WebServerStartEvent());
         startButton.setFont(buttonFont);
         desktopContext.setStartButton(startButton);
 
-        Button stopButton = new Button("停止服务");
+        Button stopButton = new Button("停止");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
         stopButton.setFont(buttonFont);
         desktopContext.setStopButton(stopButton);
 
-        Button openBrowserButton = new Button("访问网页");
+        Button openBrowserButton = new Button("访问");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
         openBrowserButton.setFont(buttonFont);
         desktopContext.setOpenBrowserButton(openBrowserButton);
+
+        Button configButton = new Button("配置");
+//        openBrowserButton.setOnAction(new OpenBrowserEvent());
+        configButton.setDisable(true);
+        configButton.setFont(buttonFont);
+//        desktopContext.setOpenBrowserButton(openBrowserButton);
 
         // 布局
         // 顶部内容
@@ -64,10 +70,12 @@ public class DesktopMainClass extends Application {
         HBox.setHgrow(startButton, Priority.ALWAYS);
         HBox.setHgrow(openBrowserButton, Priority.ALWAYS);
         HBox.setHgrow(stopButton, Priority.ALWAYS);
+        HBox.setHgrow(configButton, Priority.ALWAYS);
         startButton.setMaxWidth(Double.MAX_VALUE);
         openBrowserButton.setMaxWidth(Double.MAX_VALUE);
         stopButton.setMaxWidth(Double.MAX_VALUE);
-        topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton);
+        configButton.setMaxWidth(Double.MAX_VALUE);
+        topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, configButton);
 
         // 中间内容
         TextArea textArea = new TextArea();
@@ -105,8 +113,8 @@ public class DesktopMainClass extends Application {
         // 舞台
         stage.setScene(scene);
         stage.setTitle("账号管理器");
-        stage.setWidth(460);
-        stage.setHeight(460);
+        stage.setWidth(480);
+        stage.setHeight(480);
         stage.setResizable(false);
         stage.getIcons().add(new Image("/icon.jpg"));
         stage.setOnCloseRequest(new CloseEvent());
