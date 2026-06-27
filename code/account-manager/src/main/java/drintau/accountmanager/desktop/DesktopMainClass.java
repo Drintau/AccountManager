@@ -58,15 +58,19 @@ public class DesktopMainClass extends Application {
         desktopContext.setOpenBrowserButton(openBrowserButton);
 
         Button configButton = new Button("配置");
-//        openBrowserButton.setOnAction(new OpenBrowserEvent());
-        configButton.setDisable(true);
         configButton.setFont(buttonFont);
-//        desktopContext.setOpenBrowserButton(openBrowserButton);
+        desktopContext.setConfigButton(configButton);
 
-        // 布局
-        // 顶部内容
-        HBox topHBox = new HBox(20);
-        topHBox.setPadding(new Insets(10));
+        Button saveButton = new Button("保存");
+        saveButton.setFont(buttonFont);
+
+        Button closeButton = new Button("关闭");
+        closeButton.setFont(buttonFont);
+
+        // 首页布局
+        // 首页-顶部内容
+        HBox indexTopHBox = new HBox(20);
+        indexTopHBox.setPadding(new Insets(10));
         HBox.setHgrow(startButton, Priority.ALWAYS);
         HBox.setHgrow(openBrowserButton, Priority.ALWAYS);
         HBox.setHgrow(stopButton, Priority.ALWAYS);
@@ -75,9 +79,9 @@ public class DesktopMainClass extends Application {
         openBrowserButton.setMaxWidth(Double.MAX_VALUE);
         stopButton.setMaxWidth(Double.MAX_VALUE);
         configButton.setMaxWidth(Double.MAX_VALUE);
-        topHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, configButton);
+        indexTopHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, configButton);
 
-        // 中间内容
+        // 首页-中间内容
         TextArea textArea = new TextArea();
         desktopContext.setTextArea(textArea);
 
@@ -86,32 +90,56 @@ public class DesktopMainClass extends Application {
         Font textAreaFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
         textArea.setFont(textAreaFont);
 
-        HBox centerHBox = new HBox();
-        centerHBox.setPadding(new Insets(10));
-        centerHBox.getChildren().addAll(textArea);
+        HBox indexCenterHBox = new HBox();
+        indexCenterHBox.setPadding(new Insets(10));
+        indexCenterHBox.getChildren().addAll(textArea);
 
-        // 底部内容
+        // 首页-底部内容
         Font labelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
         versionLabel.setFont(labelFont);
         Label buildTimeLabel = new Label("构建时间：" + launcherContext.getVersionInfo().getLocalBuildTime());
         buildTimeLabel.setFont(labelFont);
-        HBox bottomHBox = new HBox(20);
-        bottomHBox.setPadding(new Insets(10));
-        bottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
-        bottomHBox.setAlignment(Pos.CENTER);
+        HBox indexBottomHBox = new HBox(20);
+        indexBottomHBox.setPadding(new Insets(10));
+        indexBottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
+        indexBottomHBox.setAlignment(Pos.CENTER);
 
-        // 控件分布：上中下左右
-        BorderPane borderPane = new BorderPane();
-        borderPane.setTop(topHBox);
-        borderPane.setCenter(centerHBox);
-        borderPane.setBottom(bottomHBox);
+        // 首页-控件分布：上中下左右
+        BorderPane indexPane = new BorderPane();
+        indexPane.setTop(indexTopHBox);
+        indexPane.setCenter(indexCenterHBox);
+        indexPane.setBottom(indexBottomHBox);
+
+        // 配置页布局
+        HBox configBottomHBox = new HBox(20);
+        configBottomHBox.setPadding(new Insets(10));
+        HBox.setHgrow(closeButton, Priority.ALWAYS);
+        HBox.setHgrow(saveButton, Priority.ALWAYS);
+        closeButton.setMaxWidth(Double.MAX_VALUE);
+        saveButton.setMaxWidth(Double.MAX_VALUE);
+        configBottomHBox.getChildren().addAll(closeButton, saveButton);
+
+        BorderPane configPane = new BorderPane();
+        configPane.setBottom(configBottomHBox);
 
         // 场景
-        Scene scene = new Scene(borderPane);
+        // 首页场景
+        Scene indexScene = new Scene(indexPane);
+
+        // 配置页场景
+        Scene configScene = new Scene(configPane);
+
+        // 场景跳转
+        closeButton.setOnAction(event -> {
+            stage.setScene(indexScene);
+        });
+        configButton.setOnAction(event -> {
+            stage.setScene(configScene);
+        });
 
         // 窗口
-        stage.setScene(scene);
+        stage.setScene(indexScene);
         stage.setTitle("账号管理器");
         stage.setWidth(480);
         stage.setHeight(480);

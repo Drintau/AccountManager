@@ -37,6 +37,7 @@ public class CloseEvent implements EventHandler<WindowEvent> {
 
         windowEvent.consume();
         DesktopContext desktopContext = DesktopContext.getInstance();
+        desktopContext.getConfigButton().setDisable(true);
         desktopContext.getStopButton().setDisable(true);
         desktopContext.getOpenBrowserButton().setDisable(true);
         desktopContext.getStartButton().setDisable(true);
