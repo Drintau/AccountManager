@@ -37,7 +37,7 @@ public class DesktopMainClass extends Application {
         LauncherContext launcherContext = LauncherContext.getInstance();
         DesktopContext desktopContext = DesktopContext.getInstance();
 
-        Font buttonFont = new Font("System Bold", 20);
+        Font buttonFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Heavy.otf"), 20);
 
         // 控件
         Button startButton = new Button("启动");
@@ -83,7 +83,7 @@ public class DesktopMainClass extends Application {
 
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        Font textAreaFont = Font.font(16);
+        Font textAreaFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
         textArea.setFont(textAreaFont);
 
         HBox centerHBox = new HBox();
@@ -91,7 +91,7 @@ public class DesktopMainClass extends Application {
         centerHBox.getChildren().addAll(textArea);
 
         // 底部内容
-        Font labelFont = Font.font(14);
+        Font labelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
         versionLabel.setFont(labelFont);
         Label buildTimeLabel = new Label("构建时间：" + launcherContext.getVersionInfo().getLocalBuildTime());
@@ -110,7 +110,7 @@ public class DesktopMainClass extends Application {
         // 场景
         Scene scene = new Scene(borderPane);
 
-        // 舞台
+        // 窗口
         stage.setScene(scene);
         stage.setTitle("账号管理器");
         stage.setWidth(480);
