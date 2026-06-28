@@ -108,18 +108,18 @@ public class DesktopMainClass extends Application {
         indexPane.setBottom(indexBottomHBox);
 
         // 帮助页布局
-        HBox configCenterHBox = new HBox();
-        configCenterHBox.setPadding(new Insets(10));
+        HBox helpCenterHBox = new HBox();
+        helpCenterHBox.setPadding(new Insets(10));
 
-        HBox configBottomHBox = new HBox(20);
-        configBottomHBox.setPadding(new Insets(10));
+        HBox helpBottomHBox = new HBox(20);
+        helpBottomHBox.setPadding(new Insets(10));
         HBox.setHgrow(closeButton, Priority.ALWAYS);
         closeButton.setMaxWidth(Double.MAX_VALUE);
-        configBottomHBox.getChildren().addAll(closeButton);
+        helpBottomHBox.getChildren().addAll(closeButton);
 
         BorderPane helpPane = new BorderPane();
-        helpPane.setCenter(configCenterHBox);
-        helpPane.setBottom(configBottomHBox);
+        helpPane.setCenter(helpCenterHBox);
+        helpPane.setBottom(helpBottomHBox);
 
         // 场景
         // 首页场景
