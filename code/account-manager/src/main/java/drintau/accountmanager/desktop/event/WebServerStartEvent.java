@@ -15,8 +15,6 @@ public class WebServerStartEvent implements EventHandler<ActionEvent> {
         ConfigurableApplicationContext webServerContext = desktopContext.getWebServerContext();
         synchronized (this) {
             if (!desktopContext.getStartButton().isDisabled() && (webServerContext == null || !webServerContext.isRunning())) {
-                // 启动后就不能修改配置，必须停止服务才能修改配置
-                desktopContext.getConfigButton().setDisable(true);
                 // 点击后就不能再点击
                 desktopContext.getStartButton().setDisable(true);
                 ThreadPool.getInstance().execute(() -> {

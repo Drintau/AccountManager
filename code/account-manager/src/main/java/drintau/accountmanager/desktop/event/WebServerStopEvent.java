@@ -21,7 +21,6 @@ public class WebServerStopEvent implements EventHandler<ActionEvent> {
                     SpringApplication.exit(webServerContext);
                     desktopContext.setWebServerContext(null);
                     desktopContext.getStartButton().setDisable(false);
-                    desktopContext.getConfigButton().setDisable(false);
                 });
             }
         }

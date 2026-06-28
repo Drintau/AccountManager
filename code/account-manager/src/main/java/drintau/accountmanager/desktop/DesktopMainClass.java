@@ -10,13 +10,12 @@ import drintau.accountmanager.shared.LogQueue;
 import drintau.accountmanager.shared.util.StrUtil;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -25,15 +24,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -67,12 +57,8 @@ public class DesktopMainClass extends Application {
         openBrowserButton.setFont(buttonFont);
         desktopContext.setOpenBrowserButton(openBrowserButton);
 
-        Button configButton = new Button("配置");
-        configButton.setFont(buttonFont);
-        desktopContext.setConfigButton(configButton);
-
-        Button saveButton = new Button("保存");
-        saveButton.setFont(buttonFont);
+        Button helpButton = new Button("帮助");
+        helpButton.setFont(buttonFont);
 
         Button closeButton = new Button("关闭");
         closeButton.setFont(buttonFont);
@@ -84,12 +70,12 @@ public class DesktopMainClass extends Application {
         HBox.setHgrow(startButton, Priority.ALWAYS);
         HBox.setHgrow(openBrowserButton, Priority.ALWAYS);
         HBox.setHgrow(stopButton, Priority.ALWAYS);
-        HBox.setHgrow(configButton, Priority.ALWAYS);
+        HBox.setHgrow(helpButton, Priority.ALWAYS);
         startButton.setMaxWidth(Double.MAX_VALUE);
         openBrowserButton.setMaxWidth(Double.MAX_VALUE);
         stopButton.setMaxWidth(Double.MAX_VALUE);
-        configButton.setMaxWidth(Double.MAX_VALUE);
-        indexTopHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, configButton);
+        helpButton.setMaxWidth(Double.MAX_VALUE);
+        indexTopHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, helpButton);
 
         // 首页-中间内容
         TextArea textArea = new TextArea();
@@ -121,85 +107,33 @@ public class DesktopMainClass extends Application {
         indexPane.setCenter(indexCenterHBox);
         indexPane.setBottom(indexBottomHBox);
 
-        // 配置页布局
-        TableView<PropertiesItem> tableView = new TableView<>();
-        TableColumn<PropertiesItem, String> keyColumn = new TableColumn<>("key");
-        keyColumn.setCellValueFactory(cellDate -> cellDate.getValue().getKey());
-        keyColumn.setSortable(false);
-        keyColumn.setEditable(false);
-
-        TableColumn<PropertiesItem, String> valueColumn = new TableColumn<>("value");
-        valueColumn.setCellValueFactory(cellDate -> cellDate.getValue().getValue());
-        valueColumn.setSortable(false);
-        valueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        valueColumn.setOnEditCommit(event -> {
-            event.getRowValue().setValue(event.getNewValue());
-        });
-
-        tableView.getColumns().setAll(keyColumn, valueColumn);
-
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-        tableView.setEditable(true);
-
+        // 帮助页布局
         HBox configCenterHBox = new HBox();
-        HBox.setHgrow(tableView, Priority.ALWAYS);
-        tableView.setMaxWidth(Double.MAX_VALUE);
         configCenterHBox.setPadding(new Insets(10));
-        configCenterHBox.getChildren().addAll(tableView);
 
         HBox configBottomHBox = new HBox(20);
         configBottomHBox.setPadding(new Insets(10));
         HBox.setHgrow(closeButton, Priority.ALWAYS);
-        HBox.setHgrow(saveButton, Priority.ALWAYS);
         closeButton.setMaxWidth(Double.MAX_VALUE);
-        saveButton.setMaxWidth(Double.MAX_VALUE);
-        configBottomHBox.getChildren().addAll(closeButton, saveButton);
+        configBottomHBox.getChildren().addAll(closeButton);
 
-        BorderPane configPane = new BorderPane();
-        configPane.setCenter(configCenterHBox);
-        configPane.setBottom(configBottomHBox);
+        BorderPane helpPane = new BorderPane();
+        helpPane.setCenter(configCenterHBox);
+        helpPane.setBottom(configBottomHBox);
 
         // 场景
         // 首页场景
         Scene indexScene = new Scene(indexPane);
 
-        // 配置页场景
-        Scene configScene = new Scene(configPane);
-        saveButton.setOnAction(event -> {
-            if (desktopContext.getPropertiesItemList() != null) {
-                for (PropertiesItem propertiesItem : desktopContext.getPropertiesItemList()) {
-                    log.warn("key:{},oldValue:{},value:{}",propertiesItem.getKey().getValue(),propertiesItem.getOldValue(),propertiesItem.getValue().getValue());
-                }
-
-                desktopContext.setPropertiesItemList(null);
-            }
-            stage.setScene(indexScene);
-        });
+        // 帮助页场景
+        Scene helpScene = new Scene(helpPane);
 
         // 场景跳转
         closeButton.setOnAction(event -> {
-            desktopContext.setPropertiesItemList(null);
             stage.setScene(indexScene);
         });
-        configButton.setOnAction(event -> {
-            Path propertiesPath = Paths.get(System.getProperty("user.dir"), "application.properties");
-            Properties properties = new Properties();
-            if (Files.exists(propertiesPath)) {
-                try (BufferedReader reader = Files.newBufferedReader(propertiesPath, StandardCharsets.UTF_8)) {
-                    properties.load(reader);
-                } catch (IOException e) {
-                    log.error("读取配置文件失败，路径：{}，错误：{}", propertiesPath.toAbsolutePath(), e.getMessage());
-                }
-            }
-
-            List<PropertiesItem> propertiesItemList = new ArrayList<>();
-            desktopContext.setPropertiesItemList(propertiesItemList);
-            properties.forEach((key, value) -> {
-                propertiesItemList.add(new PropertiesItem(key.toString(), value.toString()));
-            });
-            ObservableList<PropertiesItem> observableList = FXCollections.observableArrayList(propertiesItemList);
-            tableView.setItems(observableList);
-            stage.setScene(configScene);
+        helpButton.setOnAction(event -> {
+            stage.setScene(helpScene);
         });
 
         // 窗口
