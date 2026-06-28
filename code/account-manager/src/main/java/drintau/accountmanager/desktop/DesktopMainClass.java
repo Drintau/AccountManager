@@ -78,24 +78,24 @@ public class DesktopMainClass extends Application {
         indexTopHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, helpButton);
 
         // 首页-中间内容
-        TextArea textArea = new TextArea();
-        desktopContext.setTextArea(textArea);
+        TextArea indexTextArea = new TextArea();
+        desktopContext.setLogTextArea(indexTextArea);
 
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        Font textAreaFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
-        textArea.setFont(textAreaFont);
+        indexTextArea.setEditable(false);
+        indexTextArea.setWrapText(true);
+        Font indexTextAreaFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
+        indexTextArea.setFont(indexTextAreaFont);
 
         HBox indexCenterHBox = new HBox();
         indexCenterHBox.setPadding(new Insets(10));
-        indexCenterHBox.getChildren().addAll(textArea);
+        indexCenterHBox.getChildren().addAll(indexTextArea);
 
         // 首页-底部内容
-        Font labelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
+        Font indexLabelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
-        versionLabel.setFont(labelFont);
+        versionLabel.setFont(indexLabelFont);
         Label buildTimeLabel = new Label("构建时间：" + launcherContext.getVersionInfo().getLocalBuildTime());
-        buildTimeLabel.setFont(labelFont);
+        buildTimeLabel.setFont(indexLabelFont);
         HBox indexBottomHBox = new HBox(20);
         indexBottomHBox.setPadding(new Insets(10));
         indexBottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
@@ -108,8 +108,18 @@ public class DesktopMainClass extends Application {
         indexPane.setBottom(indexBottomHBox);
 
         // 帮助页布局
+        Label helpLabel = new Label("""
+                启动：启动WEB服务
+                访问：打开本机浏览器访问WEB页面
+                停止：停止WEB服务
+                右上X：关闭程序，如果启用了备份功能，会进行备份
+                """);
+        helpLabel.setWrapText(true);
+        Font helpLabelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 18);
+        helpLabel.setFont(helpLabelFont);
         HBox helpCenterHBox = new HBox();
         helpCenterHBox.setPadding(new Insets(10));
+        helpCenterHBox.getChildren().addAll(helpLabel);
 
         HBox helpBottomHBox = new HBox(20);
         helpBottomHBox.setPadding(new Insets(10));
@@ -154,7 +164,7 @@ public class DesktopMainClass extends Application {
                     try {
                         String logStr = LogQueue.getInstance().poll(5000);
                         if (StrUtil.isNotBlank(logStr)) {
-                            Platform.runLater(() -> DesktopContext.getInstance().getTextArea().appendText(logStr + "\n"));
+                            Platform.runLater(() -> DesktopContext.getInstance().getLogTextArea().appendText(logStr + "\n"));
                         }
                     } catch (InterruptedException ignored) {
 
