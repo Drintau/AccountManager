@@ -27,6 +27,6 @@ public class DesktopContext {
     private Button startButton;
     private Button stopButton;
     private Button openBrowserButton;
-    private TextArea logTextArea;
+    private TextArea indexTextArea;
 
 }

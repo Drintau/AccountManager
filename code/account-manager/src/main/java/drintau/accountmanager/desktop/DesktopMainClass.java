@@ -79,7 +79,7 @@ public class DesktopMainClass extends Application {
 
         // 首页-中间内容
         TextArea indexTextArea = new TextArea();
-        desktopContext.setLogTextArea(indexTextArea);
+        desktopContext.setIndexTextArea(indexTextArea);
 
         indexTextArea.setEditable(false);
         indexTextArea.setWrapText(true);
@@ -164,7 +164,7 @@ public class DesktopMainClass extends Application {
                     try {
                         String logStr = LogQueue.getInstance().poll(5000);
                         if (StrUtil.isNotBlank(logStr)) {
-                            Platform.runLater(() -> DesktopContext.getInstance().getLogTextArea().appendText(logStr + "\n"));
+                            Platform.runLater(() -> DesktopContext.getInstance().getIndexTextArea().appendText(logStr + "\n"));
                         }
                     } catch (InterruptedException ignored) {
 
