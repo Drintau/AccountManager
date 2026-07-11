@@ -17,9 +17,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +36,10 @@ public class DesktopMainClass extends Application {
         LauncherContext launcherContext = LauncherContext.getInstance();
         DesktopContext desktopContext = DesktopContext.getInstance();
 
+        // 按钮控件
+        // 按钮控件字体
         Font buttonFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Heavy.otf"), 20);
 
-        // 控件
         Button startButton = new Button("启动");
         startButton.setOnAction(new WebServerStartEvent());
         startButton.setFont(buttonFont);
@@ -63,7 +63,7 @@ public class DesktopMainClass extends Application {
         Button closeButton = new Button("关闭");
         closeButton.setFont(buttonFont);
 
-        // 首页布局
+        // 首页内容
         // 首页-顶部内容
         HBox indexTopHBox = new HBox(20);
         indexTopHBox.setPadding(new Insets(10));
@@ -101,13 +101,14 @@ public class DesktopMainClass extends Application {
         indexBottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
         indexBottomHBox.setAlignment(Pos.CENTER);
 
-        // 首页-控件分布：上中下左右
+        // 首页布局容器
         BorderPane indexPane = new BorderPane();
         indexPane.setTop(indexTopHBox);
         indexPane.setCenter(indexCenterHBox);
         indexPane.setBottom(indexBottomHBox);
 
-        // 帮助页布局
+        // 帮助页内容
+        // 帮助页-中间内容
         Label helpLabel = new Label("""
                 启动：启动WEB服务
                 访问：打开本机浏览器访问WEB页面
@@ -121,15 +122,22 @@ public class DesktopMainClass extends Application {
         helpCenterHBox.setPadding(new Insets(10));
         helpCenterHBox.getChildren().addAll(helpLabel);
 
+        // 帮助页-底部内容
         HBox helpBottomHBox = new HBox(20);
         helpBottomHBox.setPadding(new Insets(10));
         HBox.setHgrow(closeButton, Priority.ALWAYS);
         closeButton.setMaxWidth(Double.MAX_VALUE);
         helpBottomHBox.getChildren().addAll(closeButton);
 
+        // 帮助页布局容器
         BorderPane helpPane = new BorderPane();
         helpPane.setCenter(helpCenterHBox);
         helpPane.setBottom(helpBottomHBox);
+
+        // 布局容器背景颜色设置
+        Background background = Background.fill(Color.web("#2196F3", 0.1));
+        indexPane.setBackground(background);
+        helpPane.setBackground(background);
 
         // 场景
         // 首页场景
