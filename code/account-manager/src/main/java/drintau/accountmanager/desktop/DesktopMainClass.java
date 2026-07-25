@@ -1,9 +1,6 @@
 package drintau.accountmanager.desktop;
 
-import drintau.accountmanager.desktop.event.CloseEvent;
-import drintau.accountmanager.desktop.event.OpenBrowserEvent;
-import drintau.accountmanager.desktop.event.WebServerStartEvent;
-import drintau.accountmanager.desktop.event.WebServerStopEvent;
+import drintau.accountmanager.desktop.event.*;
 import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.shared.DaemonScheduler;
 import drintau.accountmanager.shared.LogQueue;
@@ -15,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -121,21 +119,34 @@ public class DesktopMainClass extends Application {
                 """);
         helpBodyLabel.setWrapText(true);
         helpBodyLabel.setFont(medium18Font);
+
+        Label checkTitleLabel = new Label("检查新版本（需要网络）");
+        checkTitleLabel.setFont(heavy20Font);
+        Label currentVersionLabel = new Label("当前版本：" + launcherContext.getVersionInfo().getVersion());
+        currentVersionLabel.setFont(medium18Font);
+        Button checkVersionButton = new Button("查询更新");
+        checkVersionButton.setFont(medium18Font);
+        CheckVersionEvent checkVersionEvent = new CheckVersionEvent();
+        checkVersionButton.setOnAction(checkVersionEvent);
+        Label latestVersionLabel = new Label();
+        latestVersionLabel.setFont(medium18Font);
+        checkVersionEvent.setLatestVersionLabel(latestVersionLabel);
+
         VBox aboutCenterVBox = new VBox();
         aboutCenterVBox.setPadding(new Insets(10));
-        aboutCenterVBox.getChildren().addAll(helpTitleLabel,helpBodyLabel);
+        aboutCenterVBox.getChildren().addAll(helpTitleLabel,helpBodyLabel,new Separator(),checkTitleLabel,currentVersionLabel,checkVersionButton,latestVersionLabel);
 
         // 关于页-底部内容
-        HBox helpBottomHBox = new HBox(20);
-        helpBottomHBox.setPadding(new Insets(10));
+        HBox aboutBottomHBox = new HBox(20);
+        aboutBottomHBox.setPadding(new Insets(10));
         HBox.setHgrow(closeButton, Priority.ALWAYS);
         closeButton.setMaxWidth(Double.MAX_VALUE);
-        helpBottomHBox.getChildren().addAll(closeButton);
+        aboutBottomHBox.getChildren().addAll(closeButton);
 
         // 关于页布局容器
         BorderPane aboutPane = new BorderPane();
         aboutPane.setCenter(aboutCenterVBox);
-        aboutPane.setBottom(helpBottomHBox);
+        aboutPane.setBottom(aboutBottomHBox);
 
         // 布局容器背景颜色设置
         Background background = Background.fill(Color.web("#2196F3", 0.1));
