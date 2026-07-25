@@ -137,10 +137,14 @@ public class DesktopMainClass extends Application {
         Label latestVersionLabel = new Label();
         latestVersionLabel.setFont(medium18Font);
         checkVersionEvent.setLatestVersionLabel(latestVersionLabel);
+        Label hasNewVersionLabel = new Label();
+        hasNewVersionLabel.setFont(medium18Font);
+        hasNewVersionLabel.setTextFill(Color.RED);
+        checkVersionEvent.setHasNewVersionLabel(hasNewVersionLabel);
 
         VBox aboutCenterVBox = new VBox();
         aboutCenterVBox.setPadding(new Insets(10));
-        aboutCenterVBox.getChildren().addAll(helpTitleLabel,helpBodyLabel,new Separator(),checkTitleLabel,currentVersionLabel,checkVersionButton,latestVersionLabel);
+        aboutCenterVBox.getChildren().addAll(helpTitleLabel,helpBodyLabel,new Separator(),checkTitleLabel,currentVersionLabel,checkVersionButton,latestVersionLabel,hasNewVersionLabel);
 
         // 关于页-底部内容
         HBox aboutBottomHBox = new HBox(20);

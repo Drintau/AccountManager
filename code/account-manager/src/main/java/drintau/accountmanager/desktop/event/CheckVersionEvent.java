@@ -2,7 +2,9 @@ package drintau.accountmanager.desktop.event;
 
 import drintau.accountmanager.desktop.DesktopContext;
 import drintau.accountmanager.desktop.GithubReleaseInfo;
+import drintau.accountmanager.launcher.LauncherContext;
 import drintau.accountmanager.shared.ThreadPool;
+import drintau.accountmanager.shared.util.CompareUtil;
 import drintau.accountmanager.shared.util.JsonUtil;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -24,6 +26,9 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
     @Setter
     private Label latestVersionLabel;
 
+    @Setter
+    private Label hasNewVersionLabel;
+
     @Override
     public void handle(ActionEvent event) {
         DesktopContext desktopContext = DesktopContext.getInstance();
@@ -31,6 +36,7 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
             if (!desktopContext.getCheckVersionButton().isDisabled()) {
                 desktopContext.getCheckVersionButton().setDisable(true);
                 latestVersionLabel.setText("");
+                hasNewVersionLabel.setText("");
                 ThreadPool.getInstance().execute(() -> {
                     try (HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build()) {
                         HttpRequest request = HttpRequest.newBuilder()
@@ -46,8 +52,13 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
                             });
                         } else {
                             GithubReleaseInfo githubReleaseInfo = JsonUtil.readJsonToObj(response.body(), GithubReleaseInfo.class);
+                            String latestVersion = githubReleaseInfo.latestVersion();
+                            int flag = CompareUtil.compareVersion(LauncherContext.getInstance().getVersionInfo().getVersion(), latestVersion);
                             Platform.runLater(() -> {
                                 latestVersionLabel.setText("最新版本：" + githubReleaseInfo.latestVersion());
+                                if (flag < 0) {
+                                    hasNewVersionLabel.setText("查询到有新版，建议下载更新！");
+                                }
                             });
                         }
 
