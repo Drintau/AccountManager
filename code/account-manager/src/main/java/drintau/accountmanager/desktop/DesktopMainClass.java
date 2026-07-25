@@ -36,32 +36,36 @@ public class DesktopMainClass extends Application {
         LauncherContext launcherContext = LauncherContext.getInstance();
         DesktopContext desktopContext = DesktopContext.getInstance();
 
-        // 按钮控件
-        // 按钮控件字体
-        Font buttonFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Heavy.otf"), 20);
+        // 字体
+        Font heavy22Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Heavy.otf"), 22);
+        Font heavy20Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Heavy.otf"), 20);
+        Font medium18Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 18);
+        Font medium16Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
+        Font medium14Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
 
+        // 按钮控件
         Button startButton = new Button("启动");
         startButton.setOnAction(new WebServerStartEvent());
-        startButton.setFont(buttonFont);
+        startButton.setFont(heavy22Font);
         desktopContext.setStartButton(startButton);
 
         Button stopButton = new Button("停止");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
-        stopButton.setFont(buttonFont);
+        stopButton.setFont(heavy22Font);
         desktopContext.setStopButton(stopButton);
 
         Button openBrowserButton = new Button("访问");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
-        openBrowserButton.setFont(buttonFont);
+        openBrowserButton.setFont(heavy22Font);
         desktopContext.setOpenBrowserButton(openBrowserButton);
 
-        Button helpButton = new Button("帮助");
-        helpButton.setFont(buttonFont);
+        Button aboutButton = new Button("关于");
+        aboutButton.setFont(heavy22Font);
 
         Button closeButton = new Button("关闭");
-        closeButton.setFont(buttonFont);
+        closeButton.setFont(heavy22Font);
 
         // 首页内容
         // 首页-顶部内容
@@ -70,12 +74,12 @@ public class DesktopMainClass extends Application {
         HBox.setHgrow(startButton, Priority.ALWAYS);
         HBox.setHgrow(openBrowserButton, Priority.ALWAYS);
         HBox.setHgrow(stopButton, Priority.ALWAYS);
-        HBox.setHgrow(helpButton, Priority.ALWAYS);
+        HBox.setHgrow(aboutButton, Priority.ALWAYS);
         startButton.setMaxWidth(Double.MAX_VALUE);
         openBrowserButton.setMaxWidth(Double.MAX_VALUE);
         stopButton.setMaxWidth(Double.MAX_VALUE);
-        helpButton.setMaxWidth(Double.MAX_VALUE);
-        indexTopHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, helpButton);
+        aboutButton.setMaxWidth(Double.MAX_VALUE);
+        indexTopHBox.getChildren().addAll(startButton, openBrowserButton, stopButton, aboutButton);
 
         // 首页-中间内容
         TextArea indexTextArea = new TextArea();
@@ -83,19 +87,17 @@ public class DesktopMainClass extends Application {
 
         indexTextArea.setEditable(false);
         indexTextArea.setWrapText(true);
-        Font indexTextAreaFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
-        indexTextArea.setFont(indexTextAreaFont);
+        indexTextArea.setFont(medium16Font);
 
         HBox indexCenterHBox = new HBox();
         indexCenterHBox.setPadding(new Insets(10));
         indexCenterHBox.getChildren().addAll(indexTextArea);
 
         // 首页-底部内容
-        Font indexLabelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
-        versionLabel.setFont(indexLabelFont);
+        versionLabel.setFont(medium14Font);
         Label buildTimeLabel = new Label("构建时间：" + launcherContext.getVersionInfo().getLocalBuildTime());
-        buildTimeLabel.setFont(indexLabelFont);
+        buildTimeLabel.setFont(medium14Font);
         HBox indexBottomHBox = new HBox(20);
         indexBottomHBox.setPadding(new Insets(10));
         indexBottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
@@ -107,51 +109,52 @@ public class DesktopMainClass extends Application {
         indexPane.setCenter(indexCenterHBox);
         indexPane.setBottom(indexBottomHBox);
 
-        // 帮助页内容
-        // 帮助页-中间内容
-        Label helpLabel = new Label("""
+        // 关于页内容
+        // 关于页-中间内容
+        Label helpTitleLabel = new Label("帮助");
+        helpTitleLabel.setFont(heavy20Font);
+        Label helpBodyLabel = new Label("""
                 启动：启动WEB服务
                 访问：打开本机浏览器访问WEB页面
                 停止：停止WEB服务
                 右上X：关闭程序，如果启用了备份功能，会进行备份
                 """);
-        helpLabel.setWrapText(true);
-        Font helpLabelFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 18);
-        helpLabel.setFont(helpLabelFont);
-        HBox helpCenterHBox = new HBox();
-        helpCenterHBox.setPadding(new Insets(10));
-        helpCenterHBox.getChildren().addAll(helpLabel);
+        helpBodyLabel.setWrapText(true);
+        helpBodyLabel.setFont(medium18Font);
+        VBox aboutCenterVBox = new VBox();
+        aboutCenterVBox.setPadding(new Insets(10));
+        aboutCenterVBox.getChildren().addAll(helpTitleLabel,helpBodyLabel);
 
-        // 帮助页-底部内容
+        // 关于页-底部内容
         HBox helpBottomHBox = new HBox(20);
         helpBottomHBox.setPadding(new Insets(10));
         HBox.setHgrow(closeButton, Priority.ALWAYS);
         closeButton.setMaxWidth(Double.MAX_VALUE);
         helpBottomHBox.getChildren().addAll(closeButton);
 
-        // 帮助页布局容器
-        BorderPane helpPane = new BorderPane();
-        helpPane.setCenter(helpCenterHBox);
-        helpPane.setBottom(helpBottomHBox);
+        // 关于页布局容器
+        BorderPane aboutPane = new BorderPane();
+        aboutPane.setCenter(aboutCenterVBox);
+        aboutPane.setBottom(helpBottomHBox);
 
         // 布局容器背景颜色设置
         Background background = Background.fill(Color.web("#2196F3", 0.1));
         indexPane.setBackground(background);
-        helpPane.setBackground(background);
+        aboutPane.setBackground(background);
 
         // 场景
         // 首页场景
         Scene indexScene = new Scene(indexPane);
 
-        // 帮助页场景
-        Scene helpScene = new Scene(helpPane);
+        // 关于页场景
+        Scene aboutScene = new Scene(aboutPane);
 
         // 场景跳转
         closeButton.setOnAction(event -> {
             stage.setScene(indexScene);
         });
-        helpButton.setOnAction(event -> {
-            stage.setScene(helpScene);
+        aboutButton.setOnAction(event -> {
+            stage.setScene(aboutScene);
         });
 
         // 窗口
