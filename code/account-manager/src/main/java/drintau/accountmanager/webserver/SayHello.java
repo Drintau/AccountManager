@@ -38,7 +38,7 @@ public class SayHello implements ApplicationRunner {
         log.info("服务启动。");
 
         String localUrl = "http://localhost:" + port + contextPath;
-        log.info("访问地址：{}", localUrl);
+        log.info("网址：{}", localUrl);
         log.debug("h2控制台：{}", localUrl + h2ConsolePath);
 
         // 桌面运行时，传递参数配置

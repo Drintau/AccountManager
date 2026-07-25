@@ -39,7 +39,6 @@ public class DesktopMainClass extends Application {
         Font heavy20Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Heavy.otf"), 20);
         Font medium18Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 18);
         Font medium16Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 16);
-        Font medium14Font = Font.loadFont(getClass().getClassLoader().getResourceAsStream("SourceHanSerifCN-Medium.otf"), 14);
 
         // 按钮控件
         Button startButton = new Button("启动");
@@ -90,7 +89,7 @@ public class DesktopMainClass extends Application {
 
         indexTextArea.setEditable(false);
         indexTextArea.setWrapText(true);
-        indexTextArea.setFont(medium16Font);
+        indexTextArea.setFont(medium18Font);
 
         HBox indexCenterHBox = new HBox();
         indexCenterHBox.setPadding(new Insets(10));
@@ -98,9 +97,9 @@ public class DesktopMainClass extends Application {
 
         // 首页-底部内容
         Label versionLabel = new Label("版本号：" + launcherContext.getVersionInfo().getVersion());
-        versionLabel.setFont(medium14Font);
+        versionLabel.setFont(medium16Font);
         Label buildTimeLabel = new Label("构建时间：" + launcherContext.getVersionInfo().getLocalBuildTime());
-        buildTimeLabel.setFont(medium14Font);
+        buildTimeLabel.setFont(medium16Font);
         HBox indexBottomHBox = new HBox(20);
         indexBottomHBox.setPadding(new Insets(10));
         indexBottomHBox.getChildren().addAll(versionLabel, buildTimeLabel);
@@ -131,6 +130,7 @@ public class DesktopMainClass extends Application {
         currentVersionLabel.setFont(medium18Font);
         Button checkVersionButton = new Button("查询新版");
         checkVersionButton.setFont(medium18Font);
+        checkVersionButton.setPadding(new Insets(4, 8, 4, 8));
         CheckVersionEvent checkVersionEvent = new CheckVersionEvent();
         checkVersionButton.setOnAction(checkVersionEvent);
         desktopContext.setCheckVersionButton(checkVersionButton);

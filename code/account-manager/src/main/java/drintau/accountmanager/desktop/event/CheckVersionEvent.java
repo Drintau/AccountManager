@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,6 +46,7 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
                         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
                         if (response.statusCode() != 200) {
+//                            log.error("查询失败：{}", response.body());
                             Platform.runLater(() -> {
                                 latestVersionLabel.setText("查询失败");
                             });
@@ -66,7 +66,7 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
                         Platform.runLater(() -> {
                             latestVersionLabel.setText("网络异常");
                         });
-                        log.error("检查新版本失败", e);
+                        log.error("网络异常", e);
                     }
 
                     desktopContext.getCheckVersionButton().setDisable(false);

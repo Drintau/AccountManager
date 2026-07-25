@@ -7,7 +7,6 @@ import drintau.accountmanager.shared.BusinessCode;
 import drintau.accountmanager.shared.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
