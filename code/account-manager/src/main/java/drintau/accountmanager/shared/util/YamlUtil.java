@@ -23,7 +23,7 @@ public final class YamlUtil {
     public static <T> T readYamlToObj(InputStream yamlFile, Class<T> targetClass) {
         try {
             return objectMapper.readValue(yamlFile, targetClass);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("解析yaml文件失败", e);
             throw new BusinessException(BusinessCode.FAIL, "解析yaml文件失败");
         }

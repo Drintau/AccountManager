@@ -1,8 +1,7 @@
 package drintau.accountmanager.desktop.event;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import drintau.accountmanager.desktop.GithubReleaseInfo;
+import drintau.accountmanager.shared.util.JsonUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -21,17 +20,10 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
     @Setter
     private Label latestVersionLabel;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record ReleaseInfo(
-            @JsonProperty("name") String name
-    ){}
-
     @Override
     public void handle(ActionEvent event) {
 
-        String msg = "最新版本：";
+        String msg;
 
         try (HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(5)).build()) {
 
@@ -44,12 +36,11 @@ public class CheckVersionEvent implements EventHandler<ActionEvent> {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200) {
-                msg = "检查失败";
+                msg = "查询失败";
+            } else {
+                GithubReleaseInfo githubReleaseInfo = JsonUtil.readJsonToObj(response.body(), GithubReleaseInfo.class);
+                msg = "最新版本：" + githubReleaseInfo.latestVersion();
             }
-
-            ReleaseInfo releaseInfo = objectMapper.readValue(response.body(), ReleaseInfo.class);
-
-            msg = msg + releaseInfo.name();
 
         } catch (Exception e) {
             msg = "网络异常";

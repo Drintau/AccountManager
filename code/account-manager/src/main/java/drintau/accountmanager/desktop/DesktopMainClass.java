@@ -45,25 +45,30 @@ public class DesktopMainClass extends Application {
         Button startButton = new Button("启动");
         startButton.setOnAction(new WebServerStartEvent());
         startButton.setFont(heavy22Font);
+        startButton.setPadding(new Insets(2));
         desktopContext.setStartButton(startButton);
 
         Button stopButton = new Button("停止");
         stopButton.setOnAction(new WebServerStopEvent());
         stopButton.setDisable(true);
         stopButton.setFont(heavy22Font);
+        stopButton.setPadding(new Insets(2));
         desktopContext.setStopButton(stopButton);
 
         Button openBrowserButton = new Button("访问");
         openBrowserButton.setOnAction(new OpenBrowserEvent());
         openBrowserButton.setDisable(true);
         openBrowserButton.setFont(heavy22Font);
+        openBrowserButton.setPadding(new Insets(2));
         desktopContext.setOpenBrowserButton(openBrowserButton);
 
         Button aboutButton = new Button("关于");
         aboutButton.setFont(heavy22Font);
+        aboutButton.setPadding(new Insets(2));
 
         Button closeButton = new Button("关闭");
         closeButton.setFont(heavy22Font);
+        closeButton.setPadding(new Insets(2));
 
         // 首页内容
         // 首页-顶部内容
@@ -120,11 +125,11 @@ public class DesktopMainClass extends Application {
         helpBodyLabel.setWrapText(true);
         helpBodyLabel.setFont(medium18Font);
 
-        Label checkTitleLabel = new Label("检查新版本（需要网络）");
+        Label checkTitleLabel = new Label("检查更新（需要网络）");
         checkTitleLabel.setFont(heavy20Font);
         Label currentVersionLabel = new Label("当前版本：" + launcherContext.getVersionInfo().getVersion());
         currentVersionLabel.setFont(medium18Font);
-        Button checkVersionButton = new Button("查询更新");
+        Button checkVersionButton = new Button("查询新版");
         checkVersionButton.setFont(medium18Font);
         CheckVersionEvent checkVersionEvent = new CheckVersionEvent();
         checkVersionButton.setOnAction(checkVersionEvent);
@@ -139,6 +144,7 @@ public class DesktopMainClass extends Application {
         // 关于页-底部内容
         HBox aboutBottomHBox = new HBox(20);
         aboutBottomHBox.setPadding(new Insets(10));
+        aboutBottomHBox.setAlignment(Pos.CENTER);
         HBox.setHgrow(closeButton, Priority.ALWAYS);
         closeButton.setMaxWidth(Double.MAX_VALUE);
         aboutBottomHBox.getChildren().addAll(closeButton);
