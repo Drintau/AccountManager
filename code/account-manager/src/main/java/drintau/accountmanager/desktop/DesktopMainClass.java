@@ -133,6 +133,7 @@ public class DesktopMainClass extends Application {
         checkVersionButton.setFont(medium18Font);
         CheckVersionEvent checkVersionEvent = new CheckVersionEvent();
         checkVersionButton.setOnAction(checkVersionEvent);
+        desktopContext.setCheckVersionButton(checkVersionButton);
         Label latestVersionLabel = new Label();
         latestVersionLabel.setFont(medium18Font);
         checkVersionEvent.setLatestVersionLabel(latestVersionLabel);
