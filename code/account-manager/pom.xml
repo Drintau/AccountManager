@@ -25,9 +25,9 @@
 
         <fesod.version>2.0.2-incubating</fesod.version>
 
-        <vue.version>3.5.39</vue.version>
-        <axios.version>1.18.1</axios.version>
-        <vuetify.version>4.0.9</vuetify.version>
+        <vue.version>3.5.43</vue.version>
+        <axios.version>1.20.0</axios.version>
+        <vuetify.version>4.1.13</vuetify.version>
         <mdi-font.version>7.4.47</mdi-font.version>
 
         <!-- 使用LTS版本 -->
